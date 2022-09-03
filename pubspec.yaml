@@ -10,6 +10,8 @@ dependencies:
   # Main Flutter SDK
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   # Local modules
   not_zero_storage:
@@ -30,6 +32,19 @@ dependencies:
   # Dependecy injection
   injectable: ^1.5.3
   get_it: ^7.2.0
+
+  # Data management
+  uuid: ^3.0.6
+
+  # Navigation
+  go_router: ^4.3.0
+
+  # Widgets
+  flutter_form_builder: ^7.6.0
+  form_builder_validators: ^8.3.0
+
+  # For filters and finders from storage module
+  sembast: ^3.3.0
 
 dev_dependencies:
   flutter_test:

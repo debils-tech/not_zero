@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:not_zero/helpers/date_time_epoch_json.dart';
+import 'package:uuid/uuid.dart';
 
 part 'task.freezed.dart';
 part 'task.g.dart';
@@ -25,4 +26,17 @@ class Task with _$Task {
   }) = _Task;
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
+
+  factory Task.create({
+    required String title,
+    String? description,
+    required TaskImportance importance,
+  }) =>
+      Task(
+        id: const Uuid().v4(),
+        title: title,
+        description: description ?? '',
+        createdAt: DateTime.now(),
+        importance: importance,
+      );
 }

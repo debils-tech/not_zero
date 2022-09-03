@@ -47,9 +47,17 @@ class TaskCard extends StatelessWidget {
                     task.title,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Text(
-                    task.description,
-                    style: Theme.of(context).textTheme.subtitle2,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Text(
+                      task.description,
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.subtitle2?.color,
+                        fontSize: 12,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
                   ),
                 ],
               ),

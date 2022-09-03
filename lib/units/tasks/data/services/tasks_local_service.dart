@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero_storage/not_zero_database.dart';
+import 'package:sembast/sembast.dart';
 
 abstract class TasksLocalService {
   Future<List<Task>> getTasks();
@@ -18,7 +19,11 @@ class TasksLocalServiceImpl implements TasksLocalService {
 
   @override
   Future<List<Task>> getTasks() async {
-    final tasks = await tasksCollection.find();
+    final tasks = await tasksCollection.find(
+      finder: Finder(
+        sortOrders: [SortOrder('createdAt', false)],
+      ),
+    );
     return tasks.map(Task.fromJson).toList();
   }
 
