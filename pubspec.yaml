@@ -26,14 +26,21 @@ dependencies:
   # App theme
   flex_color_scheme: ^5.1.0
 
+  # Dependecy injection
+  injectable: ^1.5.3
+  get_it: ^7.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+
+  # Code generation
   build_runner: ^2.2.0
   freezed: ^2.1.0+1
   json_serializable: ^6.3.1
+  injectable_generator: ^1.5.4
 
 flutter:
   uses-material-design: true

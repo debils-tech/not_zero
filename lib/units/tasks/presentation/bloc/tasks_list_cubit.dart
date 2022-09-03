@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 
+@injectable
 class TasksListCubit extends Cubit<TasksListState> {
   TasksListCubit() : super(const TasksListState.loading());
 

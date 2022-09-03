@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_card.dart';
@@ -14,7 +15,7 @@ class TasksListScreen extends StatelessWidget {
         title: const Text('Tasks'),
       ),
       body: BlocProvider(
-        create: (_) => TasksListCubit()..loadTasks(),
+        create: (_) => getIt<TasksListCubit>()..loadTasks(),
         child: const _TasksListScreenBody(),
       ),
     );
