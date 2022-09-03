@@ -43,12 +43,12 @@ class SembastStoreCollection implements Collection {
   }
 
   @override
-  Future<void> delete(Finder? finder) {
+  Future<void> delete({Finder? finder}) {
     return _store.delete(db, finder: finder);
   }
 
   @override
-  Future<int> count(Filter? filter) {
+  Future<int> count({Filter? filter}) {
     return _store.count(db, filter: filter);
   }
 }

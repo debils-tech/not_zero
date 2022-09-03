@@ -21,4 +21,7 @@ abstract class MultitableDatabaseDriver {
   /// If such collection does not exist, it will be created and then can be
   /// accessed in the future.
   Collection operator [](String key);
+
+  /// Returns a list of all created collections in the database.
+  Iterable<Collection> get collections;
 }

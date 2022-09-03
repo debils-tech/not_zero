@@ -51,4 +51,7 @@ class SembastMultitableDatabaseDriver implements MultitableDatabaseDriver {
       return collection;
     }
   }
+
+  @override
+  Iterable<Collection> get collections => _logicalCollections.values;
 }

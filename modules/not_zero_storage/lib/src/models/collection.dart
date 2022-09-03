@@ -33,7 +33,7 @@ abstract class Collection {
 
   Future<void> deleteByKey(String key);
 
-  Future<void> delete(Finder? finder);
+  Future<void> delete({Finder? finder});
 
-  Future<int> count(Filter? filter);
+  Future<int> count({Filter? filter});
 }
