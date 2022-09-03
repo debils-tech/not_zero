@@ -2,7 +2,7 @@ name: not_zero_storage
 description: |
   Submodule of "Not Zero" app, providing it with a ways of storing persistent
   data.
-version: 0.0.1
+version: 0.1.0
 publish_to: none
 
 environment:
@@ -27,5 +27,3 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-
-flutter:
