@@ -13,7 +13,7 @@ dependencies:
 
   # Local modules
   not_zero_storage:
-    path: modules/not_zero_storage
+    path: modules/storage
 
   # Models
   freezed_annotation: ^2.1.0

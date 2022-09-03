@@ -378,7 +378,7 @@ packages:
   not_zero_storage:
     dependency: "direct main"
     description:
-      path: "modules/not_zero_storage"
+      path: "modules/storage"
       relative: true
     source: path
     version: "0.1.0"
