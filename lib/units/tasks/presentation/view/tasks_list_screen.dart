@@ -6,7 +6,7 @@ import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_card.dart';
 
 class TasksListScreen extends StatelessWidget {
-  const TasksListScreen({Key? key}) : super(key: key);
+  const TasksListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +23,12 @@ class TasksListScreen extends StatelessWidget {
 }
 
 class _TasksListScreenBody extends StatelessWidget {
-  const _TasksListScreenBody({Key? key}) : super(key: key);
+  const _TasksListScreenBody();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TasksListCubit, TasksListState>(
-      builder: ((context, state) {
+      builder: (context, state) {
         return state.when(
           loading: () {
             return const Center(
@@ -49,7 +49,7 @@ class _TasksListScreenBody extends StatelessWidget {
             );
           },
         );
-      }),
+      },
     );
   }
 }

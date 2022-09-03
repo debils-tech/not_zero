@@ -39,7 +39,7 @@ class SembastMultitableDatabaseDriver implements MultitableDatabaseDriver {
       );
     }
 
-    SembastStoreCollection? collection = _logicalCollections[name];
+    var collection = _logicalCollections[name];
     if (collection != null) {
       // If such collection is already exists
       return collection;

@@ -36,11 +36,11 @@ void main() {
 
     var dbValue = prefs.get('key');
     expect(dbValue, isList);
-    expect(listEquals(value, dbValue as List), true);
+    expect(listEquals(value, dbValue! as List), true);
 
     dbValue = await prefs.getLazy('key');
     expect(dbValue, isList);
-    expect(listEquals(value, dbValue as List), true);
+    expect(listEquals(value, dbValue! as List), true);
   });
 
   test('Map', () async {
@@ -50,11 +50,11 @@ void main() {
 
     var dbValue = prefs.get('key');
     expect(dbValue, isMap);
-    expect(mapEquals(value, dbValue as Map), true);
+    expect(mapEquals(value, dbValue! as Map), true);
 
     dbValue = await prefs.getLazy('key');
     expect(dbValue, isMap);
-    expect(mapEquals(value, dbValue as Map), true);
+    expect(mapEquals(value, dbValue! as Map), true);
   });
 
   // More "extreme" tests
@@ -74,7 +74,10 @@ Future<void> _testPrimitiveValue<T>(
   T value, {
   String key = 'key',
 }) async {
-  assert(T == String || T == int || T == double || T == bool);
+  assert(
+    T == String || T == int || T == double || T == bool,
+    'Unsupported type',
+  );
 
   await prefs.set(key, value as Object);
 

@@ -2,6 +2,10 @@ import 'package:not_zero_storage/src/models/collection.dart';
 import 'package:sembast/sembast.dart';
 
 class SembastStoreCollection implements Collection {
+  SembastStoreCollection(this.name, this.db, {this.primaryKey = 'id'}) {
+    _store = StoreRef<String, Map<String, dynamic>>(name);
+  }
+
   @override
   final String name;
 
@@ -10,10 +14,6 @@ class SembastStoreCollection implements Collection {
 
   @override
   final String primaryKey;
-
-  SembastStoreCollection(this.name, this.db, {this.primaryKey = 'id'}) {
-    _store = StoreRef<String, Map<String, dynamic>>(name);
-  }
 
   @override
   Future<void> drop() {

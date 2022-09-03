@@ -8,20 +8,22 @@ class TasksListCubit extends Cubit<TasksListState> {
   TasksListCubit() : super(const TasksListState.loading());
 
   Future<void> loadTasks() async {
-    await Future.delayed(const Duration(seconds: 1));
-    emit(TasksListState.loaded([
-      Task(
-        id: '1',
-        title: 'Task 1',
-        description: 'Some not important task',
-        importance: TaskImportance.notImportant,
-      ),
-      Task(
-        id: '2',
-        title: 'Task 56',
-        description: 'Some highly important task',
-        importance: TaskImportance.important,
-      ),
-    ]));
+    await Future<void>.delayed(const Duration(seconds: 1));
+    emit(
+      TasksListState.loaded([
+        Task(
+          id: '1',
+          title: 'Task 1',
+          description: 'Some not important task',
+          importance: TaskImportance.notImportant,
+        ),
+        Task(
+          id: '2',
+          title: 'Task 56',
+          description: 'Some highly important task',
+          importance: TaskImportance.important,
+        ),
+      ]),
+    );
   }
 }

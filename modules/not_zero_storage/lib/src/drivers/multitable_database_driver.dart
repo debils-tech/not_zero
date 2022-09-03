@@ -13,7 +13,8 @@ abstract class MultitableDatabaseDriver {
   /// collections and fills the map of stores, connected to logical collections.
   Future<void> init();
 
-  /// Clears all known data from the database, clears map of logical collections.
+  /// Clears all known data from the database, clears map of logical
+  /// collections.
   Future<void> drop();
 
   /// Returns a collection by its name.

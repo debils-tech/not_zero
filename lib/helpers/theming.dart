@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 @immutable
 class TaskColors extends ThemeExtension<TaskColors> {
-  final Color notImportantColor;
-  final Color normalColor;
-  final Color importantColor;
-
   const TaskColors({
     required this.notImportantColor,
     required this.normalColor,
     required this.importantColor,
   });
+
+  final Color notImportantColor;
+  final Color normalColor;
+  final Color importantColor;
 
   @override
   ThemeExtension<TaskColors> lerp(ThemeExtension<TaskColors>? other, double t) {

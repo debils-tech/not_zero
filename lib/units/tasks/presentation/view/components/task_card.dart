@@ -3,9 +3,9 @@ import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 
 class TaskCard extends StatelessWidget {
-  final Task task;
+  const TaskCard(this.task, {super.key});
 
-  const TaskCard(this.task, {Key? key}) : super(key: key);
+  final Task task;
 
   @override
   Widget build(BuildContext context) {

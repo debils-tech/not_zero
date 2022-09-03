@@ -18,9 +18,13 @@ import 'package:not_zero_storage/src/implementations/sembast_database_provider.d
 /// await db.prefs.set('stats-tap-amount', 10);
 /// ```
 abstract class DatabaseProvider {
+  /// Create an instance of [DatabaseProvider] as [SembastDatabaseProvider].
+  factory DatabaseProvider.sembast() => SembastDatabaseProvider();
+
   /// Getter allowing to gain the access to simple key-value storage.
   PrefsDatabaseDriver get prefs;
 
+  /// Getter allowing to gain the access to multi-table storage.
   MultitableDatabaseDriver get collections;
 
   /// Initializing the database.
@@ -34,6 +38,4 @@ abstract class DatabaseProvider {
   /// Removes all the files related to database, clears all database cache.
   /// This action can't be undone, data will be lost forever.
   Future<void> drop();
-
-  factory DatabaseProvider.sembast() => SembastDatabaseProvider();
 }
