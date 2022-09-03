@@ -7,8 +7,8 @@ import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.d
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 
 @injectable
-class TasksListCubit extends Bloc<TasksListEvent, TasksListState> {
-  TasksListCubit(this._repository) : super(const TasksListState.loading()) {
+class TasksListBloc extends Bloc<TasksListEvent, TasksListState> {
+  TasksListBloc(this._repository) : super(const TasksListState.loading()) {
     on<LoadTasksEvent>(_onLoadTasks);
   }
 
