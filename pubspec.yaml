@@ -22,6 +22,7 @@ dependencies:
   # State management
   bloc: ^8.1.0
   flutter_bloc: ^8.1.1
+  rxdart: ^0.27.5
 
   # App theme
   flex_color_scheme: ^5.1.0

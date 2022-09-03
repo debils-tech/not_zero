@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:not_zero/helpers/date_time_epoch_json.dart';
 
 part 'task.freezed.dart';
 part 'task.g.dart';
@@ -18,6 +19,8 @@ class Task with _$Task {
     required String id,
     required String title,
     @Default('') String description,
+    @DateTimeEpochConverter() required DateTime createdAt,
+    @DateTimeEpochConverter() DateTime? modifiedAt,
     required TaskImportance importance,
   }) = _Task;
 

@@ -14,7 +14,9 @@ class SembastMultitableDatabaseDriver implements MultitableDatabaseDriver {
     _db = await getDatabaseFactory().openDatabase('collections.db');
 
     final collectionsInfo = await _mainStore.record('collections').get(_db);
-    final collectionsList = (collectionsInfo as List<String>?) ?? [];
+    final collectionsList = collectionsInfo != null
+        ? List<String>.from(collectionsInfo as Iterable)
+        : <String>[];
     for (final c in collectionsList) {
       _logicalCollections[c] = SembastStoreCollection(c, _db);
     }

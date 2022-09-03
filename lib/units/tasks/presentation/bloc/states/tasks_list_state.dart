@@ -5,6 +5,6 @@ part 'tasks_list_state.freezed.dart';
 
 @freezed
 class TasksListState with _$TasksListState {
-  const factory TasksListState.loading() = Loading;
-  const factory TasksListState.loaded(List<Task> tasks) = Loaded;
+  const factory TasksListState.loading() = TasksLoadingState;
+  const factory TasksListState.loaded(List<Task> tasks) = TasksLoadedState;
 }

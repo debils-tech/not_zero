@@ -13,12 +13,14 @@ class SembastDatabaseProvider implements DatabaseProvider {
   MultitableDatabaseDriver collections = SembastMultitableDatabaseDriver();
 
   @override
-  Future<void> init() {
-    return prefs.init();
+  Future<void> init() async {
+    await prefs.init();
+    await collections.init();
   }
 
   @override
-  Future<void> drop() {
-    return prefs.drop();
+  Future<void> drop() async {
+    await prefs.drop();
+    await collections.drop();
   }
 }
