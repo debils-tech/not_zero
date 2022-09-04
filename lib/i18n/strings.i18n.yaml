@@ -1,0 +1,18 @@
+tasks:
+  list:
+    title: 'Tasks'
+    create: 'Add new task'
+    timeSubtitle:
+      createdAt: 'created at ${time}'
+      modifiedAt: 'modified at ${time}'
+
+  edit:
+    title:
+      create: 'New task'
+      existing: 'Edit task'
+    fields:
+      taskTitle: 'Title'
+      taskDescription: 'Description'
+    submit:
+      create: 'Create new task!'
+      existing: 'Save changes'

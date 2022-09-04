@@ -6,4 +6,6 @@ abstract class TasksRepository {
   Future<void> syncTasks();
 
   Future<void> saveTask(Task task);
+
+  Future<void> updateTask(Task task);
 }

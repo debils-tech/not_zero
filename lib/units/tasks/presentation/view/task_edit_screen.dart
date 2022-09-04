@@ -6,12 +6,15 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/widgets/stars_rate.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/theming.dart';
+import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/task_edit_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_bloc.dart';
 
 class TaskEditScreen extends StatelessWidget {
-  const TaskEditScreen({super.key});
+  const TaskEditScreen({this.taskToEdit, super.key});
+
+  final Task? taskToEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +26,19 @@ class TaskEditScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('New task'),
+              title: Text(
+                taskToEdit == null
+                    ? t.tasks.edit.title.create
+                    : t.tasks.edit.title.existing,
+              ),
             ),
-            body: _TaskEditScreenBody(formKey),
-            floatingActionButton: state ? _FloatingSubmitButton(formKey) : null,
+            body: _TaskEditScreenBody(formKey, taskToEdit: taskToEdit),
+            floatingActionButton: state
+                ? _FloatingSubmitButton(
+                    formKey,
+                    taskToEdit: taskToEdit,
+                  )
+                : null,
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
           );
@@ -37,14 +49,20 @@ class TaskEditScreen extends StatelessWidget {
 }
 
 class _TaskEditScreenBody extends StatelessWidget {
-  const _TaskEditScreenBody(this.formKey);
+  const _TaskEditScreenBody(this.formKey, {this.taskToEdit});
 
+  final Task? taskToEdit;
   final GlobalKey<FormBuilderState> formKey;
 
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
       key: formKey,
+      initialValue: {
+        'title': taskToEdit?.title,
+        'description': taskToEdit?.description,
+        'importance': taskToEdit?.importance ?? TaskImportance.normal,
+      },
       child: Stack(
         children: [
           ListView(
@@ -77,13 +95,13 @@ class _TitleField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'title',
-      decoration: const InputDecoration(
-        labelText: 'Task title',
+      decoration: InputDecoration(
+        labelText: t.tasks.edit.fields.taskTitle,
       ),
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
-        FormBuilderValidators.minLength(1),
       ]),
+      maxLength: 50,
       onChanged: (_) => context.read<TaskEditBloc>().add(
             TaskEditEvent.changeForm(
               correct: formKey.currentState?.validate() ?? false,
@@ -100,8 +118,8 @@ class _DescriptionField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'description',
-      decoration: const InputDecoration(
-        labelText: 'Description',
+      decoration: InputDecoration(
+        labelText: t.tasks.edit.fields.taskDescription,
       ),
       maxLines: null,
     );
@@ -117,13 +135,12 @@ class _ImportanceField extends StatelessWidget {
 
     return FormBuilderField<TaskImportance>(
       name: 'importance',
-      initialValue: TaskImportance.normal,
       builder: (field) {
         return StarsRateWidget(
           count: 3,
-          initialValue: 2,
+          initialValue: field.value?.toIndex() ?? 2,
           onChanged: (value) {
-            field.didChange(TaskImportance.values[value]);
+            field.didChange(TaskImportance.fromIndex(value));
           },
           colorsByIndex: [
             taskColors.notImportantColor,
@@ -137,8 +154,9 @@ class _ImportanceField extends StatelessWidget {
 }
 
 class _FloatingSubmitButton extends StatelessWidget {
-  const _FloatingSubmitButton(this.formKey);
+  const _FloatingSubmitButton(this.formKey, {this.taskToEdit});
 
+  final Task? taskToEdit;
   final GlobalKey<FormBuilderState> formKey;
 
   @override
@@ -153,6 +171,7 @@ class _FloatingSubmitButton extends StatelessWidget {
                 title: values['title'] as String,
                 description: values['description'] as String?,
                 importance: values['importance'] as TaskImportance,
+                taskToEdit: taskToEdit,
               ),
             );
 
@@ -167,9 +186,11 @@ class _FloatingSubmitButton extends StatelessWidget {
           ),
         ),
       ),
-      child: const Text(
-        'Create new task!',
-        style: TextStyle(fontSize: 20),
+      child: Text(
+        taskToEdit == null
+            ? t.tasks.edit.submit.create
+            : t.tasks.edit.submit.existing,
+        style: const TextStyle(fontSize: 20),
       ),
     );
   }

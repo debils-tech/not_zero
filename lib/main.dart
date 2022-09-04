@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/theming.dart';
+import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/routes.dart';
 import 'package:not_zero_storage/not_zero_database.dart';
 
@@ -14,7 +15,7 @@ void main() async {
 
   await getIt<DatabaseProvider>().init();
 
-  runApp(const MyApp());
+  runApp(TranslationProvider(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,11 +23,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lightThemeBase = FlexThemeData.light(scheme: FlexScheme.material);
+    final darkThemeBase = FlexThemeData.dark(scheme: FlexScheme.material);
+
     return MaterialApp.router(
       title: 'Flutter Demo',
+
+      // Themes
       themeMode: ThemeMode.dark,
-      theme: FlexThemeData.light(scheme: FlexScheme.material).copyWith(
+      theme: lightThemeBase.copyWith(
         useMaterial3: true,
+        textTheme: lightThemeBase.textTheme.copyWith(
+          subtitle2: TextStyle(color: Colors.grey.shade500),
+        ),
         extensions: <ThemeExtension>[
           TaskColors(
             notImportantColor: Colors.blueGrey.shade400,
@@ -35,8 +44,11 @@ class MyApp extends StatelessWidget {
           ),
         ],
       ),
-      darkTheme: FlexThemeData.dark(scheme: FlexScheme.material).copyWith(
+      darkTheme: darkThemeBase.copyWith(
         useMaterial3: true,
+        textTheme: darkThemeBase.textTheme.copyWith(
+          subtitle2: TextStyle(color: Colors.grey.shade700),
+        ),
         extensions: <ThemeExtension>[
           TaskColors(
             notImportantColor: Colors.grey[350]!,
@@ -45,12 +57,17 @@ class MyApp extends StatelessWidget {
           ),
         ],
       ),
+
+      // Routing
       routeInformationProvider: appRouter.routeInformationProvider,
       routeInformationParser: appRouter.routeInformationParser,
       routerDelegate: appRouter.routerDelegate,
+
+      // Localization
+      locale: TranslationProvider.of(context).flutterLocale,
       supportedLocales: const [
-        Locale('en'),
-        Locale('ru'),
+        Locale('en', 'US'),
+        Locale('ru', 'RU'),
       ],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

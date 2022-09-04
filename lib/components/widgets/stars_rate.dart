@@ -24,7 +24,13 @@ class StarsRateWidget extends StatefulWidget {
 }
 
 class _StarsRateWidgetState extends State<StarsRateWidget> {
-  int currentValue = 1;
+  late int currentValue;
+
+  @override
+  void initState() {
+    currentValue = widget.initialValue;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

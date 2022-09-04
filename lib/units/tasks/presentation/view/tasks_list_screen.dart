@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
@@ -14,7 +15,7 @@ class TasksListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tasks'),
+        title: Text(t.tasks.list.title),
       ),
       body: BlocProvider(
         create: (_) => getIt<TasksListBloc>()..add(const LoadTasksEvent()),

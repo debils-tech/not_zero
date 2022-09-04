@@ -18,17 +18,26 @@ class TasksRepositoryImpl implements TasksRepository {
   @override
   Future<void> syncTasks() async {
     final localTasks = await localService.getTasks();
-    if (_tasksStreamController.value.isEmpty) {
-      _tasksStreamController.add(localTasks);
-    } else {
-      _tasksStreamController
-          .add([..._tasksStreamController.value, ...localTasks]);
-    }
+    _tasksStreamController.add(localTasks);
   }
 
   @override
   Future<void> saveTask(Task task) async {
     _tasksStreamController.add([task, ..._tasksStreamController.value]);
     await localService.saveTask(task);
+  }
+
+  @override
+  Future<void> updateTask(Task task) async {
+    final currentList = _tasksStreamController.value;
+    final indexOfSavedTask = currentList.indexWhere((e) => e.id == task.id);
+    if (indexOfSavedTask == -1) {
+      return;
+    } else {
+      final newList = [...currentList];
+      newList[indexOfSavedTask] = task;
+      _tasksStreamController.add(newList);
+      await localService.saveTask(task);
+    }
   }
 }

@@ -16,12 +16,25 @@ class TaskEditBloc extends Bloc<TaskEditEvent, bool> {
   Future<void> _saveTask(
     SaveTaskEvent event,
     Emitter<bool> _,
-  ) =>
-      _repository.saveTask(
+  ) {
+    final taskToEdit = event.taskToEdit;
+    if (taskToEdit == null) {
+      return _repository.saveTask(
         Task.create(
           title: event.title,
           description: event.description,
           importance: event.importance,
         ),
       );
+    } else {
+      return _repository.updateTask(
+        Task.edit(
+          task: taskToEdit,
+          title: event.title,
+          description: event.description,
+          importance: event.importance,
+        ),
+      );
+    }
+  }
 }

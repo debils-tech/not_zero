@@ -10,16 +10,22 @@ dependencies:
   # Main Flutter SDK
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
 
   # Local modules
   not_zero_storage:
     path: modules/storage
 
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+  slang: ^2.7.0
+  slang_flutter: ^2.7.0
+
   # Models
   freezed_annotation: ^2.1.0
   json_annotation: ^4.6.0
+  uuid: ^3.0.6
 
   # State management
   bloc: ^8.1.0
@@ -32,9 +38,6 @@ dependencies:
   # Dependecy injection
   injectable: ^1.5.3
   get_it: ^7.2.0
-
-  # Data management
-  uuid: ^3.0.6
 
   # Navigation
   go_router: ^4.3.0
@@ -50,6 +53,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # Analysis
   flutter_lints: ^2.0.0
   very_good_analysis: ^3.0.1
 
@@ -58,6 +62,7 @@ dev_dependencies:
   freezed: ^2.1.0+1
   json_serializable: ^6.3.1
   injectable_generator: ^1.5.4
+  slang_build_runner: ^2.7.0
 
 flutter:
   uses-material-design: true

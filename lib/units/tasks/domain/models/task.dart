@@ -11,7 +11,31 @@ enum TaskImportance {
   @JsonValue(3)
   normal,
   @JsonValue(5)
-  important,
+  important;
+
+  factory TaskImportance.fromIndex(int? index) {
+    switch (index) {
+      case 0:
+        return TaskImportance.notImportant;
+      case 1:
+        return TaskImportance.normal;
+      case 2:
+        return TaskImportance.important;
+      default:
+        return TaskImportance.normal;
+    }
+  }
+
+  int toIndex() {
+    switch (this) {
+      case TaskImportance.notImportant:
+        return 0;
+      case TaskImportance.normal:
+        return 1;
+      case TaskImportance.important:
+        return 2;
+    }
+  }
 }
 
 @freezed
@@ -38,5 +62,20 @@ class Task with _$Task {
         description: description ?? '',
         createdAt: DateTime.now(),
         importance: importance,
+      );
+
+  factory Task.edit({
+    required Task task,
+    String? title,
+    String? description,
+    TaskImportance? importance,
+  }) =>
+      Task(
+        id: task.id,
+        title: title ?? task.title,
+        description: description ?? '',
+        createdAt: task.createdAt,
+        modifiedAt: DateTime.now(),
+        importance: importance ?? task.importance,
       );
 }

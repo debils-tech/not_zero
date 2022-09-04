@@ -11,5 +11,6 @@ class TaskEditEvent with _$TaskEditEvent {
     required TaskImportance importance,
     required String title,
     String? description,
+    Task? taskToEdit,
   }) = SaveTaskEvent;
 }
