@@ -18,7 +18,7 @@ class TasksRepositoryImpl implements TasksRepository {
   @override
   Future<void> syncTasks() async {
     final localTasks = await localService.getTasks();
-    _tasksStreamController.add(localTasks);
+    _tasksStreamController.add(localTasks..sort(_tasksSorting));
   }
 
   @override
@@ -31,13 +31,25 @@ class TasksRepositoryImpl implements TasksRepository {
   Future<void> updateTask(Task task) async {
     final currentList = _tasksStreamController.value;
     final indexOfSavedTask = currentList.indexWhere((e) => e.id == task.id);
-    if (indexOfSavedTask == -1) {
-      return;
-    } else {
+    if (indexOfSavedTask != -1) {
       final newList = [...currentList];
       newList[indexOfSavedTask] = task;
-      _tasksStreamController.add(newList);
+
+      // Sorting for ensuring that completed tasks will be at the bottom of the
+      // list.
+      _tasksStreamController.add(newList..sort(_tasksSorting));
+
       await localService.saveTask(task);
+    }
+  }
+
+  int _tasksSorting(Task a, Task b) {
+    if (a.isCompleted && !b.isCompleted) {
+      return 1;
+    } else if (!a.isCompleted && b.isCompleted) {
+      return -1;
+    } else {
+      return b.createdAt.compareTo(a.createdAt);
     }
   }
 }

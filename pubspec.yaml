@@ -48,6 +48,7 @@ dependencies:
 
   # For filters and finders from storage module
   sembast: ^3.3.0
+  animated_list_plus: ^0.4.4
 
 dev_dependencies:
   flutter_test:

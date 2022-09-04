@@ -65,7 +65,7 @@ class _StarIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onTap,
-      style: ButtonStyle(foregroundColor: MaterialStateProperty.all(color)),
+      style: ButtonStyle(foregroundColor: MaterialStatePropertyAll(color)),
       child: Icon(
         active ? Icons.star : Icons.star_border,
         size: 45,

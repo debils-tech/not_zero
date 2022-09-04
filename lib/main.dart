@@ -23,8 +23,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lightThemeBase = FlexThemeData.light(scheme: FlexScheme.material);
-    final darkThemeBase = FlexThemeData.dark(scheme: FlexScheme.material);
+    final lightThemeBase = FlexThemeData.light(
+      scheme: FlexScheme.material,
+      extensions: <ThemeExtension>[
+        TaskColors(
+          notImportantColor: Colors.blueGrey.shade400,
+          normalColor: Colors.amber,
+          importantColor: Colors.red,
+        ),
+      ],
+    );
+    final darkThemeBase = FlexThemeData.dark(
+      scheme: FlexScheme.material,
+      extensions: <ThemeExtension>[
+        TaskColors(
+          notImportantColor: Colors.grey[350]!,
+          normalColor: Colors.amberAccent,
+          importantColor: Colors.redAccent,
+        ),
+      ],
+    );
 
     return MaterialApp.router(
       title: 'Flutter Demo',
@@ -36,26 +54,26 @@ class MyApp extends StatelessWidget {
         textTheme: lightThemeBase.textTheme.copyWith(
           subtitle2: TextStyle(color: Colors.grey.shade500),
         ),
-        extensions: <ThemeExtension>[
-          TaskColors(
-            notImportantColor: Colors.blueGrey.shade400,
-            normalColor: Colors.amber,
-            importantColor: Colors.red,
+        checkboxTheme: lightThemeBase.checkboxTheme.copyWith(
+          fillColor: MaterialStateProperty.resolveWith(
+            (states) => states.contains(MaterialState.selected)
+                ? lightThemeBase.primaryColorLight
+                : null,
           ),
-        ],
+        ),
       ),
       darkTheme: darkThemeBase.copyWith(
         useMaterial3: true,
         textTheme: darkThemeBase.textTheme.copyWith(
           subtitle2: TextStyle(color: Colors.grey.shade700),
         ),
-        extensions: <ThemeExtension>[
-          TaskColors(
-            notImportantColor: Colors.grey[350]!,
-            normalColor: Colors.amberAccent,
-            importantColor: Colors.redAccent,
+        checkboxTheme: darkThemeBase.checkboxTheme.copyWith(
+          fillColor: MaterialStateProperty.resolveWith(
+            (states) => states.contains(MaterialState.selected)
+                ? darkThemeBase.primaryColor
+                : null,
           ),
-        ],
+        ),
       ),
 
       // Routing

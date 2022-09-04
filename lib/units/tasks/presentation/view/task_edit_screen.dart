@@ -191,10 +191,10 @@ class _FloatingSubmitButton extends StatelessWidget {
 
         GoRouter.of(context).pop();
       },
-      style: ButtonStyle(
-        elevation: MaterialStateProperty.all(20),
-        padding: MaterialStateProperty.all(
-          const EdgeInsets.symmetric(
+      style: const ButtonStyle(
+        elevation: MaterialStatePropertyAll(20),
+        padding: MaterialStatePropertyAll(
+          EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 15,
           ),

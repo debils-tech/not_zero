@@ -1,8 +1,11 @@
+import 'package:animated_list_plus/animated_list_plus.dart';
+import 'package:animated_list_plus/transitions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/strings.g.dart';
+import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
@@ -37,25 +40,48 @@ class _TasksListScreenBody extends StatelessWidget {
     return BlocBuilder<TasksListBloc, TasksListState>(
       builder: (context, state) {
         return state.when<Widget>(
-          loading: () {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-          loaded: (tasks) {
-            return ListView.builder(
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4,
-                  horizontal: 5,
-                ),
-                child: TaskCard(tasks[index]),
-              ),
-              itemCount: tasks.length,
-            );
-          },
+          loading: () => const _TasksLoadingView(),
+          loaded: _TasksListView.new,
         );
       },
+    );
+  }
+}
+
+class _TasksLoadingView extends StatelessWidget {
+  const _TasksLoadingView();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+}
+
+class _TasksListView extends StatelessWidget {
+  const _TasksListView(this.tasks);
+
+  final List<Task> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    return ImplicitlyAnimatedList<Task>(
+      items: tasks,
+      areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
+      insertDuration: const Duration(milliseconds: 300),
+      removeDuration: const Duration(milliseconds: 200),
+      updateDuration: const Duration(milliseconds: 100),
+      itemBuilder: (context, animation, item, index) => SizeFadeTransition(
+        animation: animation,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 4,
+            horizontal: 5,
+          ),
+          child: TaskCard(item),
+        ),
+      ),
     );
   }
 }

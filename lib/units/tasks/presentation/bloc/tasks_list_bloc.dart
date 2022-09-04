@@ -10,6 +10,7 @@ import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.d
 class TasksListBloc extends Bloc<TasksListEvent, TasksListState> {
   TasksListBloc(this._repository) : super(const TasksListState.loading()) {
     on<LoadTasksEvent>(_onLoadTasks);
+    on<ChangeTaskCompletionEvent>(_onChangeTaskCompletion);
   }
 
   final TasksRepository _repository;
@@ -25,6 +26,15 @@ class TasksListBloc extends Bloc<TasksListEvent, TasksListState> {
       onData: (tasks) {
         return TasksListState.loaded(tasks);
       },
+    );
+  }
+
+  Future<void> _onChangeTaskCompletion(
+    ChangeTaskCompletionEvent event,
+    Emitter<TasksListState> emit,
+  ) {
+    return _repository.updateTask(
+      event.task.copyWith(isCompleted: event.completion),
     );
   }
 }

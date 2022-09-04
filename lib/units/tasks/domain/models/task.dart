@@ -47,6 +47,7 @@ class Task with _$Task {
     @DateTimeEpochConverter() required DateTime createdAt,
     @DateTimeEpochConverter() DateTime? modifiedAt,
     required TaskImportance importance,
+    @Default(false) bool isCompleted,
   }) = _Task;
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);

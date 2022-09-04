@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
+import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
+import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard(this.task, {super.key});
@@ -35,46 +38,55 @@ class TaskCard extends StatelessWidget {
         elevation: 3,
         borderRadius: BorderRadius.circular(10),
         clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: () => GoRouter.of(context).push('/tasks/edit', extra: task),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(
-                width: 7,
-                child: ColoredBox(
-                  color: colorByImportance,
+        child: Opacity(
+          opacity: task.isCompleted ? 0.5 : 1,
+          child: InkWell(
+            onTap: () => GoRouter.of(context).push('/tasks/edit', extra: task),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  width: 7,
+                  child: ColoredBox(
+                    color: colorByImportance,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _TaskTimeText(task: task),
-                    Text(
-                      task.title,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleMedium!
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Text(
-                        task.description,
-                        style: theme.textTheme.caption!
-                            .copyWith(fontWeight: FontWeight.w500),
+                const SizedBox(width: 8),
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _TaskTimeText(task: task),
+                      Text(
+                        task.title,
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
+                        style: theme.textTheme.titleMedium!
+                            .copyWith(fontWeight: FontWeight.w600),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          task.description,
+                          style: theme.textTheme.caption!
+                              .copyWith(fontWeight: FontWeight.w500),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-            ],
+                const SizedBox(width: 12),
+                Checkbox(
+                  value: task.isCompleted,
+                  shape: const CircleBorder(),
+                  onChanged: (value) => context.read<TasksListBloc>()
+                    ..add(ChangeTaskCompletionEvent(task, completion: value!)),
+                ),
+                const SizedBox(width: 8),
+              ],
+            ),
           ),
         ),
       ),
