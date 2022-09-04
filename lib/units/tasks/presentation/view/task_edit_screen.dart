@@ -73,11 +73,11 @@ class _TaskEditScreenBody extends StatelessWidget {
               bottom: 70,
             ),
             children: [
-              const _ImportanceField(),
+              _ImportanceField(formKey),
               const SizedBox(height: 16),
               _TitleField(formKey),
               const SizedBox(height: 12),
-              const _DescriptionField(),
+              _DescriptionField(formKey),
             ],
           ),
         ],
@@ -112,7 +112,9 @@ class _TitleField extends StatelessWidget {
 }
 
 class _DescriptionField extends StatelessWidget {
-  const _DescriptionField();
+  const _DescriptionField(this.formKey);
+
+  final GlobalKey<FormBuilderState> formKey;
 
   @override
   Widget build(BuildContext context) {
@@ -122,12 +124,19 @@ class _DescriptionField extends StatelessWidget {
         labelText: t.tasks.edit.fields.taskDescription,
       ),
       maxLines: null,
+      onChanged: (_) => context.read<TaskEditBloc>().add(
+            TaskEditEvent.changeForm(
+              correct: formKey.currentState?.validate() ?? false,
+            ),
+          ),
     );
   }
 }
 
 class _ImportanceField extends StatelessWidget {
-  const _ImportanceField();
+  const _ImportanceField(this.formKey);
+
+  final GlobalKey<FormBuilderState> formKey;
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +158,11 @@ class _ImportanceField extends StatelessWidget {
           ],
         );
       },
+      onChanged: (_) => context.read<TaskEditBloc>().add(
+            TaskEditEvent.changeForm(
+              correct: formKey.currentState?.validate() ?? false,
+            ),
+          ),
     );
   }
 }
