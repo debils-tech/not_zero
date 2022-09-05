@@ -67,6 +67,7 @@ class _TasksListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ImplicitlyAnimatedList<Task>(
+      padding: const EdgeInsets.only(top: 5, bottom: 75, left: 5, right: 5),
       items: tasks,
       areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
       insertDuration: const Duration(milliseconds: 300),

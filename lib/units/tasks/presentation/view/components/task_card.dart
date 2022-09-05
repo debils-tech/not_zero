@@ -78,11 +78,16 @@ class TaskCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Checkbox(
-                  value: task.isCompleted,
-                  shape: const CircleBorder(),
-                  onChanged: (value) => context.read<TasksListBloc>()
-                    ..add(ChangeTaskCompletionEvent(task, completion: value!)),
+                Transform.scale(
+                  scale: 1.3,
+                  child: Checkbox(
+                    value: task.isCompleted,
+                    shape: const CircleBorder(),
+                    onChanged: (value) => context.read<TasksListBloc>()
+                      ..add(
+                        ChangeTaskCompletionEvent(task, completion: value!),
+                      ),
+                  ),
                 ),
                 const SizedBox(width: 8),
               ],
