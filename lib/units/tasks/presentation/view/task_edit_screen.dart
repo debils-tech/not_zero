@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:not_zero/components/widgets/stars_rate.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/helpers/confirmation_dialog.dart';
 import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
@@ -31,6 +33,11 @@ class TaskEditScreen extends StatelessWidget {
                     ? t.tasks.edit.title.create
                     : t.tasks.edit.title.existing,
               ),
+              actions: taskToEdit != null
+                  ? [
+                      _DeleteTaskButton(taskToEdit!),
+                    ]
+                  : null,
             ),
             body: _TaskEditScreenBody(formKey, taskToEdit: taskToEdit),
             floatingActionButton: state
@@ -43,6 +50,36 @@ class TaskEditScreen extends StatelessWidget {
                 FloatingActionButtonLocation.centerFloat,
           );
         },
+      ),
+    );
+  }
+}
+
+class _DeleteTaskButton extends StatelessWidget {
+  const _DeleteTaskButton(this.task);
+
+  final Task task;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => showConfirmationDialog(
+        context,
+        title: t.tasks.edit.deleteDialog.title,
+        content: t.tasks.edit.deleteDialog.content,
+        confirm: t.tasks.edit.deleteDialog.confrm,
+        dangerous: true,
+      ).then((value) {
+        if (value == true) {
+          context.read<TaskEditBloc>().add(DeleteTaskEvent(task: task));
+          GoRouter.of(context).pop();
+        }
+      }),
+      iconSize: 26,
+      tooltip: 'Delete',
+      icon: Icon(
+        Icons.delete_outline,
+        color: Theme.of(context).errorColor,
       ),
     );
   }
@@ -78,6 +115,8 @@ class _TaskEditScreenBody extends StatelessWidget {
               _TitleField(formKey),
               const SizedBox(height: 12),
               _DescriptionField(formKey),
+              const SizedBox(height: 8),
+              if (taskToEdit != null) _EditingTaskInfo(taskToEdit!),
             ],
           ),
         ],
@@ -206,6 +245,44 @@ class _FloatingSubmitButton extends StatelessWidget {
             : t.tasks.edit.submit.existing,
         style: const TextStyle(fontSize: 20),
       ),
+    );
+  }
+}
+
+class _EditingTaskInfo extends StatelessWidget {
+  const _EditingTaskInfo(this.task);
+
+  final Task task;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme.subtitle2;
+
+    final timeFormat = DateFormat.Hms();
+    final dateFormat = DateFormat.yMMMMd();
+    final createAtDate = '${timeFormat.format(task.createdAt)}'
+        ' '
+        '${dateFormat.format(task.createdAt)}';
+    final modifiedAtDate = task.modifiedAt != null
+        ? '${timeFormat.format(task.modifiedAt!)}'
+            ' '
+            '${dateFormat.format(task.modifiedAt!)}'
+        : null;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          t.tasks.list.timeSubtitle.createdAt(time: createAtDate),
+          style: textTheme,
+        ),
+        const SizedBox(height: 2),
+        if (modifiedAtDate != null)
+          Text(
+            t.tasks.list.timeSubtitle.modifiedAt(time: modifiedAtDate),
+            style: textTheme,
+          ),
+      ],
     );
   }
 }

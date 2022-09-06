@@ -8,4 +8,6 @@ abstract class TasksRepository {
   Future<void> saveTask(Task task);
 
   Future<void> updateTask(Task task);
+
+  Future<void> deleteTask(Task task);
 }

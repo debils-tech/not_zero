@@ -6,6 +6,8 @@ abstract class TasksLocalService {
   Future<List<Task>> getTasks();
 
   Future<void> saveTask(Task task);
+
+  Future<void> deleteTask(String taskId);
 }
 
 @Singleton(as: TasksLocalService)
@@ -25,5 +27,10 @@ class TasksLocalServiceImpl implements TasksLocalService {
   @override
   Future<void> saveTask(Task task) {
     return tasksCollection.insert(task.toJson());
+  }
+
+  @override
+  Future<void> deleteTask(String taskId) {
+    return tasksCollection.deleteByKey(taskId);
   }
 }

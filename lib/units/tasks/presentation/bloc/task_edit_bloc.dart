@@ -9,6 +9,7 @@ class TaskEditBloc extends Bloc<TaskEditEvent, bool> {
   TaskEditBloc(this._repository) : super(false) {
     on<ChangeFormEvent>((event, emit) => emit(event.correct));
     on<SaveTaskEvent>(_saveTask);
+    on<DeleteTaskEvent>(_deleteTask);
   }
 
   final TasksRepository _repository;
@@ -36,5 +37,9 @@ class TaskEditBloc extends Bloc<TaskEditEvent, bool> {
         ),
       );
     }
+  }
+
+  Future<void> _deleteTask(DeleteTaskEvent event, Emitter<bool> _) {
+    return _repository.deleteTask(event.task);
   }
 }

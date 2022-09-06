@@ -7,10 +7,14 @@ part 'task_edit_event.freezed.dart';
 class TaskEditEvent with _$TaskEditEvent {
   const factory TaskEditEvent.changeForm({required bool correct}) =
       ChangeFormEvent;
+
   const factory TaskEditEvent.saveTask({
     required TaskImportance importance,
     required String title,
     String? description,
     Task? taskToEdit,
   }) = SaveTaskEvent;
+
+  const factory TaskEditEvent.deleteTask({required Task task}) =
+      DeleteTaskEvent;
 }

@@ -16,3 +16,15 @@ tasks:
     submit:
       create: 'Create new task!'
       existing: 'Save changes'
+    deleteDialog:
+      title: 'Confirm deletion'
+      content: 'Are you sure you want delete this task?'
+      confrm: 'Delete'
+    tooltips:
+      deleteTaskButton: 'Delete'
+
+common:
+  dialog:
+    confirmTitle: 'Confirm?'
+    cancelButton: 'Cancel'
+    okButton: 'Yes'
