@@ -4,7 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:not_zero/components/widgets/stars_rate.dart';
+import 'package:not_zero/components/common_widgets/stars_rate.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/confirmation_dialog.dart';
 import 'package:not_zero/helpers/theming.dart';
