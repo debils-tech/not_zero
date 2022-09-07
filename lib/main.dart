@@ -1,21 +1,39 @@
+import 'dart:async';
+
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/helpers/env.dart';
 import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/routes.dart';
 import 'package:not_zero_storage/not_zero_database.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  await runZonedGuarded(() async {
+    await SentryFlutter.init(
+      (options) {
+        options
+          ..dsn = Env.sentryDSN
+          ..sampleRate = 1.0
+          ..tracesSampleRate = 1.0
+          ..reportPackages = true;
+      },
+    );
 
-  configureDependencies();
+    WidgetsFlutterBinding.ensureInitialized();
 
-  await getIt<DatabaseProvider>().init();
+    configureDependencies();
 
-  runApp(TranslationProvider(child: const MyApp()));
+    await getIt<DatabaseProvider>().init();
+
+    runApp(TranslationProvider(child: const MyApp()));
+  }, (e, s) {
+    Sentry.captureException(e, stackTrace: s);
+  });
 }
 
 class MyApp extends StatelessWidget {

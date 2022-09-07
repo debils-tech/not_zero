@@ -45,3 +45,7 @@ app.*.map.json
 lib/get_it.config.dart
 lib/**/*.g.dart
 lib/**/*.freezed.dart
+
+# Enveroment variables
+/.env
+env.g.dart
