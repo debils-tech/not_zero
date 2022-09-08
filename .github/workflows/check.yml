@@ -1,0 +1,37 @@
+name: Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    name: Check application
+    runs-on: ubuntu-latest
+    steps:
+      ### PREPARATION ###
+      - name: Clone flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.3.1'
+          channel: stable
+      - name: Check flutter installation
+        run: flutter doctor -v
+      - name: Clone application code
+        uses: actions/checkout
+      - name: Get all dependecies
+        run: flutter pub get -v
+
+      ### ANALYSIS ###
+      - name: Ensure that code is formatted correctly
+        run: flutter format --set-exit-if-changed --dry-run .
+      - name: Analyze code to find critical problems
+        run: flutter analyze --fatal-warnings
+
+      ### TESTS ###
+      - name: Run tests in "storage" module
+        run: (cd modules/storage && flutter test)
+      # Currently here is no tests
+      # - name: Run tests for main package
+      #   run: flutter test
+
