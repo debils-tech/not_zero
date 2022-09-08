@@ -15,6 +15,8 @@ class SelectableCard extends StatelessWidget {
   final void Function()? onTap;
   final Widget child;
 
+  static const _animDuration = Duration(milliseconds: 150);
+
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<ItemSelectionBloc>();
@@ -28,15 +30,32 @@ class SelectableCard extends StatelessWidget {
       }
     }
 
-    return Material(
-      color: isSelected ? Colors.red : Theme.of(context).cardColor,
-      elevation: 3,
-      borderRadius: BorderRadius.circular(10),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: bloc.state.isNotEmpty ? toggleSelection : onTap,
-        onLongPress: toggleSelection,
-        child: child,
+    return AnimatedScale(
+      scale: isSelected ? 0.95 : 1,
+      duration: _animDuration,
+      child: AnimatedContainer(
+        decoration: BoxDecoration(
+          border: isSelected
+              ? Border.all(
+                  width: 3.5,
+                  color: Theme.of(context).primaryColor.withOpacity(0.7),
+                  strokeAlign: StrokeAlign.center,
+                )
+              : null,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        duration: _animDuration,
+        child: Material(
+          color: Theme.of(context).cardColor,
+          elevation: 3,
+          borderRadius: BorderRadius.circular(10),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: bloc.state.isNotEmpty ? toggleSelection : onTap,
+            onLongPress: toggleSelection,
+            child: child,
+          ),
+        ),
       ),
     );
   }

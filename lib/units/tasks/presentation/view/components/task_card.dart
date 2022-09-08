@@ -33,7 +33,7 @@ class TaskCard extends StatelessWidget {
     }
 
     return SizedBox(
-      height: 70,
+      height: 75,
       child: SelectableCard(
         onTap: () => GoRouter.of(context).push('/tasks/edit', extra: task),
         identifier: task.id,

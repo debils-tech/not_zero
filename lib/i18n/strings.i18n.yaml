@@ -2,9 +2,10 @@ tasks:
   list:
     title: 'Tasks'
     create: 'Add new task'
+    titleSelection: 'Selected ${count} tasks'
     timeSubtitle:
-      createdAt: 'created at ${time}'
-      modifiedAt: 'modified at ${time}'
+      createdAt: 'created ${time}'
+      modifiedAt: 'modified ${time}'
 
   edit:
     title:

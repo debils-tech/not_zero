@@ -17,24 +17,31 @@ class TasksListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(t.tasks.list.title),
-      ),
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (_) => getIt<TasksListBloc>()..add(const LoadTasksEvent()),
-          ),
-          BlocProvider(
-            create: (_) => getIt<ItemSelectionBloc>(),
-          ),
-        ],
-        child: const _TasksListScreenBody(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => GoRouter.of(context).push('/tasks/edit'),
-        child: const Icon(Icons.add_task_rounded),
+    return BlocProvider(
+      create: (_) => getIt<ItemSelectionBloc>(),
+      child: BlocBuilder<ItemSelectionBloc, Set<String>>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                state.isEmpty
+                    ? t.tasks.list.title
+                    : t.tasks.list.titleSelection(count: state.length),
+              ),
+            ),
+            body: BlocProvider(
+              create: (_) =>
+                  getIt<TasksListBloc>()..add(const LoadTasksEvent()),
+              child: const _TasksListScreenBody(),
+            ),
+            floatingActionButton: state.isEmpty
+                ? FloatingActionButton(
+                    onPressed: () => GoRouter.of(context).push('/tasks/edit'),
+                    child: const Icon(Icons.add_task_rounded),
+                  )
+                : null,
+          );
+        },
       ),
     );
   }
