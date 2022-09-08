@@ -8,7 +8,6 @@ jobs:
   check:
     name: Check application
     runs-on: ubuntu-latest
-    environment: Test
     steps:
       ### INITIAL ###
       - name: Clone application code
@@ -26,7 +25,7 @@ jobs:
       - name: Get all dependecies
         run: flutter pub get
       - name: Generate ".env" file for "envied" package
-        run: echo "SENTRY_DSN=\"$SENTRY_DSN\"" > .env.test
+        run: echo "SENTRY_DSN=\"\"" > .env.test
       - name: Generate all needed code
         run: flutter pub run build_runner build --delete-conflicting-outputs lib && flutter pub run slang
 
