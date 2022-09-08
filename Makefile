@@ -1,6 +1,11 @@
 config:
-	flutter pub get
+	dart pub global activate fvm
+	fvm install
+	fvm flutter pub get
 	make gen
 
 gen:
-	flutter pub run build_runner build --delete-conflicting-outputs lib
+	fvm flutter pub run build_runner build --delete-conflicting-outputs lib
+
+run:
+	fvm flutter run

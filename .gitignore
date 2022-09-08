@@ -46,6 +46,9 @@ lib/get_it.config.dart
 lib/**/*.g.dart
 lib/**/*.freezed.dart
 
-# Enveroment variables
+# Enviroment variables
 /.env
 env.g.dart
+
+# Symbolic link to Flutter SDK created by FVM
+/.fvm/flutter_sdk
