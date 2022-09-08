@@ -698,13 +698,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.7.0"
-  slang_build_runner:
-    dependency: "direct dev"
-    description:
-      name: slang_build_runner
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.7.0"
   slang_flutter:
     dependency: "direct main"
     description:
