@@ -18,7 +18,7 @@ jobs:
       - name: Check flutter installation
         run: flutter doctor -v
       - name: Clone application code
-        uses: actions/checkout
+        uses: actions/checkout@v3
       - name: Get all dependecies
         run: flutter pub get -v
 
