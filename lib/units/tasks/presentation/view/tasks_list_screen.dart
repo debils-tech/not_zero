@@ -3,6 +3,7 @@ import 'package:animated_list_plus/transitions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
@@ -20,8 +21,15 @@ class TasksListScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(t.tasks.list.title),
       ),
-      body: BlocProvider(
-        create: (_) => getIt<TasksListBloc>()..add(const LoadTasksEvent()),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => getIt<TasksListBloc>()..add(const LoadTasksEvent()),
+          ),
+          BlocProvider(
+            create: (_) => getIt<ItemSelectionBloc>(),
+          ),
+        ],
         child: const _TasksListScreenBody(),
       ),
       floatingActionButton: FloatingActionButton(

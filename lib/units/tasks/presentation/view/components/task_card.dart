@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:not_zero/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
@@ -33,15 +34,12 @@ class TaskCard extends StatelessWidget {
 
     return SizedBox(
       height: 70,
-      child: Material(
-        color: Theme.of(context).cardColor,
-        elevation: 3,
-        borderRadius: BorderRadius.circular(10),
-        clipBehavior: Clip.antiAlias,
+      child: SelectableCard(
+        onTap: () => GoRouter.of(context).push('/tasks/edit', extra: task),
+        identifier: task.id,
         child: Opacity(
           opacity: task.isCompleted ? 0.5 : 1,
           child: InkWell(
-            onTap: () => GoRouter.of(context).push('/tasks/edit', extra: task),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

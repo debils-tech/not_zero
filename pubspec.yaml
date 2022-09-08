@@ -26,9 +26,9 @@ dependencies:
   freezed_annotation: ^2.1.0
   json_annotation: ^4.6.0
   uuid: ^3.0.6
+  equatable: ^2.0.5
 
   # State management
-  bloc: ^8.1.0
   flutter_bloc: ^8.1.1
   rxdart: ^0.27.5
 
