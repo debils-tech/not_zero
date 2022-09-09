@@ -11,5 +11,16 @@ class ItemSelectionBloc extends Bloc<ItemSelectionEvent, Set<String>> {
     on<RemoveItemFromSelectionEvent>(
       (event, emit) => emit({...state}..remove(event.item)),
     );
+    on<AddAllItemsToSelectionEvent>(
+      (event, emit) => emit({...state, ...event.items}),
+    );
+    on<RemoveAllItemsFromSelectionEvent>((event, emit) {
+      final items = event.items;
+      if (items == null) {
+        emit(<String>{});
+      } else {
+        emit({...state}..removeAll(items));
+      }
+    });
   }
 }

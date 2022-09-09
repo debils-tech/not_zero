@@ -44,12 +44,21 @@ class TasksRepositoryImpl implements TasksRepository {
   }
 
   @override
-  Future<void> deleteTask(Task task) {
+  Future<void> deleteTask(String task) {
     final newList = [..._tasksStreamController.value]
-      ..removeWhere((element) => element.id == task.id);
+      ..removeWhere((element) => element.id == task);
     _tasksStreamController.add(newList);
 
-    return localService.deleteTask(task.id);
+    return localService.deleteTasks([task]);
+  }
+
+  @override
+  Future<void> deleteMultipleTasks(Set<String> tasks) {
+    final newList = [..._tasksStreamController.value]
+      ..removeWhere((element) => tasks.contains(element.id));
+    _tasksStreamController.add(newList);
+
+    return localService.deleteTasks(tasks);
   }
 
   int _tasksSorting(Task a, Task b) {

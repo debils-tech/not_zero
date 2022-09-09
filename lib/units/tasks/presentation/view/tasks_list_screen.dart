@@ -5,43 +5,47 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/get_it.dart';
-import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_card.dart';
+import 'package:not_zero/units/tasks/presentation/view/components/tasks_list_app_bar.dart';
 
 class TasksListScreen extends StatelessWidget {
   const TasksListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<ItemSelectionBloc>(),
-      child: BlocBuilder<ItemSelectionBloc, Set<String>>(
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                state.isEmpty
-                    ? t.tasks.list.title
-                    : t.tasks.list.titleSelection(count: state.length),
-              ),
-            ),
-            body: BlocProvider(
-              create: (_) =>
-                  getIt<TasksListBloc>()..add(const LoadTasksEvent()),
-              child: const _TasksListScreenBody(),
-            ),
-            floatingActionButton: state.isEmpty
-                ? FloatingActionButton(
-                    onPressed: () => GoRouter.of(context).push('/tasks/edit'),
-                    child: const Icon(Icons.add_task_rounded),
-                  )
-                : null,
-          );
-        },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => getIt<ItemSelectionBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => getIt<TasksListBloc>()..add(const LoadTasksEvent()),
+        )
+      ],
+      // TODO(uSlashVlad): It is neccessary to do something with this builder
+      child: Scaffold(
+        appBar: const CommonTasksListAppBar(),
+        body: const _TasksListScreenBody(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => GoRouter.of(context).push('/tasks/edit'),
+          child: const Icon(Icons.add_task_rounded),
+        ),
+        // : FloatingActionButton(
+        //     onPressed: () {
+        //       context
+        //           .read<ItemSelectionBloc>()
+        //           .add(const RemoveAllItemsFromSelectionEvent(null));
+        //       context
+        //           .read<TasksListBloc>()
+        //           .add(DeleteSelectedTasksEvent(state));
+        //     },
+        //     backgroundColor: Theme.of(context).errorColor,
+        //     child: const Icon(Icons.delete_outline),
+        //   ),
       ),
     );
   }

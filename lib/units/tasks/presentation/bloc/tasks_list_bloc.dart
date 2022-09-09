@@ -11,6 +11,7 @@ class TasksListBloc extends Bloc<TasksListEvent, TasksListState> {
   TasksListBloc(this._repository) : super(const TasksListState.loading()) {
     on<LoadTasksEvent>(_onLoadTasks);
     on<ChangeTaskCompletionEvent>(_onChangeTaskCompletion);
+    on<DeleteSelectedTasksEvent>(_onDeleteSelectedTasks);
   }
 
   final TasksRepository _repository;
@@ -31,10 +32,17 @@ class TasksListBloc extends Bloc<TasksListEvent, TasksListState> {
 
   Future<void> _onChangeTaskCompletion(
     ChangeTaskCompletionEvent event,
-    Emitter<TasksListState> emit,
+    Emitter<TasksListState> _,
   ) {
     return _repository.updateTask(
       event.task.copyWith(isCompleted: event.completion),
     );
+  }
+
+  Future<void> _onDeleteSelectedTasks(
+    DeleteSelectedTasksEvent event,
+    Emitter<TasksListState> _,
+  ) {
+    return _repository.deleteMultipleTasks(event.tasks);
   }
 }

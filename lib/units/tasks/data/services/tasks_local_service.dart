@@ -8,7 +8,7 @@ abstract class TasksLocalService {
 
   Future<void> saveTask(Task task);
 
-  Future<void> deleteTask(String taskId);
+  Future<void> deleteTasks(Iterable<String> tasks);
 }
 
 @Singleton(as: TasksLocalService)
@@ -43,10 +43,13 @@ class TasksLocalServiceImpl implements TasksLocalService {
   }
 
   @override
-  Future<void> deleteTask(String taskId) {
+  Future<void> deleteTasks(Iterable<String> tasks) {
     return MetricsHelper.trackAndCapture(
-      process: () {
-        return tasksCollection.deleteByKey(taskId);
+      process: () async {
+        // TODO(uSlashVlad): Add "deleteByKeys" method in collections
+        for (final task in tasks) {
+          await tasksCollection.deleteByKey(task);
+        }
       },
       processName: 'deleteTask',
       operation: CustomOperations.database,

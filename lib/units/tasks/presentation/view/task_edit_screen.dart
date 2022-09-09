@@ -134,6 +134,7 @@ class _TitleField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'title',
+      autofocus: true,
       decoration: InputDecoration(
         labelText: t.tasks.edit.fields.taskTitle,
       ),
@@ -146,6 +147,7 @@ class _TitleField extends StatelessWidget {
               correct: formKey.currentState?.validate() ?? false,
             ),
           ),
+      // onSubmitted: (_) => formKey.currentState.,
     );
   }
 }

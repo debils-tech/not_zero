@@ -11,4 +11,7 @@ class TasksListEvent with _$TasksListEvent {
     Task task, {
     required bool completion,
   }) = ChangeTaskCompletionEvent;
+
+  const factory TasksListEvent.deleteSelected(Set<String> tasks) =
+      DeleteSelectedTasksEvent;
 }

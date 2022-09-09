@@ -40,6 +40,6 @@ class TaskEditBloc extends Bloc<TaskEditEvent, bool> {
   }
 
   Future<void> _deleteTask(DeleteTaskEvent event, Emitter<bool> _) {
-    return _repository.deleteTask(event.task);
+    return _repository.deleteTask(event.task.id);
   }
 }

@@ -9,5 +9,7 @@ abstract class TasksRepository {
 
   Future<void> updateTask(Task task);
 
-  Future<void> deleteTask(Task task);
+  Future<void> deleteTask(String task);
+
+  Future<void> deleteMultipleTasks(Set<String> tasks);
 }
