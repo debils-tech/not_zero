@@ -6,8 +6,10 @@ on:
 
 jobs:
   check:
-    name: Check application
+    name: Check application Action
+
     runs-on: ubuntu-latest
+
     steps:
       ### INITIAL ###
       - name: Clone application code
