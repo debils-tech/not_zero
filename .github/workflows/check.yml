@@ -1,4 +1,4 @@
-name: Check
+name: Analyze and check app
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   check:
-    name: Check application Action
+    name: Check application
 
     runs-on: ubuntu-latest
 
@@ -42,3 +42,16 @@ jobs:
         run: (cd modules/storage && flutter test)
       - name: Run tests for main package
         run: flutter test
+
+  metrics:
+    name: Dart Code Metrics
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: dart-code-metrics
+        uses: dart-code-checker/dart-code-metrics-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
