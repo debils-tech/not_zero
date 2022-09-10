@@ -43,14 +43,7 @@ jobs:
       - name: Run tests for main package
         run: flutter test
 
-  metrics:
-    name: Dart Code Metrics
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
+      ### REPORT ###
       - name: dart-code-metrics
         uses: dart-code-checker/dart-code-metrics-action@v2
         with:
