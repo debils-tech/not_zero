@@ -40,10 +40,10 @@ dart_code_metrics:
     avoid-unnecessary-type-casts: true
     avoid-unrelated-type-assertions: true
     double-literal-format: true
-    format-comment: true
-    newline-before-return:
+    format-comment:
       ignored-patterns:
-        - ^\s*-- .* --$
+        - ^-- .* --$
+    newline-before-return: true
     no-boolean-literal-compare: true
     no-empty-block:
       severity: warning
