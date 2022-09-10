@@ -17,7 +17,7 @@ class TaskColors extends ThemeExtension<TaskColors> {
     if (other is! TaskColors) {
       return this;
     }
-    
+
     return TaskColors(
       notImportantColor: Color.lerp(
         notImportantColor,
