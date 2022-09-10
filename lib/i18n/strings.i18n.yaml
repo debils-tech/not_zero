@@ -6,6 +6,10 @@ tasks:
     timeSubtitle:
       createdAt: 'created ${time}'
       modifiedAt: 'modified ${time}'
+    deleteDialog:
+      content: 'Are you sure you want delete selected tasks?'
+    tooltips:
+      deleteSelectedButton: 'Delete selected'
 
   edit:
     title:
@@ -18,9 +22,7 @@ tasks:
       create: 'Create new task!'
       existing: 'Save changes'
     deleteDialog:
-      title: 'Confirm deletion'
       content: 'Are you sure you want delete this task?'
-      confrm: 'Delete'
     tooltips:
       deleteTaskButton: 'Delete'
 
@@ -29,3 +31,5 @@ common:
     confirmTitle: 'Confirm?'
     cancelButton: 'Cancel'
     okButton: 'Yes'
+    deleteTitle: 'Confirm deletion'
+    deleteButton: 'Delete'

@@ -20,7 +20,7 @@ Future<bool?> showConfirmationDialog(
       TextButton(
         onPressed: () => Navigator.of(context).pop(true),
         child: Text(
-          cancel ?? t.common.dialog.okButton,
+          confirm ?? t.common.dialog.okButton,
           style: dangerous
               ? TextStyle(
                   color: Theme.of(context).errorColor,

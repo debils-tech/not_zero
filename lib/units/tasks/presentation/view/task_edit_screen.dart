@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/get_it.dart';
-import 'package:not_zero/helpers/confirmation_dialog.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/task_edit_event.dart';
@@ -63,9 +63,9 @@ class _DeleteTaskButton extends StatelessWidget {
     return IconButton(
       onPressed: () => showConfirmationDialog(
         context,
-        title: t.tasks.edit.deleteDialog.title,
+        title: t.common.dialog.deleteTitle,
         content: t.tasks.edit.deleteDialog.content,
-        confirm: t.tasks.edit.deleteDialog.confrm,
+        confirm: t.common.dialog.deleteButton,
         dangerous: true,
       ).then((value) {
         if (value == true) {
@@ -74,7 +74,7 @@ class _DeleteTaskButton extends StatelessWidget {
         }
       }),
       iconSize: 26,
-      tooltip: 'Delete',
+      tooltip: t.tasks.edit.tooltips.deleteTaskButton,
       icon: Icon(
         Icons.delete_outline,
         color: Theme.of(context).errorColor,

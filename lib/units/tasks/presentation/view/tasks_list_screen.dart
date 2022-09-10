@@ -3,8 +3,11 @@ import 'package:animated_list_plus/transitions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
+import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
@@ -26,27 +29,31 @@ class TasksListScreen extends StatelessWidget {
           create: (_) => getIt<TasksListBloc>()..add(const LoadTasksEvent()),
         )
       ],
-      // TODO(uSlashVlad): It is neccessary to do something with this builder
-      child: Scaffold(
-        appBar: const CommonTasksListAppBar(),
-        body: const _TasksListScreenBody(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => GoRouter.of(context).push('/tasks/edit'),
-          child: const Icon(Icons.add_task_rounded),
-        ),
-        // : FloatingActionButton(
-        //     onPressed: () {
-        //       context
-        //           .read<ItemSelectionBloc>()
-        //           .add(const RemoveAllItemsFromSelectionEvent(null));
-        //       context
-        //           .read<TasksListBloc>()
-        //           .add(DeleteSelectedTasksEvent(state));
-        //     },
-        //     backgroundColor: Theme.of(context).errorColor,
-        //     child: const Icon(Icons.delete_outline),
-        //   ),
+      child: const Scaffold(
+        appBar: TasksListAppBar(),
+        body: _TasksListScreenBody(),
+        floatingActionButton: _TasksListFloatingButton(),
       ),
+    );
+  }
+}
+
+class _TasksListFloatingButton extends StatelessWidget {
+  const _TasksListFloatingButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ItemSelectionBloc, Set<String>>(
+      builder: (context, state) {
+        if (state.isEmpty) {
+          return FloatingActionButton(
+            onPressed: () => GoRouter.of(context).push('/tasks/edit'),
+            child: const Icon(Icons.add_task_rounded),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 }
@@ -60,7 +67,23 @@ class _TasksListScreenBody extends StatelessWidget {
       builder: (context, state) {
         return state.when<Widget>(
           loading: () => const _TasksLoadingView(),
-          loaded: _TasksListView.new,
+          loaded: (tasks) => BlocBuilder<ItemSelectionBloc, Set<String>>(
+            builder: (context, state) {
+              if (state.isEmpty) {
+                return _TasksListView(tasks);
+              } else {
+                return Stack(
+                  children: [
+                    _TasksListView(tasks),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: _TasksSelectionActions(tasks),
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
         );
       },
     );
@@ -101,6 +124,65 @@ class _TasksListView extends StatelessWidget {
           ),
           child: TaskCard(item),
         ),
+      ),
+    );
+  }
+}
+
+class _TasksSelectionActions extends StatelessWidget
+    implements PreferredSizeWidget {
+  const _TasksSelectionActions(this.tasks);
+
+  final List<Task> tasks;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(75);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).navigationBarTheme.backgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Row(
+          children: const [
+            _DeleteTasksButton(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DeleteTasksButton extends StatelessWidget {
+  const _DeleteTasksButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => showConfirmationDialog(
+        context,
+        title: t.common.dialog.deleteTitle,
+        content: t.tasks.list.deleteDialog.content,
+        confirm: t.common.dialog.deleteButton,
+        dangerous: true,
+      ).then((value) {
+        if (value == true) {
+          context.read<TasksListBloc>().add(
+                DeleteSelectedTasksEvent(
+                  context.read<ItemSelectionBloc>().state,
+                ),
+              );
+          context
+              .read<ItemSelectionBloc>()
+              .add(const RemoveAllItemsFromSelectionEvent(null));
+        }
+      }),
+      iconSize: 28,
+      tooltip: t.tasks.list.tooltips.deleteSelectedButton,
+      icon: Icon(
+        Icons.delete_outline,
+        color: Theme.of(context).errorColor,
       ),
     );
   }

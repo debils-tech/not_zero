@@ -6,9 +6,8 @@ import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 
-class CommonTasksListAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
-  const CommonTasksListAppBar({super.key});
+class TasksListAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const TasksListAppBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
