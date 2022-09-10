@@ -6,6 +6,7 @@ config:
 
 gen:
 	fvm flutter pub run build_runner build --delete-conflicting-outputs lib
+	fvm flutter pub run slang
 
 format, fmt:
 	fvm flutter format .
