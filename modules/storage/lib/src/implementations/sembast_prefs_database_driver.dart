@@ -1,7 +1,9 @@
 import 'dart:collection';
 
+import 'package:flutter/foundation.dart';
 import 'package:not_zero_storage/src/drivers/prefs_database_driver.dart';
 import 'package:tekartik_app_flutter_sembast/sembast.dart';
+import 'package:universal_io/io.dart';
 
 /// Implementation of [PrefsDatabaseDriver] with the use of Sembast databases.
 class SembastPrefsDatabaseDriverImpl implements PrefsDatabaseDriver {
@@ -12,7 +14,14 @@ class SembastPrefsDatabaseDriverImpl implements PrefsDatabaseDriver {
 
   @override
   Future<void> init() async {
-    _db = await getDatabaseFactory().openDatabase('prefs.db');
+    final DatabaseFactory factory;
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      debugPrint('Running "prefs" database in test environment');
+      factory = databaseFactoryMemory;
+    } else {
+      factory = getDatabaseFactory();
+    }
+    _db = await factory.openDatabase('prefs.db');
     await _updateRecordsInCache();
   }
 

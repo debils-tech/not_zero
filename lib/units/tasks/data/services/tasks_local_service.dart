@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/helpers/metrics.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero_storage/not_zero_database.dart';
@@ -17,7 +18,7 @@ class TasksLocalServiceImpl implements TasksLocalService {
 
   final DatabaseProvider db;
 
-  Collection get tasksCollection => db.collections['tasks'];
+  Collection get tasksCollection => db.collections[LocalCollections.tasks];
 
   @override
   Future<List<Task>> getTasks() {

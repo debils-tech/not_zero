@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:not_zero_storage/not_zero_database.dart';
 import 'package:not_zero_storage/src/implementations/sembast_store_collection.dart';
 import 'package:tekartik_app_flutter_sembast/sembast.dart';
+import 'package:universal_io/io.dart';
 
 class SembastMultitableDatabaseDriver implements MultitableDatabaseDriver {
   late Database _db;
@@ -11,7 +13,14 @@ class SembastMultitableDatabaseDriver implements MultitableDatabaseDriver {
 
   @override
   Future<void> init() async {
-    _db = await getDatabaseFactory().openDatabase('collections.db');
+    final DatabaseFactory factory;
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      debugPrint('Running "collections" database in test environment');
+      factory = databaseFactoryMemory;
+    } else {
+      factory = getDatabaseFactory();
+    }
+    _db = await factory.openDatabase('collections.db');
 
     final collectionsInfo = await _mainStore.record('collections').get(_db);
     final collectionsList = collectionsInfo != null

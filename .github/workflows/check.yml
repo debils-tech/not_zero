@@ -38,6 +38,5 @@ jobs:
       ### TESTS ###
       - name: Run tests in "storage" module
         run: (cd modules/storage && flutter test)
-      # Currently here is no tests
-      # - name: Run tests for main package
-      #   run: flutter test
+      - name: Run tests for main package
+        run: flutter test

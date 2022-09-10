@@ -22,6 +22,8 @@ dependencies:
       url: https://github.com/tekartik/app_flutter_utils.dart
       ref: dart2_3
       path: app_sembast
+  # Universal IO for checking enviroment variables
+  universal_io: ^2.0.4
 
 dev_dependencies:
   flutter_test:

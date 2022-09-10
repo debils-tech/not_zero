@@ -12,3 +12,9 @@ format, fmt:
 
 run:
 	fvm flutter run
+
+test:
+	(cd modules/storage && fvm flutter test)
+	fvm flutter test
+
+.PHONY: config gen format fmt run test
