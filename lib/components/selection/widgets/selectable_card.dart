@@ -22,6 +22,8 @@ class SelectableCard extends StatelessWidget {
     final bloc = context.watch<ItemSelectionBloc>();
     final isSelected = bloc.state.contains(identifier);
 
+    final theme = Theme.of(context);
+
     void toggleSelection() {
       if (isSelected) {
         bloc.add(ItemSelectionEvent.remove(identifier));
@@ -38,17 +40,17 @@ class SelectableCard extends StatelessWidget {
           border: isSelected
               ? Border.all(
                   width: 3.5,
-                  color: Theme.of(context).primaryColor.withOpacity(0.7),
+                  color: theme.primaryColor.withOpacity(0.7),
                   strokeAlign: StrokeAlign.center,
                 )
               : null,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         duration: _animDuration,
         child: Material(
-          color: Theme.of(context).cardColor,
+          color: theme.cardColor,
           elevation: 3,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: bloc.state.isNotEmpty ? toggleSelection : onTap,

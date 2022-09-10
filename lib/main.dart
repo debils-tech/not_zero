@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
 
-      // Themes
+      //-- Themes --
       themeMode: ThemeMode.dark,
       theme: lightThemeBase.copyWith(
         useMaterial3: true,
@@ -95,12 +95,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      // Routing
+      //-- Routing --
       routeInformationProvider: appRouter.routeInformationProvider,
       routeInformationParser: appRouter.routeInformationParser,
       routerDelegate: appRouter.routerDelegate,
 
-      // Localization
+      //-- Localization --
       locale: TranslationProvider.of(context).flutterLocale,
       supportedLocales: const [
         Locale('en', 'US'),

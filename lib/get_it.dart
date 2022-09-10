@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:not_zero/get_it.config.dart';
 import 'package:not_zero_storage/not_zero_database.dart';
 
-/// Simple shortcut for [GetIt.instance]
+/// Simple shortcut for [GetIt.instance].
 final getIt = GetIt.instance;
 
 @InjectableInit(
@@ -13,7 +13,7 @@ final getIt = GetIt.instance;
   generateForDir: ['lib'],
 )
 
-/// Configures both manual and generated dependencies
+/// Configures both manual and generated dependencies.
 void configureDependencies() {
   _manualDeps();
   $initGetIt(getIt);

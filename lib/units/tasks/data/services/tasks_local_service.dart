@@ -25,6 +25,7 @@ class TasksLocalServiceImpl implements TasksLocalService {
     return MetricsHelper.trackAndCapture(
       process: () async {
         final tasks = await tasksCollection.find();
+
         return tasks.map(Task.fromJson).toList();
       },
       processName: 'getTasks',
@@ -47,7 +48,7 @@ class TasksLocalServiceImpl implements TasksLocalService {
   Future<void> deleteTasks(Iterable<String> tasks) {
     return MetricsHelper.trackAndCapture(
       process: () async {
-        // TODO(uSlashVlad): Add "deleteByKeys" method in collections
+        // TODO(uSlashVlad): Add "deleteByKeys" method in collections.
         for (final task in tasks) {
           await tasksCollection.deleteByKey(task);
         }

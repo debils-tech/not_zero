@@ -5,12 +5,15 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 abstract class MetricsHelper {
   static Future<void> captureException(
-    dynamic exception, {
+    Object exception, {
     StackTrace? stackTrace,
     String? hint,
   }) async {
     // TODO(uSlashVlad): Replace with logger in the future.
-    debugPrint('$exception\n$stackTrace');
+    debugPrint('[ERR]: $exception');
+    if (stackTrace != null) {
+      debugPrintStack(stackTrace: stackTrace);
+    }
 
     await Sentry.captureException(
       exception,

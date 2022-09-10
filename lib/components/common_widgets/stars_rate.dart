@@ -38,6 +38,7 @@ class _StarsRateWidgetState extends State<StarsRateWidget> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: List<Widget>.generate(widget.count, (index) {
         final active = index <= currentValue;
+        
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 3),
           child: _StarIcon(
