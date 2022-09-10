@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:not_zero/components/common_widgets/stars_rate.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/confirmation_dialog.dart';
-import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/task_edit_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_bloc.dart';
+import 'package:not_zero/units/tasks/presentation/view/components/task_edit_fields.dart';
 
 class TaskEditScreen extends StatelessWidget {
   const TaskEditScreen({this.taskToEdit, super.key});
@@ -110,100 +108,17 @@ class _TaskEditScreenBody extends StatelessWidget {
               bottom: 70,
             ),
             children: [
-              _ImportanceField(formKey),
+              TaskEditImportanceField(formKey),
               const SizedBox(height: 16),
-              _TitleField(formKey),
+              TaskEditTitleField(formKey),
               const SizedBox(height: 12),
-              _DescriptionField(formKey),
+              TaskEditDescriptionField(formKey),
               const SizedBox(height: 8),
               if (taskToEdit != null) _EditingTaskInfo(taskToEdit!),
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _TitleField extends StatelessWidget {
-  const _TitleField(this.formKey);
-
-  final GlobalKey<FormBuilderState> formKey;
-
-  @override
-  Widget build(BuildContext context) {
-    return FormBuilderTextField(
-      name: 'title',
-      autofocus: true,
-      decoration: InputDecoration(
-        labelText: t.tasks.edit.fields.taskTitle,
-      ),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(),
-      ]),
-      maxLength: 50,
-      onChanged: (_) => context.read<TaskEditBloc>().add(
-            TaskEditEvent.changeForm(
-              correct: formKey.currentState?.validate() ?? false,
-            ),
-          ),
-      // onSubmitted: (_) => formKey.currentState.,
-    );
-  }
-}
-
-class _DescriptionField extends StatelessWidget {
-  const _DescriptionField(this.formKey);
-
-  final GlobalKey<FormBuilderState> formKey;
-
-  @override
-  Widget build(BuildContext context) {
-    return FormBuilderTextField(
-      name: 'description',
-      decoration: InputDecoration(
-        labelText: t.tasks.edit.fields.taskDescription,
-      ),
-      maxLines: null,
-      onChanged: (_) => context.read<TaskEditBloc>().add(
-            TaskEditEvent.changeForm(
-              correct: formKey.currentState?.validate() ?? false,
-            ),
-          ),
-    );
-  }
-}
-
-class _ImportanceField extends StatelessWidget {
-  const _ImportanceField(this.formKey);
-
-  final GlobalKey<FormBuilderState> formKey;
-
-  @override
-  Widget build(BuildContext context) {
-    final taskColors = Theme.of(context).extension<TaskColors>()!;
-
-    return FormBuilderField<TaskImportance>(
-      name: 'importance',
-      builder: (field) {
-        return StarsRateWidget(
-          count: 3,
-          initialValue: field.value?.toIndex() ?? 2,
-          onChanged: (value) {
-            field.didChange(TaskImportance.fromIndex(value));
-          },
-          colorsByIndex: [
-            taskColors.notImportantColor,
-            taskColors.normalColor,
-            taskColors.importantColor,
-          ],
-        );
-      },
-      onChanged: (_) => context.read<TaskEditBloc>().add(
-            TaskEditEvent.changeForm(
-              correct: formKey.currentState?.validate() ?? false,
-            ),
-          ),
     );
   }
 }
