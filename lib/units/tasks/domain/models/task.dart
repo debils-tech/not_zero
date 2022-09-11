@@ -71,12 +71,10 @@ class Task with _$Task {
     String? description,
     TaskImportance? importance,
   }) =>
-      Task(
-        id: task.id,
+      task.copyWith(
         title: title ?? task.title,
-        description: description ?? '',
-        createdAt: task.createdAt,
-        modifiedAt: DateTime.now(),
+        description: description ?? task.description,
         importance: importance ?? task.importance,
+        modifiedAt: DateTime.now(),
       );
 }

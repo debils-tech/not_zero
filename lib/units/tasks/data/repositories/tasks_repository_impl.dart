@@ -4,7 +4,7 @@ import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-@Singleton(as: TasksRepository)
+@LazySingleton(as: TasksRepository)
 class TasksRepositoryImpl implements TasksRepository {
   TasksRepositoryImpl(this.localService);
 

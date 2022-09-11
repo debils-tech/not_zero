@@ -5,59 +5,9 @@ import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/data/services/tasks_local_service.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero_storage/not_zero_database.dart';
-import 'package:uuid/uuid.dart';
+import 'template_tasks.dart';
 
 void main() {
-  final uuid = const Uuid().v4;
-
-  final templateTasks1 = <Task>[
-    Task(
-      id: uuid(),
-      title: 'Hello World',
-      description: '1',
-      importance: TaskImportance.normal,
-      createdAt: DateTime(2022),
-      isCompleted: true,
-    ),
-    Task(
-      id: uuid(),
-      title: 'Foo',
-      description: '2',
-      importance: TaskImportance.notImportant,
-      createdAt: DateTime(2022, 2),
-    ),
-    Task(
-      id: uuid(),
-      title: 'Bar',
-      importance: TaskImportance.important,
-      createdAt: DateTime(2022, 3),
-    ),
-  ];
-
-  final templateTasks2 = <Task>[
-    Task(
-      id: uuid(),
-      title: 'Task 1',
-      description: '1',
-      importance: TaskImportance.normal,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(1000000),
-      isCompleted: true,
-    ),
-    Task(
-      id: uuid(),
-      title: 'Task 2',
-      description: '2',
-      importance: TaskImportance.notImportant,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(1200000),
-    ),
-    Task(
-      id: uuid(),
-      title: 'Task 3',
-      importance: TaskImportance.important,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(1300000),
-    ),
-  ];
-
   configureDependencies();
 
   final db = getIt<DatabaseProvider>();
