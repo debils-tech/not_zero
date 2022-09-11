@@ -1,5 +1,4 @@
 import 'package:not_zero/units/tasks/domain/models/task.dart';
-import 'package:uuid/uuid.dart';
 
 final templateTasks1 = <Task>[
   Task(
