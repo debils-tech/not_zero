@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:not_zero/helpers/pattern_validator.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 
 import 'template_tasks.dart';
@@ -12,7 +13,7 @@ void main() {
       importance: TaskImportance.important,
     );
 
-    expect(task.id, matches(_uuidPattern));
+    expect(task.id, matches(PatternValidator.uuidPattern));
     expect(task.title, 'Test task');
     expect(task.description, 'Test description');
     expect(task.createdAt.isAfter(timeBeforeCreation), true);
@@ -40,9 +41,3 @@ void main() {
     expect(task.isCompleted, originalTask.isCompleted);
   });
 }
-
-final _uuidPattern = RegExp('^[a-f0-9]{8}-'
-    '[a-f0-9]{4}-'
-    '[a-f0-9]{4}-'
-    '[a-f0-9]{4}-'
-    r'[a-f0-9]{12}$');

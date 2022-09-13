@@ -35,7 +35,8 @@ class TaskCard extends StatelessWidget {
     return SizedBox(
       height: 75,
       child: SelectableCard(
-        onTap: () => GoRouter.of(context).push('/tasks/edit', extra: task),
+        onTap: () =>
+            GoRouter.of(context).push('/tasks/edit/${task.id}', extra: task),
         identifier: task.id,
         child: Opacity(
           opacity: task.isCompleted ? 0.5 : 1,

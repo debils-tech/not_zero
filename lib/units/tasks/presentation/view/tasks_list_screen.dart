@@ -47,7 +47,7 @@ class _TasksListFloatingButton extends StatelessWidget {
       builder: (context, state) {
         if (state.isEmpty) {
           return FloatingActionButton(
-            onPressed: () => GoRouter.of(context).push('/tasks/edit'),
+            onPressed: () => GoRouter.of(context).push('/tasks/new'),
             child: const Icon(Icons.add_task_rounded),
           );
         } else {
