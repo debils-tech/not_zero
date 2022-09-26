@@ -43,6 +43,11 @@ class SembastStoreCollection implements Collection {
   }
 
   @override
+  Future<void> deleteByKeys(Iterable<String> keys) {
+    return _store.records(keys).delete(db);
+  }
+
+  @override
   Future<void> delete({Finder? finder}) {
     return _store.delete(db, finder: finder);
   }

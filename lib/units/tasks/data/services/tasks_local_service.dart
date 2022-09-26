@@ -47,11 +47,8 @@ class TasksLocalServiceImpl implements TasksLocalService {
   @override
   Future<void> deleteTasks(Iterable<String> tasks) {
     return MetricsHelper.trackAndCapture(
-      process: () async {
-        // TODO(uSlashVlad): Add "deleteByKeys" method in collections.
-        for (final task in tasks) {
-          await tasksCollection.deleteByKey(task);
-        }
+      process: () {
+        return tasksCollection.deleteByKeys(tasks);
       },
       processName: 'deleteTask',
       operation: CustomOperations.database,
