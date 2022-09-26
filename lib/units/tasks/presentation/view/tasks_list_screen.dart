@@ -167,7 +167,7 @@ class _DeleteTasksButton extends StatelessWidget {
         confirm: t.common.dialog.deleteButton,
         dangerous: true,
       ).then((value) {
-        if (value == true) {
+        if (value ?? false) {
           context.read<TasksListBloc>().add(
                 DeleteSelectedTasksEvent(
                   context.read<ItemSelectionBloc>().state,
