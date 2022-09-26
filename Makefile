@@ -8,8 +8,9 @@ gen:
 	fvm flutter pub run build_runner build --delete-conflicting-outputs lib
 	fvm flutter pub run slang
 
-format, fmt:
+format:
 	fvm flutter format .
+fmt: format
 
 run:
 	fvm flutter run
