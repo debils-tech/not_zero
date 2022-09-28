@@ -110,19 +110,27 @@ class _TaskTimeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timeToShow = task.modifiedAt ?? task.createdAt;
+    final timeToShow = task.completedAt ?? task.modifiedAt ?? task.createdAt;
 
-    final String dateTimeText;
+    final String formattedTime;
     if (timeToShow.day == DateTime.now().day) {
-      dateTimeText = DateFormat.Hms().format(timeToShow);
+      formattedTime = DateFormat.Hms().format(timeToShow);
     } else {
-      dateTimeText = DateFormat.yMMMd().format(timeToShow);
+      formattedTime = DateFormat.yMMMd().format(timeToShow);
+    }
+
+    final ts = t.tasks.list.timeSubtitle;
+    final String finalTextTime;
+    if (task.isCompleted) {
+      finalTextTime = ts.completedAt(time: formattedTime);
+    } else if (task.modifiedAt != null) {
+      finalTextTime = ts.modifiedAt(time: formattedTime);
+    } else {
+      finalTextTime = ts.createdAt(time: formattedTime);
     }
 
     return Text(
-      task.modifiedAt == null
-          ? t.tasks.list.timeSubtitle.createdAt(time: dateTimeText)
-          : t.tasks.list.timeSubtitle.modifiedAt(time: dateTimeText),
+      finalTextTime,
       style: Theme.of(context).textTheme.subtitle2,
     );
   }
