@@ -84,7 +84,10 @@ class TaskCard extends StatelessWidget {
                     shape: const CircleBorder(),
                     onChanged: (value) => context.read<TasksListBloc>()
                       ..add(
-                        ChangeTaskCompletionEvent(task, completion: value!),
+                        ChangeTaskCompletionEvent(
+                          task,
+                          completion: value ?? false,
+                        ),
                       ),
                   ),
                 ),

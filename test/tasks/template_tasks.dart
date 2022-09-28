@@ -7,7 +7,7 @@ final templateTasks1 = <Task>[
     description: '1',
     importance: TaskImportance.normal,
     createdAt: DateTime(2022),
-    isCompleted: true,
+    completedAt: DateTime.fromMillisecondsSinceEpoch(1664392368),
   ),
   Task(
     id: 'b2f659ad-7e31-4abd-a399-3d276800deaa',
@@ -31,7 +31,7 @@ final templateTasks2 = <Task>[
     description: '1',
     importance: TaskImportance.normal,
     createdAt: DateTime.fromMillisecondsSinceEpoch(1000000),
-    isCompleted: true,
+    completedAt: DateTime.fromMillisecondsSinceEpoch(1664390368),
   ),
   Task(
     id: '06281633-36a6-42c6-9271-a664554d0e60',

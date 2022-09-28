@@ -66,7 +66,7 @@ void main() {
     final editedTask = templateTasks1.first.copyWith(
       title: 'Edited task 1',
       description: '(edited)',
-      isCompleted: false,
+      completedAt: DateTime.fromMillisecondsSinceEpoch(1664392368),
     );
 
     expect(

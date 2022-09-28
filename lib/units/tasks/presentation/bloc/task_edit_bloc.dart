@@ -29,8 +29,7 @@ class TaskEditBloc extends Bloc<TaskEditEvent, bool> {
       );
     } else {
       return _repository.updateTask(
-        Task.edit(
-          task: taskToEdit,
+        taskToEdit.edit(
           title: event.title,
           description: event.description,
           importance: event.importance,

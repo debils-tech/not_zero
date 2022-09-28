@@ -53,7 +53,7 @@ void main() {
     // Overwriting some record.
     final taskForCopy = templateTasks2[1].copyWith(
       title: 'New task!',
-      isCompleted: true,
+      completedAt: DateTime.fromMillisecondsSinceEpoch(1664392368),
     );
     await service.saveTask(taskForCopy);
     final recordFromDb = await collection.findByKey(taskForCopy.id);

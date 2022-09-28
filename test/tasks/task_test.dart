@@ -24,8 +24,7 @@ void main() {
 
   test('Task edit', () {
     final originalTask = templateTasks1.first;
-    final task = Task.edit(
-      task: originalTask,
+    final task = originalTask.edit(
       title: 'Edited title',
       description: 'Test description',
       importance: TaskImportance.notImportant,

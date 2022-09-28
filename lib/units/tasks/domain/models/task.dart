@@ -46,9 +46,11 @@ class Task with _$Task {
     @Default('') String description,
     @DateTimeEpochConverter() required DateTime createdAt,
     @DateTimeEpochConverter() DateTime? modifiedAt,
+    @DateTimeEpochConverter() DateTime? completedAt,
     required TaskImportance importance,
-    @Default(false) bool isCompleted,
   }) = _Task;
+
+  const Task._();
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 
@@ -65,16 +67,21 @@ class Task with _$Task {
         importance: importance,
       );
 
-  factory Task.edit({
-    required Task task,
+  Task edit({
     String? title,
     String? description,
     TaskImportance? importance,
   }) =>
-      task.copyWith(
-        title: title ?? task.title,
-        description: description ?? task.description,
-        importance: importance ?? task.importance,
+      copyWith(
+        title: title ?? this.title,
+        description: description ?? this.description,
+        importance: importance ?? this.importance,
         modifiedAt: DateTime.now(),
       );
+
+  Task complete({required bool completed}) => copyWith(
+        completedAt: completed ? DateTime.now() : null,
+      );
+
+  bool get isCompleted => completedAt != null;
 }

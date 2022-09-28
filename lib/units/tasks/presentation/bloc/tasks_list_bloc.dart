@@ -34,7 +34,7 @@ class TasksListBloc extends Bloc<TasksListEvent, TasksListState> {
     Emitter<TasksListState> _,
   ) {
     return _repository.updateTask(
-      event.task.copyWith(isCompleted: event.completion),
+      event.task.complete(completed: event.completion),
     );
   }
 
