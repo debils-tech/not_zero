@@ -63,6 +63,8 @@ class _TasksListScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final listKey = GlobalKey();
+
     return BlocBuilder<TasksListBloc, TasksListState>(
       builder: (context, state) {
         return state.when<Widget>(
@@ -70,11 +72,12 @@ class _TasksListScreenBody extends StatelessWidget {
           loaded: (tasks) => BlocBuilder<ItemSelectionBloc, Set<String>>(
             builder: (context, state) {
               if (state.isEmpty) {
-                return _TasksListView(tasks);
+                return _TasksListView(tasks, listKey: listKey);
               } else {
+                // If at least one element is selected.
                 return Stack(
                   children: [
-                    _TasksListView(tasks),
+                    _TasksListView(tasks, listKey: listKey),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: _TasksSelectionActions(tasks),
@@ -102,13 +105,15 @@ class _TasksLoadingView extends StatelessWidget {
 }
 
 class _TasksListView extends StatelessWidget {
-  const _TasksListView(this.tasks);
+  const _TasksListView(this.tasks, {this.listKey});
 
   final List<Task> tasks;
+  final GlobalKey? listKey;
 
   @override
   Widget build(BuildContext context) {
     return ImplicitlyAnimatedList<Task>(
+      key: listKey,
       padding: const EdgeInsets.only(top: 5, bottom: 75, left: 5, right: 5),
       items: tasks,
       areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
