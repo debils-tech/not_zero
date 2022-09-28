@@ -35,7 +35,7 @@ jobs:
       - name: Ensure that code is formatted correctly
         run: flutter format --set-exit-if-changed --dry-run $(git ls-files | grep --colour=never -e ".*\.dart")
       - name: Analyze code to find critical problems
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
 
       ### TESTS ###
       - name: Run tests in "storage" module
