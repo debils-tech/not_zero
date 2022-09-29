@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/foundation.dart';
 import 'package:not_zero_storage/not_zero_database.dart';
 import 'package:not_zero_storage/src/implementations/sembast_store_collection.dart';
