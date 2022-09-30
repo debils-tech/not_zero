@@ -1,16 +1,20 @@
-# not_zero
+# **Not Zero**
 
-A new Flutter project.
+<a href="./LICENSE.md"><img src="https://img.shields.io/badge/license-GPLv3-blue.svg"></a>
 
-## Getting Started
+> Currently under active development and doesn't have anything very intresting to show.
+>
+> More information will be in the near future.
 
-This project is a starting point for a Flutter application.
+## Building and running
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+# For installing basic dependencies, configuring flutter version, generating neccesary code
+make config
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Run flutter app to any available device using already configured flutter version
+make run
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Run app tests
+make test
+```
