@@ -9,13 +9,13 @@ import 'package:not_zero/routes.dart';
 import 'package:not_zero_storage/not_zero_database.dart';
 
 void main() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
-    configureDependencies();
+  configureDependencies();
 
-    await getIt<DatabaseProvider>().init();
+  await getIt<DatabaseProvider>().init();
 
-    runApp(TranslationProvider(child: const MyApp()));
+  runApp(TranslationProvider(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
