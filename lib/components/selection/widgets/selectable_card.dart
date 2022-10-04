@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:not_zero/components/common_widgets/clickable_card.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
 
@@ -47,11 +48,7 @@ class SelectableCard extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         duration: _animDuration,
-        child: Material(
-          color: theme.cardColor,
-          elevation: 3,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          clipBehavior: Clip.antiAlias,
+        child: ClickableCard(
           child: InkWell(
             onTap: bloc.state.isNotEmpty ? toggleSelection : onTap,
             onLongPress: toggleSelection,
