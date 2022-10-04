@@ -1,6 +1,5 @@
 import 'package:injectable/injectable.dart';
 import 'package:not_zero/constants/database.dart';
-import 'package:not_zero/helpers/metrics.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero_storage/not_zero_database.dart';
 
@@ -21,37 +20,19 @@ class TasksLocalServiceImpl implements TasksLocalService {
   Collection get tasksCollection => db.collections[LocalCollections.tasks];
 
   @override
-  Future<List<Task>> getTasks() {
-    return MetricsHelper.trackAndCapture(
-      process: () async {
-        final tasks = await tasksCollection.find();
+  Future<List<Task>> getTasks() async {
+    final tasks = await tasksCollection.find();
 
-        return tasks.map(Task.fromJson).toList();
-      },
-      processName: 'getTasks',
-      operation: CustomOperations.database,
-    );
+    return tasks.map(Task.fromJson).toList();
   }
 
   @override
   Future<void> saveTask(Task task) {
-    return MetricsHelper.trackAndCapture(
-      process: () {
-        return tasksCollection.insert(task.toJson());
-      },
-      processName: 'saveTask',
-      operation: CustomOperations.database,
-    );
+    return tasksCollection.insert(task.toJson());
   }
 
   @override
   Future<void> deleteTasks(Iterable<String> tasks) {
-    return MetricsHelper.trackAndCapture(
-      process: () {
-        return tasksCollection.deleteByKeys(tasks);
-      },
-      processName: 'deleteTask',
-      operation: CustomOperations.database,
-    );
+    return tasksCollection.deleteByKeys(tasks);
   }
 }

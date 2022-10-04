@@ -51,12 +51,6 @@ dependencies:
   # For filters and finders from storage module
   sembast: ^3.3.0
 
-  # Metrics and crash reports
-  sentry_flutter: ^6.11.0
-
-  # Enviroment variables
-  envied: ^0.2.3
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
