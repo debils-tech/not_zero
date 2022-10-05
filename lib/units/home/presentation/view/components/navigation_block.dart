@@ -15,11 +15,21 @@ class HomeNavigationBlock extends StatelessWidget {
         child: ClickableCard(
           child: InkWell(
             onTap: () => GoRouter.of(context).push('/tasks'),
-            child: Row(
-              children: [
-                const Icon(Icons.check_circle),
-                Text(t.tasks.list.title)
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.format_list_bulleted,
+                    size: 26,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    t.tasks.list.title,
+                    style: Theme.of(context).textTheme.headline6,
+                  )
+                ],
+              ),
             ),
           ),
         ),

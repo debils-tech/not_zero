@@ -45,7 +45,7 @@ class SelectableCard extends StatelessWidget {
                   strokeAlign: StrokeAlign.center,
                 )
               : null,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         duration: _animDuration,
         child: ClickableCard(

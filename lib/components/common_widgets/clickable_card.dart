@@ -7,10 +7,9 @@ class ClickableCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).cardColor,
-      elevation: 3,
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
+    return Card(
+      color: Theme.of(context).cardTheme.color,
+      elevation: 2,
       clipBehavior: Clip.antiAlias,
       child: child,
     );
