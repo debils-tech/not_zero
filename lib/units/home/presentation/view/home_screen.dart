@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<UserTotalPointsCubit>(),
+      create: (_) => getIt<UserTotalPointsCubit>()..init(),
       child: const Scaffold(
         body: _HomeScreenBody(),
       ),

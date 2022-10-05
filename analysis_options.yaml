@@ -47,7 +47,6 @@ dart_code_metrics:
     format-comment:
       ignored-patterns:
         - ^-- .* --$
-    newline-before-return: true
     no-boolean-literal-compare: true
     no-empty-block:
       severity: warning

@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
 import 'package:not_zero/units/tasks/data/services/tasks_local_service.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
@@ -6,9 +7,10 @@ import 'package:rxdart/rxdart.dart';
 
 @LazySingleton(as: TasksRepository)
 class TasksRepositoryImpl implements TasksRepository {
-  TasksRepositoryImpl(this.localService);
+  TasksRepositoryImpl(this.localService, this.statsRepository);
 
   final TasksLocalService localService;
+  final StatsRepository statsRepository;
 
   final _tasksStreamController = BehaviorSubject<List<Task>>.seeded([]);
 
@@ -17,6 +19,7 @@ class TasksRepositoryImpl implements TasksRepository {
 
   @override
   Future<void> syncTasks() async {
+    // TODO(uSlashVlad): Refactor this code to eliminate unnecessary var.
     final localTasks = await localService.getTasks();
     _tasksStreamController.add(localTasks..sort(_tasksSorting));
   }
@@ -31,22 +34,49 @@ class TasksRepositoryImpl implements TasksRepository {
   Future<void> updateTask(Task task) async {
     final currentList = _tasksStreamController.value;
     final indexOfSavedTask = currentList.indexWhere((e) => e.id == task.id);
+
     if (indexOfSavedTask != -1) {
       final newList = [...currentList];
+
+      // Tracking if there is need to update total score.
+      final oldTask = newList[indexOfSavedTask];
+
       newList[indexOfSavedTask] = task;
 
-      // Sorting for ensuring that completed tasks will be at the bottom of the
-      // list.
-      _tasksStreamController.add(newList..sort(_tasksSorting));
+      if (oldTask.isCompleted != task.isCompleted) {
+        // Sorting for ensuring that completed tasks will be at the bottom of
+        // the list.
+        newList.sort(_tasksSorting);
 
-      await localService.saveTask(task);
+        if (task.isCompleted) {
+          statsRepository.includeCompletedTask(task.importance);
+        } else {
+          statsRepository.excludeCompletedTask(task.importance);
+        }
+      } else if (oldTask.importance != task.importance && task.isCompleted) {
+        statsRepository
+          ..excludeCompletedTask(oldTask.importance)
+          ..includeCompletedTask(task.importance);
+      }
+
+      _tasksStreamController.add(newList);
+
+      return localService.saveTask(task);
     }
   }
 
   @override
   Future<void> deleteTask(String task) {
-    final newList = [..._tasksStreamController.value]
-      ..removeWhere((element) => element.id == task);
+    final newList = [..._tasksStreamController.value]..removeWhere((element) {
+        if (element.id == task) {
+          if (element.isCompleted) {
+            statsRepository.excludeCompletedTask(element.importance);
+          }
+          return true;
+        }
+        return false;
+      });
+
     _tasksStreamController.add(newList);
 
     return localService.deleteTasks([task]);
@@ -54,8 +84,15 @@ class TasksRepositoryImpl implements TasksRepository {
 
   @override
   Future<void> deleteMultipleTasks(Set<String> tasks) {
-    final newList = [..._tasksStreamController.value]
-      ..removeWhere((element) => tasks.contains(element.id));
+    final newList = [..._tasksStreamController.value]..removeWhere((element) {
+        if (tasks.contains(element.id)) {
+          if (element.isCompleted) {
+            statsRepository.excludeCompletedTask(element.importance);
+          }
+          return true;
+        }
+        return false;
+      });
     _tasksStreamController.add(newList);
 
     return localService.deleteTasks(tasks);

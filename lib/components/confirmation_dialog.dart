@@ -31,5 +31,6 @@ Future<bool?> showConfirmationDialog(
     ],
   );
 
+  // TODO(uSlashVlad): Here is need to simplify return.
   return showDialog<bool>(context: context, builder: (_) => dialog);
 }

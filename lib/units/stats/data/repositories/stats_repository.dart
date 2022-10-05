@@ -4,6 +4,14 @@ import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:rxdart/subjects.dart';
 
+// Needed for mapping completed tasks for counting score.
+// Have to contain every importance value as key.
+final _taskImportanceToScore = {
+  TaskImportance.notImportant: 3,
+  TaskImportance.normal: 5,
+  TaskImportance.important: 8,
+};
+
 @LazySingleton(as: StatsRepository)
 class StatsRepositoryImpl implements StatsRepository {
   StatsRepositoryImpl(this.localService);
@@ -22,19 +30,19 @@ class StatsRepositoryImpl implements StatsRepository {
 
     var result = 0;
     for (final importance in tasks) {
-      switch (importance) {
-        case TaskImportance.notImportant:
-          result += 3;
-          break;
-        case TaskImportance.normal:
-          result += 5;
-          break;
-        case TaskImportance.important:
-          result += 8;
-          break;
-      }
+      result += _taskImportanceToScore[importance]!;
     }
 
     _totalPointsStreamController.add(result);
+  }
+
+  @override
+  void includeCompletedTask(TaskImportance importance) {
+    _totalPointsStreamController.value += _taskImportanceToScore[importance]!;
+  }
+
+  @override
+  void excludeCompletedTask(TaskImportance importance) {
+    _totalPointsStreamController.value -= _taskImportanceToScore[importance]!;
   }
 }

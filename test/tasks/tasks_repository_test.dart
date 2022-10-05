@@ -116,4 +116,7 @@ void main() {
       templateTasks1[1].id,
     });
   });
+
+  // TODO(uSlashVlad): There also should be test for checking task completion
+  // and correct ordering.
 }
