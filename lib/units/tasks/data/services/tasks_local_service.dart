@@ -13,11 +13,11 @@ abstract class TasksLocalService {
 
 @Singleton(as: TasksLocalService)
 class TasksLocalServiceImpl implements TasksLocalService {
-  TasksLocalServiceImpl(this.db);
+  TasksLocalServiceImpl(this._db);
 
-  final DatabaseProvider db;
+  final DatabaseProvider _db;
 
-  Collection get tasksCollection => db.collections[LocalCollections.tasks];
+  Collection get tasksCollection => _db.collections[LocalCollections.tasks];
 
   @override
   Future<List<Task>> getTasks() async {

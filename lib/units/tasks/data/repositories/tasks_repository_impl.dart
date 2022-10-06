@@ -7,10 +7,10 @@ import 'package:rxdart/rxdart.dart';
 
 @LazySingleton(as: TasksRepository)
 class TasksRepositoryImpl implements TasksRepository {
-  TasksRepositoryImpl(this.localService, this.statsRepository);
+  TasksRepositoryImpl(this._localService, this._statsRepository);
 
-  final TasksLocalService localService;
-  final StatsRepository statsRepository;
+  final TasksLocalService _localService;
+  final StatsRepository _statsRepository;
 
   final _tasksStreamController = BehaviorSubject<List<Task>>.seeded([]);
 
@@ -20,14 +20,14 @@ class TasksRepositoryImpl implements TasksRepository {
   @override
   Future<void> syncTasks() async {
     // TODO(uSlashVlad): Refactor this code to eliminate unnecessary var.
-    final localTasks = await localService.getTasks();
+    final localTasks = await _localService.getTasks();
     _tasksStreamController.add(localTasks..sort(_tasksSorting));
   }
 
   @override
   Future<void> saveTask(Task task) async {
     _tasksStreamController.add([task, ..._tasksStreamController.value]);
-    await localService.saveTask(task);
+    await _localService.saveTask(task);
   }
 
   @override
@@ -49,19 +49,19 @@ class TasksRepositoryImpl implements TasksRepository {
         newList.sort(_tasksSorting);
 
         if (task.isCompleted) {
-          statsRepository.includeCompletedTask(task.importance);
+          _statsRepository.includeCompletedTask(task.importance);
         } else {
-          statsRepository.excludeCompletedTask(task.importance);
+          _statsRepository.excludeCompletedTask(task.importance);
         }
       } else if (oldTask.importance != task.importance && task.isCompleted) {
-        statsRepository
+        _statsRepository
           ..excludeCompletedTask(oldTask.importance)
           ..includeCompletedTask(task.importance);
       }
 
       _tasksStreamController.add(newList);
 
-      return localService.saveTask(task);
+      return _localService.saveTask(task);
     }
   }
 
@@ -70,7 +70,7 @@ class TasksRepositoryImpl implements TasksRepository {
     final newList = [..._tasksStreamController.value]..removeWhere((element) {
         if (element.id == task) {
           if (element.isCompleted) {
-            statsRepository.excludeCompletedTask(element.importance);
+            _statsRepository.excludeCompletedTask(element.importance);
           }
           return true;
         }
@@ -79,7 +79,7 @@ class TasksRepositoryImpl implements TasksRepository {
 
     _tasksStreamController.add(newList);
 
-    return localService.deleteTasks([task]);
+    return _localService.deleteTasks([task]);
   }
 
   @override
@@ -87,7 +87,7 @@ class TasksRepositoryImpl implements TasksRepository {
     final newList = [..._tasksStreamController.value]..removeWhere((element) {
         if (tasks.contains(element.id)) {
           if (element.isCompleted) {
-            statsRepository.excludeCompletedTask(element.importance);
+            _statsRepository.excludeCompletedTask(element.importance);
           }
           return true;
         }
@@ -95,7 +95,7 @@ class TasksRepositoryImpl implements TasksRepository {
       });
     _tasksStreamController.add(newList);
 
-    return localService.deleteTasks(tasks);
+    return _localService.deleteTasks(tasks);
   }
 
   int _tasksSorting(Task a, Task b) {

@@ -10,11 +10,11 @@ abstract class StatsLocalService {
 
 @Singleton(as: StatsLocalService)
 class StatsLocalServiceImpl implements StatsLocalService {
-  StatsLocalServiceImpl(this.db);
+  StatsLocalServiceImpl(this._db);
 
-  final DatabaseProvider db;
+  final DatabaseProvider _db;
 
-  Collection get tasksCollection => db.collections[LocalCollections.tasks];
+  Collection get tasksCollection => _db.collections[LocalCollections.tasks];
 
   @override
   Future<List<TaskImportance>> getCompletedTasksImportance() async {

@@ -14,9 +14,9 @@ final _taskImportanceToScore = {
 
 @LazySingleton(as: StatsRepository)
 class StatsRepositoryImpl implements StatsRepository {
-  StatsRepositoryImpl(this.localService);
+  StatsRepositoryImpl(this._localService);
 
-  final StatsLocalService localService;
+  final StatsLocalService _localService;
 
   final _totalPointsStreamController = BehaviorSubject<int>.seeded(0);
 
@@ -26,7 +26,7 @@ class StatsRepositoryImpl implements StatsRepository {
 
   @override
   Future<void> countTotalPoints() async {
-    final tasks = await localService.getCompletedTasksImportance();
+    final tasks = await _localService.getCompletedTasksImportance();
 
     var result = 0;
     for (final importance in tasks) {
