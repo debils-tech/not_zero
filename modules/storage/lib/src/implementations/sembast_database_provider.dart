@@ -29,7 +29,8 @@ class SembastDatabaseProvider implements DatabaseProvider {
   Future<void> init() async {
     await prefs.init();
     await collections.init();
-    _inited.complete();
+
+    if (!_inited.isCompleted) _inited.complete();
   }
 
   @override
