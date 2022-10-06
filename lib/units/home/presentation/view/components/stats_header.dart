@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:not_zero/units/stats/presentation/bloc/user_total_points_cubit.dart';
+import 'package:not_zero/units/home/presentation/bloc/home_score_cubit.dart';
+import 'package:not_zero/units/home/presentation/bloc/states/home_score_state.dart';
 
 class HomeStatsHeader extends StatelessWidget {
   const HomeStatsHeader({super.key});
@@ -20,15 +21,19 @@ class HomeStatsHeader extends StatelessWidget {
           ],
         ),
       ),
-      child: BlocBuilder<UserTotalPointsCubit, int>(
+      child: BlocBuilder<HomeScoreCubit, HomeScoreState>(
         builder: (context, state) {
-          return Text(
-            state.toString(),
-            style: const TextStyle(
-              fontSize: 34,
-              fontWeight: FontWeight.w800,
-            ),
-          );
+          if (state.totalPoints != null) {
+            return Text(
+              state.totalPoints.toString(),
+              style: const TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.w800,
+              ),
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
         },
       ),
     );

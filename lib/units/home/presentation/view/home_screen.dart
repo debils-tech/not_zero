@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/units/home/presentation/bloc/home_score_cubit.dart';
 import 'package:not_zero/units/home/presentation/view/components/navigation_block.dart';
 import 'package:not_zero/units/home/presentation/view/components/stats_header.dart';
-import 'package:not_zero/units/stats/presentation/bloc/user_total_points_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<UserTotalPointsCubit>()..init(),
+      create: (_) => getIt<HomeScoreCubit>(),
       child: const Scaffold(
         body: _HomeScreenBody(),
       ),

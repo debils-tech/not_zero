@@ -18,7 +18,7 @@ class StatsRepositoryImpl implements StatsRepository {
 
   final StatsLocalService _localService;
 
-  final _totalPointsStreamController = BehaviorSubject<int>.seeded(0);
+  final _totalPointsStreamController = BehaviorSubject<int>.seeded(-1);
 
   @override
   Stream<int> getTotalPoints() =>
