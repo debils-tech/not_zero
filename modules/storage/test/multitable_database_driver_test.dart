@@ -6,7 +6,7 @@ import 'package:sembast/sembast.dart' as sembast;
 void main() {
   // Prepare the database before tests
   final MultitableDatabaseDriver collections =
-      SembastMultitableDatabaseDriver();
+      SembastMultitableDatabaseDriver(null);
 
   setUp(collections.init);
 

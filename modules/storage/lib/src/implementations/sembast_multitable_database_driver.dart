@@ -7,6 +7,14 @@ import 'package:tekartik_app_flutter_sembast/sembast.dart';
 import 'package:universal_io/io.dart';
 
 class SembastMultitableDatabaseDriver implements MultitableDatabaseDriver {
+  /// Accepts only [DatabaseProvider] that should be a "parent" of this driver
+  /// instance.
+  SembastMultitableDatabaseDriver(this._dbProviderRef);
+
+  /// This is needed for checking if database is fully ready before storing
+  /// anything in it.
+  final DatabaseProvider? _dbProviderRef;
+
   late Database _db;
 
   final _mainStore = StoreRef<String, Object>.main();
@@ -29,7 +37,7 @@ class SembastMultitableDatabaseDriver implements MultitableDatabaseDriver {
         ? List<String>.from(collectionsInfo as Iterable)
         : <String>[];
     for (final c in collectionsList) {
-      _logicalCollections[c] = SembastStoreCollection(c, _db);
+      _logicalCollections[c] = SembastStoreCollection(_dbProviderRef, c, _db);
     }
   }
 
@@ -59,7 +67,7 @@ class SembastMultitableDatabaseDriver implements MultitableDatabaseDriver {
     } else {
       // In other case, create this collection
       _mainStore.record('collections').put(_db, [name], merge: true);
-      collection = SembastStoreCollection(name, _db);
+      collection = SembastStoreCollection(_dbProviderRef, name, _db);
       _logicalCollections[name] = collection;
       return collection;
     }

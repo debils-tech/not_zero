@@ -1,12 +1,21 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
+import 'package:not_zero_storage/src/database_provider.dart';
 import 'package:not_zero_storage/src/drivers/prefs_database_driver.dart';
 import 'package:tekartik_app_flutter_sembast/sembast.dart';
 import 'package:universal_io/io.dart';
 
 /// Implementation of [PrefsDatabaseDriver] with the use of Sembast databases.
 class SembastPrefsDatabaseDriverImpl implements PrefsDatabaseDriver {
+  /// Accepts only [DatabaseProvider] that should be a "parent" of this driver
+  /// instance.
+  SembastPrefsDatabaseDriverImpl(this._dbProviderRef);
+
+  /// This is needed for checking if database is fully ready before storing
+  /// anything in it.
+  final DatabaseProvider? _dbProviderRef;
+
   final _store = StoreRef<String, Object>.main();
   late Database _db;
 
@@ -39,9 +48,10 @@ class SembastPrefsDatabaseDriverImpl implements PrefsDatabaseDriver {
   }
 
   @override
-  Future<void> set(String key, Object value, {bool merge = true}) {
+  Future<void> set(String key, Object value, {bool merge = true}) async {
+    await _dbProviderRef?.ensureInited;
     _cache[key] = value;
-    return _store.record(key).put(_db, value, merge: merge);
+    await _store.record(key).put(_db, value, merge: merge);
   }
 
   @override
@@ -53,7 +63,8 @@ class SembastPrefsDatabaseDriverImpl implements PrefsDatabaseDriver {
   }
 
   @override
-  Future<Object?> getLazy(String key) {
+  Future<Object?> getLazy(String key) async {
+    await _dbProviderRef?.ensureInited;
     return _store.record(key).get(_db);
   }
 }

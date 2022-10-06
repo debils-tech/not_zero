@@ -27,6 +27,9 @@ abstract class DatabaseProvider {
   /// Getter allowing to gain the access to multi-table storage.
   MultitableDatabaseDriver get collections;
 
+  /// This future completes only if [init] call was completed.
+  Future<void> get ensureInited;
+
   /// Initializing the database.
   ///
   /// In case of [SembastDatabaseProvider], it just creates the file if it

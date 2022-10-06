@@ -5,7 +5,7 @@ import 'package:not_zero_storage/src/implementations/sembast_prefs_database_driv
 
 void main() {
   // Prepare the database before tests
-  final PrefsDatabaseDriver prefs = SembastPrefsDatabaseDriverImpl();
+  final PrefsDatabaseDriver prefs = SembastPrefsDatabaseDriverImpl(null);
 
   setUp(prefs.init);
 
