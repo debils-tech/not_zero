@@ -19,4 +19,7 @@ test:
 	(cd modules/storage && fvm flutter test)
 	fvm flutter test
 
+build-android:
+	fvm flutter build apk --split-per-abi
+
 .PHONY: config gen format fmt run test
