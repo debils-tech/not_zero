@@ -7,7 +7,7 @@ import 'package:not_zero_storage/not_zero_database.dart';
 import 'template_tasks.dart';
 
 Collection getTasksCollection() =>
-      getIt<DatabaseProvider>().collections[LocalCollections.tasks];
+    getIt<DatabaseProvider>().collections[LocalCollections.tasks];
 
 void configDatabaseForTasks([List<Task>? tasks]) {
   // Initialize DB before all tests.
