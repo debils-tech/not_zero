@@ -1,30 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/data/services/tasks_local_service.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
-import 'package:not_zero_storage/not_zero_database.dart';
+import 'tasks_db_config.dart';
 import 'template_tasks.dart';
 
 void main() {
   configureDependencies();
-
-  final db = getIt<DatabaseProvider>();
-  Collection getTasksCollection() => db.collections[LocalCollections.tasks];
-
-  // Prepare some tasks for testing service functions.
-  setUp(() async {
-    await db.init();
-
-    final collection = getTasksCollection();
-    for (final t in templateTasks1) {
-      await collection.insert(t.toJson());
-    }
-  });
-
-  // Clear DB after every test.
-  tearDown(db.drop);
+  configDatabaseForTasks();
 
   final service = getIt<TasksLocalService>();
 

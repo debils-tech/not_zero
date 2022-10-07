@@ -1,30 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
-import 'package:not_zero_storage/not_zero_database.dart';
+import 'tasks_db_config.dart';
 import 'template_tasks.dart';
 
 void main() {
   configureDependencies();
+  configDatabaseForTasks();
 
-  final db = getIt<DatabaseProvider>();
-  Collection getTasksCollection() => db.collections[LocalCollections.tasks];
-
-  // Prepare some tasks for testing service functions.
-  setUp(() async {
-    await db.init();
-
-    final collection = getTasksCollection();
-    for (final t in templateTasks1) {
-      await collection.insert(t.toJson());
-    }
-  });
-
-  // Clear DB and repositories after every test.
+  // Clear repository for eliminating results of previous test.
   tearDown(() async {
-    await db.drop();
     getIt.resetLazySingleton<TasksRepository>();
   });
 
@@ -49,9 +35,9 @@ void main() {
       repository.getTasks(),
       emitsInOrder([
         <Task>[],
-        [templateTasks2.first],
-        [templateTasks2[1], templateTasks2.first],
-        [templateTasks2[2], templateTasks2[1], templateTasks2.first],
+        [templateTasks2[0]],
+        [templateTasks2[1], templateTasks2[0]],
+        [templateTasks2[2], templateTasks2[1], templateTasks2[0]],
       ]),
     );
 
@@ -90,7 +76,7 @@ void main() {
       emitsInOrder([
         <Task>[],
         templateTasks1.reversed.toList(),
-        <Task>[templateTasks1[2], templateTasks1.first],
+        <Task>[templateTasks1[2], templateTasks1[0]],
       ]),
     );
 
