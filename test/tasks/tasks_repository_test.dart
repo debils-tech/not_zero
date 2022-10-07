@@ -55,54 +55,81 @@ void main() {
       completedAt: DateTime.fromMillisecondsSinceEpoch(1664392368),
     );
 
+    await repository.syncTasks();
+
     expect(
       repository.getTasks(),
       emitsInOrder([
-        <Task>[],
         templateTasks1.reversed.toList(),
         <Task>[templateTasks1[2], templateTasks1[1], editedTask],
       ]),
     );
 
-    await repository.syncTasks();
     await repository.updateTask(editedTask);
   });
 
   test('Delete task + sync', () async {
     final repository = getIt<TasksRepository>();
 
+    await repository.syncTasks();
+
     expect(
       repository.getTasks(),
       emitsInOrder([
-        <Task>[],
         templateTasks1.reversed.toList(),
         <Task>[templateTasks1[2], templateTasks1[0]],
       ]),
     );
 
-    await repository.syncTasks();
     await repository.deleteTask(templateTasks1[1].id);
   });
 
   test('Delete multiple tasks + sync', () async {
     final repository = getIt<TasksRepository>();
 
+    await repository.syncTasks();
+
     expect(
       repository.getTasks(),
       emitsInOrder([
-        <Task>[],
         templateTasks1.reversed.toList(),
         <Task>[templateTasks1.first],
       ]),
     );
 
-    await repository.syncTasks();
     await repository.deleteMultipleTasks({
       templateTasks1[2].id,
       templateTasks1[1].id,
     });
   });
 
-  // TODO(uSlashVlad): There also should be test for checking task completion
-  // and correct ordering.
+  test('Full cycle and ordering', () async {
+    final repository = getIt<TasksRepository>();
+
+    final newTask = templateTasks2[1].copyWith(
+      createdAt: DateTime.fromMillisecondsSinceEpoch(1665168245000),
+    );
+
+    final completedTask = newTask.copyWith(
+      completedAt: DateTime.fromMillisecondsSinceEpoch(1665168265000),
+    );
+
+    await repository.syncTasks();
+
+    expect(
+      repository.getTasks(),
+      emitsInOrder([
+        templateTasks1.reversed.toList(),
+        [templateTasks1[2], templateTasks1[1]],
+        [newTask, templateTasks1[2], templateTasks1[1]],
+        [templateTasks1[2], templateTasks1[1], completedTask],
+      ]),
+    );
+
+    await repository.deleteTask(templateTasks1[0].id);
+
+    await repository.saveTask(newTask);
+
+    await repository.updateTask(completedTask);
+  });
 }
