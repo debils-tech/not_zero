@@ -9,28 +9,28 @@ Future<bool?> showConfirmationDialog(
   String? confirm,
   bool dangerous = false,
 }) {
-  final dialog = AlertDialog(
-    title: Text(title ?? t.common.dialog.confirmTitle),
-    content: content != null ? Text(content) : null,
-    actions: [
-      TextButton(
-        onPressed: () => Navigator.of(context).pop(false),
-        child: Text(cancel ?? t.common.dialog.cancelButton),
-      ),
-      TextButton(
-        onPressed: () => Navigator.of(context).pop(true),
-        child: Text(
-          confirm ?? t.common.dialog.okButton,
-          style: dangerous
-              ? TextStyle(
-                  color: Theme.of(context).errorColor,
-                )
-              : null,
+  return showDialog<bool>(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: Text(title ?? t.common.dialog.confirmTitle),
+      content: content != null ? Text(content) : null,
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text(cancel ?? t.common.dialog.cancelButton),
         ),
-      ),
-    ],
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(true),
+          child: Text(
+            confirm ?? t.common.dialog.okButton,
+            style: dangerous
+                ? TextStyle(
+                    color: Theme.of(context).errorColor,
+                  )
+                : null,
+          ),
+        ),
+      ],
+    ),
   );
-
-  // TODO(uSlashVlad): Here is need to simplify return.
-  return showDialog<bool>(context: context, builder: (_) => dialog);
 }

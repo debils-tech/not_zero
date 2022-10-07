@@ -19,7 +19,6 @@ class TasksRepositoryImpl implements TasksRepository {
 
   @override
   Future<void> syncTasks() async {
-    // TODO(uSlashVlad): Refactor this code to eliminate unnecessary var.
     final localTasks = await _localService.getTasks();
     _tasksStreamController.add(localTasks..sort(_tasksSorting));
   }
