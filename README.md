@@ -1,4 +1,4 @@
-# **Not Zero**
+# <img src="assets/logo-colored.svg" width="27"> **Not Zero**
 
 <a href="./LICENSE.md"><img src="https://img.shields.io/badge/license-GPLv3-blue.svg"></a>
 
