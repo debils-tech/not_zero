@@ -27,6 +27,19 @@ tasks:
     tooltips:
       deleteTaskButton: 'Delete'
 
+settings:
+  list:
+    title: 'Settings'
+    blocks:
+      lookAndFeel: 'Look and feel'
+      about: 'About'
+  theme:
+    title: 'Theme'
+    values:
+      light: 'Light theme'
+      dark: 'Dark theme'
+      system: 'Prefer system theme'
+
 common:
   dialog:
     confirmTitle: 'Confirm?'

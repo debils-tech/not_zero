@@ -10,26 +10,57 @@ class HomeNavigationBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: SizedBox(
-        height: 100,
-        child: ClickableCard(
-          child: InkWell(
-            onTap: () => GoRouter.of(context).push('/tasks'),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.format_list_bulleted,
-                    size: 26,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    t.tasks.list.title,
-                    style: Theme.of(context).textTheme.headline6,
-                  )
-                ],
-              ),
+      child: Column(
+        children: [
+          _NavigationCard(
+            route: '/tasks',
+            icon: Icons.format_list_bulleted,
+            title: t.tasks.list.title,
+          ),
+          const SizedBox(height: 6),
+          _NavigationCard(
+            route: '/settings',
+            icon: Icons.settings,
+            title: t.settings.list.title,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NavigationCard extends StatelessWidget {
+  const _NavigationCard({
+    required this.route,
+    required this.icon,
+    required this.title,
+  });
+
+  final String route;
+  final IconData icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 70,
+      child: ClickableCard(
+        child: InkWell(
+          onTap: () => GoRouter.of(context).push(route),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                  size: 25,
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline6,
+                )
+              ],
             ),
           ),
         ),
