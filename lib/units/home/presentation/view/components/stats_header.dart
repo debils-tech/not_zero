@@ -8,19 +8,24 @@ class HomeStatsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
-      height: 140,
+      height: 150,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
           colors: [
-            Theme.of(context).primaryColorDark,
-            Theme.of(context).primaryColor
+            theme.scaffoldBackgroundColor,
+            theme.primaryColorDark,
+            theme.primaryColor,
           ],
+          stops: const [0.0, 0.2, 1.0],
         ),
       ),
+      padding: const EdgeInsets.only(bottom: 15),
       child: BlocBuilder<HomeScoreCubit, HomeScoreState>(
         builder: (context, state) {
           if (state.totalPoints != null) {
