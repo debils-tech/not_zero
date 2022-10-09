@@ -18,12 +18,12 @@ Here is roadmap of project and what features are necessary to "complete" each st
 ### _Alpha_
 
 - [x] Stable app's architecture **[8 points]**
-- [ ] Home screen _(in progress)_  **[5 points]**
+- [ ] Home screen `(in progress)`  **[5 points]**
 - [x] Tasks (and local storage for them) **[8 points]**
-- [ ] Settings  _(in progress)_ **[5 points]**
+- [ ] Settings  `(in progress)` **[5 points]**
 - [ ] "About" screen **[5 points]**
 - [x] Light and dark themes **[3 points]**
-- [ ] App branding (logo, icons, posters and screenshots) _(in progress)_ **[5 points]**
+- [ ] App branding (logo, icons, posters and screenshots) `(in progress)` **[5 points]**
 - [ ] Basic development documentation **[5 points]**
 
 ### _Beta_
