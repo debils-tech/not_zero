@@ -24,13 +24,9 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [ ] "About" screen **[5 points]**
 - [x] Light and dark themes **[3 points]**
 - [ ] App branding (logo, icons, posters and screenshots) `(in progress)` **[5 points]**
-- [ ] Basic development documentation **[5 points]**
 
 ### _Beta_
 
-- [ ] Start to use different branches to implement different features
-- [ ] Use GitHub Issues or any other tool for tracking project's tasks
-- [ ] Improving documentation
 - [ ] Export and import of app's data
 - [ ] Notes
 - [ ] Animations
