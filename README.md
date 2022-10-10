@@ -31,8 +31,10 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [ ] Start to use different branches to implement different features
 - [ ] Use GitHub Issues or any other tool for tracking project's tasks
 - [ ] Improving documentation
+- [ ] Export and import of app's data
 - [ ] Notes
 - [ ] Animations
+- [ ] Combos
 - [ ] Release in Google Play
 - [ ] Release in F-Droid
 
@@ -40,6 +42,7 @@ Here is roadmap of project and what features are necessary to "complete" each st
 
 ### _Stable release_
 
+- [ ] Advanved stats (weekly, monthly statistics)
 - [ ] Achievements
 - [ ] Habbits
 - [ ] Adaptation for iOS
