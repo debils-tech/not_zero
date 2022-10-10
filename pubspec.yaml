@@ -69,4 +69,9 @@ dev_dependencies:
   dart_code_metrics: ^4.19.1
 
 flutter:
+  fonts:
+    - family: NotZero
+      fonts:
+        - asset: assets/fonts/NotZero.ttf
+
   uses-material-design: true
