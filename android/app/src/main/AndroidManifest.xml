@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tech.debils.not_zero">
    <application
-        android:label="not_zero"
+        android:label="Not Zero"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
