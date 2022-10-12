@@ -51,6 +51,10 @@ dependencies:
   # For filters and finders from storage module
   sembast: ^3.3.0
 
+  # For getting info about app's package
+  package_info_plus: ^1.4.3+1
+  universal_io: ^2.0.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -58,6 +62,7 @@ dev_dependencies:
   # Analysis
   flutter_lints: ^2.0.1
   very_good_analysis: ^3.1.0
+  dart_code_metrics: ^4.19.1
 
   # Code generation
   build_runner: ^2.2.1
@@ -66,7 +71,6 @@ dev_dependencies:
   injectable_generator: ^1.5.4
   # slang_build_runner: ^2.7.0 # It doesn't work (I don't know why)
   envied_generator: ^0.2.3
-  dart_code_metrics: ^4.19.1
 
 flutter:
   fonts:
