@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/helpers/pattern_validator.dart';
 import 'package:not_zero/units/home/presentation/view/home_screen.dart';
+import 'package:not_zero/units/settings/presentation/view/about_screen.dart';
+import 'package:not_zero/units/settings/presentation/view/licenses_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/settings_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/theme_settings_screen.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
@@ -46,6 +48,16 @@ final appRouter = GoRouter(
             GoRoute(
               path: 'theme',
               builder: (_, __) => const ThemeSettingsScreen(),
+            ),
+            GoRoute(
+              path: 'about',
+              builder: (_, __) => const AboutScreen(),
+              routes: [
+                GoRoute(
+                  path: 'licenses',
+                  builder: (_, __) => const LicensesScreen(),
+                ),
+              ],
             ),
           ],
         ),

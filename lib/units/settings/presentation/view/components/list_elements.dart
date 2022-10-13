@@ -22,19 +22,19 @@ class SettingsMenuEntry extends StatelessWidget {
   const SettingsMenuEntry({
     required this.route,
     required this.title,
-    required this.icon,
+    this.icon,
     super.key,
   });
 
   final String route;
   final String title;
-  final IconData icon;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => GoRouter.of(context).push(route),
-      leading: Icon(icon),
+      leading: icon != null ? Icon(icon) : null,
       title: Text(title),
     );
   }

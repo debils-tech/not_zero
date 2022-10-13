@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:not_zero/i18n/strings.g.dart';
-import 'package:not_zero/units/settings/presentation/view/components/app_info_block.dart';
 import 'package:not_zero/units/settings/presentation/view/components/list_elements.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -20,8 +19,12 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.wb_sunny_outlined,
             title: t.settings.theme.title,
           ),
-          const Divider(),
-          const AppInfoBlock(),
+          SettingsBlocHeader(t.settings.list.blocks.other),
+          SettingsMenuEntry(
+            route: '/settings/about',
+            icon: Icons.info_outline_rounded,
+            title: t.settings.about.title,
+          ),
         ],
       ),
     );

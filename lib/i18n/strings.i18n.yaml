@@ -32,13 +32,20 @@ settings:
     title: 'Settings'
     blocks:
       lookAndFeel: 'Look and feel'
-      about: 'About'
+      other: 'Other'
   theme:
     title: 'Theme'
     values:
       light: 'Light theme'
       dark: 'Dark theme'
       system: 'Prefer system theme'
+  about:
+    title: 'About'
+    blocks:
+      version: 'App version'
+      links: 'Links'
+      repository: 'Repository'
+      licenses: 'Licenses'
 
 common:
   dialog:
