@@ -21,9 +21,10 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [x] Home screen  **[5 points]**
 - [x] Tasks (and local storage for them) **[8 points]**
 - [x] Settings  **[5 points]**
-- [ ] "About" screen `(in progress)` **[5 points]**
+- [x] "About" screen **[5 points]**
 - [x] Light and dark themes **[3 points]**
 - [ ] App branding (logo, icons, posters and screenshots) `(in progress)` **[5 points]**
+- [ ] Automatic builds and basic packaging `(in progress)` **[5 points]**
 
 ### _Beta_
 
