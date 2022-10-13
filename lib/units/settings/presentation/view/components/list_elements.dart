@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsBlocHeader extends StatelessWidget {
   const SettingsBlocHeader(this.text, {super.key});
@@ -34,6 +35,28 @@ class SettingsMenuEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => GoRouter.of(context).push(route),
+      leading: icon != null ? Icon(icon) : null,
+      title: Text(title),
+    );
+  }
+}
+
+class SettingsUrlEntry extends StatelessWidget {
+  const SettingsUrlEntry({
+    required this.url,
+    required this.title,
+    this.icon,
+    super.key,
+  });
+
+  final String url;
+  final String title;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () => launchUrlString(url),
       leading: icon != null ? Icon(icon) : null,
       title: Text(title),
     );

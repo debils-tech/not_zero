@@ -54,6 +54,7 @@ dependencies:
   # For getting info about app's package
   package_info_plus: ^1.4.3+1
   universal_io: ^2.0.4
+  url_launcher: ^6.1.6
 
 dev_dependencies:
   flutter_test:

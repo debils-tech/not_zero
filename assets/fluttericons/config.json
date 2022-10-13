@@ -17,9 +17,20 @@
         "width": 1000
       },
       "search": [
-        "zero",
-        "logo"
+        "zero"
       ]
+    },
+    {
+      "uid": "0f6a2573a7b6df911ed199bb63717e27",
+      "css": "github-circled",
+      "code": 61595,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "3d2ba268e0ff8128fe71d48c4631a6b9",
+      "css": "telegram_plane",
+      "code": 62462,
+      "src": "fontawesome5"
     }
   ]
 }

@@ -12,8 +12,16 @@
 ///       - asset: fonts/NotZero.ttf
 ///
 ///
+/// * Font Awesome 4, Copyright (C) 2016 by Dave Gandy
+///         Author:    Dave Gandy
+///         License:   SIL ()
+///         Homepage:  http://fortawesome.github.com/Font-Awesome/
+/// * Font Awesome 5, Copyright (C) 2016 by Dave Gandy
+///         Author:    Dave Gandy
+///         License:   SIL (https://github.com/FortAwesome/Font-Awesome/blob/master/LICENSE.txt)
+///         Homepage:  http://fortawesome.github.com/Font-Awesome/
 ///
-// ignore_for_file: avoid_redundant_argument_values
+// ignore_for_file: avoid_redundant_argument_values, constant_identifier_names
 
 import 'package:flutter/widgets.dart';
 
@@ -23,9 +31,10 @@ class NotZeroIcons {
   static const _kFontFam = 'NotZero';
   static const String? _kFontPkg = null;
 
-  static const IconData zero = IconData(
-    0xe800,
-    fontFamily: _kFontFam,
-    fontPackage: _kFontPkg,
-  );
+  static const IconData zero =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData github_circled =
+      IconData(0xf09b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData telegram_plane =
+      IconData(0xf3fe, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
