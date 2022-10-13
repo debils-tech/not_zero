@@ -56,7 +56,7 @@ class SettingsUrlEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => launchUrlString(url),
+      onTap: () => launchUrlString(url, mode: LaunchMode.externalApplication),
       leading: icon != null ? Icon(icon) : null,
       title: Text(title),
     );
