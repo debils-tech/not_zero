@@ -12,10 +12,6 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.5
 
-  # Local modules
-  not_zero_storage:
-    path: modules/storage
-
   # Localization
   flutter_localizations:
     sdk: flutter
@@ -52,6 +48,7 @@ dependencies:
   # Database
   drift: ^2.2.0
   sqlite3_flutter_libs: ^0.5.0
+  hive_flutter: ^1.1.0
   path_provider: ^2.0.0
   path: ^1.8.2
 
@@ -75,6 +72,7 @@ dev_dependencies:
   build_runner: ^2.3.0
   freezed: ^2.1.0
   json_serializable: ^6.5.1
+  # TODO Replace with pub.dev dependency when developer will fix conflict with "analyzer" package
   injectable_generator:
     git:
       url: https://github.com/volskaya/injectable.git

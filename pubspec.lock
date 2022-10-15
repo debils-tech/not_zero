@@ -392,6 +392,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  hive:
+    dependency: transitive
+    description:
+      name: hive
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.3"
+  hive_flutter:
+    dependency: "direct main"
+    description:
+      name: hive_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   html:
     dependency: transitive
     description:
@@ -420,13 +434,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
-  idb_shim:
-    dependency: transitive
-    description:
-      name: idb_shim
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1+1"
   image:
     dependency: transitive
     description:
@@ -534,13 +541,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  not_zero_storage:
-    dependency: "direct main"
-    description:
-      path: "modules/storage"
-      relative: true
-    source: path
-    version: "0.2.0"
   package_config:
     dependency: transitive
     description:
@@ -681,13 +681,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
-  process_run:
-    dependency: transitive
-    description:
-      name: process_run
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.12.3+2"
   provider:
     dependency: transitive
     description:
@@ -730,27 +723,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.5"
-  sembast:
-    dependency: transitive
-    description:
-      name: sembast
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.3.1"
-  sembast_sqflite:
-    dependency: transitive
-    description:
-      name: sembast_sqflite
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
-  sembast_web:
-    dependency: transitive
-    description:
-      name: sembast_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1+1"
   shelf:
     dependency: transitive
     description:
@@ -805,27 +777,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.0"
-  sqflite:
-    dependency: transitive
-    description:
-      name: sqflite
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.0+1"
-  sqflite_common:
-    dependency: transitive
-    description:
-      name: sqflite_common
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.3.0"
-  sqflite_common_ffi:
-    dependency: transitive
-    description:
-      name: sqflite_common_ffi
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.1+1"
   sqlite3:
     dependency: transitive
     description:
@@ -875,40 +826,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
-  synchronized:
-    dependency: transitive
-    description:
-      name: synchronized
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0+3"
-  tekartik_app_flutter_sembast:
-    dependency: transitive
-    description:
-      path: app_sembast
-      ref: dart2_3
-      resolved-ref: "71005cf650d83783881a5620335ae603752bbe9d"
-      url: "https://github.com/tekartik/app_flutter_utils.dart"
-    source: git
-    version: "0.5.1"
-  tekartik_app_flutter_sqflite:
-    dependency: transitive
-    description:
-      path: app_sqflite
-      ref: dart2_3
-      resolved-ref: "71005cf650d83783881a5620335ae603752bbe9d"
-      url: "https://github.com/tekartik/app_flutter_utils.dart"
-    source: git
-    version: "0.5.1"
-  tekartik_lints_flutter:
-    dependency: transitive
-    description:
-      path: "packages/lints_flutter"
-      ref: dart2_3
-      resolved-ref: f5a7346cac00a778e981727fb0858110af87cbe0
-      url: "https://github.com/tekartik/common_flutter.dart"
-    source: git
-    version: "0.1.2"
   term_glyph:
     dependency: transitive
     description:

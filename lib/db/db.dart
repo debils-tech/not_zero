@@ -26,8 +26,19 @@ class NotZeroDatabase extends _$NotZeroDatabase {
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite'));
-    return NativeDatabase(file);
+    // TODO(uSlashVlad): Implement DriftIsolate for database.
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      // It can be problematic to use database with files in test
+      // (DB can be locked).
+      // You can fix errors in test by using "-j 1" argument, but honestly it is
+      // bad solution.
+      // In-memory DB can't be locked and runs much faster
+      // (that is usefull for tests).
+      return NativeDatabase.memory();
+    } else {
+      final dbFolder = await getApplicationDocumentsDirectory();
+      final file = File(p.join(dbFolder.path, 'db.sqlite'));
+      return NativeDatabase(file);
+    }
   });
 }

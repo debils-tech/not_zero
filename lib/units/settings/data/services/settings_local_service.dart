@@ -1,24 +1,26 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:not_zero/constants/database.dart';
+import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
-import 'package:not_zero_storage/not_zero_database.dart';
 
 abstract class SettingsLocalService {
-  Future<ThemeState?> getThemeState();
+  ThemeState? getThemeState();
 
   Future<void> setThemeState(ThemeState state);
 }
 
 @LazySingleton(as: SettingsLocalService)
 class SettingsLocalServiceImpl implements SettingsLocalService {
-  SettingsLocalServiceImpl(this._db);
+  SettingsLocalServiceImpl(StorageProvider storage) {
+    _db = storage.settings;
+  }
 
-  final DatabaseProvider _db;
+  late final Box<String> _db;
 
   @override
-  Future<ThemeState?> getThemeState() async {
-    final stringValue =
-        await _db.prefs.getLazy(SettingsKeys.themeState) as String?;
+  ThemeState? getThemeState() {
+    final stringValue = _db.get(SettingsKeys.themeState);
 
     if (stringValue != null) {
       return ThemeState.values.byName(stringValue);
@@ -27,7 +29,7 @@ class SettingsLocalServiceImpl implements SettingsLocalService {
   }
 
   @override
-  Future<void> setThemeState(ThemeState state) async {
-    await _db.prefs.set(SettingsKeys.themeState, state.name);
+  Future<void> setThemeState(ThemeState state) {
+    return _db.put(SettingsKeys.themeState, state.name);
   }
 }

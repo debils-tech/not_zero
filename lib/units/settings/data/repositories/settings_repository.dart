@@ -10,8 +10,8 @@ class SettingsRepositoryImpl implements SettingsRepository {
   final SettingsLocalService _localService;
 
   @override
-  Future<ThemeState> loadThemeState() async {
-    return await _localService.getThemeState() ?? ThemeState.system;
+  ThemeState loadThemeState() {
+    return _localService.getThemeState() ?? ThemeState.system;
   }
 
   @override
