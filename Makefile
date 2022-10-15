@@ -26,5 +26,10 @@ build-android:
 	# BUILDING AAB
 	fvm flutter build appbundle
 	ls build/app/outputs/bundle/release -1hs
+	# VALIDATE PACKAGES
+	sh android/tools/check-cert.sh apk/release/app-arm64-v8a-release.apk
+	sh android/tools/check-cert.sh apk/release/app-armeabi-v7a-release.apk
+	sh android/tools/check-cert.sh apk/release/app-x86_64-release.apk
+	sh android/tools/check-cert.sh bundle/release/app-release.aab
 
 .PHONY: config gen format fmt run test
