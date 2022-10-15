@@ -20,6 +20,11 @@ test:
 	fvm flutter test
 
 build-android:
+	# BUILDING APK
 	fvm flutter build apk --split-per-abi
+	ls build/app/outputs/apk/release -1hs
+	# BUILDING AAB
+	fvm flutter build appbundle
+	ls build/app/outputs/bundle/release -1hs
 
 .PHONY: config gen format fmt run test
