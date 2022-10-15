@@ -15,29 +15,31 @@ It currently at very early stage, I would like to call it **alpha**, but it is m
 
 Here is roadmap of project and what features are necessary to "complete" each stage:
 
-### _Alpha_
+<details>
+<summary> Alpha </summary>
 
-- [x] Stable app's architecture **[8 points]**
-- [x] Home screen  **[5 points]**
-- [x] Tasks (and local storage for them) **[8 points]**
-- [x] Settings  **[5 points]**
-- [x] "About" screen **[5 points]**
-- [x] Light and dark themes **[3 points]**
-- [ ] App branding (logo, icons, posters and screenshots) `(in progress)` **[5 points]**
-- [ ] Automatic builds and basic packaging `(in progress)` **[5 points]**
+- [x] Stable app's architecture
+- [x] Home screen
+- [x] Tasks (and local storage for them)
+- [x] "About" screen
+- [x] Light and dark themes
+- [x] App branding (logo, icons, posters)
+- [ ] Automatic builds and basic packaging `(in progress)`
+- [ ] Notes
+</details>
 
-### _Beta_
+<details>
+<summary> Beta </summary>
 
 - [ ] Export and import of app's data
-- [ ] Notes
 - [ ] Animations
 - [ ] Combos
 - [ ] Release in Google Play
 - [ ] Release in F-Droid
+</details>
 
-... and probably some other stuff will be added here
-
-### _Stable release_
+<details>
+<summary> Stable release </summary>
 
 - [ ] Advanved stats (weekly, monthly statistics)
 - [ ] Achievements
@@ -47,8 +49,7 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [ ] Adaptation of app for desktop
 - [ ] Release on Linux
 - [ ] Release on Windows
-
-... and probably some other stuff will be added here
+</details>
 
 ## Building and running
 
