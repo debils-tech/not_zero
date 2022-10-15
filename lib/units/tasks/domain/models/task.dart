@@ -1,16 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:not_zero/helpers/date_time_epoch_json.dart';
 import 'package:uuid/uuid.dart';
 
 part 'task.freezed.dart';
 part 'task.g.dart';
 
 enum TaskImportance {
-  @JsonValue(1)
   notImportant,
-  @JsonValue(3)
   normal,
-  @JsonValue(5)
   important;
 
   factory TaskImportance.fromIndex(int? index) {
@@ -44,9 +40,9 @@ class Task with _$Task {
     required String id,
     required String title,
     @Default('') String description,
-    @DateTimeEpochConverter() required DateTime createdAt,
-    @DateTimeEpochConverter() DateTime? modifiedAt,
-    @DateTimeEpochConverter() DateTime? completedAt,
+    required DateTime createdAt,
+    DateTime? modifiedAt,
+    DateTime? completedAt,
     required TaskImportance importance,
   }) = _Task;
 

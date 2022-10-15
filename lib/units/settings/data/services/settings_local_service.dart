@@ -9,7 +9,7 @@ abstract class SettingsLocalService {
   Future<void> setThemeState(ThemeState state);
 }
 
-@Singleton(as: SettingsLocalService)
+@LazySingleton(as: SettingsLocalService)
 class SettingsLocalServiceImpl implements SettingsLocalService {
   SettingsLocalServiceImpl(this._db);
 

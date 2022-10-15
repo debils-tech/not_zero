@@ -7,21 +7,21 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "47.0.0"
+    version: "49.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.7.0"
+    version: "5.1.0"
   analyzer_plugin:
     dependency: transitive
     description:
       name: analyzer_plugin
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0"
+    version: "0.11.2"
   animated_list_plus:
     dependency: "direct main"
     description:
@@ -217,7 +217,7 @@ packages:
       name: dart_code_metrics
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.19.1"
+    version: "4.21.2"
   dart_style:
     dependency: transitive
     description:
@@ -225,6 +225,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.4"
+  drift:
+    dependency: "direct main"
+    description:
+      name: drift
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
+  drift_dev:
+    dependency: "direct dev"
+    description:
+      name: drift_dev
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0+1"
   equatable:
     dependency: "direct main"
     description:
@@ -335,7 +349,7 @@ packages:
       name: freezed
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0+1"
+    version: "2.1.1"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -430,10 +444,12 @@ packages:
   injectable_generator:
     dependency: "direct dev"
     description:
-      name: injectable_generator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.5.4"
+      path: injectable_generator
+      ref: master
+      resolved-ref: "55c1acb61c1650e8fe471555dd5ee434ebc146d1"
+      url: "https://github.com/volskaya/injectable.git"
+    source: git
+    version: "1.5.3"
   intl:
     dependency: "direct main"
     description:
@@ -575,14 +591,14 @@ packages:
     source: hosted
     version: "3.0.0"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.2"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
@@ -686,6 +702,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  pub_updater:
+    dependency: transitive
+    description:
+      name: pub_updater
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
   pubspec_parse:
     dependency: transitive
     description:
@@ -693,6 +716,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  recase:
+    dependency: transitive
+    description:
+      name: recase
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0"
   rxdart:
     dependency: "direct main"
     description:
@@ -701,7 +731,7 @@ packages:
     source: hosted
     version: "0.27.5"
   sembast:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: sembast
       url: "https://pub.dartlang.org"
@@ -803,6 +833,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.0"
+  sqlite3_flutter_libs:
+    dependency: "direct main"
+    description:
+      name: sqlite3_flutter_libs
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.10"
+  sqlparser:
+    dependency: transitive
+    description:
+      name: sqlparser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.23.3"
   stack_trace:
     dependency: transitive
     description:
