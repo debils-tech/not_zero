@@ -38,8 +38,6 @@ jobs:
         run: flutter analyze --no-fatal-infos
 
       ### TESTS ###
-      - name: Run tests in "storage" module
-        run: (cd modules/storage && flutter test)
       - name: Run tests for main package
         run: flutter test
 
