@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:not_zero/constants/database.dart';
+import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
-import 'package:not_zero_storage/not_zero_database.dart';
 
 abstract class TasksLocalService {
   Future<List<Task>> getTasks();
@@ -11,28 +10,27 @@ abstract class TasksLocalService {
   Future<void> deleteTasks(Iterable<String> tasks);
 }
 
-@Singleton(as: TasksLocalService)
+@LazySingleton(as: TasksLocalService)
 class TasksLocalServiceImpl implements TasksLocalService {
-  TasksLocalServiceImpl(this._db);
+  TasksLocalServiceImpl(StorageProvider storage) {
+    _db = storage.database;
+  }
 
-  final DatabaseProvider _db;
-
-  Collection get tasksCollection => _db.collections[LocalCollections.tasks];
+  late final NotZeroDatabase _db;
 
   @override
-  Future<List<Task>> getTasks() async {
-    final tasks = await tasksCollection.find();
-
-    return tasks.map(Task.fromJson).toList();
+  Future<List<Task>> getTasks() {
+    return _db.select(_db.tasksTable).get();
   }
 
   @override
   Future<void> saveTask(Task task) {
-    return tasksCollection.insert(task.toJson());
+    return _db.into(_db.tasksTable).insertOnConflictUpdate(task.toInsertable());
   }
 
   @override
   Future<void> deleteTasks(Iterable<String> tasks) {
-    return tasksCollection.deleteByKeys(tasks);
+    return (_db.delete(_db.tasksTable)..where((tbl) => tbl.id.isIn(tasks)))
+        .go();
   }
 }

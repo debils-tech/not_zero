@@ -12,7 +12,7 @@ class AppThemeBloc extends Bloc<ThemeState, ThemeState> {
       _repository.saveThemeState(event);
     });
 
-    _repository.loadThemeState().then(add);
+    add(_repository.loadThemeState());
   }
 
   final SettingsRepository _repository;

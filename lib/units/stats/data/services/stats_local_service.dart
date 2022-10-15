@@ -1,27 +1,26 @@
+import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
-import 'package:not_zero/constants/database.dart';
+import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
-import 'package:not_zero_storage/not_zero_database.dart';
-import 'package:sembast/sembast.dart';
 
 abstract class StatsLocalService {
   Future<List<TaskImportance>> getCompletedTasksImportance();
 }
 
-@Singleton(as: StatsLocalService)
+@LazySingleton(as: StatsLocalService)
 class StatsLocalServiceImpl implements StatsLocalService {
-  StatsLocalServiceImpl(this._db);
+  StatsLocalServiceImpl(StorageProvider storage) {
+    _db = storage.database;
+  }
 
-  final DatabaseProvider _db;
-
-  Collection get tasksCollection => _db.collections[LocalCollections.tasks];
+  late final NotZeroDatabase _db;
 
   @override
   Future<List<TaskImportance>> getCompletedTasksImportance() async {
-    final rawCompletedTasks = await tasksCollection.find(
-      finder: Finder(filter: Filter.notNull('completedAt')),
-    );
+    final completedTasks = await (_db.select(_db.tasksTable)
+          ..where((tbl) => tbl.completedAt.isNotNull()))
+        .get();
 
-    return rawCompletedTasks.map((e) => Task.fromJson(e).importance).toList();
+    return completedTasks.map((e) => e.importance).toList();
   }
 }

@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/data/services/tasks_local_service.dart';
-import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'tasks_db_config.dart';
 import 'template_tasks.dart';
 
@@ -14,10 +13,8 @@ void main() {
 
   test('Get tasks', () async {
     final tasks = await service.getTasks();
-    // Sorting is necessary since "getTasks" doesn't guarantee the right order.
-    tasks.sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
-    expect(listEquals(templateTasks1, tasks), true);
+    expect(tasks, unorderedEquals(templateTasks1));
   });
 
   test('Save tasks', () async {
@@ -27,22 +24,26 @@ void main() {
     }
 
     // Testing saved data by comparing with actual data in DB.
-    final collection = getTasksCollection();
+    final db = getIt<StorageProvider>().database;
     for (final t in templateTasks2) {
-      final recordFromDb = await collection.findByKey(t.id);
+      final recordFromDb = await (db.select(db.tasksTable)
+            ..where((tbl) => tbl.id.equals(t.id)))
+          .getSingleOrNull();
       expect(recordFromDb, isNotNull);
-      expect(t, Task.fromJson(recordFromDb!));
+      expect(recordFromDb, t);
     }
 
     // Overwriting some record.
     final taskForCopy = templateTasks2[1].copyWith(
       title: 'New task!',
-      completedAt: DateTime.fromMillisecondsSinceEpoch(1664392368),
+      completedAt: DateTime.now(),
     );
     await service.saveTask(taskForCopy);
-    final recordFromDb = await collection.findByKey(taskForCopy.id);
+    final recordFromDb = await (db.select(db.tasksTable)
+          ..where((tbl) => tbl.id.equals(taskForCopy.id)))
+        .getSingleOrNull();
     expect(recordFromDb, isNotNull);
-    expect(taskForCopy, Task.fromJson(recordFromDb!));
+    expect(recordFromDb, taskForCopy);
   });
 
   test('Delete tasks', () async {
@@ -51,12 +52,14 @@ void main() {
         .deleteTasks([templateTasks1.first.id, templateTasks1.last.id]);
 
     // Check if they are removed and second task is still there.
-    final collection = getTasksCollection();
+    final db = getIt<StorageProvider>().database;
     for (final t in templateTasks1) {
-      final recordFromDb = await collection.findByKey(t.id);
+      final recordFromDb = await (db.select(db.tasksTable)
+            ..where((tbl) => tbl.id.equals(t.id)))
+          .getSingleOrNull();
       if (t.id == templateTasks1[1].id) {
         expect(recordFromDb, isNotNull);
-        expect(t, Task.fromJson(recordFromDb!));
+        expect(recordFromDb, t);
       } else {
         expect(recordFromDb, isNull);
       }

@@ -12,10 +12,6 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.5
 
-  # Local modules
-  not_zero_storage:
-    path: modules/storage
-
   # Localization
   flutter_localizations:
     sdk: flutter
@@ -24,7 +20,7 @@ dependencies:
   slang_flutter: ^3.1.0
 
   # Models
-  freezed_annotation: ^2.1.0
+  freezed_annotation: ^2.2.0
   json_annotation: ^4.7.0
   uuid: ^3.0.6
   equatable: ^2.0.5
@@ -42,35 +38,49 @@ dependencies:
 
   # Navigation
   go_router: ^5.1.0
+  url_launcher: ^6.1.6
 
   # Widgets
   flutter_form_builder: ^7.7.0
   form_builder_validators: ^8.3.0
   animated_list_plus: ^0.4.4
 
-  # For filters and finders from storage module
-  sembast: ^3.3.1
+  # Database
+  drift: ^2.2.0
+  sqlite3_flutter_libs: ^0.5.10
+  hive_flutter: ^1.1.0
+
+  # Utilities
+  path_provider: ^2.0.11
+  path: ^1.8.2
 
   # For getting info about app's package
   package_info_plus: ^2.0.0
   universal_io: ^2.0.4
-  url_launcher: ^6.1.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # For generating icons on various platforms
   flutter_launcher_icons: ^0.10.0
 
   # Analysis
   flutter_lints: ^2.0.1
   very_good_analysis: ^3.1.0
-  dart_code_metrics: ^4.19.1
+  dart_code_metrics: ^4.21.2
 
   # Code generation
   build_runner: ^2.3.0
-  freezed: ^2.1.0
+  freezed: ^2.2.0
   json_serializable: ^6.5.1
-  injectable_generator: ^1.5.4
+  # TODO Replace with pub.dev dependency when developer will fix conflict with "analyzer" package
+  injectable_generator:
+    git:
+      url: https://github.com/volskaya/injectable.git
+      ref: master
+      path: injectable_generator
+  drift_dev: ^2.2.0+1
 
 flutter:
   fonts:
