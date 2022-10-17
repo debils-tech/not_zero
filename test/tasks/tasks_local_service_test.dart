@@ -26,9 +26,7 @@ void main() {
     // Testing saved data by comparing with actual data in DB.
     final db = getIt<StorageProvider>().database;
     for (final t in templateTasks2) {
-      final recordFromDb = await (db.select(db.tasksTable)
-            ..where((tbl) => tbl.id.equals(t.id)))
-          .getSingleOrNull();
+      final recordFromDb = await db.findByKey(db.tasksTable, t.id);
       expect(recordFromDb, isNotNull);
       expect(recordFromDb, t);
     }
@@ -39,9 +37,7 @@ void main() {
       completedAt: DateTime.now(),
     );
     await service.saveTask(taskForCopy);
-    final recordFromDb = await (db.select(db.tasksTable)
-          ..where((tbl) => tbl.id.equals(taskForCopy.id)))
-        .getSingleOrNull();
+    final recordFromDb = await db.findByKey(db.tasksTable, taskForCopy.id);
     expect(recordFromDb, isNotNull);
     expect(recordFromDb, taskForCopy);
   });
@@ -54,9 +50,7 @@ void main() {
     // Check if they are removed and second task is still there.
     final db = getIt<StorageProvider>().database;
     for (final t in templateTasks1) {
-      final recordFromDb = await (db.select(db.tasksTable)
-            ..where((tbl) => tbl.id.equals(t.id)))
-          .getSingleOrNull();
+      final recordFromDb = await db.findByKey(db.tasksTable, t.id);
       if (t.id == templateTasks1[1].id) {
         expect(recordFromDb, isNotNull);
         expect(recordFromDb, t);

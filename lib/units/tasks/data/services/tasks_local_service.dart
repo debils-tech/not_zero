@@ -25,7 +25,7 @@ class TasksLocalServiceImpl implements TasksLocalService {
 
   @override
   Future<void> saveTask(Task task) {
-    return _db.into(_db.tasksTable).insertOnConflictUpdate(task.toInsertable());
+    return _db.upsertIn(_db.tasksTable, task.toInsertable());
   }
 
   @override
