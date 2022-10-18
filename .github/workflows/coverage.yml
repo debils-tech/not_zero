@@ -6,7 +6,9 @@ on:
     - master
 
 jobs:
-  coverage-hive:
+  coverage:
+    name: Upload code test coverage
+
     runs-on: ubuntu-latest
 
     steps:
@@ -20,13 +22,15 @@ jobs:
           channel: stable
           cache: true
 
-      ### Run tests ###
-      - name: Collect coverage
+      ### RUN TESTS ###
+      - name: Preparation
         run: |
           flutter pub get
-          flutter test --coverage
+          flutter pub run build_runner build --delete-conflicting-outputs lib && flutter pub run slang
+      - name: Execute tests
+        run: flutter test --coverage
 
-      ### Upload results ###
+      ### UPLOAD RESULTS ###
       - uses: codecov/codecov-action@v1.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

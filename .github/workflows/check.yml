@@ -26,8 +26,6 @@ jobs:
         run: flutter --version
       - name: Get all dependecies
         run: flutter pub get
-      - name: Generate ".env" file for "envied" package
-        run: echo "SENTRY_DSN=\"\"" > .env
       - name: Generate all needed code
         run: flutter pub run build_runner build --delete-conflicting-outputs lib && flutter pub run slang
 
@@ -38,7 +36,7 @@ jobs:
         run: flutter analyze --no-fatal-infos
 
       ### TESTS ###
-      - name: Run tests for main package
+      - name: Run tests
         run: flutter test
 
       ### REPORT ###
