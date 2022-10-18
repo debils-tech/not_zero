@@ -1,7 +1,9 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:injectable/injectable.dart';
 import 'package:not_zero/db/db.dart';
 export 'db.dart';
 
+@singleton
 class StorageProvider {
   final database = NotZeroDatabase();
 

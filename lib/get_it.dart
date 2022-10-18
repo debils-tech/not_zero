@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/get_it.config.dart';
 
 /// Simple shortcut for [GetIt.instance].
@@ -15,10 +14,5 @@ final getIt = GetIt.instance;
 
 /// Configures both manual and generated dependencies.
 void configureDependencies() {
-  _manualDeps();
   $initGetIt(getIt);
-}
-
-void _manualDeps() {
-  getIt.registerSingleton(StorageProvider());
 }
