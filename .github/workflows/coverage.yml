@@ -1,0 +1,33 @@
+name: Coverage
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  coverage-hive:
+    runs-on: ubuntu-latest
+
+    steps:
+      ### INITIAL ###
+      - name: Clone application code
+        uses: actions/checkout@v3
+      - name: Clone flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.3.4'
+          channel: stable
+          cache: true
+
+      ### Run tests ###
+      - name: Collect coverage
+        run: |
+          flutter pub get
+          flutter test --coverage
+
+      ### Upload results ###
+      - uses: codecov/codecov-action@v1.0.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage/lcov.info
