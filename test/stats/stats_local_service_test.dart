@@ -4,10 +4,12 @@ import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/stats/data/services/stats_local_service.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 
+import '../init_paths.dart';
 import '../tasks/tasks_db_config.dart';
 import '../tasks/template_tasks.dart';
 
 void main() {
+  initPaths();
   configureDependencies();
   configDatabaseForTasks(templateTasks3);
 

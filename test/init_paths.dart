@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+import 'package:uuid/uuid.dart';
 
 const rootPath = 'build/test_root';
 
@@ -9,31 +10,39 @@ void initPaths() {
 }
 
 class FakePathProviderPlatform extends PathProviderPlatform {
-  @override
-  Future<String?> getApplicationDocumentsPath() => _futurePath('documents');
+  FakePathProviderPlatform() : _randSubdirectory = const Uuid().v4();
+
+  final String _randSubdirectory;
 
   @override
-  Future<String?> getApplicationSupportPath() => _futurePath('support');
+  Future<String?> getApplicationDocumentsPath() =>
+      _futurePath('$_randSubdirectory/documents');
 
   @override
-  Future<String?> getDownloadsPath() => _futurePath('downloads');
+  Future<String?> getApplicationSupportPath() =>
+      _futurePath('$_randSubdirectory/support');
+
+  @override
+  Future<String?> getDownloadsPath() =>
+      _futurePath('$_randSubdirectory/downloads');
 
   @override
   Future<List<String>?> getExternalCachePaths() =>
-      Future.value(['$rootPath/cache']);
+      Future.value(['$rootPath/$_randSubdirectory/cache']);
 
   @override
-  Future<String?> getExternalStoragePath() => _futurePath('external');
+  Future<String?> getExternalStoragePath() =>
+      _futurePath('$_randSubdirectory/external');
 
   @override
   Future<List<String>?> getExternalStoragePaths({StorageDirectory? type}) =>
-      Future.value(['$rootPath/external']);
+      Future.value(['$rootPath/$_randSubdirectory/external']);
 
   @override
-  Future<String?> getLibraryPath() => _futurePath('library');
+  Future<String?> getLibraryPath() => _futurePath('$_randSubdirectory/library');
 
   @override
-  Future<String?> getTemporaryPath() => _futurePath('temp');
+  Future<String?> getTemporaryPath() => _futurePath('$_randSubdirectory/temp');
 }
 
 Future<String> _futurePath(String v) => Future.value('$rootPath/$v');
