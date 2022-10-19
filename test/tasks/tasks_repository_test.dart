@@ -2,13 +2,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
-import '../init_paths.dart';
+import '../global_init.dart';
 import 'tasks_db_config.dart';
 import 'template_tasks.dart';
 
 void main() {
-  initPaths();
-  configureDependencies();
+  globalInit();
   configDatabaseForTasks();
 
   // Clear repository for eliminating results of previous test.

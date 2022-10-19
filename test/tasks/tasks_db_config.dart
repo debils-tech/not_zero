@@ -16,5 +16,5 @@ void configDatabaseForTasks([List<Task>? tasks]) {
     });
   });
 
-  tearDown(getIt<StorageProvider>().database.drop);
+  tearDown(() => getIt<StorageProvider>().database.drop());
 }

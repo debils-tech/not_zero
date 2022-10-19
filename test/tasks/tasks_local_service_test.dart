@@ -2,24 +2,26 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/data/services/tasks_local_service.dart';
-import '../init_paths.dart';
+
+import '../global_init.dart';
 import 'tasks_db_config.dart';
 import 'template_tasks.dart';
 
 void main() {
-  initPaths();
-  configureDependencies();
+  globalInit();
   configDatabaseForTasks();
 
-  final service = getIt<TasksLocalService>();
-
   test('Get tasks', () async {
+    final service = getIt<TasksLocalService>();
+
     final tasks = await service.getTasks();
 
     expect(tasks, unorderedEquals(templateTasks1));
   });
 
   test('Save tasks', () async {
+    final service = getIt<TasksLocalService>();
+
     // Actual saving.
     for (final t in templateTasks2) {
       await service.saveTask(t);
@@ -45,6 +47,8 @@ void main() {
   });
 
   test('Delete tasks', () async {
+    final service = getIt<TasksLocalService>();
+
     // Remove 2 tasks from DB.
     await service
         .deleteTasks([templateTasks1.first.id, templateTasks1.last.id]);

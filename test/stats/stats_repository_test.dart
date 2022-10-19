@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
 
-import '../init_paths.dart';
+import '../global_init.dart';
 import '../tasks/tasks_db_config.dart';
 import '../tasks/template_tasks.dart';
 
@@ -13,8 +13,7 @@ void main() {
   const expectedTasksSum =
       notImportantScore + normalScore + normalScore + importantScore;
 
-  initPaths();
-  configureDependencies();
+  globalInit();
   configDatabaseForTasks(templateTasks3);
 
   // Clear repository for eliminating results of previous test.

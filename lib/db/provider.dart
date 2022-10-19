@@ -7,10 +7,15 @@ export 'db.dart';
 class StorageProvider {
   final database = NotZeroDatabase();
 
-  late final Box<String> settings;
+  final settings = Hive.box<String>('settings');
 
-  Future<void> init() async {
+  static Future<void> initHiveBoxes() async {
     await Hive.initFlutter();
-    settings = await Hive.openBox<String>('settings');
+    await Hive.openBox<String>('settings');
+  }
+
+  Future<void> deleteFromDisk() async {
+    await database.deleteFromDisk();
+    await settings.deleteFromDisk();
   }
 }

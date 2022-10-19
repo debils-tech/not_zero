@@ -26,6 +26,10 @@ class NotZeroDatabase extends _$NotZeroDatabase {
     });
   }
 
+  Future<void> deleteFromDisk() async {
+    File(await _getDatabasePath()).deleteSync();
+  }
+
   Future<void> upsertIn<T extends Table, D>(
     TableInfo<T, D> table,
     Insertable<D> insertable,
@@ -53,8 +57,12 @@ class NotZeroDatabase extends _$NotZeroDatabase {
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     // TODO(uSlashVlad): Implement DriftIsolate for database.
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite'));
+    final file = File(await _getDatabasePath());
     return NativeDatabase(file);
   });
+}
+
+Future<String> _getDatabasePath() async {
+  final dbFolder = await getApplicationDocumentsDirectory();
+  return p.join(dbFolder.path, 'db.sqlite');
 }
