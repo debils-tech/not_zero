@@ -27,7 +27,11 @@ class NotZeroDatabase extends _$NotZeroDatabase {
   }
 
   Future<void> deleteFromDisk() async {
-    File(await _getDatabasePath()).deleteSync();
+    final dbFile = File(await _getDatabasePath());
+    if (dbFile.existsSync()) {
+      await close();
+      dbFile.deleteSync();
+    }
   }
 
   Future<void> upsertIn<T extends Table, D>(
