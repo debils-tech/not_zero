@@ -9,15 +9,12 @@ import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
 class HomeScoreCubit extends Cubit<HomeScoreState> {
   HomeScoreCubit(this._repository) : super(const HomeScoreState()) {
     _countingSub = _repository.getTotalPoints().listen(_countChangeListener);
+    _repository.countTotalPoints();
   }
 
   final StatsRepository _repository;
 
   StreamSubscription<int>? _countingSub;
-
-  Future<void> init() {
-    return _repository.countTotalPoints();
-  }
 
   @override
   Future<void> close() {
