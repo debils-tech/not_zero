@@ -24,26 +24,27 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [x] "About" screen
 - [x] Light and dark themes
 - [x] App branding (logo, icons, posters)
+- [ ] Stable database version
 - [ ] Automatic builds and basic packaging `(in progress)`
 - [ ] Notes
+- [ ] Export and import of app's data
 </details>
 
 <details>
 <summary> Beta </summary>
 
-- [ ] Export and import of app's data
 - [ ] Animations
-- [ ] Combos
+- [ ] Advanved stats (weekly, monthly statistics)
 - [ ] Release in Google Play
 - [ ] Release in F-Droid
+- [ ] Combos
+- [ ] Habbits
 </details>
 
 <details>
 <summary> Stable release </summary>
 
-- [ ] Advanved stats (weekly, monthly statistics)
 - [ ] Achievements
-- [ ] Habbits
 - [ ] Adaptation for iOS
 - [ ] Release in App Store
 - [ ] Adaptation of app for desktop
