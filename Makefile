@@ -20,16 +20,22 @@ test:
 	fvm flutter test
 
 build-android:
+	# PREPARING BUILD DIRECTORY
+	mkdir build/releases
 	# BUILDING APK
 	fvm flutter build apk --split-per-abi
-	ls build/app/outputs/apk/release -1hs
+	cp build/app/outputs/apk/release/* build/releases/.
+	fvm flutter build apk
+	cp build/app/outputs/apk/release/* build/releases/.
 	# BUILDING AAB
 	fvm flutter build appbundle
-	ls build/app/outputs/bundle/release -1hs
+	cp build/app/outputs/bundle/release/* build/releases/.
 	# VALIDATE PACKAGES
-	sh android/tools/check-cert.sh apk/release/app-arm64-v8a-release.apk
-	sh android/tools/check-cert.sh apk/release/app-armeabi-v7a-release.apk
-	sh android/tools/check-cert.sh apk/release/app-x86_64-release.apk
-	sh android/tools/check-cert.sh bundle/release/app-release.aab
+	ls build/releases -1hs
+	sh android/tools/check-cert.sh app-arm64-v8a-release.apk
+	sh android/tools/check-cert.sh app-armeabi-v7a-release.apk
+	sh android/tools/check-cert.sh app-x86_64-release.apk
+	sh android/tools/check-cert.sh app-release.apk
+	sh android/tools/check-cert.sh app-release.aab
 
 .PHONY: config gen format fmt run test
