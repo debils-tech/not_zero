@@ -11,7 +11,7 @@ Not Zero is a free crossplatform application developed with [flutter](https://fl
 ## Project status and roadmap
 
 Project is now developing by the single person, so development is not very fast.
-It currently at very early stage, I would like to call it **alpha**, but it is more like **pre-alpha**.
+It currently at very early stage, can contain breaking changes **(including a posibility of user data loss)**.
 
 Here is roadmap of project and what features are necessary to "complete" each stage:
 
@@ -24,7 +24,7 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [x] "About" screen
 - [x] Light and dark themes
 - [x] App branding (logo, icons, posters)
-- [ ] Stable database version
+- [ ] Stable database version `(in progress)`
 - [ ] Automatic builds and basic packaging `(in progress)`
 - [ ] Notes
 - [ ] Export and import of app's data
@@ -51,6 +51,11 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [ ] Release on Linux
 - [ ] Release on Windows
 </details>
+
+## Screenshots
+
+<img src="assets/screenshots/Screenshot_main.png" width="250">
+<img src="assets/screenshots/Screenshot_tasks.png" width="250">
 
 ## Building and running
 
