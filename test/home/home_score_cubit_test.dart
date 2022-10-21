@@ -22,4 +22,6 @@ void main() {
       ]),
     );
   });
+
+  // TODO(uSlashVlad): Test score updating.
 }
