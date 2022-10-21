@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'task.freezed.dart';
-part 'task.g.dart';
 
 enum TaskImportance {
   notImportant,
@@ -47,8 +46,6 @@ class Task with _$Task {
   }) = _Task;
 
   const Task._();
-
-  factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 
   factory Task.create({
     required String title,
