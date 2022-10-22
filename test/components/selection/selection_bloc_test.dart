@@ -26,47 +26,59 @@ void main() {
     await testBlocSingle(
       bloc,
       AddItemToSelectionEvent(uuids[0]),
-      <String>{uuids[0]},
+      {uuids[0]},
     );
 
     await testBlocSingle(
       bloc,
       AddItemToSelectionEvent(uuids[1]),
-      <String>{uuids[0], uuids[1]},
+      {uuids[0], uuids[1]},
     );
 
     await testBlocSingle(
       bloc,
       AddItemToSelectionEvent(uuids[2]),
-      <String>{uuids[0], uuids[1], uuids[2]},
+      {uuids[0], uuids[1], uuids[2]},
     );
   });
 
-  test('Add and remove', () {
+  test('Add and remove', () async {
     final bloc = getIt<ItemSelectionBloc>();
 
     expect(bloc.state, <String>{});
 
-    expect(
-      bloc.stream,
-      emitsInOrder([
-        <String>{uuids[0]},
-        <String>{},
-        <String>{uuids[0]},
-        <String>{uuids[0], uuids[1]},
-        <String>{uuids[1]},
-      ]),
+    await testBlocSingle(
+      bloc,
+      AddItemToSelectionEvent(uuids[0]),
+      {uuids[0]},
     );
 
-    bloc
-      ..add(AddItemToSelectionEvent(uuids[0]))
-      ..add(RemoveItemFromSelectionEvent(uuids[0]))
-      ..add(AddItemToSelectionEvent(uuids[0]))
-      ..add(AddItemToSelectionEvent(uuids[1]))
-      ..add(RemoveItemFromSelectionEvent(uuids[0]));
+    await testBlocSingle(
+      bloc,
+      RemoveItemFromSelectionEvent(uuids[0]),
+      <String>{},
+    );
+
+    await testBlocSingle(
+      bloc,
+      AddItemToSelectionEvent(uuids[0]),
+      {uuids[0]},
+    );
+
+    await testBlocSingle(
+      bloc,
+      AddItemToSelectionEvent(uuids[1]),
+      {uuids[0], uuids[1]},
+    );
+
+    await testBlocSingle(
+      bloc,
+      RemoveItemFromSelectionEvent(uuids[0]),
+      {uuids[1]},
+    );
   });
 
-  test('Add multiple', () {
+  test('Add multiple', () async {
     final bloc = getIt<ItemSelectionBloc>();
 
     expect(bloc.state, <String>{});
@@ -81,6 +93,7 @@ void main() {
 
     bloc
       ..add(AddAllItemsToSelectionEvent({uuids[0], uuids[1]}))
+      // This specific event (empty set) shouldn't emit event.
       ..add(const AddAllItemsToSelectionEvent({}))
       ..add(
         AddAllItemsToSelectionEvent({uuids[1], uuids[2], uuids[3]}),
@@ -104,6 +117,7 @@ void main() {
       ..add(
         AddAllItemsToSelectionEvent({uuids[0], uuids[1], uuids[2], uuids[3]}),
       )
+      // This specific event (empty set) shouldn't emit event.
       ..add(const RemoveAllItemsFromSelectionEvent({}))
       ..add(RemoveAllItemsFromSelectionEvent({uuids[0], uuids[2], uuids[3]}));
   });
