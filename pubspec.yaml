@@ -37,7 +37,7 @@ dependencies:
   get_it: ^7.2.0
 
   # Navigation
-  go_router: ^5.1.0
+  go_router: ^5.1.1
   url_launcher: ^6.1.6
 
   # Widgets
@@ -55,10 +55,11 @@ dependencies:
   path: ^1.8.2
 
   # For getting info about app's package
-  package_info_plus: ^2.0.0
+  package_info_plus: ^3.0.1
   universal_io: ^2.0.4
 
 dev_dependencies:
+  # Testing
   flutter_test:
     sdk: flutter
   path_provider_platform_interface: ^2.0.5
@@ -72,9 +73,9 @@ dev_dependencies:
   dart_code_metrics: ^4.21.2
 
   # Code generation
-  build_runner: ^2.3.0
+  build_runner: ^2.3.2
   freezed: ^2.2.0
-  json_serializable: ^6.5.1
+  json_serializable: ^6.5.3
   # TODO Replace with pub.dev dependency when developer will fix conflict with "analyzer" package
   injectable_generator:
     git:
