@@ -2,33 +2,31 @@ config:
 	dart pub global activate fvm
 	fvm install
 	fvm flutter pub get
-	make gen
 
 gen:
-	fvm flutter pub run build_runner build --delete-conflicting-outputs lib
-	fvm flutter pub run slang
+	flutter pub run build_runner build --delete-conflicting-outputs lib
+	flutter pub run slang
 
 format:
-	fvm flutter format .
+	flutter format .
 fmt: format
 
 run:
-	fvm flutter run
+	flutter run
 
 test:
-	(cd modules/storage && fvm flutter test)
-	fvm flutter test
+	flutter test
 
 build-android:
 	# PREPARING BUILD DIRECTORY
 	mkdir build/releases
 	# BUILDING APK
-	fvm flutter build apk --split-per-abi
+	flutter build apk --split-per-abi
 	cp build/app/outputs/apk/release/* build/releases/.
-	fvm flutter build apk
+	flutter build apk
 	cp build/app/outputs/apk/release/* build/releases/.
 	# BUILDING AAB
-	fvm flutter build appbundle
+	flutter build appbundle
 	cp build/app/outputs/bundle/release/* build/releases/.
 	# VALIDATE PACKAGES
 	ls build/releases -1hs

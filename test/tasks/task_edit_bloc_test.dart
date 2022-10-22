@@ -27,5 +27,5 @@ void main() {
     );
   });
 
-  // TODO(uSlashVlad): Save and delete tasks
+  // TODO(uSlashVlad): Save and delete tasks.
 }
