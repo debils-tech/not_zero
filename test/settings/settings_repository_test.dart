@@ -14,26 +14,18 @@ void main() {
     final settingsBox = Hive.box<String>(BoxNames.settings);
     final repository = getIt<SettingsRepository>();
 
-    await settingsBox.put(SettingsKeys.themeState, ThemeState.dark.name);
-    expect(repository.loadThemeState(), ThemeState.dark);
-
-    await settingsBox.put(SettingsKeys.themeState, ThemeState.light.name);
-    expect(repository.loadThemeState(), ThemeState.light);
-
-    await settingsBox.put(SettingsKeys.themeState, ThemeState.system.name);
-    expect(repository.loadThemeState(), ThemeState.system);
+    for (final value in ThemeState.values) {
+      await settingsBox.put(SettingsKeys.themeState, value.name);
+      expect(repository.loadThemeState(), value);
+    }
   });
 
   test('Set value', () async {
     final repository = getIt<SettingsRepository>();
 
-    await repository.saveThemeState(ThemeState.dark);
-    expect(repository.loadThemeState(), ThemeState.dark);
-
-    await repository.saveThemeState(ThemeState.light);
-    expect(repository.loadThemeState(), ThemeState.light);
-
-    await repository.saveThemeState(ThemeState.system);
-    expect(repository.loadThemeState(), ThemeState.system);
+    for (final value in ThemeState.values) {
+      await repository.saveThemeState(value);
+      expect(repository.loadThemeState(), value);
+    }
   });
 }

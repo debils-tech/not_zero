@@ -6,13 +6,11 @@ import 'package:not_zero/units/settings/domain/repositories/settings_repository.
 /// This BLoC just throws changes of theme up to root MaterialApp.
 @injectable
 class AppThemeBloc extends Bloc<ThemeState, ThemeState> {
-  AppThemeBloc(this._repository) : super(ThemeState.system) {
+  AppThemeBloc(this._repository) : super(_repository.loadThemeState()) {
     on<ThemeState>((event, emit) {
       emit(event);
       _repository.saveThemeState(event);
     });
-
-    add(_repository.loadThemeState());
   }
 
   final SettingsRepository _repository;
