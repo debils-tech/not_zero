@@ -1,8 +1,7 @@
 name: Analyze and check app
 
 on:
-  release:
-    types: [published]
+  pull_request:
 
 jobs:
   check:
@@ -12,22 +11,23 @@ jobs:
 
     steps:
       ### INITIAL ###
-      - name: Clone application code
-        uses: actions/checkout@v3
-      - name: Clone flutter
-        uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.3.4'
           channel: stable
           cache: true
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache/git
+            ~/.pub-cache/hosted
 
       ### PREPARATION ###
       - name: Check flutter installation
         run: flutter --version
-      - name: Get all dependecies
-        run: flutter pub get
-      - name: Generate all needed code
-        run: flutter pub run build_runner build --delete-conflicting-outputs lib && flutter pub run slang
+      - name: Get dependecies and generate all needed code
+        run: make gen
 
       ### ANALYSIS ###
       - name: Ensure that code is formatted correctly
@@ -37,7 +37,7 @@ jobs:
 
       ### TESTS ###
       - name: Run tests
-        run: flutter test
+        run: make test
 
       ### REPORT ###
       - name: Dart Code Metrics
