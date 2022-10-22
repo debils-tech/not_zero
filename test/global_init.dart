@@ -5,8 +5,9 @@ import 'package:not_zero/get_it.dart';
 import 'init_paths.dart';
 
 void globalInit() {
+  initPaths();
+
   setUpAll(() async {
-    initPaths();
     await StorageProvider.initHiveBoxes();
     configureDependencies();
   });
