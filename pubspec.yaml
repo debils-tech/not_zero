@@ -63,6 +63,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   path_provider_platform_interface: ^2.0.5
+  package_info_plus_platform_interface: ^2.0.1
 
   # For generating icons on various platforms
   flutter_launcher_icons: ^0.10.0

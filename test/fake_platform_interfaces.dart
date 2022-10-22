@@ -1,12 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:package_info_plus_platform_interface/package_info_data.dart';
+import 'package:package_info_plus_platform_interface/package_info_platform_interface.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:uuid/uuid.dart';
 
 const rootPath = 'build/test_root';
 
 void initPaths() {
-  TestWidgetsFlutterBinding.ensureInitialized();
   PathProviderPlatform.instance = FakePathProviderPlatform();
+}
+
+void initPackageInfo() {
+  PackageInfoPlatform.instance = FakePackageInfoPlatform();
 }
 
 class FakePathProviderPlatform extends PathProviderPlatform {
@@ -46,3 +51,16 @@ class FakePathProviderPlatform extends PathProviderPlatform {
 }
 
 Future<String> _futurePath(String v) => Future.value('$rootPath/$v');
+
+class FakePackageInfoPlatform extends PackageInfoPlatform {
+  @override
+  Future<PackageInfoData> getAll() async {
+    return PackageInfoData(
+      appName: 'Not Zero Test',
+      version: '0.0.0',
+      buildNumber: '0',
+      packageName: 'not_zero',
+      buildSignature: '',
+    );
+  }
+}

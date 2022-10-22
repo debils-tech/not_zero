@@ -556,7 +556,7 @@ packages:
     source: hosted
     version: "3.0.1"
   package_info_plus_platform_interface:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: package_info_plus_platform_interface
       url: "https://pub.dartlang.org"

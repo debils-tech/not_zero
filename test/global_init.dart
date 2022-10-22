@@ -2,10 +2,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/get_it.dart';
 
-import 'init_paths.dart';
+import 'fake_platform_interfaces.dart';
 
 void globalInit() {
   initPaths();
+  initPackageInfo();
 
   setUpAll(() async {
     await StorageProvider.initHiveBoxes();
