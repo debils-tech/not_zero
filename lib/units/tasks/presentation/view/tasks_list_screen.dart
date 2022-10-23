@@ -1,13 +1,9 @@
-import 'package:animated_list_plus/animated_list_plus.dart';
-import 'package:animated_list_plus/transitions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:not_zero/components/confirmation_dialog.dart';
+import 'package:not_zero/components/common_widgets/universal_list_view.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
-import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/get_it.dart';
-import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
@@ -45,14 +41,15 @@ class _TasksListFloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ItemSelectionBloc, Set<String>>(
       builder: (context, state) {
-        if (state.isEmpty) {
-          return FloatingActionButton(
-            onPressed: () => GoRouter.of(context).push('/tasks/new'),
-            child: const Icon(Icons.add_task_rounded),
-          );
-        } else {
-          return const SizedBox();
-        }
+        final isSelection = state.isNotEmpty;
+        return FloatingActionButton(
+          backgroundColor:
+              isSelection ? Theme.of(context).colorScheme.error : null,
+          onPressed: () => GoRouter.of(context).push('/tasks/new'),
+          child: Icon(
+            isSelection ? Icons.delete_outline_rounded : Icons.add_task_rounded,
+          ),
+        );
       },
     );
   }
@@ -69,24 +66,7 @@ class _TasksListScreenBody extends StatelessWidget {
       builder: (context, state) {
         return state.when<Widget>(
           loading: () => const _TasksLoadingView(),
-          loaded: (tasks) => BlocBuilder<ItemSelectionBloc, Set<String>>(
-            builder: (context, state) {
-              if (state.isEmpty) {
-                return _TasksListView(tasks, listKey: listKey);
-              } else {
-                // If at least one element is selected.
-                return Stack(
-                  children: [
-                    _TasksListView(tasks, listKey: listKey),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: _TasksSelectionActions(tasks),
-                    ),
-                  ],
-                );
-              }
-            },
-          ),
+          loaded: (tasks) => _TasksListView(tasks, listKey: listKey),
         );
       },
     );
@@ -112,83 +92,10 @@ class _TasksListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ImplicitlyAnimatedList<Task>(
-      key: listKey,
-      padding: const EdgeInsets.only(top: 5, bottom: 75, left: 5, right: 5),
+    return UniversalListView<Task>(
+      listKey: listKey,
       items: tasks,
-      areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
-      insertDuration: const Duration(milliseconds: 300),
-      removeDuration: const Duration(milliseconds: 200),
-      updateDuration: const Duration(milliseconds: 100),
-      itemBuilder: (context, animation, item, index) => SizeFadeTransition(
-        animation: animation,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 4,
-            horizontal: 5,
-          ),
-          child: TaskCard(item),
-        ),
-      ),
-    );
-  }
-}
-
-class _TasksSelectionActions extends StatelessWidget
-    implements PreferredSizeWidget {
-  const _TasksSelectionActions(this.tasks);
-
-  final List<Task> tasks;
-
-  @override
-  Size get preferredSize => const Size.fromHeight(75);
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).navigationBarTheme.backgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Row(
-          children: const [
-            _DeleteTasksButton(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _DeleteTasksButton extends StatelessWidget {
-  const _DeleteTasksButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () => showConfirmationDialog(
-        context,
-        title: t.common.dialog.deleteTitle,
-        content: t.tasks.list.deleteDialog.content,
-        confirm: t.common.dialog.deleteButton,
-        dangerous: true,
-      ).then((value) {
-        if (value ?? false) {
-          context.read<TasksListBloc>().add(
-                DeleteSelectedTasksEvent(
-                  context.read<ItemSelectionBloc>().state,
-                ),
-              );
-          context
-              .read<ItemSelectionBloc>()
-              .add(const RemoveAllItemsFromSelectionEvent(null));
-        }
-      }),
-      iconSize: 28,
-      tooltip: t.tasks.list.tooltips.deleteSelectedButton,
-      icon: Icon(
-        Icons.delete_outline,
-        color: Theme.of(context).errorColor,
-      ),
+      itemBuilder: (_, item, __) => TaskCard(item),
     );
   }
 }

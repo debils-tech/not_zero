@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:not_zero/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero/helpers/theming.dart';
+import 'package:not_zero/helpers/time.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
@@ -33,67 +33,68 @@ class TaskCard extends StatelessWidget {
     }
 
     return SizedBox(
-      height: 75,
-      child: SelectableCard(
-        onTap: () =>
-            GoRouter.of(context).push('/tasks/edit/${task.id}', extra: task),
-        identifier: task.id,
-        child: Opacity(
-          opacity: task.isCompleted ? 0.5 : 1,
-          child: InkWell(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  width: 7,
-                  child: ColoredBox(
-                    color: colorByImportance,
-                  ),
+      height: 79,
+      child: Opacity(
+        opacity: task.isCompleted ? 0.5 : 1,
+        child: SelectableCard(
+          onTap: () =>
+              GoRouter.of(context).push('/tasks/edit/${task.id}', extra: task),
+          identifier: task.id,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                width: 7,
+                child: ColoredBox(
+                  color: colorByImportance,
                 ),
-                const SizedBox(width: 8),
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _TaskTimeText(task: task),
-                      Text(
-                        task.title,
+              ),
+              const SizedBox(width: 8),
+              Flexible(
+                fit: FlexFit.tight,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _TaskTimeText(task),
+                    Text(
+                      task.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.titleMedium!
+                          .copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 2,
+                      ),
+                      child: Text(
+                        task.description,
+                        style: theme.textTheme.caption!
+                            .copyWith(fontWeight: FontWeight.w500),
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleMedium!
-                            .copyWith(fontWeight: FontWeight.w600),
+                        maxLines: 2,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Text(
-                          task.description,
-                          style: theme.textTheme.caption!
-                              .copyWith(fontWeight: FontWeight.w500),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 12),
-                Transform.scale(
-                  scale: 1.3,
-                  child: Checkbox(
-                    value: task.isCompleted,
-                    shape: const CircleBorder(),
-                    onChanged: (value) => context.read<TasksListBloc>()
-                      ..add(
-                        ChangeTaskCompletionEvent(
-                          task,
-                          completion: value ?? false,
-                        ),
+              ),
+              const SizedBox(width: 12),
+              Transform.scale(
+                scale: 1.3,
+                child: Checkbox(
+                  value: task.isCompleted,
+                  shape: const CircleBorder(),
+                  onChanged: (value) => context.read<TasksListBloc>()
+                    ..add(
+                      ChangeTaskCompletionEvent(
+                        task,
+                        completion: value ?? false,
                       ),
-                  ),
+                    ),
                 ),
-                const SizedBox(width: 8),
-              ],
-            ),
+              ),
+              const SizedBox(width: 8),
+            ],
           ),
         ),
       ),
@@ -102,9 +103,7 @@ class TaskCard extends StatelessWidget {
 }
 
 class _TaskTimeText extends StatelessWidget {
-  const _TaskTimeText({
-    required this.task,
-  });
+  const _TaskTimeText(this.task);
 
   final Task task;
 
@@ -112,12 +111,7 @@ class _TaskTimeText extends StatelessWidget {
   Widget build(BuildContext context) {
     final timeToShow = task.completedAt ?? task.modifiedAt ?? task.createdAt;
 
-    final String formattedTime;
-    if (timeToShow.day == DateTime.now().day) {
-      formattedTime = DateFormat.Hms().format(timeToShow);
-    } else {
-      formattedTime = DateFormat.yMMMd().format(timeToShow);
-    }
+    final formattedTime = timeToShow.localFormat();
 
     final ts = t.common.timeSubtitle;
     final String finalTextTime;
