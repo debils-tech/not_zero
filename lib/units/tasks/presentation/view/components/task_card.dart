@@ -119,7 +119,7 @@ class _TaskTimeText extends StatelessWidget {
       formattedTime = DateFormat.yMMMd().format(timeToShow);
     }
 
-    final ts = t.tasks.list.timeSubtitle;
+    final ts = t.common.timeSubtitle;
     final String finalTextTime;
     if (task.isCompleted) {
       finalTextTime = ts.completedAt(time: formattedTime);

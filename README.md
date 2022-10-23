@@ -24,8 +24,8 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [x] "About" screen
 - [x] Light and dark themes
 - [x] App branding (logo, icons, posters)
-- [ ] Stable database version `(in progress)`
-- [ ] Automatic builds and basic packaging `(in progress)`
+- [x] Stable database version
+- [x] Automatic builds and basic packaging
 - [ ] Notes
 - [ ] Export and import of app's data
 </details>

@@ -19,6 +19,12 @@ class HomeNavigationBlock extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           _NavigationCard(
+            route: '/notes',
+            icon: Icons.note_outlined,
+            title: t.notes.list.title,
+          ),
+          const SizedBox(height: 6),
+          _NavigationCard(
             route: '/settings',
             icon: Icons.settings,
             title: t.settings.list.title,

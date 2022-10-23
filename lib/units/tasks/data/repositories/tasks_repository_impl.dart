@@ -18,6 +18,17 @@ class TasksRepositoryImpl implements TasksRepository {
   Stream<List<Task>> getTasks() => _tasksStreamController.asBroadcastStream();
 
   @override
+  Task? getTaskById(String taskId) {
+    final currentList = _tasksStreamController.value;
+    final index = currentList.indexWhere((element) => element.id == taskId);
+
+    if (index != -1) {
+      return currentList[index];
+    }
+    return null;
+  }
+
+  @override
   Future<void> syncTasks() async {
     final localTasks = await _localService.getTasks();
     _tasksStreamController.add(localTasks..sort(_tasksSorting));

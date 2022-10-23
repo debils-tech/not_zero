@@ -1,12 +1,7 @@
 tasks:
   list:
     title: 'Tasks'
-    create: 'Add new task'
     titleSelection: 'Selected ${count} tasks'
-    timeSubtitle:
-      createdAt: 'created at ${time}'
-      modifiedAt: 'modified at ${time}'
-      completedAt: 'completed at ${time}'
     deleteDialog:
       content: 'Are you sure you want delete selected tasks?'
     tooltips:
@@ -26,6 +21,15 @@ tasks:
       content: 'Are you sure you want delete this task?'
     tooltips:
       deleteTaskButton: 'Delete'
+
+notes:
+  list:
+    title: 'Notes'
+    titleSelection: 'Selected ${count} notes'
+    deleteDialog:
+      content: 'Are you sure you want delete selected tasks?'
+    tooltips:
+      deleteSelectedButton: 'Delete selected'
 
 settings:
   list:
@@ -55,3 +59,7 @@ common:
     okButton: 'Yes'
     deleteTitle: 'Confirm deletion'
     deleteButton: 'Delete'
+  timeSubtitle:
+    createdAt: 'created at ${time}'
+    modifiedAt: 'modified at ${time}'
+    completedAt: 'completed at ${time}'

@@ -3,6 +3,8 @@ import 'package:not_zero/units/tasks/domain/models/task.dart';
 abstract class TasksRepository {
   Stream<List<Task>> getTasks();
 
+  Task? getTaskById(String taskId);
+
   Future<void> syncTasks();
 
   Future<void> saveTask(Task task);

@@ -190,13 +190,13 @@ class _EditingTaskInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          t.tasks.list.timeSubtitle.createdAt(time: createAtDate),
+          t.common.timeSubtitle.createdAt(time: createAtDate),
           style: textTheme,
         ),
         const SizedBox(height: 2),
         if (modifiedAtDate != null)
           Text(
-            t.tasks.list.timeSubtitle.modifiedAt(time: modifiedAtDate),
+            t.common.timeSubtitle.modifiedAt(time: modifiedAtDate),
             style: textTheme,
           ),
       ],
