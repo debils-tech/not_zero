@@ -26,19 +26,20 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [x] App branding (logo, icons, posters)
 - [x] Stable database version
 - [x] Automatic builds and basic packaging
-- [ ] Notes
+- [ ] Notes `(in progress)`
 - [ ] Export and import of app's data
 </details>
 
 <details>
 <summary> Beta </summary>
 
-- [ ] Animations
-- [ ] Advanved stats (weekly, monthly statistics)
 - [ ] Release in Google Play
 - [ ] Release in F-Droid
+- [ ] Animations
+- [ ] Advanced stats (weekly, monthly statistics)
 - [ ] Combos
 - [ ] Habbits
+- [ ] Sublists
 </details>
 
 <details>
