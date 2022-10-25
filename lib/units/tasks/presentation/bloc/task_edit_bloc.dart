@@ -20,7 +20,7 @@ class TaskEditBloc extends Bloc<TaskEditEvent, bool> {
   ) {
     final taskToEdit = event.taskToEdit;
     if (taskToEdit == null) {
-      return _repository.saveTask(
+      return _repository.addTask(
         Task.create(
           title: event.title,
           description: event.description,

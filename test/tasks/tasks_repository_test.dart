@@ -43,7 +43,7 @@ void main() {
     );
 
     for (final t in templateTasks2) {
-      await repository.saveTask(t);
+      await repository.addTask(t);
     }
   });
 
@@ -129,7 +129,7 @@ void main() {
 
     await repository.deleteTask(templateTasks1[0].id);
 
-    await repository.saveTask(newTask);
+    await repository.addTask(newTask);
 
     await repository.updateTask(completedTask);
   });
