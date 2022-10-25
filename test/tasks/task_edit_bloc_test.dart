@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/get_it.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/events/task_edit_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_bloc.dart';
 
 import '../async.dart';
@@ -10,19 +9,19 @@ void main() {
   globalInit();
 
   test('Form changes', () {
-    final bloc = getIt<TaskEditBloc>();
+    final cubit = getIt<TaskEditBloc>();
 
-    expect(bloc.state, false);
+    expect(cubit.state, false);
 
-    testBlocSingle(
-      bloc,
-      const TaskEditEvent.changeForm(correct: true),
+    testCubitSingle(
+      cubit,
+      () => cubit.changeForm(isCorrect: true),
       true,
     );
 
-    testBlocSingle(
-      bloc,
-      const TaskEditEvent.changeForm(correct: false),
+    testCubitSingle(
+      cubit,
+      () => cubit.changeForm(isCorrect: false),
       false,
     );
   });

@@ -7,7 +7,6 @@ import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/events/task_edit_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_bloc.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_edit_fields.dart';
 
@@ -69,7 +68,7 @@ class _DeleteTaskButton extends StatelessWidget {
         dangerous: true,
       ).then((value) {
         if (value ?? false) {
-          context.read<TaskEditBloc>().add(DeleteTaskEvent(task: task));
+          context.read<TaskEditBloc>().deleteTask(task);
           GoRouter.of(context).pop();
         }
       }),
@@ -136,13 +135,11 @@ class _FloatingSubmitButton extends StatelessWidget {
         formKey.currentState!.save();
         final values = formKey.currentState!.value;
 
-        context.read<TaskEditBloc>().add(
-              TaskEditEvent.saveTask(
-                title: values['title'] as String,
-                description: values['description'] as String?,
-                importance: values['importance'] as TaskImportance,
-                taskToEdit: taskToEdit,
-              ),
+        context.read<TaskEditBloc>().saveTask(
+              title: values['title'] as String,
+              description: values['description'] as String?,
+              importance: values['importance'] as TaskImportance,
+              taskToEdit: taskToEdit,
             );
 
         GoRouter.of(context).pop();

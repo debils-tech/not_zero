@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/i18n/strings.g.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 
 class TasksListAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -29,20 +28,21 @@ class TasksListAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           IconButton(
             onPressed: () {
-              final tasksState = tasksListBloc.state;
-              if (tasksState is TasksLoadedState) {
-                itemSelBloc.add(
-                  AddAllItemsToSelectionEvent(
-                    tasksState.tasks.map((e) => e.id).toSet(),
-                  ),
-                );
-              }
+              tasksListBloc.state.mapOrNull(
+                loaded: (tasksState) {
+                  itemSelBloc.add(
+                    ItemSelectionEvent.addAll(
+                      tasksState.tasks.map((e) => e.id).toSet(),
+                    ),
+                  );
+                },
+              );
             },
             icon: const Icon(Icons.select_all),
           ),
           IconButton(
             onPressed: () {
-              itemSelBloc.add(const RemoveAllItemsFromSelectionEvent(null));
+              itemSelBloc.add(const ItemSelectionEvent.removeAll(null));
             },
             icon: const Icon(Icons.close),
           ),
