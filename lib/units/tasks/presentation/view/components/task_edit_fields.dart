@@ -6,7 +6,7 @@ import 'package:not_zero/components/common_widgets/stars_rate.dart';
 import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/task_edit_bloc.dart';
+import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 
 class TaskEditTitleField extends StatelessWidget {
   const TaskEditTitleField(this.formKey, {super.key});
@@ -25,7 +25,7 @@ class TaskEditTitleField extends StatelessWidget {
         FormBuilderValidators.required(),
       ]),
       maxLength: 50,
-      onChanged: (_) => context.read<TaskEditBloc>().changeForm(
+      onChanged: (_) => context.read<TaskEditCubit>().changeForm(
             isCorrect: formKey.currentState?.validate() ?? false,
           ),
     );
@@ -45,7 +45,7 @@ class TaskEditDescriptionField extends StatelessWidget {
         labelText: t.tasks.edit.fields.taskDescription,
       ),
       maxLines: null,
-      onChanged: (_) => context.read<TaskEditBloc>().changeForm(
+      onChanged: (_) => context.read<TaskEditCubit>().changeForm(
             isCorrect: formKey.currentState?.validate() ?? false,
           ),
     );
@@ -77,7 +77,7 @@ class TaskEditImportanceField extends StatelessWidget {
           ],
         );
       },
-      onChanged: (_) => context.read<TaskEditBloc>().changeForm(
+      onChanged: (_) => context.read<TaskEditCubit>().changeForm(
             isCorrect: formKey.currentState?.validate() ?? false,
           ),
     );

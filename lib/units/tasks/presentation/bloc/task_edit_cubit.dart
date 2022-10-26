@@ -4,8 +4,8 @@ import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
 
 @injectable
-class TaskEditBloc extends Cubit<bool> {
-  TaskEditBloc(this._repository) : super(false);
+class TaskEditCubit extends Cubit<bool> {
+  TaskEditCubit(this._repository) : super(false);
 
   final TasksRepository _repository;
 

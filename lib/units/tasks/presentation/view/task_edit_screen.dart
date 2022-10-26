@@ -7,7 +7,7 @@ import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/strings.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/task_edit_bloc.dart';
+import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_edit_fields.dart';
 
 class TaskEditScreen extends StatelessWidget {
@@ -20,8 +20,8 @@ class TaskEditScreen extends StatelessWidget {
     final formKey = GlobalKey<FormBuilderState>();
 
     return BlocProvider(
-      create: (_) => getIt<TaskEditBloc>(),
-      child: BlocBuilder<TaskEditBloc, bool>(
+      create: (_) => getIt<TaskEditCubit>(),
+      child: BlocBuilder<TaskEditCubit, bool>(
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -68,7 +68,7 @@ class _DeleteTaskButton extends StatelessWidget {
         dangerous: true,
       ).then((value) {
         if (value ?? false) {
-          context.read<TaskEditBloc>().deleteTask(task);
+          context.read<TaskEditCubit>().deleteTask(task);
           GoRouter.of(context).pop();
         }
       }),
@@ -135,7 +135,7 @@ class _FloatingSubmitButton extends StatelessWidget {
         formKey.currentState!.save();
         final values = formKey.currentState!.value;
 
-        context.read<TaskEditBloc>().saveTask(
+        context.read<TaskEditCubit>().saveTask(
               title: values['title'] as String,
               description: values['description'] as String?,
               importance: values['importance'] as TaskImportance,
