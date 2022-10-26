@@ -23,9 +23,7 @@ class TasksListBloc extends Bloc<TasksListEvent, TasksListState> {
 
     await emit.forEach<List<Task>>(
       _repository.getTasks(),
-      onData: (tasks) {
-        return TasksListState.loaded(tasks);
-      },
+      onData: TasksListState.loaded,
     );
   }
 
