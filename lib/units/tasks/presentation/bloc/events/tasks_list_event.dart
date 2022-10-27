@@ -4,7 +4,7 @@ import 'package:not_zero/units/tasks/domain/models/task.dart';
 part 'tasks_list_event.freezed.dart';
 
 @freezed
-abstract class TasksListEvent with _$TasksListEvent {
+class TasksListEvent with _$TasksListEvent {
   const factory TasksListEvent.loadTasks() = LoadTasksEvent;
 
   const factory TasksListEvent.changeTaskCompletion(

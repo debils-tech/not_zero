@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:not_zero/units/notes/domain/models/note.dart';
 import 'package:not_zero/units/notes/domain/repositories/notes_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
+@LazySingleton(as: NotesRepository)
 class NotesRepositoryImpl implements NotesRepository {
   final _notesStreamController = BehaviorSubject<List<Note>>.seeded([]);
 

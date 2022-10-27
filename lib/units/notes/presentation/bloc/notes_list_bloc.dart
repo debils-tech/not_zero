@@ -8,7 +8,8 @@ import 'package:not_zero/units/notes/presentation/bloc/states/notes_list_state.d
 @injectable
 class NotesListBloc extends Bloc<NotesListEvent, NotesListState> {
   NotesListBloc(this._repository) : super(const NotesListState.loading()) {
-    on<LoadNotesEvent>((event, emit) => _onLoadNotes);
+    on<LoadNotesEvent>(_onLoadNotes);
+    on<DeleteSelectedNotesEvent>(_onDeleteSelectedNotes);
   }
 
   final NotesRepository _repository;

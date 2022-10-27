@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/common_widgets/universal_list_view.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
+import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
@@ -18,9 +19,7 @@ class TasksListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => getIt<ItemSelectionBloc>(),
-        ),
+        BlocProvider(create: (_) => getIt<ItemSelectionBloc>()),
         BlocProvider(
           create: (_) => getIt<TasksListBloc>()..add(const LoadTasksEvent()),
         )
@@ -41,14 +40,26 @@ class _TasksListFloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ItemSelectionBloc, Set<String>>(
       builder: (context, state) {
-        final isSelection = state.isNotEmpty;
+        if (state.isNotEmpty) {
+          return FloatingActionButton(
+            backgroundColor: Theme.of(context).colorScheme.error,
+            onPressed: () {
+              // Delete all selected tasks.
+              context
+                  .read<TasksListBloc>()
+                  .add(TasksListEvent.deleteSelected(state));
+
+              // Clear the selection.
+              context
+                  .read<ItemSelectionBloc>()
+                  .add(const ItemSelectionEvent.removeAll(null));
+            },
+            child: const Icon(Icons.delete_outline_rounded),
+          );
+        }
         return FloatingActionButton(
-          backgroundColor:
-              isSelection ? Theme.of(context).colorScheme.error : null,
           onPressed: () => GoRouter.of(context).push('/tasks/new'),
-          child: Icon(
-            isSelection ? Icons.delete_outline_rounded : Icons.add_task_rounded,
-          ),
+          child: const Icon(Icons.add_task_rounded),
         );
       },
     );
@@ -64,7 +75,7 @@ class _TasksListScreenBody extends StatelessWidget {
 
     return BlocBuilder<TasksListBloc, TasksListState>(
       builder: (context, state) {
-        return state.when<Widget>(
+        return state.when(
           loading: () => const _TasksLoadingView(),
           loaded: (tasks) => _TasksListView(tasks, listKey: listKey),
         );
