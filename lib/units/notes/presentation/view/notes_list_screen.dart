@@ -31,6 +31,18 @@ class NotesListScreen extends StatelessWidget {
   }
 }
 
+class _NotesListFloatingButton extends StatelessWidget {
+  const _NotesListFloatingButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {},
+      child: const Icon(Icons.note_add),
+    );
+  }
+}
+
 class _NotesListScreenBody extends StatelessWidget {
   const _NotesListScreenBody();
 

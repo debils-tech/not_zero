@@ -31,6 +31,14 @@ notes:
     tooltips:
       deleteSelectedButton: 'Delete selected'
 
+  edit:
+    title:
+      create: 'New note'
+      existing: 'Edit note'
+    tooltips:
+      deleteNoteButton: 'Delete'
+      saveNoteButton: 'Save'
+
 settings:
   list:
     title: 'Settings'

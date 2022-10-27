@@ -19,24 +19,23 @@ class TaskEditScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
 
+    final screenTitle = taskToEdit == null
+        ? t.tasks.edit.title.create
+        : t.tasks.edit.title.existing;
+    final taskActions =
+        taskToEdit != null ? [_DeleteTaskButton(taskToEdit!)] : null;
+
     return BlocProvider(
       create: (_) => getIt<TaskEditCubit>(),
       child: BlocBuilder<TaskEditCubit, bool>(
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(
-                taskToEdit == null
-                    ? t.tasks.edit.title.create
-                    : t.tasks.edit.title.existing,
-              ),
-              actions: taskToEdit != null
-                  ? [
-                      _DeleteTaskButton(taskToEdit!),
-                    ]
-                  : null,
+              title: Text(screenTitle),
+              actions: taskActions,
             ),
             body: _TaskEditScreenBody(formKey, taskToEdit: taskToEdit),
+            // Bloc builder for TaskEditCubit here exist for this only feature.
             floatingActionButton: state
                 ? _FloatingSubmitButton(
                     formKey,

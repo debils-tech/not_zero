@@ -9,7 +9,11 @@ class TaskEditCubit extends Cubit<bool> {
 
   final TasksRepository _repository;
 
-  void changeForm({required bool isCorrect}) => emit(isCorrect);
+  void changeForm({required bool isCorrect}) {
+    if (isCorrect != state) {
+      emit(isCorrect);
+    }
+  }
 
   Future<void> saveTask({
     required TaskImportance importance,
