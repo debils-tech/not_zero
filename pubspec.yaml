@@ -33,12 +33,12 @@ dependencies:
   flex_color_scheme: ^6.0.1
 
   # Dependecy injection
-  injectable: ^1.5.3
+  injectable: ^2.1.0
   get_it: ^7.2.0
 
   # Navigation
-  go_router: ^5.1.1
-  url_launcher: ^6.1.6
+  go_router: ^5.2.1
+  url_launcher: ^6.1.7
 
   # Widgets
   flutter_form_builder: ^7.7.0
@@ -46,8 +46,8 @@ dependencies:
   animated_list_plus: ^0.4.4
 
   # Database
-  drift: ^2.2.0
-  sqlite3_flutter_libs: ^0.5.10
+  drift: ^2.3.0
+  sqlite3_flutter_libs: ^0.5.12
   hive_flutter: ^1.1.0
 
   # Utilities
@@ -55,7 +55,7 @@ dependencies:
   path: ^1.8.2
 
   # For getting info about app's package
-  package_info_plus: ^3.0.1
+  package_info_plus: ^3.0.2
   universal_io: ^2.0.4
 
 dev_dependencies:
@@ -66,24 +66,19 @@ dev_dependencies:
   package_info_plus_platform_interface: ^2.0.1
 
   # For generating icons on various platforms
-  flutter_launcher_icons: ^0.10.0
+  flutter_launcher_icons: ^0.11.0
 
   # Analysis
   flutter_lints: ^2.0.1
   very_good_analysis: ^3.1.0
-  dart_code_metrics: ^4.21.2
+  dart_code_metrics: ^5.1.0
 
   # Code generation
   build_runner: ^2.3.2
-  freezed: ^2.2.0
-  json_serializable: ^6.5.3
-  # TODO Replace with pub.dev dependency when developer will fix conflict with "analyzer" package
-  injectable_generator:
-    git:
-      url: https://github.com/volskaya/injectable.git
-      ref: master
-      path: injectable_generator
-  drift_dev: ^2.2.0+1
+  freezed: ^2.3.0
+  json_serializable: ^6.5.4
+  injectable_generator: ^2.1.2
+  drift_dev: ^2.3.2
 
 flutter:
   fonts:
