@@ -2,7 +2,7 @@
 
 <a href="./LICENSE.md"><img src="https://img.shields.io/badge/license-GPLv3-blue.svg"></a>
 
-> Currently under active development and doesn't have anything very intresting to show.
+> Currently at the very early stage of development and here is no interesting stuff to show.
 >
 > More information will be in the near future.
 
@@ -10,8 +10,8 @@ Not Zero is a free crossplatform application developed with [flutter](https://fl
 
 ## Project status and roadmap
 
-Project is now developing by the single person, so development is not very fast.
-It currently at very early stage, can contain breaking changes **(including a posibility of user data loss)**.
+Project is now being developed by a single person in his personal time, so development is not very fast.
+It is currently at the very early stage, can contain breaking changes **(including a posibility of user data loss)**.
 
 Here is roadmap of project and what features are necessary to "complete" each stage:
 
