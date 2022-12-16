@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/common_widgets/universal_list_view.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/get_it.dart';
@@ -26,6 +27,7 @@ class NotesListScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(title: Text(t.notes.list.title)),
         body: const _NotesListScreenBody(),
+        floatingActionButton: const _NotesListFloatingButton(),
       ),
     );
   }
@@ -37,7 +39,9 @@ class _NotesListFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: () {
+        GoRouter.of(context).push('/notes/new');
+      },
       child: const Icon(Icons.note_add),
     );
   }
@@ -66,7 +70,9 @@ class _NotesLoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
   }
 }
 

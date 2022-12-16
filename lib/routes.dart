@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/pattern_validator.dart';
 import 'package:not_zero/units/home/presentation/view/home_screen.dart';
+import 'package:not_zero/units/notes/presentation/view/note_edit_screen.dart';
 import 'package:not_zero/units/notes/presentation/view/notes_list_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/about_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/licenses_screen.dart';
@@ -30,6 +31,11 @@ final appRouter = GoRouter(
             GoRoute(
               path: 'edit/:id',
               builder: (_, state) {
+                assert(
+                  state.params.containsKey('id'),
+                  'This route has to pass "id" parameter',
+                );
+
                 final taskId = state.params['id']!;
 
                 assert(
@@ -54,6 +60,12 @@ final appRouter = GoRouter(
         GoRoute(
           path: 'notes',
           builder: (_, __) => const NotesListScreen(),
+          routes: [
+            GoRoute(
+              path: 'new',
+              builder: (_, __) => const NoteEditScreen(),
+            ),
+          ],
         ),
         GoRoute(
           path: 'settings',

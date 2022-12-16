@@ -46,9 +46,6 @@ dart_code_metrics:
     avoid-unnecessary-type-casts: true
     avoid-unrelated-type-assertions: true
     double-literal-format: true
-    format-comment:
-      ignored-patterns:
-        - ^-- .* --$
     no-boolean-literal-compare: true
     no-empty-block:
       severity: warning
