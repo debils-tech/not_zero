@@ -2,7 +2,6 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/pattern_validator.dart';
 import 'package:not_zero/units/home/presentation/view/home_screen.dart';
-import 'package:not_zero/units/notes/presentation/view/notes_list_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/about_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/licenses_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/settings_screen.dart';
@@ -50,10 +49,6 @@ final appRouter = GoRouter(
               },
             ),
           ],
-        ),
-        GoRoute(
-          path: 'notes',
-          builder: (_, __) => const NotesListScreen(),
         ),
         GoRoute(
           path: 'settings',
