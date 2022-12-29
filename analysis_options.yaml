@@ -20,6 +20,7 @@ linter:
     sort_pub_dependencies: false
     unnecessary_await_in_return: true
     prefer_final_locals: true
+    cascade_invocations: false
 
 dart_code_metrics:
   metrics-exclude:
@@ -46,9 +47,9 @@ dart_code_metrics:
     avoid-unnecessary-type-casts: true
     avoid-unrelated-type-assertions: true
     double-literal-format: true
-    format-comment:
-      ignored-patterns:
-        - ^-- .* --$
+    # format-comment:
+    #   ignored-patterns:
+    #     - ^-- .* --$
     no-boolean-literal-compare: true
     no-empty-block:
       severity: warning
