@@ -2,6 +2,7 @@ list:
   title: 'Settings'
   blocks:
     lookAndFeel: 'Look and feel'
+    storage: 'Storage'
     other: 'Other'
 
 theme:
@@ -10,6 +11,15 @@ theme:
     light: 'Light theme'
     dark: 'Dark theme'
     system: 'Prefer system theme'
+
+storage:
+  title: 'Backup data'
+  aboutHeader: 'How it works'
+  aboutContent: |
+    You can export all of your app data into single JSON file and then import at any time on any device.
+    ⚠️ Warning: while app is in early stage of development, data and formats between versions can be changed and then data can be lost.
+  importTitle: 'Import'
+  exportTitle: 'Export'
 
 about:
   title: 'About'

@@ -20,9 +20,10 @@ class AboutScreen extends StatelessWidget {
         children: [
           SettingsBlocHeader(t.settings.about.blocks.version),
           ListTile(
-            title: Text(appInfo.name),
-            subtitle: Text(appInfo.platform),
-            trailing: Text('${appInfo.version} (${appInfo.buildNumber})'),
+            title: SelectableText(appInfo.name),
+            subtitle: SelectableText(appInfo.platform),
+            trailing:
+                SelectableText('${appInfo.version} (${appInfo.buildNumber})'),
           ),
           SettingsBlocHeader(t.settings.about.blocks.links),
           SettingsUrlEntry(

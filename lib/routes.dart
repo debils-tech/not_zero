@@ -5,6 +5,7 @@ import 'package:not_zero/units/home/presentation/view/home_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/about_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/licenses_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/settings_screen.dart';
+import 'package:not_zero/units/settings/presentation/view/storage_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/theme_settings_screen.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
@@ -57,6 +58,10 @@ final appRouter = GoRouter(
             GoRoute(
               path: 'theme',
               builder: (_, __) => const ThemeSettingsScreen(),
+            ),
+            GoRoute(
+              path: 'storage',
+              builder: (_, __) => const StorageSettingsScreen(),
             ),
             GoRoute(
               path: 'about',
