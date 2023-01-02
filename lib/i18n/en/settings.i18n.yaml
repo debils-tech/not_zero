@@ -1,0 +1,21 @@
+list:
+  title: 'Settings'
+  blocks:
+    lookAndFeel: 'Look and feel'
+    other: 'Other'
+
+theme:
+  title: 'Theme'
+  values:
+    light: 'Light theme'
+    dark: 'Dark theme'
+    system: 'Prefer system theme'
+
+about:
+  title: 'About'
+  blocks:
+    version: 'App version'
+    links: 'Links'
+    telegram: 'Telegram'
+    repository: 'Repository'
+    licenses: 'Licenses'

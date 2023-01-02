@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/common_widgets/clickable_card.dart';
-import 'package:not_zero/i18n/strings.g.dart';
+import 'package:not_zero/i18n/translations.g.dart';
 
 class HomeNavigationBlock extends StatelessWidget {
   const HomeNavigationBlock({super.key});

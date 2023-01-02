@@ -1,0 +1,22 @@
+list:
+  title: 'Tasks'
+  titleSelection: 'Selected ${count} tasks'
+  deleteDialog:
+    content: 'Are you sure you want delete selected tasks?'
+  tooltips:
+    deleteSelectedButton: 'Delete selected'
+
+edit:
+  title:
+    create: 'New task'
+    existing: 'Edit task'
+  fields:
+    taskTitle: 'Title'
+    taskDescription: 'Description'
+  submit:
+    create: 'Create new task!'
+    existing: 'Save changes'
+  deleteDialog:
+    content: 'Are you sure you want delete this task?'
+  tooltips:
+    deleteTaskButton: 'Delete'

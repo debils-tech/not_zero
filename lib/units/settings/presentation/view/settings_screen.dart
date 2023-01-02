@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:not_zero/i18n/strings.g.dart';
+import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/settings/presentation/view/components/list_elements.dart';
 
 class SettingsScreen extends StatelessWidget {

@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/get_it.dart';
-import 'package:not_zero/i18n/strings.g.dart';
+import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_edit_fields.dart';
@@ -171,7 +171,7 @@ class _EditingTaskInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme.subtitle2;
 
-    final timeFormat = DateFormat.Hms();
+    final timeFormat = DateFormat.Hm();
     final dateFormat = DateFormat.yMMMMd();
     final createAtDate = '${timeFormat.format(task.createdAt)}'
         ' '

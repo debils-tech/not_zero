@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/helpers/time.dart';
-import 'package:not_zero/i18n/strings.g.dart';
+import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';

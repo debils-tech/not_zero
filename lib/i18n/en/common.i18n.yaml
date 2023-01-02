@@ -1,0 +1,11 @@
+dialog:
+  confirmTitle: 'Confirm?'
+  cancelButton: 'Cancel'
+  okButton: 'Yes'
+  deleteTitle: 'Confirm deletion'
+  deleteButton: 'Delete'
+
+timeSubtitle:
+  createdAt: 'created at ${time}'
+  modifiedAt: 'modified at ${time}'
+  completedAt: 'completed at ${time}'

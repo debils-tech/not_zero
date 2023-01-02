@@ -4,7 +4,7 @@ extension FormatBasedOnToday on DateTime {
   String localFormat() {
     final dateToCompare = DateTime.now();
     if (day == dateToCompare.day) {
-      return DateFormat.Hms().format(this);
+      return DateFormat.Hm().format(this);
     } else if (year == dateToCompare.year) {
       return DateFormat.MMMMd().format(this);
     } else {

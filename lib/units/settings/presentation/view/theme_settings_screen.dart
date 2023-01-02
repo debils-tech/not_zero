@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:not_zero/i18n/strings.g.dart';
+import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
 import 'package:not_zero/units/settings/presentation/bloc/theme_bloc.dart';
 

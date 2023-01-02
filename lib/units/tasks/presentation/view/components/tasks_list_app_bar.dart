@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
-import 'package:not_zero/i18n/strings.g.dart';
+import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 
 class TasksListAppBar extends StatelessWidget implements PreferredSizeWidget {
