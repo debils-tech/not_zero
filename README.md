@@ -26,8 +26,7 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [x] App branding (logo, icons, posters)
 - [x] Stable database version
 - [x] Automatic builds and basic packaging
-- [ ] Notes `(in progress)`
-- [ ] Export and import of app's data
+- [ ] Export and import of app's data `(in progress)`
 </details>
 
 <details>
@@ -45,6 +44,7 @@ Here is roadmap of project and what features are necessary to "complete" each st
 <details>
 <summary> Stable release </summary>
 
+- [ ] Notes
 - [ ] Achievements
 - [ ] Adaptation for iOS
 - [ ] Release in App Store
