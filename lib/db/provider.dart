@@ -11,7 +11,7 @@ export 'db.dart';
 @singleton
 class StorageProvider {
   static Future<String> get storageDirectory async {
-    if (Platform.isLinux) {
+    if (Platform.isLinux && !Platform.environment.containsKey('FLUTTER_TEST')) {
       return p.join(
         Platform.environment['HOME'] ?? '~',
         '.config/not_zero',
