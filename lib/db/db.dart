@@ -3,10 +3,10 @@
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/db/tasks_table.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';
 
 part 'db.g.dart';
@@ -67,6 +67,6 @@ LazyDatabase _openConnection() {
 }
 
 Future<String> _getDatabasePath() async {
-  final dbFolder = await getApplicationDocumentsDirectory();
-  return p.join(dbFolder.path, 'db.sqlite');
+  final storagePath = await StorageProvider.storageDirectory;
+  return p.join(storagePath, 'db.sqlite');
 }
