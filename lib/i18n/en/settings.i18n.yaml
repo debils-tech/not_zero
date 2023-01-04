@@ -22,6 +22,7 @@ storage:
   exportTitle: 'Export'
   importStatus:
     process: 'Importing your data...'
+    successTitle: 'Restart required'
     success: |
       You successfully imported app's data!
       For finishing this process, please restart this app

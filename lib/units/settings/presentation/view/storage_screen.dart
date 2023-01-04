@@ -100,6 +100,7 @@ class StorageSettingsScreen extends StatelessWidget {
 
           return AlertDialog(
             icon: const Icon(Icons.warning_amber_rounded),
+            title: Text(t.settings.storage.importStatus.successTitle),
             content: Text(t.settings.storage.importStatus.success),
             actions: isClosingSupported ? closeDialogAction : null,
           );
