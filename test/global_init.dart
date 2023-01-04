@@ -7,6 +7,7 @@ import 'fake_platform_interfaces.dart';
 void globalInit() {
   initPaths();
   initPackageInfo();
+  initFileHelper();
 
   setUpAll(() async {
     await StorageProvider.initHiveBoxes();

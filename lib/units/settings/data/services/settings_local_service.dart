@@ -62,14 +62,11 @@ class SettingsLocalService {
 
     return MultiplatformFileHelper.instance.saveFile(
       data: bytesContent,
-      fileName: _backupFileName,
+      fileName: 'NotZero_Backup_${DateTime.now().toIso8601String()}.json',
       mimetype: 'application/json',
       allowedExtensions: ['json', 'yaml', 'yml'],
     );
   }
-
-  String get _backupFileName =>
-      'NotZero_Backup_${DateTime.now().toIso8601String()}.json';
 
   Future<BackupModel?> importDataFromFile() async {
     try {
