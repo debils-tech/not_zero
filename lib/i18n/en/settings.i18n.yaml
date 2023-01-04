@@ -20,9 +20,21 @@ storage:
     ⚠️ Warning: while app is in early stage of development, data and formats between versions can be changed and then data can be lost.
   importTitle: 'Import'
   exportTitle: 'Export'
+  importStatus:
+    process: 'Importing your data...'
+    success: |
+      You successfully imported app's data!
+      For finishing this process, please restart this app
+    failure: |
+      Something went wrong. Your data wasn't imported :(
+      Try again on some other file
   exportStatus:
-    success: 'You successfully exported you data!'
-    failure: Something went wrong. Your data wasn't exported
+    process: 'Exporting your data...'
+    success: 'You successfully exported your data!'
+    failure: |
+      Something went wrong. Your data wasn't exported ;(
+      Try to restart an app
+  closeAppButton: 'Close this app!'
 
 about:
   title: 'About'

@@ -11,6 +11,7 @@ analyzer:
     - lib/get_it.config.dart
   errors:
     unnecessary_await_in_return: warning
+    use_build_context_synchronously: ignore
     # Added since JsonKey and JsonSerializable should be used in "invalid" place with freezed
     invalid_annotation_target: ignore
 
