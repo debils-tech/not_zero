@@ -36,16 +36,9 @@ void main() {
     }
 
     // Overwriting some record.
-    final newTime = DateTime.now();
     final taskForCopy = templateTasks2[1].copyWith(
       title: 'New task!',
-      // It is done for resetting milliseconds
-      completedAt: newTime.subtract(
-        Duration(
-          milliseconds: newTime.millisecond,
-          microseconds: newTime.microsecond,
-        ),
-      ),
+      completedAt: DateTime.now(),
     );
     await service.saveTask(taskForCopy);
     final recordFromDb = await db.findByKey(db.tasksTable, taskForCopy.id);

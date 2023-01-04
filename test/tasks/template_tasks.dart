@@ -7,7 +7,7 @@ final templateTasks1 = <Task>[
     description: '1',
     importance: TaskImportance.normal,
     createdAt: DateTime(2022),
-    completedAt: DateTime.fromMillisecondsSinceEpoch(1664392000),
+    completedAt: DateTime.fromMillisecondsSinceEpoch(1664392368),
   ),
   Task(
     id: 'b2f659ad-7e31-4abd-a399-3d276800deaa',
@@ -31,7 +31,7 @@ final templateTasks2 = <Task>[
     description: '1',
     importance: TaskImportance.normal,
     createdAt: DateTime.fromMillisecondsSinceEpoch(1000000),
-    completedAt: DateTime.fromMillisecondsSinceEpoch(1664390000),
+    completedAt: DateTime.fromMillisecondsSinceEpoch(1664390368),
   ),
   Task(
     id: '06281633-36a6-42c6-9271-a664554d0e60',
@@ -56,7 +56,7 @@ final templateTasks3 = <Task>[
     description: '1',
     importance: TaskImportance.normal,
     createdAt: DateTime.fromMillisecondsSinceEpoch(1000000),
-    completedAt: DateTime.fromMillisecondsSinceEpoch(166437000),
+    completedAt: DateTime.fromMillisecondsSinceEpoch(1664370368),
   ),
   Task(
     id: 'f670866f-3a31-4c3d-81e8-3b0fa88f4494',
@@ -64,7 +64,7 @@ final templateTasks3 = <Task>[
     description: '2',
     importance: TaskImportance.notImportant,
     createdAt: DateTime.fromMillisecondsSinceEpoch(1200000),
-    completedAt: DateTime.fromMillisecondsSinceEpoch(1664392000),
+    completedAt: DateTime.fromMillisecondsSinceEpoch(1664392368),
   ),
   Task(
     id: '5a81f313-31a4-482b-93fe-f40a52f98de9',
@@ -78,7 +78,7 @@ final templateTasks3 = <Task>[
     description: '1',
     importance: TaskImportance.important,
     createdAt: DateTime(2022),
-    completedAt: DateTime.fromMillisecondsSinceEpoch(1662392000),
+    completedAt: DateTime.fromMillisecondsSinceEpoch(1662392368),
   ),
   Task(
     id: 'd6614c6f-0a37-4fc0-8559-af374ad53a54',
@@ -98,6 +98,6 @@ final templateTasks3 = <Task>[
     title: 'Task 7',
     importance: TaskImportance.normal,
     createdAt: DateTime(2022),
-    completedAt: DateTime.fromMillisecondsSinceEpoch(1662392000),
+    completedAt: DateTime.fromMillisecondsSinceEpoch(1662392318),
   ),
 ];

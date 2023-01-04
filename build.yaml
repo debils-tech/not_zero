@@ -1,0 +1,7 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          # This is necessary for saving microseconds accuracy
+          store_date_time_values_as_text: true
