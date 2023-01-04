@@ -1,17 +1,14 @@
 import 'dart:convert';
 
-import 'package:document_file_save_plus/document_file_save_plus.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/db/provider.dart';
+import 'package:not_zero/helpers/file_helper.dart';
 import 'package:not_zero/units/settings/domain/models/backup_model.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:universal_io/io.dart';
 
 @lazySingleton
 class SettingsLocalService {
@@ -60,44 +57,15 @@ class SettingsLocalService {
   }
 
   Future<bool> exportDataToFile(BackupModel content) {
-    final bytesContent = utf8.encode(json.encode(content.toJson()));
-    if (Platform.isAndroid || Platform.isIOS) {
-      return _saveMobile(bytesContent);
-    } else if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
-      return _saveDesktop(bytesContent);
-    } else {
-      throw UnimplementedError('Export is not available on web');
-    }
-  }
+    final bytesContent =
+        Uint8List.fromList(utf8.encode(json.encode(content.toJson())));
 
-  Future<bool> _saveMobile(List<int> bytes) async {
-    try {
-      await DocumentFileSavePlus.saveFile(
-        Uint8List.fromList(bytes),
-        _backupFileName,
-        'application/json',
-      );
-      return true;
-    } catch (e, st) {
-      debugPrint('Error while saving backup: $e');
-      debugPrintStack(stackTrace: st);
-      return false;
-    }
-  }
-
-  Future<bool> _saveDesktop(List<int> bytes) async {
-    final documentsDir = await getApplicationDocumentsDirectory();
-    final pathToSave = await FilePicker.platform.saveFile(
+    return MultiplatformFileHelper.instance.saveFile(
+      data: bytesContent,
       fileName: _backupFileName,
-      initialDirectory: documentsDir.path,
-      type: FileType.custom,
-      allowedExtensions: ['json'],
-      lockParentWindow: true,
+      mimetype: 'application/json',
+      allowedExtensions: ['json', 'yaml', 'yml'],
     );
-    if (pathToSave == null) return false;
-
-    File(pathToSave).writeAsBytesSync(bytes);
-    return true;
   }
 
   String get _backupFileName =>
@@ -105,18 +73,13 @@ class SettingsLocalService {
 
   Future<BackupModel?> importDataFromFile() async {
     try {
-      final backupFile = await FilePicker.platform.pickFiles(
-        allowCompression: false,
-        type: FileType.custom,
+      final backupContent = await MultiplatformFileHelper.instance.loadFile(
         allowedExtensions: ['json'],
-        lockParentWindow: true,
       );
-      final filePath = backupFile?.files.single.path;
-      if (filePath == null) return null;
+      if (backupContent == null) return null;
 
       return BackupModel.fromJson(
-        json.decode(utf8.decode(File(filePath).readAsBytesSync()))
-            as Map<String, dynamic>,
+        json.decode(utf8.decode(backupContent)) as Map<String, dynamic>,
       );
     } catch (e, st) {
       debugPrint('Error while loading backup: $e');
