@@ -1,10 +1,10 @@
-class BoxNames {
+abstract class BoxNames {
   BoxNames._();
 
   static const String settings = 'settings';
 }
 
-class SettingsKeys {
+abstract class SettingsKeys {
   SettingsKeys._();
 
   static const String themeState = 'themeState';

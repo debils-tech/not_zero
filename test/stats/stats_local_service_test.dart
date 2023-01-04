@@ -21,13 +21,13 @@ void main() {
     tasks.sort((a, b) => a.index.compareTo(b.index));
 
     expect(
-      listEquals(tasks, [
+      tasks,
+      [
         TaskImportance.notImportant,
         TaskImportance.normal,
         TaskImportance.normal,
         TaskImportance.important
-      ]),
-      true,
+      ],
     );
   });
 }

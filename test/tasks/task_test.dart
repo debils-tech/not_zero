@@ -39,4 +39,25 @@ void main() {
     expect(task.importance, TaskImportance.notImportant);
     expect(task.isCompleted, originalTask.isCompleted);
   });
+
+  test('Task toJson', () {
+    final task = templateTasks1.first;
+
+    expect(task.toJson(), {
+      'id': task.id,
+      'title': task.title,
+      'description': task.description,
+      'createdAt': task.createdAt.toIso8601String(),
+      'modifiedAt': task.modifiedAt?.toIso8601String(),
+      'completedAt': task.completedAt?.toIso8601String(),
+      'importance': task.importance.name,
+    });
+  });
+
+  test('Task fromJson', () {
+    final task = templateTasks1.first;
+    final recreatedTask = Task.fromJson(task.toJson());
+
+    expect(recreatedTask, task);
+  });
 }

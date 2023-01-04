@@ -1,4 +1,4 @@
-class ContactLinks {
+abstract class ContactLinks {
   ContactLinks._();
 
   static const String telegram = 'https://t.me/uSlashVlad';

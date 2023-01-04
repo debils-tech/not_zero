@@ -1,4 +1,4 @@
-class PatternValidator {
+abstract class PatternValidator {
   PatternValidator._();
 
   static final uuidPattern =

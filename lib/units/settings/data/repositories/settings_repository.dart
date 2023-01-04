@@ -52,8 +52,6 @@ class SettingsRepositoryImpl implements SettingsRepository {
     final backupContent = await _localService.importDataFromFile();
     if (backupContent == null) return false;
 
-    print(backupContent);
-
     // If version is not supported
     if (backupContent.version != 1) return false;
 

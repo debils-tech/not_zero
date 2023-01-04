@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 
-import '../async.dart';
 import '../global_init.dart';
 
 void main() {
@@ -13,17 +12,12 @@ void main() {
 
     expect(cubit.state, false);
 
-    testCubitSingle(
-      cubit,
-      () => cubit.changeForm(isCorrect: true),
-      true,
-    );
+    // Somehow my async cubit tests doesn't work with
+    // `flutter test --coverage` command
+    expect(cubit.stream, emitsInOrder([true, false]));
 
-    testCubitSingle(
-      cubit,
-      () => cubit.changeForm(isCorrect: false),
-      false,
-    );
+    cubit.changeForm(isCorrect: true);
+    cubit.changeForm(isCorrect: false);
   });
 
   // TODO(uSlashVlad): Save and delete tasks.
