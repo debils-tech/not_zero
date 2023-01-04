@@ -20,7 +20,7 @@ void main() {
         name: 'Not Zero',
         platform: Platform.operatingSystem,
         version: '0.0.0',
-        buildNumber: '0',
+        buildNumber: 0,
       ),
     );
   });

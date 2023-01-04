@@ -4,4 +4,8 @@ abstract class SettingsRepository {
   ThemeState loadThemeState();
 
   Future<void> saveThemeState(ThemeState state);
+
+  Future<bool> exportData();
+
+  Future<bool> importData();
 }

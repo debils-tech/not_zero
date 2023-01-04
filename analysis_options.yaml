@@ -11,12 +11,14 @@ analyzer:
     - lib/get_it.config.dart
   errors:
     unnecessary_await_in_return: warning
+    # Added since JsonKey and JsonSerializable should be used in "invalid" place with freezed
+    invalid_annotation_target: ignore
 
 linter:
   rules:
     public_member_api_docs: false
     one_member_abstracts: false
-    unused_element: true
+    unused_element: false
     sort_pub_dependencies: false
     unnecessary_await_in_return: true
     prefer_final_locals: true

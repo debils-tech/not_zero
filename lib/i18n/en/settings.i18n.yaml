@@ -20,6 +20,9 @@ storage:
     ⚠️ Warning: while app is in early stage of development, data and formats between versions can be changed and then data can be lost.
   importTitle: 'Import'
   exportTitle: 'Export'
+  exportStatus:
+    success: 'You successfully exported you data!'
+    failure: Something went wrong. Your data wasn't exported
 
 about:
   title: 'About'

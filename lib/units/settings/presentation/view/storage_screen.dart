@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
+import 'package:not_zero/units/settings/domain/repositories/settings_repository.dart';
 import 'package:not_zero/units/settings/presentation/view/components/list_elements.dart';
 
 class StorageSettingsScreen extends StatelessWidget {
@@ -17,9 +21,7 @@ class StorageSettingsScreen extends StatelessWidget {
             child: SelectableText(t.settings.storage.aboutContent),
           ),
           ListTile(
-            onTap: () {
-              // TODO(uSlashVlad): Add export functionality
-            },
+            onTap: () => _exportData(context),
             leading: const Icon(Icons.save),
             title: Text(t.settings.storage.exportTitle),
           ),
@@ -33,5 +35,37 @@ class StorageSettingsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _exportData(BuildContext context) {
+    unawaited(
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            icon: const Icon(Icons.save),
+            title: const Text('Exporting your data...'),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+
+    getIt<SettingsRepository>().exportData().then((result) {
+      final infoText = result
+          ? t.settings.storage.exportStatus.success
+          : t.settings.storage.exportStatus.failure;
+
+      Navigator.of(context, rootNavigator: true).pop();
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(infoText)));
+    });
   }
 }

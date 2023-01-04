@@ -4,6 +4,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:universal_io/io.dart';
 
 part 'app_info.freezed.dart';
+part 'app_info.g.dart';
 
 @freezed
 @singleton
@@ -12,8 +13,11 @@ class AppInfo with _$AppInfo {
     required String name,
     required String platform,
     required String version,
-    required String buildNumber,
+    @JsonKey(name: 'build') required int buildNumber,
   }) = _AppInfo;
+
+  factory AppInfo.fromJson(Map<String, dynamic> json) =>
+      _$AppInfoFromJson(json);
 
   @factoryMethod
   static Future<AppInfo> fromEnviroment() async {
@@ -23,7 +27,7 @@ class AppInfo with _$AppInfo {
       name: 'Not Zero',
       platform: Platform.operatingSystem,
       version: packageInfo.version,
-      buildNumber: packageInfo.buildNumber,
+      buildNumber: int.parse(packageInfo.buildNumber),
     );
   }
 }
