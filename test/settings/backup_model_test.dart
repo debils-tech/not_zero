@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/units/settings/domain/models/backup_model.dart';
 
@@ -17,8 +18,8 @@ void main() {
         buildNumber: 0,
       ),
       data: {
-        'settings': settingsJson,
-        'tasks': tasksJson,
+        BoxNames.settings: settingsJson,
+        TableNames.tasks: tasksJson,
       },
     );
 
@@ -33,8 +34,8 @@ void main() {
           'build': 0
         },
         'data': {
-          'settings': settingsJson,
-          'tasks': tasksJson,
+          BoxNames.settings: settingsJson,
+          TableNames.tasks: tasksJson,
         }
       },
     );
@@ -53,8 +54,8 @@ void main() {
         'build': 0
       },
       'data': {
-        'settings': settingsJson,
-        'tasks': tasksJson,
+        BoxNames.settings: settingsJson,
+        TableNames.tasks: tasksJson,
       }
     });
 
@@ -69,8 +70,8 @@ void main() {
       ),
     );
     expect(backup.data, {
-      'settings': settingsJson,
-      'tasks': tasksJson,
+      BoxNames.settings: settingsJson,
+      TableNames.tasks: tasksJson,
     });
   });
 }

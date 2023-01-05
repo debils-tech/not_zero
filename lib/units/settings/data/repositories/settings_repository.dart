@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
+import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/units/settings/data/services/settings_local_service.dart';
@@ -39,8 +40,8 @@ class SettingsRepositoryImpl implements SettingsRepository {
     final backupContent = BackupModel(
       appInfo: getIt<AppInfo>(),
       data: {
-        'settings': settings,
-        'tasks': tasks,
+        BoxNames.settings: settings,
+        TableNames.tasks: tasks,
       },
     );
 
@@ -56,11 +57,11 @@ class SettingsRepositoryImpl implements SettingsRepository {
     if (backupContent.version != 1) return false;
 
     try {
-      final rawSettings = backupContent.data['settings'] as Map;
+      final rawSettings = backupContent.data[BoxNames.settings] as Map;
       await _localService.applyAllSettings(
         Map<String, String>.from(rawSettings),
       );
-      final rawTasks = backupContent.data['tasks'] as List;
+      final rawTasks = backupContent.data[TableNames.tasks] as List;
       await _localService.applyAllTasks(
         rawTasks.map((e) => Map<String, dynamic>.from(e as Map)).toList(),
       );

@@ -4,6 +4,12 @@ abstract class BoxNames {
   static const String settings = 'settings';
 }
 
+abstract class TableNames {
+  TableNames._();
+
+  static const String tasks = 'tasks';
+}
+
 abstract class SettingsKeys {
   SettingsKeys._();
 

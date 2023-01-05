@@ -107,8 +107,8 @@ void main() {
     var backup = BackupModel(
       version: 1,
       data: {
-        'settings': const <String, String>{},
-        'tasks': templateTasks1.map((e) => e.toJson()).toList(),
+        BoxNames.settings: const <String, String>{},
+        TableNames.tasks: templateTasks1.map((e) => e.toJson()).toList(),
       },
     );
     expect(await service.exportDataToFile(backup), true);
@@ -118,8 +118,8 @@ void main() {
       version: 69,
       appInfo: await AppInfo.fromEnviroment(),
       data: {
-        'settings': {'foo': 'bar'},
-        'tasks': const <Map<String, dynamic>>[],
+        BoxNames.settings: {'foo': 'bar'},
+        TableNames.tasks: const <Map<String, dynamic>>[],
       },
     );
     expect(await service.exportDataToFile(backup), true);
