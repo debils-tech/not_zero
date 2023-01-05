@@ -26,7 +26,7 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [x] App branding (logo, icons, posters)
 - [x] Stable database version
 - [x] Automatic builds and basic packaging
-- [ ] Export and import of app's data `(in progress)`
+- [x] Export and import of app's data
 </details>
 
 <details>
