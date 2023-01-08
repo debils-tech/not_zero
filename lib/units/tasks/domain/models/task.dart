@@ -81,4 +81,27 @@ class Task with _$Task, ObjectIdMixin {
       );
 
   bool get isCompleted => completedAt != null;
+
+  int compareTo(Task other) {
+    // Sorting by completeness
+    if (isCompleted && !other.isCompleted) {
+      // Moving back completed tasks
+      return -1;
+    } else if (!isCompleted && other.isCompleted) {
+      // Moving forward not completed tasks
+      return 1;
+    }
+
+    // Sorting by importance
+    if (importance.index < other.importance.index) {
+      // Moving back less important tasks
+      return -1;
+    } else if (importance.index > other.importance.index) {
+      // Moving forward more important tasks
+      return 1;
+    }
+
+    // Sorting by time that task was created
+    return createdAt.compareTo(other.createdAt);
+  }
 }

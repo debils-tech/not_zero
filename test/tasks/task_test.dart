@@ -60,4 +60,6 @@ void main() {
 
     expect(recreatedTask, task);
   });
+
+  // TODO(uSlashVlad): Added test for [compareTo].
 }

@@ -108,12 +108,6 @@ class TasksRepositoryImpl implements TasksRepository {
   }
 
   int _tasksSorting(Task a, Task b) {
-    if (a.isCompleted && !b.isCompleted) {
-      return 1;
-    } else if (!a.isCompleted && b.isCompleted) {
-      return -1;
-    } else {
-      return b.createdAt.compareTo(a.createdAt);
-    }
+    return b.compareTo(a);
   }
 }

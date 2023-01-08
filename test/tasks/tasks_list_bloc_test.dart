@@ -35,6 +35,7 @@ void main() {
   });
 
   test('Complete tasks', () async {
+    // TODO(uSlashVlad): Fix this test according to new sorting.
     final bloc = getIt<TasksListBloc>();
 
     expect(
