@@ -21,7 +21,7 @@ test:
 
 build-android:
 	# PREPARING BUILD DIRECTORY
-	mkdir build/releases
+	mkdir -p build/releases
 	# BUILDING APK
 	flutter build apk --split-per-abi
 	cp build/app/outputs/apk/release/* build/releases/.
