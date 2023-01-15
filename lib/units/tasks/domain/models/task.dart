@@ -36,7 +36,7 @@ enum TaskImportance {
 }
 
 @freezed
-class Task with _$Task, ObjectIdMixin {
+class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   factory Task({
     required String id,
     required String title,
@@ -82,6 +82,7 @@ class Task with _$Task, ObjectIdMixin {
 
   bool get isCompleted => completedAt != null;
 
+  @override
   int compareTo(Task other) {
     // Sorting by completeness
     if (isCompleted && !other.isCompleted) {

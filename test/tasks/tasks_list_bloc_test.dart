@@ -35,7 +35,6 @@ void main() {
   });
 
   test('Complete tasks', () async {
-    // TODO(uSlashVlad): Fix this test according to new sorting.
     final bloc = getIt<TasksListBloc>();
 
     expect(
@@ -44,8 +43,8 @@ void main() {
         TasksListState.loaded(templateTasks1.reversed.toList()),
         TasksListState.loaded([
           templateTasks1[2],
-          templateTasks1[1],
           templateTasks1[0].copyWith(completedAt: null),
+          templateTasks1[1],
         ]),
       ]),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/helpers/pattern_validator.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
+import 'package:uuid/uuid.dart';
 
 import 'template_tasks.dart';
 
@@ -61,5 +62,79 @@ void main() {
     expect(recreatedTask, task);
   });
 
-  // TODO(uSlashVlad): Added test for [compareTo].
+  group('Sorting', () {
+    test('... by completion', () {
+      final task1 = Task(
+        id: const Uuid().v4(),
+        title: 'Task 1',
+        createdAt: DateTime.now(),
+        importance: TaskImportance.normal,
+        completedAt: DateTime.now(),
+      );
+      final task2 = Task(
+        id: const Uuid().v4(),
+        title: 'Task 2',
+        createdAt: DateTime.now(),
+        importance: TaskImportance.normal,
+      );
+      expect(task1.compareTo(task2), -1);
+      expect([task1, task2]..sort(), [task1, task2]);
+    });
+
+    test('... by importance', () {
+      final task1 = Task(
+        id: const Uuid().v4(),
+        title: 'Task 1',
+        createdAt: DateTime.now(),
+        importance: TaskImportance.important,
+      );
+      final task2 = Task(
+        id: const Uuid().v4(),
+        title: 'Task 1',
+        createdAt: DateTime.now(),
+        importance: TaskImportance.normal,
+      );
+      expect(task1.compareTo(task2), 1);
+      expect([task1, task2]..sort(), [task2, task1]);
+    });
+
+    test('... by time', () {
+      final task1 = Task(
+        id: const Uuid().v4(),
+        title: 'Task 1',
+        createdAt: DateTime.now(),
+        importance: TaskImportance.normal,
+      );
+      final task2 = Task(
+        id: const Uuid().v4(),
+        title: 'Task 1',
+        createdAt: DateTime.now(),
+        importance: TaskImportance.normal,
+      );
+      expect(task1.compareTo(task2), -1);
+      expect([task1, task2]..sort(), [task1, task2]);
+    });
+
+    test('Complex', () {
+      final testList1 = templateTasks1.toList()..sort();
+      expect(
+        testList1,
+        [templateTasks1[0], templateTasks1[1], templateTasks1[2]],
+      );
+
+      final testList2 = templateTasks3.toList()..sort();
+      expect(
+        testList2,
+        [
+          templateTasks3[1], // completed, notImportant
+          templateTasks3[0], // completed, normal, older
+          templateTasks3[6], // completed, normal, newer
+          templateTasks3[3], // completed, important
+          templateTasks3[4], // notImportant
+          templateTasks3[2], // important, older
+          templateTasks3[5], // important, newer
+        ],
+      );
+    });
+  });
 }
