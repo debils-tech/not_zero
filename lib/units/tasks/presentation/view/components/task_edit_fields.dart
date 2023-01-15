@@ -66,7 +66,7 @@ class TaskEditImportanceField extends StatelessWidget {
       builder: (field) {
         return StarsRateWidget(
           count: 3,
-          initialValue: field.value?.toIndex() ?? 2,
+          initialValue: field.value?.index ?? 2,
           onChanged: (value) {
             field.didChange(TaskImportance.fromIndex(value));
           },

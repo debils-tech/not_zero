@@ -22,17 +22,6 @@ enum TaskImportance {
         return TaskImportance.normal;
     }
   }
-
-  int toIndex() {
-    switch (this) {
-      case TaskImportance.notImportant:
-        return 0;
-      case TaskImportance.normal:
-        return 1;
-      case TaskImportance.important:
-        return 2;
-    }
-  }
 }
 
 @freezed
@@ -85,19 +74,21 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   @override
   int compareTo(Task other) {
     // Sorting by completeness
-    if (isCompleted && !other.isCompleted) {
-      // Moving back completed tasks
-      return -1;
-    } else if (!isCompleted && other.isCompleted) {
+    if (isCompleted != other.isCompleted) {
+      if (isCompleted) {
+        // Moving back completed tasks
+        return -1;
+      }
       // Moving forward not completed tasks
       return 1;
     }
 
     // Sorting by importance
-    if (importance.index < other.importance.index) {
-      // Moving back less important tasks
-      return -1;
-    } else if (importance.index > other.importance.index) {
+    if (importance != other.importance) {
+      if (importance.index < other.importance.index) {
+        // Moving back less important tasks
+        return -1;
+      }
       // Moving forward more important tasks
       return 1;
     }
