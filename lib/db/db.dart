@@ -2,18 +2,22 @@
 // ignore_for_file: invalid_use_of_visible_for_overriding_member
 
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
 import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/db/tasks_table.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
+// Relative imports are usefull here because of conditional imports.
+// ignore: always_use_package_imports
+import 'drift/unsupported_database.dart'
+    if (dart.library.ffi) 'drift/native_database.dart'
+    if (dart.library.html) 'drift/web_database.dart';
 
 part 'db.g.dart';
 
 @DriftDatabase(tables: [TasksTable])
 class NotZeroDatabase extends _$NotZeroDatabase {
-  NotZeroDatabase() : super(_openConnection());
+  NotZeroDatabase() : super(openDriftDatabase());
 
   @override
   int get schemaVersion => 1;
@@ -56,14 +60,6 @@ class NotZeroDatabase extends _$NotZeroDatabase {
     return (delete(table)..where((tbl) => tbl.primaryKey!.single.equals(key)))
         .go();
   }
-}
-
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    // TODO(uSlashVlad): Implement DriftIsolate for database.
-    final file = File(await _getDatabasePath());
-    return NativeDatabase(file);
-  });
 }
 
 Future<String> _getDatabasePath() async {

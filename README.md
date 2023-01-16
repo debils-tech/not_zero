@@ -71,3 +71,7 @@ make run
 # Run app tests
 make test
 ```
+
+<!--
+TODO Add any words about usage of sql.js from here: https://github.com/sql-js/sql.js
+-->

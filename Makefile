@@ -3,7 +3,7 @@ config:
 	fvm install
 	fvm flutter pub get
 
-generate:
+generate: web/sql-wasm.js
 	flutter pub get
 	flutter pub run build_runner build --delete-conflicting-outputs lib
 	flutter pub run slang
@@ -37,5 +37,10 @@ build-android:
 	sh android/tools/check-cert.sh app-x86_64-release.apk
 	sh android/tools/check-cert.sh app-release.apk
 	sh android/tools/check-cert.sh app-release.aab
+
+web/sql-wasm.js:
+	wget -O build/sqljs-wasm.zip "https://github.com/sql-js/sql.js/releases/download/v1.8.0/sqljs-wasm.zip"
+	unzip -o build/sqljs-wasm.zip -d web
+
 
 .PHONY: config gen format fmt run test
