@@ -2,22 +2,20 @@
 // ignore_for_file: invalid_use_of_visible_for_overriding_member
 
 import 'package:drift/drift.dart';
+import 'package:not_zero/db/drift/open_database.dart';
 import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/db/tasks_table.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
-// Relative imports are usefull here because of conditional imports.
-// ignore: always_use_package_imports
-import 'drift/unsupported_database.dart'
-    if (dart.library.ffi) 'drift/native_database.dart'
-    if (dart.library.html) 'drift/web_database.dart';
 
 part 'db.g.dart';
 
 @DriftDatabase(tables: [TasksTable])
 class NotZeroDatabase extends _$NotZeroDatabase {
   NotZeroDatabase() : super(openDriftDatabase());
+
+  NotZeroDatabase.connect(super.connection) : super.connect();
 
   @override
   int get schemaVersion => 1;

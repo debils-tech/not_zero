@@ -6,7 +6,6 @@ import 'package:universal_io/io.dart';
 
 QueryExecutor openDriftDatabase() {
   return LazyDatabase(() async {
-    // TODO(uSlashVlad): Implement DriftIsolate for database.
     final file = File(await _getDatabasePath());
     return NativeDatabase(file);
   });
