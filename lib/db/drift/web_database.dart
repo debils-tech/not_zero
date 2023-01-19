@@ -8,3 +8,7 @@ QueryExecutor openDriftDatabase() {
     );
   });
 }
+
+DatabaseConnection openIsolateConnection() {
+  throw UnsupportedError("Flutter web doesn't support isolates");
+}
