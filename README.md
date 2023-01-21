@@ -27,6 +27,8 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [x] Stable database version
 - [x] Automatic builds and basic packaging
 - [x] Export and import of app's data
+- [ ] Basic stats
+- [ ] Sublists
 </details>
 
 <details>
@@ -34,18 +36,16 @@ Here is roadmap of project and what features are necessary to "complete" each st
 
 - [ ] Release in Google Play
 - [ ] Release in F-Droid
-- [ ] Animations
 - [ ] Advanced stats (weekly, monthly statistics)
 - [ ] Combos
 - [ ] Habbits
-- [ ] Sublists
+- [ ] Achievements
 </details>
 
 <details>
 <summary> Stable release </summary>
 
 - [ ] Notes
-- [ ] Achievements
 - [ ] Adaptation for iOS
 - [ ] Release in App Store
 - [ ] Adaptation of app for desktop
