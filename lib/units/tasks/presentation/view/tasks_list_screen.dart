@@ -106,7 +106,10 @@ class _TasksListView extends StatelessWidget {
     return UniversalListView<Task>(
       listKey: listKey,
       items: tasks,
-      itemBuilder: (_, item, __) => TaskCard(item),
+      itemBuilder: (_, item, __) => TaskCard(
+        item,
+        key: Key('Task ${item.id}'),
+      ),
     );
   }
 }

@@ -16,28 +16,6 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final taskColors = theme.extension<TaskColors>()!;
-
-    final Color colorByImportance;
-    switch (task.importance) {
-      case TaskImportance.notImportant:
-        colorByImportance = taskColors.notImportantColor;
-        break;
-      case TaskImportance.normal:
-        colorByImportance = taskColors.normalColor;
-        break;
-      case TaskImportance.important:
-        colorByImportance = taskColors.importantColor;
-        break;
-    }
-
-    final titleStyle =
-        theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600);
-    final descriptionStyle =
-        theme.textTheme.caption?.copyWith(fontWeight: FontWeight.w500);
-    final timeStyle = theme.textTheme.subtitle2;
-
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 200),
       opacity: task.isCompleted ? 0.5 : 1,
@@ -46,20 +24,11 @@ class TaskCard extends StatelessWidget {
             GoRouter.of(context).push('/tasks/edit/${task.id}', extra: task),
         identifier: task.id,
         child: Row(
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _TaskImportanceLine(
-              colorByImportance: colorByImportance,
-            ),
             const SizedBox(width: 8),
             Flexible(
               fit: FlexFit.tight,
-              child: _TaskTextBlock(
-                task: task,
-                titleStyle: titleStyle,
-                descriptionStyle: descriptionStyle,
-                timeStyle: timeStyle,
-              ),
+              child: _TaskTextBlock(task: task),
             ),
             const SizedBox(width: 12),
             _TaskCheckbox(task: task),
@@ -71,47 +40,37 @@ class TaskCard extends StatelessWidget {
   }
 }
 
-class _TaskImportanceLine extends StatelessWidget {
-  const _TaskImportanceLine({
-    required this.colorByImportance,
-  });
-
-  final Color colorByImportance;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 7,
-      child: ColoredBox(color: colorByImportance),
-    );
-  }
-}
-
 class _TaskTextBlock extends StatelessWidget {
   const _TaskTextBlock({
     required this.task,
-    this.titleStyle,
-    this.descriptionStyle,
-    this.timeStyle,
   });
 
   final Task task;
-  final TextStyle? titleStyle;
-  final TextStyle? descriptionStyle;
-  final TextStyle? timeStyle;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 2),
-        _TaskTimeText(task, timeStyle: timeStyle),
+        SizedBox(
+          height: 25,
+          child: Row(
+            children: [
+              _TaskTimeText(task),
+              const SizedBox(width: 10),
+              _ImportanceIndicator(task.importance),
+            ],
+          ),
+        ),
         Text(
           task.title,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
-          style: titleStyle,
+          style: theme.textTheme.titleMedium
+              ?.copyWith(fontWeight: FontWeight.w600),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(
@@ -120,7 +79,8 @@ class _TaskTextBlock extends StatelessWidget {
           ),
           child: Text(
             task.description,
-            style: descriptionStyle,
+            style:
+                theme.textTheme.caption?.copyWith(fontWeight: FontWeight.w500),
             overflow: TextOverflow.ellipsis,
             maxLines: 4,
           ),
@@ -132,10 +92,9 @@ class _TaskTextBlock extends StatelessWidget {
 }
 
 class _TaskTimeText extends StatelessWidget {
-  const _TaskTimeText(this.task, {this.timeStyle});
+  const _TaskTimeText(this.task);
 
   final Task task;
-  final TextStyle? timeStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +114,41 @@ class _TaskTimeText extends StatelessWidget {
 
     return Text(
       finalTextTime,
-      style: timeStyle,
+      style: Theme.of(context).textTheme.subtitle2,
+    );
+  }
+}
+
+class _ImportanceIndicator extends StatelessWidget {
+  const _ImportanceIndicator(this.importance);
+
+  final TaskImportance importance;
+
+  @override
+  Widget build(BuildContext context) {
+    final taskColors = Theme.of(context).extension<TaskColors>()!;
+
+    final Color colorByImportance;
+    switch (importance) {
+      case TaskImportance.notImportant:
+        colorByImportance = taskColors.notImportantColor;
+        break;
+      case TaskImportance.normal:
+        colorByImportance = taskColors.normalColor;
+        break;
+      case TaskImportance.important:
+        colorByImportance = taskColors.importantColor;
+        break;
+    }
+
+    return Wrap(
+      children: List.filled(
+        importance.index + 1,
+        Icon(
+          Icons.star_border_rounded,
+          color: colorByImportance,
+        ),
+      ),
     );
   }
 }
