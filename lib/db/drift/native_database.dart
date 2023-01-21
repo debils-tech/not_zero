@@ -7,11 +7,15 @@ import 'package:not_zero/db/provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
-QueryExecutor openDriftDatabase() {
-  return LazyDatabase(() async {
-    final file = File(await _getDatabasePath());
-    return NativeDatabase(file);
-  });
+QueryExecutor openDriftDatabase({bool permament = true}) {
+  if (permament) {
+    return LazyDatabase(() async {
+      final file = File(await _getDatabasePath());
+      return NativeDatabase(file);
+    });
+  }
+
+  return NativeDatabase.memory();
 }
 
 Future<String> _getDatabasePath() async {
