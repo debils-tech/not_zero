@@ -32,80 +32,110 @@ class TaskCard extends StatelessWidget {
         break;
     }
 
-    return SizedBox(
-      height: 79,
-      child: Opacity(
-        opacity: task.isCompleted ? 0.5 : 1,
-        child: SelectableCard(
-          onTap: () =>
-              GoRouter.of(context).push('/tasks/edit/${task.id}', extra: task),
-          identifier: task.id,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(
-                width: 7,
-                child: ColoredBox(
-                  color: colorByImportance,
-                ),
+    final titleStyle =
+        theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600);
+    final descriptionStyle =
+        theme.textTheme.caption?.copyWith(fontWeight: FontWeight.w500);
+    final timeStyle = theme.textTheme.subtitle2;
+
+    return AnimatedOpacity(
+      duration: const Duration(milliseconds: 200),
+      opacity: task.isCompleted ? 0.5 : 1,
+      child: SelectableCard(
+        onTap: () =>
+            GoRouter.of(context).push('/tasks/edit/${task.id}', extra: task),
+        identifier: task.id,
+        child: Row(
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _TaskImportanceLine(
+              colorByImportance: colorByImportance,
+            ),
+            const SizedBox(width: 8),
+            Flexible(
+              fit: FlexFit.tight,
+              child: _TaskTextBlock(
+                task: task,
+                titleStyle: titleStyle,
+                descriptionStyle: descriptionStyle,
+                timeStyle: timeStyle,
               ),
-              const SizedBox(width: 8),
-              Flexible(
-                fit: FlexFit.tight,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _TaskTimeText(task),
-                    Text(
-                      task.title,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleMedium!
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 4,
-                        vertical: 2,
-                      ),
-                      child: Text(
-                        task.description,
-                        style: theme.textTheme.caption!
-                            .copyWith(fontWeight: FontWeight.w500),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              Transform.scale(
-                scale: 1.3,
-                child: Checkbox(
-                  value: task.isCompleted,
-                  shape: const CircleBorder(),
-                  onChanged: (value) => context.read<TasksListBloc>()
-                    ..add(
-                      ChangeTaskCompletionEvent(
-                        task,
-                        completion: value ?? false,
-                      ),
-                    ),
-                ),
-              ),
-              const SizedBox(width: 8),
-            ],
-          ),
+            ),
+            const SizedBox(width: 12),
+            _TaskCheckbox(task: task),
+            const SizedBox(width: 8),
+          ],
         ),
       ),
     );
   }
 }
 
-class _TaskTimeText extends StatelessWidget {
-  const _TaskTimeText(this.task);
+class _TaskImportanceLine extends StatelessWidget {
+  const _TaskImportanceLine({
+    required this.colorByImportance,
+  });
+
+  final Color colorByImportance;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 7,
+      child: ColoredBox(color: colorByImportance),
+    );
+  }
+}
+
+class _TaskTextBlock extends StatelessWidget {
+  const _TaskTextBlock({
+    required this.task,
+    this.titleStyle,
+    this.descriptionStyle,
+    this.timeStyle,
+  });
 
   final Task task;
+  final TextStyle? titleStyle;
+  final TextStyle? descriptionStyle;
+  final TextStyle? timeStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 2),
+        _TaskTimeText(task, timeStyle: timeStyle),
+        Text(
+          task.title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          style: titleStyle,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 4,
+            vertical: 2,
+          ),
+          child: Text(
+            task.description,
+            style: descriptionStyle,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 4,
+          ),
+        ),
+        const SizedBox(height: 3),
+      ],
+    );
+  }
+}
+
+class _TaskTimeText extends StatelessWidget {
+  const _TaskTimeText(this.task, {this.timeStyle});
+
+  final Task task;
+  final TextStyle? timeStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +155,31 @@ class _TaskTimeText extends StatelessWidget {
 
     return Text(
       finalTextTime,
-      style: Theme.of(context).textTheme.subtitle2,
+      style: timeStyle,
+    );
+  }
+}
+
+class _TaskCheckbox extends StatelessWidget {
+  const _TaskCheckbox({required this.task});
+
+  final Task task;
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.scale(
+      scale: 1.3,
+      child: Checkbox(
+        value: task.isCompleted,
+        shape: const CircleBorder(),
+        onChanged: (value) => context.read<TasksListBloc>()
+          ..add(
+            ChangeTaskCompletionEvent(
+              task,
+              completion: value ?? false,
+            ),
+          ),
+      ),
     );
   }
 }

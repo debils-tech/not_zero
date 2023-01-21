@@ -18,6 +18,7 @@ class TaskEditTitleField extends StatelessWidget {
     return FormBuilderTextField(
       name: 'title',
       autofocus: true,
+      textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         labelText: t.tasks.edit.fields.taskTitle,
       ),
@@ -41,6 +42,7 @@ class TaskEditDescriptionField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'description',
+      textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         labelText: t.tasks.edit.fields.taskDescription,
       ),
