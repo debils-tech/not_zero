@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero/components/adaptive/list_limiter.dart';
 import 'package:not_zero/components/common_widgets/clickable_card.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 
@@ -8,22 +9,24 @@ class HomeNavigationBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          _NavigationCard(
-            route: '/tasks',
-            icon: Icons.format_list_bulleted,
-            title: t.tasks.list.title,
-          ),
-          const SizedBox(height: 6),
-          _NavigationCard(
-            route: '/settings',
-            icon: Icons.settings,
-            title: t.settings.list.title,
-          ),
-        ],
+    return AdaptiveListLimiter(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            _NavigationCard(
+              route: '/tasks',
+              icon: Icons.format_list_bulleted,
+              title: t.tasks.list.title,
+            ),
+            const SizedBox(height: 6),
+            _NavigationCard(
+              route: '/settings',
+              icon: Icons.settings,
+              title: t.settings.list.title,
+            ),
+          ],
+        ),
       ),
     );
   }

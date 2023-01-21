@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero/components/adaptive/list_limiter.dart';
 import 'package:not_zero/components/common_widgets/universal_list_view.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
@@ -103,12 +104,15 @@ class _TasksListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UniversalListView<Task>(
-      listKey: listKey,
-      items: tasks,
-      itemBuilder: (_, item, __) => TaskCard(
-        item,
-        key: Key('Task ${item.id}'),
+    return AdaptiveListLimiter(
+      maxWidth: 600,
+      child: UniversalListView<Task>(
+        listKey: listKey,
+        items: tasks,
+        itemBuilder: (_, item, __) => TaskCard(
+          item,
+          key: Key('Task ${item.id}'),
+        ),
       ),
     );
   }
