@@ -2,6 +2,7 @@
 // ignore_for_file: invalid_use_of_visible_for_overriding_member
 
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:not_zero/db/drift/open_database.dart';
 import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/db/tasks_table.dart';
@@ -16,6 +17,8 @@ class NotZeroDatabase extends _$NotZeroDatabase {
   NotZeroDatabase() : super(openDriftDatabase());
 
   NotZeroDatabase.connect(super.connection) : super.connect();
+
+  NotZeroDatabase.memory() : super(NativeDatabase.memory());
 
   @override
   int get schemaVersion => 1;

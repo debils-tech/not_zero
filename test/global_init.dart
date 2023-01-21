@@ -5,6 +5,8 @@ import 'package:not_zero/get_it.dart';
 import 'fake_platform_interfaces.dart';
 
 void globalInit() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   initPaths();
   initPackageInfo();
   initFileHelper();

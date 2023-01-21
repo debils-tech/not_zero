@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/db/db.dart';
 import 'package:not_zero/db/drift/open_database.dart';
+import 'package:not_zero/helpers/platform_extenstions.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';
@@ -14,7 +15,7 @@ export 'db.dart';
 @singleton
 class StorageProvider {
   static Future<String> get storageDirectory async {
-    if (Platform.isLinux && !Platform.environment.containsKey('FLUTTER_TEST')) {
+    if (Platform.isLinux && !isPlatformTest) {
       return p.join(
         Platform.environment['HOME'] ?? '~',
         '.config/not_zero',
@@ -47,6 +48,13 @@ NotZeroDatabase _getLazyDriftDb() {
     //
     // Error: Unsupported operation: dart:isolate is not supported on dart4web
     return NotZeroDatabase();
+  }
+
+  if (isPlatformTest) {
+    // It will be generaly better to run test on faster database.
+    //
+    // Also it helps to avoid problems with complex things like drift isolates.
+    return NotZeroDatabase.memory();
   }
 
   return NotZeroDatabase.connect(openIsolateConnection());
