@@ -142,10 +142,12 @@ class _ImportanceIndicator extends StatelessWidget {
     }
 
     return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: List.filled(
         importance.index + 1,
         Icon(
-          Icons.star_border_rounded,
+          Icons.star_rounded,
+          size: 17,
           color: colorByImportance,
         ),
       ),
