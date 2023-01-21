@@ -17,7 +17,7 @@ void main() {
   configDatabaseForTasks(templateTasks3);
 
   // Clear repository for eliminating results of previous test.
-  tearDown(() async {
+  tearDown(() {
     getIt.resetLazySingleton<StatsRepository>();
   });
 
