@@ -6,6 +6,11 @@ list:
   tooltips:
     deleteSelectedButton: 'Delete selected'
 
+view:
+  title: 'Task view'
+  tooltips:
+    editTaskButton: 'Edit'
+
 edit:
   title:
     create: 'New task'

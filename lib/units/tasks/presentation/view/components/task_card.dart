@@ -59,7 +59,7 @@ class _TaskTextBlock extends StatelessWidget {
       children: [
         const SizedBox(height: 2),
         SizedBox(
-          height: 25,
+          height: 20,
           child: _TaskTimeText(task),
         ),
         Text(
@@ -69,20 +69,21 @@ class _TaskTextBlock extends StatelessWidget {
           style: theme.textTheme.titleMedium
               ?.copyWith(fontWeight: FontWeight.w600),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 4,
-            vertical: 2,
+        const SizedBox(height: 4),
+        if (task.description.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 4,
+            ),
+            child: Text(
+              task.description,
+              style: theme.textTheme.caption
+                  ?.copyWith(fontWeight: FontWeight.w500),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
+            ),
           ),
-          child: Text(
-            task.description,
-            style:
-                theme.textTheme.caption?.copyWith(fontWeight: FontWeight.w500),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 4,
-          ),
-        ),
-        const SizedBox(height: 3),
+        const SizedBox(height: 6),
       ],
     );
   }

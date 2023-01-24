@@ -38,12 +38,14 @@ class TasksListAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
               );
             },
+            // TODO(uSlashVlad): Add toolip
             icon: const Icon(Icons.select_all),
           ),
           IconButton(
             onPressed: () {
               itemSelBloc.add(const ItemSelectionEvent.removeAll(null));
             },
+            // TODO(uSlashVlad): Add toolip
             icon: const Icon(Icons.close),
           ),
         ],

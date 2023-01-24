@@ -14,6 +14,8 @@ class TasksRepositoryImpl implements TasksRepository {
 
   final _tasksStreamController = BehaviorSubject<List<Task>>.seeded([]);
 
+  final _subscribedTasks = <String, BehaviorSubject<Task>>{};
+
   @override
   Stream<List<Task>> getTasks() => _tasksStreamController.asBroadcastStream();
 
@@ -71,6 +73,11 @@ class TasksRepositoryImpl implements TasksRepository {
       _tasksStreamController.add(newList);
     }
 
+    final taskSub = _subscribedTasks[task.id];
+    if (taskSub != null) {
+      taskSub.add(task);
+    }
+
     return _localService.saveTask(task);
   }
 
@@ -109,5 +116,26 @@ class TasksRepositoryImpl implements TasksRepository {
 
   int _tasksSorting(Task a, Task b) {
     return b.compareTo(a);
+  }
+
+  @override
+  Stream<Task> subscribeOnTaskById(String taskId) {
+    // Trying to find already created subscription.
+    var taskStream = _subscribedTasks[taskId];
+    if (taskStream != null) return taskStream;
+
+    // Creating a new one if such subscription doesn't exist.
+    taskStream = BehaviorSubject<Task>();
+    _subscribedTasks[taskId] = taskStream;
+    return taskStream;
+  }
+
+  @override
+  void disposeTaskSubscription(String taskId) {
+    final taskStream = _subscribedTasks[taskId];
+    if (taskStream == null) return;
+
+    taskStream.close();
+    _subscribedTasks.remove(taskId);
   }
 }

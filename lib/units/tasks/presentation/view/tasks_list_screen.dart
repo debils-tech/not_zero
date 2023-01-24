@@ -60,6 +60,7 @@ class _TasksListFloatingButton extends StatelessWidget {
         }
         return FloatingActionButton(
           onPressed: () => GoRouter.of(context).push('/tasks/new'),
+          // TODO(uSlashVlad): Add tooltip
           child: const Icon(Icons.add_task_rounded),
         );
       },
