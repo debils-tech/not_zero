@@ -21,19 +21,22 @@ class TaskCard extends StatelessWidget {
       opacity: task.isCompleted ? 0.5 : 1,
       child: SelectableCard(
         onTap: () =>
-            GoRouter.of(context).push('/tasks/edit/${task.id}', extra: task),
+            GoRouter.of(context).push('/tasks/view/${task.id}', extra: task),
         identifier: task.id,
-        child: Row(
-          children: [
-            const SizedBox(width: 8),
-            Flexible(
-              fit: FlexFit.tight,
-              child: _TaskTextBlock(task: task),
-            ),
-            const SizedBox(width: 12),
-            _TaskCheckbox(task: task),
-            const SizedBox(width: 8),
-          ],
+        child: _ImportanceIndicatorBox(
+          importance: task.importance,
+          child: Row(
+            children: [
+              const SizedBox(width: 15),
+              Flexible(
+                fit: FlexFit.tight,
+                child: _TaskTextBlock(task: task),
+              ),
+              const SizedBox(width: 12),
+              _TaskCheckbox(task: task),
+              const SizedBox(width: 8),
+            ],
+          ),
         ),
       ),
     );
@@ -57,13 +60,7 @@ class _TaskTextBlock extends StatelessWidget {
         const SizedBox(height: 2),
         SizedBox(
           height: 25,
-          child: Row(
-            children: [
-              _TaskTimeText(task),
-              const SizedBox(width: 10),
-              _ImportanceIndicator(task.importance),
-            ],
-          ),
+          child: _TaskTimeText(task),
         ),
         Text(
           task.title,
@@ -119,10 +116,14 @@ class _TaskTimeText extends StatelessWidget {
   }
 }
 
-class _ImportanceIndicator extends StatelessWidget {
-  const _ImportanceIndicator(this.importance);
+class _ImportanceIndicatorBox extends StatelessWidget {
+  const _ImportanceIndicatorBox({
+    required this.importance,
+    required this.child,
+  });
 
   final TaskImportance importance;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -141,16 +142,11 @@ class _ImportanceIndicator extends StatelessWidget {
         break;
     }
 
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: List.filled(
-        importance.index + 1,
-        Icon(
-          Icons.star_rounded,
-          size: 17,
-          color: colorByImportance,
-        ),
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: Border(left: BorderSide(width: 7, color: colorByImportance)),
       ),
+      child: child,
     );
   }
 }
