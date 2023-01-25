@@ -18,7 +18,6 @@ class TaskViewScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => getIt<TaskViewCubit>()..init(taskToView.id),
       child: Scaffold(
-        // TODO(uSlashVlad): Change to slang localization
         appBar: AppBar(
           title: Text(t.tasks.view.title),
           bottom: _TaskViewImportanceIndicator(taskToView),

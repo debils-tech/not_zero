@@ -5,6 +5,9 @@ list:
     content: 'Are you sure you want delete selected tasks?'
   tooltips:
     deleteSelectedButton: 'Delete selected'
+    selectAllButton: 'Select all'
+    removeSelectionButton: 'Remove selection'
+    addNewButton: 'Add new task'
 
 view:
   title: 'Task view'

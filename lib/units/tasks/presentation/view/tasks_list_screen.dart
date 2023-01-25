@@ -6,6 +6,7 @@ import 'package:not_zero/components/common_widgets/universal_list_view.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
@@ -60,7 +61,7 @@ class _TasksListFloatingButton extends StatelessWidget {
         }
         return FloatingActionButton(
           onPressed: () => GoRouter.of(context).push('/tasks/new'),
-          // TODO(uSlashVlad): Add tooltip
+          tooltip: t.tasks.list.tooltips.addNewButton,
           child: const Icon(Icons.add_task_rounded),
         );
       },
