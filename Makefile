@@ -3,15 +3,12 @@ config:
 	fvm install
 	fvm flutter pub get
 
-generate: web/sql-wasm.js
-	flutter pub get
-	flutter pub run build_runner build --delete-conflicting-outputs lib
-	flutter pub run slang
-gen: generate
-
 format:
 	flutter format .
 fmt: format
+
+
+# Building and running
 
 run:
 	flutter run
@@ -38,9 +35,26 @@ build-android:
 	sh android/tools/check-cert.sh app-release.apk
 	sh android/tools/check-cert.sh app-release.aab
 
+
+# Code generation
+
+dependencies:
+	flutter pub get
+deps: dependencies
+
+build_runner:
+	flutter pub run build_runner build --delete-conflicting-outputs lib
+
+lib/i18n/translations.g.dart: $(shell find lib/i18n -name '*.i18n.yaml')
+	flutter pub run slang
+locale: lib/i18n/translations.g.dart
+
 web/sql-wasm.js:
 	wget -O build/sqljs-wasm.zip "https://github.com/sql-js/sql.js/releases/download/v1.8.0/sqljs-wasm.zip"
 	unzip -o build/sqljs-wasm.zip -d web
+
+generate: deps build_runner locale web/sql-wasm.js
+gen: generate
 
 
 .PHONY: config gen format fmt run test
