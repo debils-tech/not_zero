@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:not_zero/units/tasks/domain/models/task.dart';
 
 @immutable
 class TaskColors extends ThemeExtension<TaskColors> {
@@ -11,6 +12,17 @@ class TaskColors extends ThemeExtension<TaskColors> {
   final Color notImportantColor;
   final Color normalColor;
   final Color importantColor;
+
+  Color colorByImportance(TaskImportance importance) {
+    switch (importance) {
+      case TaskImportance.notImportant:
+        return notImportantColor;
+      case TaskImportance.normal:
+        return normalColor;
+      case TaskImportance.important:
+        return importantColor;
+    }
+  }
 
   @override
   ThemeExtension<TaskColors> lerp(ThemeExtension<TaskColors>? other, double t) {

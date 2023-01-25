@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
@@ -18,10 +19,44 @@ class TaskViewScreen extends StatelessWidget {
       create: (_) => getIt<TaskViewCubit>()..init(taskToView.id),
       child: Scaffold(
         // TODO(uSlashVlad): Change to slang localization
-        appBar: AppBar(title: Text(t.tasks.view.title)),
+        appBar: AppBar(
+          title: Text(t.tasks.view.title),
+          bottom: _TaskViewImportanceIndicator(taskToView),
+        ),
         body: _TaskViewScreenBody(taskToView),
         floatingActionButton: _EditFloatingButton(taskToView),
       ),
+    );
+  }
+}
+
+class _TaskViewImportanceIndicator extends StatelessWidget
+    implements PreferredSizeWidget {
+  const _TaskViewImportanceIndicator(this.task);
+
+  final Task task;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(7);
+
+  @override
+  Widget build(BuildContext context) {
+    final taskColors = Theme.of(context).extension<TaskColors>()!;
+
+    return BlocBuilder<TaskViewCubit, Task?>(
+      builder: (context, state) {
+        return LayoutBuilder(
+          builder: (context, constrains) {
+            return SizedBox(
+              width: constrains.maxWidth,
+              height: preferredSize.height,
+              child: ColoredBox(
+                color: taskColors.colorByImportance(task.importance),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

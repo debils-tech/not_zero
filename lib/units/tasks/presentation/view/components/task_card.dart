@@ -130,22 +130,14 @@ class _ImportanceIndicatorBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final taskColors = Theme.of(context).extension<TaskColors>()!;
 
-    final Color colorByImportance;
-    switch (importance) {
-      case TaskImportance.notImportant:
-        colorByImportance = taskColors.notImportantColor;
-        break;
-      case TaskImportance.normal:
-        colorByImportance = taskColors.normalColor;
-        break;
-      case TaskImportance.important:
-        colorByImportance = taskColors.importantColor;
-        break;
-    }
-
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border(left: BorderSide(width: 7, color: colorByImportance)),
+        border: Border(
+          left: BorderSide(
+            width: 7,
+            color: taskColors.colorByImportance(importance),
+          ),
+        ),
       ),
       child: child,
     );
