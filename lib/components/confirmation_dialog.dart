@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 
 Future<bool?> showConfirmationDialog(
@@ -16,11 +17,11 @@ Future<bool?> showConfirmationDialog(
       content: content != null ? Text(content) : null,
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(false),
+          onPressed: () => GoRouter.of(context).pop(false),
           child: Text(cancel ?? t.common.dialog.cancelButton),
         ),
         TextButton(
-          onPressed: () => Navigator.of(context).pop(true),
+          onPressed: () => GoRouter.of(context).pop(true),
           child: Text(
             confirm ?? t.common.dialog.okButton,
             style: dangerous

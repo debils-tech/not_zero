@@ -55,16 +55,22 @@ class SettingsLocalService {
     });
   }
 
-  Future<bool> exportDataToFile(BackupModel content) {
+  Future<bool> exportDataToFile(BackupModel content) async {
     final bytesContent =
         Uint8List.fromList(utf8.encode(json.encode(content.toJson())));
 
-    return MultiplatformFileHelper.instance.saveFile(
-      data: bytesContent,
-      fileName: 'NotZero_Backup_${DateTime.now().toIso8601String()}.json',
-      mimetype: 'application/json',
-      allowedExtensions: ['json', 'yaml', 'yml'],
-    );
+    try {
+      return await MultiplatformFileHelper.instance.saveFile(
+        data: bytesContent,
+        fileName: 'NotZero_Backup_${DateTime.now().toIso8601String()}.json',
+        mimetype: 'application/json',
+        allowedExtensions: ['json', 'yaml', 'yml'],
+      );
+    } catch (e, s) {
+      debugPrint('Error while saving file: $e');
+      debugPrintStack(stackTrace: s);
+      return false;
+    }
   }
 
   Future<BackupModel?> importDataFromFile() async {

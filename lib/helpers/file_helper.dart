@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:not_zero/components/web_save_dialog.dart';
+import 'package:not_zero/helpers/global_navigation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';
 
@@ -35,7 +40,12 @@ class _UniversalFileHelper implements MultiplatformFileHelper {
     required String mimetype,
     required List<String> allowedExtensions,
   }) {
-    if (Platform.isAndroid || Platform.isIOS) {
+    if (kIsWeb) {
+      return _saveWeb(
+        bytes: data,
+        mimetype: mimetype,
+      );
+    } else if (Platform.isAndroid || Platform.isIOS) {
       return _saveMobile(
         bytes: data,
         name: fileName,
@@ -87,6 +97,23 @@ class _UniversalFileHelper implements MultiplatformFileHelper {
     if (pathToSave == null) return false;
 
     File(pathToSave).writeAsBytesSync(bytes);
+    return true;
+  }
+
+  static Future<bool> _saveWeb({
+    required List<int> bytes,
+    required String mimetype,
+  }) async {
+    if (mimetype != 'application/json' && mimetype != 'text/plain') {
+      throw UnimplementedError(
+        'Unavailable file type for web dialog: "$mimetype"',
+      );
+    }
+
+    await showDialog<void>(
+      context: GlobalNavigation.context,
+      builder: (_) => WebSaveDialog(utf8.decode(bytes)),
+    );
     return true;
   }
 

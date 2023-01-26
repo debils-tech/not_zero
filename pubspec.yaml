@@ -55,7 +55,6 @@ dependencies:
   path: ^1.8.2
   document_file_save_plus: ^1.0.9
   file_picker: ^5.2.4
-  clipboard: ^0.1.3
 
   # For getting info about app's package
   package_info_plus: ^3.0.2
@@ -88,6 +87,9 @@ flutter:
     - family: NotZero
       fonts:
         - asset: assets/fonts/NotZero.ttf
+    - family: SourceCodePro
+      fonts:
+        - asset: assets/fonts/SourceCodePro-VariableFont.ttf
 
   uses-material-design: true
 

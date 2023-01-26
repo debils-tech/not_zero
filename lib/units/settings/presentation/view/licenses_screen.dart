@@ -15,7 +15,7 @@ class LicensesScreen extends StatelessWidget {
         padding: EdgeInsets.only(top: 13, bottom: 8),
         child: Icon(NotZeroIcons.zero, size: 35),
       ),
-      applicationLegalese: 'GPLv3',
+      applicationLegalese: 'GNU GENERAL PUBLIC LICENSE version 3',
     );
   }
 }

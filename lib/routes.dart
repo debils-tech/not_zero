@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/loading_screen.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/helpers/global_navigation.dart';
 import 'package:not_zero/helpers/pattern_validator.dart';
 import 'package:not_zero/units/home/presentation/view/home_screen.dart';
 import 'package:not_zero/units/settings/presentation/view/about_screen.dart';
@@ -16,6 +17,7 @@ import 'package:not_zero/units/tasks/presentation/view/task_view_screen.dart';
 import 'package:not_zero/units/tasks/presentation/view/tasks_list_screen.dart';
 
 final appRouter = GoRouter(
+  navigatorKey: GlobalNavigation.key,
   initialLocation: '/',
   routes: [
     GoRoute(

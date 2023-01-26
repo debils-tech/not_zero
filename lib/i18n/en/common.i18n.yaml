@@ -4,6 +4,8 @@ dialog:
   okButton: 'Yes'
   deleteTitle: 'Confirm deletion'
   deleteButton: 'Delete'
+  webSaveTitle: 'Save file'
+  copyButton: 'Copy content'
 
 timeSubtitle:
   createdAt: 'created at ${time}'
