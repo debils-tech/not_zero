@@ -9,7 +9,7 @@ import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/global_navigation.dart';
 import 'package:not_zero/helpers/licenses.dart';
-import 'package:not_zero/helpers/platform_extenstions.dart';
+import 'package:not_zero/helpers/platform_checks.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/routes.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';

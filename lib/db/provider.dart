@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/db/db.dart';
 import 'package:not_zero/db/drift/open_database.dart';
-import 'package:not_zero/helpers/platform_extenstions.dart';
+import 'package:not_zero/helpers/platform_checks.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';

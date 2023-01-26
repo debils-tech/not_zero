@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/helpers/platform_checks.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/settings/domain/repositories/settings_repository.dart';
 import 'package:not_zero/units/settings/presentation/view/components/list_elements.dart';
@@ -95,9 +96,7 @@ class StorageSettingsScreen extends StatelessWidget {
         builder: (context) {
           // There is an option to close an app only on this platforms
           final isClosingSupported = Platform.isAndroid ||
-              Platform.isLinux ||
-              Platform.isMacOS ||
-              Platform.isWindows;
+              isPlatformDesktop;
 
           return AlertDialog(
             icon: const Icon(Icons.warning_amber_rounded),

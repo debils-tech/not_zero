@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:not_zero/components/web_save_dialog.dart';
 import 'package:not_zero/helpers/global_navigation.dart';
+import 'package:not_zero/helpers/platform_checks.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';
 
@@ -45,13 +46,13 @@ class _UniversalFileHelper implements MultiplatformFileHelper {
         bytes: data,
         mimetype: mimetype,
       );
-    } else if (Platform.isAndroid || Platform.isIOS) {
+    } else if (isPlatformMobile) {
       return _saveMobile(
         bytes: data,
         name: fileName,
         mimetype: mimetype,
       );
-    } else if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
+    } else if (isPlatformDesktop) {
       return _saveDesktop(
         bytes: data,
         name: fileName,
