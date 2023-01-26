@@ -13,7 +13,7 @@ class SettingsBlocHeader extends StatelessWidget {
       padding: const EdgeInsets.only(left: 9, top: 12, bottom: 6),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.titleSmall,
       ),
     );
   }

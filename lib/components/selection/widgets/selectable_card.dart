@@ -42,7 +42,6 @@ class SelectableCard extends StatelessWidget {
               ? Border.all(
                   width: 3.5,
                   color: theme.primaryColor.withOpacity(0.7),
-                  strokeAlign: StrokeAlign.center,
                 )
               : null,
           borderRadius: const BorderRadius.all(Radius.circular(15)),

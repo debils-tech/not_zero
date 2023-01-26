@@ -16,7 +16,7 @@ final _lightThemeBase = FlexThemeData.light(
 final defaultLightTheme = _lightThemeBase.copyWith(
   useMaterial3: true,
   textTheme: _lightThemeBase.textTheme.copyWith(
-    subtitle2: TextStyle(color: Colors.grey.shade500),
+    titleSmall: TextStyle(color: Colors.grey.shade500),
   ),
   checkboxTheme: _lightThemeBase.checkboxTheme.copyWith(
     fillColor: MaterialStateProperty.resolveWith(
@@ -48,7 +48,7 @@ final _darkThemeBase = FlexThemeData.dark(
 final defaultDarkTheme = _darkThemeBase.copyWith(
   useMaterial3: true,
   textTheme: _darkThemeBase.textTheme.copyWith(
-    subtitle2: TextStyle(color: Colors.grey.shade700),
+    titleSmall: TextStyle(color: Colors.grey.shade700),
   ),
   checkboxTheme: _darkThemeBase.checkboxTheme.copyWith(
     fillColor: MaterialStateProperty.resolveWith(

@@ -75,7 +75,7 @@ class _DeleteTaskButton extends StatelessWidget {
       tooltip: t.tasks.edit.tooltips.deleteTaskButton,
       icon: Icon(
         Icons.delete_outline,
-        color: Theme.of(context).errorColor,
+        color: Theme.of(context).colorScheme.error,
       ),
     );
   }

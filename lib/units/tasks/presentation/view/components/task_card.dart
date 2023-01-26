@@ -77,7 +77,7 @@ class _TaskTextBlock extends StatelessWidget {
             ),
             child: Text(
               task.description,
-              style: theme.textTheme.caption
+              style: theme.textTheme.bodySmall
                   ?.copyWith(fontWeight: FontWeight.w500),
               overflow: TextOverflow.ellipsis,
               maxLines: 4,
@@ -112,7 +112,7 @@ class _TaskTimeText extends StatelessWidget {
 
     return Text(
       finalTextTime,
-      style: Theme.of(context).textTheme.subtitle2,
+      style: Theme.of(context).textTheme.titleSmall,
     );
   }
 }

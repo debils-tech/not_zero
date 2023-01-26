@@ -25,7 +25,7 @@ Future<bool?> showConfirmationDialog(
             confirm ?? t.common.dialog.okButton,
             style: dangerous
                 ? TextStyle(
-                    color: Theme.of(context).errorColor,
+                    color: Theme.of(context).colorScheme.error,
                   )
                 : null,
           ),
