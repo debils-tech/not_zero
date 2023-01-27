@@ -56,7 +56,7 @@ class _TasksListFloatingButton extends StatelessWidget {
                   .read<ItemSelectionBloc>()
                   .add(const ItemSelectionEvent.removeAll(null));
             },
-            // TODO(uSlashVlad): Add tooltip.
+            tooltip: t.tasks.list.tooltips.deleteSelectedButton,
             child: const Icon(Icons.delete_outline_rounded),
           );
         }

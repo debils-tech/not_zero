@@ -174,7 +174,6 @@ class _FloatingSubmitButton extends StatelessWidget {
           ),
         ),
       ),
-      // TODO(uSlashVlad): Add tooltip.
       child: Text(
         taskToEdit == null
             ? t.tasks.edit.submit.create

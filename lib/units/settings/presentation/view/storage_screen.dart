@@ -84,7 +84,6 @@ class StorageSettingsScreen extends StatelessWidget {
             exit(0);
           }
         },
-        // TODO(uSlashVlad): Add tooltip.
         child: Text(t.settings.storage.closeAppButton),
       )
     ];
