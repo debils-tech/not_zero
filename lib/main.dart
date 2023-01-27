@@ -11,6 +11,7 @@ import 'package:not_zero/helpers/global_navigation.dart';
 import 'package:not_zero/helpers/licenses.dart';
 import 'package:not_zero/helpers/platform_checks.dart';
 import 'package:not_zero/i18n/translations.g.dart';
+import 'package:not_zero/logger/config.dart';
 import 'package:not_zero/routes.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
 import 'package:not_zero/units/settings/presentation/bloc/theme_bloc.dart';
@@ -21,6 +22,7 @@ void main() async {
 
   configureDependencies();
   addAppLicenses();
+  configLogger();
 
   runApp(
     TranslationProvider(

@@ -12,7 +12,7 @@ QueryExecutor openDriftDatabase({bool permament = true}) {
   if (permament) {
     return LazyDatabase(() async {
       final file = File(await _getDatabasePath());
-      return NativeDatabase(file);
+      return NativeDatabase(file, logStatements: true);
     });
   }
 

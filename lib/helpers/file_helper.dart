@@ -4,6 +4,7 @@ import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:not_zero/components/web_save_dialog.dart';
 import 'package:not_zero/helpers/global_navigation.dart';
 import 'package:not_zero/helpers/platform_checks.dart';
@@ -34,6 +35,8 @@ abstract class MultiplatformFileHelper {
 }
 
 class _UniversalFileHelper implements MultiplatformFileHelper {
+  final log = Logger('UniversalFileHelper');
+
   @override
   Future<bool> saveFile({
     required Uint8List data,
@@ -75,14 +78,17 @@ class _UniversalFileHelper implements MultiplatformFileHelper {
         mimetype,
       );
       return true;
-    } catch (e, st) {
-      debugPrint('Error while saving backup: $e');
-      debugPrintStack(stackTrace: st);
+    } catch (e, s) {
+      log.warning(
+        'Error while saving backup',
+        e,
+        s,
+      );
       return false;
     }
   }
 
-  static Future<bool> _saveDesktop({
+  Future<bool> _saveDesktop({
     required List<int> bytes,
     required String name,
     required List<String> allowedExtensions,
@@ -101,14 +107,17 @@ class _UniversalFileHelper implements MultiplatformFileHelper {
     return true;
   }
 
-  static Future<bool> _saveWeb({
+  Future<bool> _saveWeb({
     required List<int> bytes,
     required String mimetype,
   }) async {
     if (mimetype != 'application/json' && mimetype != 'text/plain') {
-      throw UnimplementedError(
-        'Unavailable file type for web dialog: "$mimetype"',
+      log.warning(
+        'Error while saving backup',
+        UnimplementedError('$mimetype is not supported for web'),
+        StackTrace.current,
       );
+      return false;
     }
 
     await showDialog<void>(

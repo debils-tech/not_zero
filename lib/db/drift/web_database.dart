@@ -6,6 +6,7 @@ QueryExecutor openDriftDatabase({bool permament = true}) {
     return LazyDatabase(() async {
       return WebDatabase.withStorage(
         await DriftWebStorage.indexedDbIfSupported('NotZero'),
+        logStatements: true,
       );
     });
   }

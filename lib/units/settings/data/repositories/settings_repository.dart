@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logging/logging.dart';
 import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/app_info.dart';
@@ -13,6 +13,8 @@ class SettingsRepositoryImpl implements SettingsRepository {
   SettingsRepositoryImpl(this._localService);
 
   final SettingsLocalService _localService;
+
+  final log = Logger('SettingsRepository');
 
   @override
   ThemeState loadThemeState() {
@@ -31,9 +33,8 @@ class SettingsRepositoryImpl implements SettingsRepository {
     try {
       settings = _localService.getAllSettings();
       tasks = await _localService.getAllTasks();
-    } catch (e, st) {
-      debugPrint('Error while getting info for export: $e');
-      debugPrintStack(stackTrace: st);
+    } catch (e, s) {
+      log.severe('Error while getting info for export', e, s);
       return false;
     }
 
@@ -65,9 +66,8 @@ class SettingsRepositoryImpl implements SettingsRepository {
       await _localService.applyAllTasks(
         rawTasks.map((e) => Map<String, dynamic>.from(e as Map)).toList(),
       );
-    } catch (e, st) {
-      debugPrint('Error while applying backup: $e');
-      debugPrintStack(stackTrace: st);
+    } catch (e, s) {
+      log.severe('Error while applying backup', e, s);
       return false;
     }
 

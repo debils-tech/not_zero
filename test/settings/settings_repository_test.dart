@@ -80,6 +80,9 @@ void main() {
 
       await service.exportDataToFile(
         BackupModel(
+          // This is normal here because "version" value will be changed
+          // in the future.
+          // ignore: avoid_redundant_argument_values
           version: 1,
           // AppInfo doesn't matter for now
           data: {

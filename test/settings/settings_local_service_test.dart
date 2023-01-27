@@ -105,6 +105,9 @@ void main() {
     expect(await service.importDataFromFile(), isNull);
 
     var backup = BackupModel(
+      // This is normal here because "version" value will be changed
+      // in the future.
+      // ignore: avoid_redundant_argument_values
       version: 1,
       data: {
         BoxNames.settings: const <String, String>{},

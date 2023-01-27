@@ -81,7 +81,6 @@ class StorageSettingsScreen extends StatelessWidget {
           if (Platform.isAndroid) {
             SystemNavigator.pop();
           } else {
-            // TODO(uSlashVlad): It isn't good to close iOS app using exit(0).
             exit(0);
           }
         },
