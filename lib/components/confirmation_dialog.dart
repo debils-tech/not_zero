@@ -18,15 +18,18 @@ Future<bool?> showConfirmationDialog(
       actions: [
         TextButton(
           onPressed: () => GoRouter.of(context).pop(false),
+          // TODO(uSlashVlad): Add tooltip.
           child: Text(cancel ?? t.common.dialog.cancelButton),
         ),
         TextButton(
           onPressed: () => GoRouter.of(context).pop(true),
+          // TODO(uSlashVlad): Add tooltip.
           child: Text(
             confirm ?? t.common.dialog.okButton,
             style: dangerous
                 ? TextStyle(
                     color: Theme.of(context).colorScheme.error,
+                    fontWeight: FontWeight.bold,
                   )
                 : null,
           ),

@@ -84,6 +84,7 @@ class StorageSettingsScreen extends StatelessWidget {
             exit(0);
           }
         },
+        // TODO(uSlashVlad): Add tooltip.
         child: Text(t.settings.storage.closeAppButton),
       )
     ];
@@ -94,8 +95,7 @@ class StorageSettingsScreen extends StatelessWidget {
         barrierDismissible: false,
         builder: (context) {
           // There is an option to close an app only on this platforms
-          final isClosingSupported = Platform.isAndroid ||
-              isPlatformDesktop;
+          final isClosingSupported = Platform.isAndroid || isPlatformDesktop;
 
           return AlertDialog(
             icon: const Icon(Icons.warning_amber_rounded),

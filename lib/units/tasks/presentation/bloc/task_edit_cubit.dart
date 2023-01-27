@@ -9,7 +9,10 @@ class TaskEditCubit extends Cubit<bool> {
 
   final TasksRepository _repository;
 
+  bool isChanged = false;
+
   void changeForm({required bool isCorrect}) {
+    isChanged = true;
     if (isCorrect != state) {
       emit(isCorrect);
     }

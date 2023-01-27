@@ -89,12 +89,34 @@ class _TaskEditScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final taskEditCubit = context.read<TaskEditCubit>();
+
     return FormBuilder(
       key: formKey,
       initialValue: {
         'title': taskToEdit?.title,
         'description': taskToEdit?.description,
         'importance': taskToEdit?.importance ?? TaskImportance.normal,
+      },
+      onChanged: () => taskEditCubit.changeForm(
+        isCorrect: formKey.currentState?.validate() ?? false,
+      ),
+      onWillPop: () async {
+        if (!taskEditCubit.isChanged) {
+          return true;
+        }
+
+        final confirm = await showConfirmationDialog(
+          context,
+          title: t.common.dialog.exitTitle,
+          content: t.common.dialog.exitContent,
+          dangerous: true,
+        );
+        if (confirm ?? false) {
+          return true;
+        }
+
+        return false;
       },
       child: Stack(
         children: [
@@ -106,11 +128,11 @@ class _TaskEditScreenBody extends StatelessWidget {
               bottom: 70,
             ),
             children: [
-              TaskEditImportanceField(formKey),
+              const TaskEditImportanceField(),
               const SizedBox(height: 16),
-              TaskEditTitleField(formKey),
+              const TaskEditTitleField(),
               const SizedBox(height: 12),
-              TaskEditDescriptionField(formKey),
+              const TaskEditDescriptionField(),
               const SizedBox(height: 8),
               if (taskToEdit != null) TaskEditingInfo(taskToEdit!),
             ],
@@ -152,6 +174,7 @@ class _FloatingSubmitButton extends StatelessWidget {
           ),
         ),
       ),
+      // TODO(uSlashVlad): Add tooltip.
       child: Text(
         taskToEdit == null
             ? t.tasks.edit.submit.create

@@ -40,10 +40,12 @@ class WebSaveDialog extends StatelessWidget {
                     // TODO(uSlashVlad): Show some kind of toast here
                     Clipboard.setData(ClipboardData(text: stringContent));
                   },
+                  // TODO(uSlashVlad): Add tooltip.
                   child: Text(t.common.dialog.copyButton),
                 ),
                 TextButton(
                   onPressed: GoRouter.of(context).pop,
+                  // TODO(uSlashVlad): Add tooltip.
                   child: Text(t.common.dialog.cancelButton),
                 ),
               ],

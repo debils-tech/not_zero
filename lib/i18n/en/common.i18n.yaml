@@ -6,6 +6,8 @@ dialog:
   deleteButton: 'Delete'
   webSaveTitle: 'Save file'
   copyButton: 'Copy content'
+  exitTitle: 'Confirm exit'
+  exitContent: 'Are you sure you want exit this page? All changes will be lost!'
 
 timeSubtitle:
   createdAt: 'created at ${time}'

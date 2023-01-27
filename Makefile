@@ -4,7 +4,7 @@ config:
 	fvm flutter pub get
 
 format:
-	flutter format .
+	dart format .
 fmt: format
 
 

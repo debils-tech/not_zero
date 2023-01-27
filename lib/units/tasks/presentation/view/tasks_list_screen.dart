@@ -56,6 +56,7 @@ class _TasksListFloatingButton extends StatelessWidget {
                   .read<ItemSelectionBloc>()
                   .add(const ItemSelectionEvent.removeAll(null));
             },
+            // TODO(uSlashVlad): Add tooltip.
             child: const Icon(Icons.delete_outline_rounded),
           );
         }
@@ -76,13 +77,24 @@ class _TasksListScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final listKey = GlobalKey();
 
-    return BlocBuilder<TasksListBloc, TasksListState>(
-      builder: (context, state) {
-        return state.when(
-          loading: () => const _TasksLoadingView(),
-          loaded: (tasks) => _TasksListView(tasks, listKey: listKey),
-        );
+    return WillPopScope(
+      onWillPop: () {
+        final selectionBloc = context.read<ItemSelectionBloc>();
+        if (selectionBloc.state.isEmpty) {
+          return Future.value(true);
+        }
+
+        selectionBloc.add(const ItemSelectionEvent.removeAll(null));
+        return Future.value(false);
       },
+      child: BlocBuilder<TasksListBloc, TasksListState>(
+        builder: (context, state) {
+          return state.when(
+            loading: () => const _TasksLoadingView(),
+            loaded: (tasks) => _TasksListView(tasks, listKey: listKey),
+          );
+        },
+      ),
     );
   }
 }
