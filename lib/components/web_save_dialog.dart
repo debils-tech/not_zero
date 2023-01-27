@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero/components/common_widgets/copy_button.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 
 class WebSaveDialog extends StatelessWidget {
@@ -35,13 +35,8 @@ class WebSaveDialog extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // TODO(uSlashVlad): Show some kind of toast here
-                    Clipboard.setData(ClipboardData(text: stringContent));
-                  },
-                  child: Text(t.common.dialog.copyButton),
-                ),
+                ElevatedCopyButton(stringContent),
+                const SizedBox(width: 10),
                 TextButton(
                   onPressed: GoRouter.of(context).pop,
                   child: Text(t.common.dialog.cancelButton),

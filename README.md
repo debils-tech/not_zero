@@ -2,16 +2,16 @@
 
 <a href="./LICENSE.md"><img src="https://img.shields.io/badge/license-GPLv3-blue.svg"></a>
 
-> Currently under active development and doesn't have anything very intresting to show.
+> Currently under active development and doesn't have anything very interesting to show.
 >
 > More information will be in the near future.
 
-Not Zero is a free crossplatform application developed with [flutter](https://flutter.dev) that aims to motivate people to do everyday tasks using gamification.
+Not Zero is a free cross-platform application developed with [flutter](https://flutter.dev) that aims to motivate people to do everyday tasks using gamification.
 
 ## Project status and roadmap
 
 Project is now developing by the single person, so development is not very fast.
-It currently at very early stage, can contain breaking changes **(including a posibility of user data loss)**.
+It currently at very early stage, can contain breaking changes **(including a possibility of user data loss)**.
 
 Here is roadmap of project and what features are necessary to "complete" each stage:
 
@@ -38,7 +38,7 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [ ] Release in F-Droid
 - [ ] Advanced stats (weekly, monthly statistics)
 - [ ] Combos
-- [ ] Habbits
+- [ ] Habits
 - [ ] Achievements
 </details>
 
@@ -61,7 +61,7 @@ Here is roadmap of project and what features are necessary to "complete" each st
 ## Building and running
 
 ```bash
-# For installing basic dependencies, configuring flutter version, generating neccesary code
+# For installing basic dependencies, configuring flutter version, generating necessary code
 # Make sure you added "$HOME/.pub-cache/bin" to your PATH because it is necessary for FVM
 make config
 
