@@ -5,19 +5,22 @@ import 'package:theme_tailor_annotation/theme_tailor_annotation.dart';
 part 'task_colors.tailor.dart';
 
 @Tailor(themeGetter: ThemeGetter.onThemeData)
-class _$TaskColorsScheme {
+class _$TasksColorScheme {
   static final List<Color> notImportantColor = [
     Colors.blueGrey.shade400,
     Colors.grey[350]!
   ];
-  static final List<Color> normalColor = [
+  static const List<Color> normalColor = [
     Colors.amber,
     Colors.amberAccent,
   ];
-  static final List<Color> importantColor = [Colors.red, Colors.redAccent];
+  static const List<Color> importantColor = [
+    Colors.red,
+    Colors.redAccent,
+  ];
 }
 
-extension TaskColorsMethodExtension on TaskColorsScheme {
+extension TaskColorsMethodExtension on TasksColorScheme {
   Color colorByImportance(TaskImportance importance) {
     switch (importance) {
       case TaskImportance.notImportant:

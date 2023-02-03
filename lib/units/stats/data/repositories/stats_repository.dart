@@ -35,10 +35,12 @@ class StatsRepositoryImpl implements StatsRepository {
   }
 
   @override
-  Future<List<int>> getStatsForCurrentWeek() async {
+  Future<List<int>> getStatsForWeek([int offsetFromCurrent = 0]) async {
     final result = <int>[];
 
-    var day = DateTime.now().startOfWeek;
+    var day = DateTime.now()
+        .subtract(Duration(days: 7 * offsetFromCurrent))
+        .startOfWeek;
     for (var i = 0; i < 7; i++) {
       final importances = await _localService.getCompletedTasksImportance(
         startPeriod: day.startOfDay,

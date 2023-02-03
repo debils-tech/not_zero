@@ -47,7 +47,7 @@ class TaskEditImportanceField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final taskColors = Theme.of(context).taskColorsScheme;
+    final taskColors = Theme.of(context).tasksColorScheme;
 
     return FormBuilderField<TaskImportance>(
       name: 'importance',

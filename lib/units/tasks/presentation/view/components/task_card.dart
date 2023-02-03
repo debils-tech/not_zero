@@ -134,7 +134,7 @@ class _ImportanceIndicatorBox extends StatelessWidget {
           left: BorderSide(
             width: 7,
             color: Theme.of(context)
-                    .taskColorsScheme.colorByImportance(importance),
+                    .tasksColorScheme.colorByImportance(importance),
           ),
         ),
       ),

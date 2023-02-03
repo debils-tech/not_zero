@@ -49,7 +49,7 @@ class _TaskViewImportanceIndicator extends StatelessWidget
               height: preferredSize.height,
               child: ColoredBox(
                 color: Theme.of(context)
-                    .taskColorsScheme
+                    .tasksColorScheme
                     .colorByImportance(task.importance),
               ),
             );

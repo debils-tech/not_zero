@@ -9,5 +9,5 @@ abstract class StatsRepository {
 
   void excludeCompletedTask(TaskImportance importance);
 
-  Future<List<int>> getStatsForCurrentWeek();
+  Future<List<int>> getStatsForWeek([int offsetFromCurrent]);
 }

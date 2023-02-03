@@ -10,7 +10,8 @@ class QuickStatisticsCubit extends Cubit<QuickStatisticsState> {
   final StatsRepository _repository;
 
   Future<void> loadStats() async {
-    final weeklyStats = await _repository.getStatsForCurrentWeek();
+    final weeklyStats = await _repository.getStatsForWeek();
+
     emit(QuickStatisticsState(weeklyStats: weeklyStats));
   }
 }
