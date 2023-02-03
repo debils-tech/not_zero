@@ -38,7 +38,7 @@ void main() {
   group('Days shift', () {
     test('Just week before', () {
       expect(
-        niceDay.weekAgo,
+        niceDay.weekBefore,
         DateTime(
           2022,
           1,
@@ -53,10 +53,10 @@ void main() {
     });
 
     test('Range week before', () {
-      expect(niceDay.weekAgo.startOfWeek, DateTime(2022, 1, 24));
+      expect(niceDay.weekBefore.startOfWeek, DateTime(2022, 1, 24));
 
       expect(
-        niceDay.weekAgo.endOfWeek,
+        niceDay.weekBefore.endOfWeek,
         DateTime(2022, 1, 30, 23, 59, 59, 999, 999),
       );
     });

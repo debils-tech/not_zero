@@ -39,14 +39,14 @@ class TasksListAppBar extends StatelessWidget implements PreferredSizeWidget {
               );
             },
             tooltip: t.tasks.list.tooltips.selectAllButton,
-            icon: const Icon(Icons.select_all),
+            icon: const Icon(Icons.select_all_rounded),
           ),
           IconButton(
             onPressed: () {
               itemSelBloc.add(const ItemSelectionEvent.removeAll(null));
             },
             tooltip: t.tasks.list.tooltips.removeSelectionButton,
-            icon: const Icon(Icons.close),
+            icon: const Icon(Icons.close_rounded),
           ),
         ],
       );

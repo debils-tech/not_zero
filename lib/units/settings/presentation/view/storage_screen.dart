@@ -25,12 +25,12 @@ class StorageSettingsScreen extends StatelessWidget {
           ),
           ListTile(
             onTap: () => _exportData(context),
-            leading: const Icon(Icons.save),
+            leading: const Icon(Icons.save_rounded),
             title: Text(t.settings.storage.exportTitle),
           ),
           ListTile(
             onTap: () => _importData(context),
-            leading: const Icon(Icons.download),
+            leading: const Icon(Icons.download_rounded),
             title: Text(t.settings.storage.importTitle),
           ),
         ],
@@ -41,7 +41,7 @@ class StorageSettingsScreen extends StatelessWidget {
   Future<void> _exportData(BuildContext context) async {
     _showDialog(
       context,
-      icon: Icons.save,
+      icon: Icons.save_rounded,
       title: t.settings.storage.exportStatus.process,
     );
 
@@ -60,7 +60,7 @@ class StorageSettingsScreen extends StatelessWidget {
   Future<void> _importData(BuildContext context) async {
     _showDialog(
       context,
-      icon: Icons.download,
+      icon: Icons.download_rounded,
       title: t.settings.storage.importStatus.process,
     );
 
@@ -118,7 +118,7 @@ class StorageSettingsScreen extends StatelessWidget {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              icon: const Icon(Icons.save),
+              icon: const Icon(Icons.save_rounded),
               title: Text(title),
               content: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

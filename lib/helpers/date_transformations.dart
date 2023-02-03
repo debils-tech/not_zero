@@ -19,6 +19,10 @@ extension DateTimeTransformations on DateTime {
     );
   }
 
+  DateTime get dayAfter {
+    return add(const Duration(days: 1));
+  }
+
   DateTime get startOfWeek {
     final justDate = startOfDay;
     return justDate.subtract(Duration(days: justDate.weekday - 1));
@@ -29,7 +33,7 @@ extension DateTimeTransformations on DateTime {
     return justDate.add(Duration(days: 7 - justDate.weekday));
   }
 
-  DateTime get weekAgo {
+  DateTime get weekBefore {
     return subtract(const Duration(days: 7));
   }
 

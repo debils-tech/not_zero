@@ -16,13 +16,19 @@ class HomeNavigationBlock extends StatelessWidget {
           children: [
             _NavigationCard(
               route: '/tasks',
-              icon: Icons.format_list_bulleted,
+              icon: Icons.format_list_bulleted_rounded,
               title: t.tasks.list.title,
             ),
             const SizedBox(height: 6),
             _NavigationCard(
+              route: '/stats',
+              icon: Icons.bar_chart_rounded,
+              title: t.stats.quickView.title,
+            ),
+            const SizedBox(height: 6),
+            _NavigationCard(
               route: '/settings',
-              icon: Icons.settings,
+              icon: Icons.settings_rounded,
               title: t.settings.list.title,
             ),
           ],

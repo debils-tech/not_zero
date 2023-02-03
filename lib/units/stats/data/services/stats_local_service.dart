@@ -11,10 +11,36 @@ class StatsLocalService {
 
   late final NotZeroDatabase _db;
 
-  Future<List<TaskImportance>> getCompletedTasksImportance() async {
-    final completedTasks = await (_db.select(_db.tasksTable)
-          ..where((tbl) => tbl.completedAt.isNotNull()))
-        .get();
+  Future<List<TaskImportance>> getCompletedTasksImportance({
+    DateTime? startPeriod,
+    DateTime? endPeriod,
+  }) async {
+    final query = _db.select(_db.tasksTable)
+      ..where((taskTable) {
+        final completed = taskTable.completedAt.isNotNull();
+        if (startPeriod == null && endPeriod == null) {
+          // in range (-inf, +inf)
+          return completed;
+        }
+
+        if (startPeriod == null && endPeriod != null) {
+          // in range (-inf, end]
+          return completed &
+              taskTable.completedAt.isSmallerOrEqualValue(endPeriod);
+        }
+
+        if (startPeriod != null && endPeriod == null) {
+          // in range [start, +inf)
+          return completed &
+              taskTable.completedAt.isBiggerOrEqualValue(startPeriod);
+        }
+
+        // in range [start, end]
+        return completed &
+            taskTable.completedAt.isBetweenValues(startPeriod!, endPeriod!);
+      });
+
+    final completedTasks = await query.get();
 
     return completedTasks.map((e) => e.importance).toList();
   }

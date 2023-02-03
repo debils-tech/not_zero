@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/selection/widgets/selectable_card.dart';
-import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/helpers/time.dart';
 import 'package:not_zero/i18n/translations.g.dart';
+import 'package:not_zero/themes/task_colors.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
@@ -128,14 +128,13 @@ class _ImportanceIndicatorBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final taskColors = Theme.of(context).extension<TaskColors>()!;
-
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border(
           left: BorderSide(
             width: 7,
-            color: taskColors.colorByImportance(importance),
+            color: Theme.of(context)
+                    .taskColorsScheme.colorByImportance(importance),
           ),
         ),
       ),

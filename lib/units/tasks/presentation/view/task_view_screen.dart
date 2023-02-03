@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/get_it.dart';
-import 'package:not_zero/helpers/theming.dart';
 import 'package:not_zero/i18n/translations.g.dart';
+import 'package:not_zero/themes/task_colors.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_editing_info.dart';
@@ -40,8 +40,6 @@ class _TaskViewImportanceIndicator extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    final taskColors = Theme.of(context).extension<TaskColors>()!;
-
     return BlocBuilder<TaskViewCubit, Task?>(
       builder: (context, state) {
         return LayoutBuilder(
@@ -50,7 +48,9 @@ class _TaskViewImportanceIndicator extends StatelessWidget
               width: constrains.maxWidth,
               height: preferredSize.height,
               child: ColoredBox(
-                color: taskColors.colorByImportance(task.importance),
+                color: Theme.of(context)
+                    .taskColorsScheme
+                    .colorByImportance(task.importance),
               ),
             );
           },

@@ -8,4 +8,6 @@ abstract class StatsRepository {
   void includeCompletedTask(TaskImportance importance);
 
   void excludeCompletedTask(TaskImportance importance);
+
+  Future<List<int>> getStatsForCurrentWeek();
 }

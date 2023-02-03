@@ -1,16 +1,9 @@
 import 'package:injectable/injectable.dart';
+import 'package:not_zero/helpers/date_transformations.dart';
 import 'package:not_zero/units/stats/data/services/stats_local_service.dart';
 import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:rxdart/subjects.dart';
-
-// Needed for mapping completed tasks for counting score.
-// Have to contain every importance value as key.
-final _taskImportanceToScore = {
-  TaskImportance.notImportant: 3,
-  TaskImportance.normal: 5,
-  TaskImportance.important: 8,
-};
 
 @LazySingleton(as: StatsRepository)
 class StatsRepositoryImpl implements StatsRepository {
@@ -26,23 +19,53 @@ class StatsRepositoryImpl implements StatsRepository {
 
   @override
   Future<void> countTotalPoints() async {
-    final tasks = await _localService.getCompletedTasksImportance();
+    final importances = await _localService.getCompletedTasksImportance();
 
-    var result = 0;
-    for (final importance in tasks) {
-      result += _taskImportanceToScore[importance]!;
-    }
-
-    _totalPointsStreamController.add(result);
+    _totalPointsStreamController.add(_importancesToScore(importances));
   }
 
   @override
   void includeCompletedTask(TaskImportance importance) {
-    _totalPointsStreamController.value += _taskImportanceToScore[importance]!;
+    _totalPointsStreamController.value += _importanceToScore(importance);
   }
 
   @override
   void excludeCompletedTask(TaskImportance importance) {
-    _totalPointsStreamController.value -= _taskImportanceToScore[importance]!;
+    _totalPointsStreamController.value -= _importanceToScore(importance);
+  }
+
+  @override
+  Future<List<int>> getStatsForCurrentWeek() async {
+    final result = <int>[];
+
+    var day = DateTime.now().startOfWeek;
+    for (var i = 0; i < 7; i++) {
+      final importances = await _localService.getCompletedTasksImportance(
+        startPeriod: day.startOfDay,
+        endPeriod: day.endOfDay,
+      );
+      result.add(_importancesToScore(importances));
+      day = day.dayAfter;
+    }
+
+    return result;
+  }
+
+  int _importancesToScore(List<TaskImportance> importances) {
+    return importances.fold(
+      0,
+      (previousValue, element) => previousValue + _importanceToScore(element),
+    );
+  }
+
+  int _importanceToScore(TaskImportance importance) {
+    switch (importance) {
+      case TaskImportance.notImportant:
+        return 3;
+      case TaskImportance.normal:
+        return 5;
+      case TaskImportance.important:
+        return 8;
+    }
   }
 }

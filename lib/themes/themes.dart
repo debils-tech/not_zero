@@ -1,15 +1,11 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:not_zero/helpers/theming.dart';
+import 'package:not_zero/themes/task_colors.dart';
 
 final _lightThemeBase = FlexThemeData.light(
   scheme: FlexScheme.material,
   extensions: <ThemeExtension>[
-    TaskColors(
-      notImportantColor: Colors.blueGrey.shade400,
-      normalColor: Colors.amber,
-      importantColor: Colors.red,
-    ),
+    TaskColorsScheme.light,
   ],
 );
 
@@ -37,11 +33,7 @@ final defaultLightTheme = _lightThemeBase.copyWith(
 final _darkThemeBase = FlexThemeData.dark(
   scheme: FlexScheme.material,
   extensions: <ThemeExtension>[
-    TaskColors(
-      notImportantColor: Colors.grey[350]!,
-      normalColor: Colors.amberAccent,
-      importantColor: Colors.redAccent,
-    ),
+    TaskColorsScheme.dark,
   ],
 );
 
