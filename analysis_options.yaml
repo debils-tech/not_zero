@@ -8,6 +8,7 @@ analyzer:
     - ios/*
     - lib/**/*.g.dart
     - lib/**/*.freezed.dart
+    - lib/**/*.tailor.dart
     - lib/get_it.config.dart
   errors:
     unnecessary_await_in_return: warning
