@@ -24,12 +24,12 @@ class UniversalListView<T extends ObjectIdMixin> extends StatelessWidget {
       insertDuration: const Duration(milliseconds: 300),
       removeDuration: const Duration(milliseconds: 200),
       updateDuration: const Duration(milliseconds: 100),
-      padding: const EdgeInsets.only(top: 5, bottom: 75, left: 5, right: 5),
+      padding: const EdgeInsets.only(top: 5, bottom: 75, left: 10, right: 10),
       itemBuilder: (context, animation, item, i) {
         return SizeFadeTransition(
           animation: animation,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 5),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             child: itemBuilder(context, item, i),
           ),
         );

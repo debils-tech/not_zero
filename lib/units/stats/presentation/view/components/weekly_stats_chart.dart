@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/themes/charts_colors.dart';
 
 class WeeklyStatsChart extends StatelessWidget {
@@ -27,104 +28,110 @@ class WeeklyStatsChart extends StatelessWidget {
         ) +
         8.0;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-      child: LineChart(
-        LineChartData(
-          minX: 0,
-          maxX: 6,
-          minY: 0,
-          maxY: maxHeight,
-          lineBarsData: [
-            LineChartBarData(
-              spots: List.generate(
-                weeklyStats.length,
-                (index) {
-                  return FlSpot(
-                    index.toDouble(),
-                    weeklyStats[index].toDouble(),
-                  );
-                },
-              ),
-              isCurved: true,
-              curveSmoothness: 0.3,
-              barWidth: 5,
-              isStrokeCapRound: true,
-              color: chartsColors.weeklyStatsLine,
-              belowBarData: BarAreaData(
-                show: true,
-                gradient: chartsColors.weeklyStatsBelowGradient,
-              ),
-            ),
-          ],
-          titlesData: FlTitlesData(
-            show: true,
-            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                interval: 1,
-                getTitlesWidget: (value, _) {
-                  final weekDay = DateTime.now()
-                      .subtract(
-                        Duration(days: 6 - value.round()),
-                      )
-                      .weekday;
-                  final String title;
-                  switch (weekDay) {
-                    case 1:
-                      title = 'Mon';
-                      break;
-                    case 2:
-                      title = 'Tue';
-                      break;
-                    case 3:
-                      title = 'Web';
-                      break;
-                    case 4:
-                      title = 'Thu';
-                      break;
-                    case 5:
-                      title = 'Fri';
-                      break;
-                    case 6:
-                      title = 'Sat';
-                      break;
-                    case 7:
-                      title = 'Sun';
-                      break;
-                    default:
-                      title = '';
-                  }
-
-                  return Text(title);
-                },
-              ),
+    return LineChart(
+      LineChartData(
+        minX: 0,
+        maxX: 6,
+        minY: 0,
+        maxY: maxHeight,
+        lineBarsData: [
+          LineChartBarData(
+            spots: _getChartSpots(),
+            isCurved: false,
+            // curveSmoothness: 2,
+            barWidth: 5,
+            isStrokeCapRound: true,
+            color: chartsColors.weeklyStatsLine,
+            belowBarData: BarAreaData(
+              show: true,
+              gradient: chartsColors.weeklyStatsBelowGradient,
             ),
           ),
-          gridData: FlGridData(
-            show: true,
-            drawVerticalLine: true,
-            drawHorizontalLine: false,
-            verticalInterval: 1,
-            getDrawingVerticalLine: (_) {
-              return FlLine(
-                color: chartsColors.gridColor,
-                strokeWidth: 1,
-              );
-            },
-          ),
-          borderData: FlBorderData(
-            show: true,
-            border: Border.fromBorderSide(
-              BorderSide(color: chartsColors.borderColor),
+        ],
+        titlesData: FlTitlesData(
+          show: true,
+          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              interval: 1,
+              getTitlesWidget: _getBottomTitleWidget,
             ),
           ),
         ),
-        chartRendererKey: rendererKey,
+        lineTouchData: LineTouchData(
+          enabled: true,
+          touchTooltipData: LineTouchTooltipData(
+            tooltipBgColor: chartsColors.tooltipBackgroundColor,
+          ),
+        ),
+        gridData: FlGridData(
+          show: true,
+          drawVerticalLine: true,
+          drawHorizontalLine: false,
+          verticalInterval: 1,
+          getDrawingVerticalLine: (_) {
+            return FlLine(
+              color: chartsColors.gridColor,
+              strokeWidth: 1,
+            );
+          },
+        ),
+        borderData: FlBorderData(
+          show: true,
+          border: Border.fromBorderSide(
+            BorderSide(color: chartsColors.borderColor),
+          ),
+        ),
       ),
+      chartRendererKey: rendererKey,
     );
+  }
+
+  List<FlSpot> _getChartSpots() {
+    return List.generate(
+      weeklyStats.length,
+      (index) {
+        return FlSpot(
+          index.toDouble(),
+          weeklyStats[index].toDouble(),
+        );
+      },
+    );
+  }
+
+  // It is normal to return widgets since it is builder function for chart.
+  // ignore: avoid-returning-widgets
+  static Widget _getBottomTitleWidget(double value, TitleMeta _) {
+    final weekDay = DateTime.now()
+        .subtract(
+          Duration(days: 6 - value.round()),
+        )
+        .weekday;
+    final title = _getShortNameOfWeekDay(weekDay);
+    return Text(title);
+  }
+
+  static String _getShortNameOfWeekDay(int weekDay) {
+    switch (weekDay) {
+      case 1:
+        return t.common.weekDays.short.monday;
+      case 2:
+        return t.common.weekDays.short.tuesday;
+      case 3:
+        return t.common.weekDays.short.wednesday;
+      case 4:
+        return t.common.weekDays.short.thursday;
+      case 5:
+        return t.common.weekDays.short.friday;
+      case 6:
+        return t.common.weekDays.short.saturday;
+      case 7:
+        return t.common.weekDays.short.sunday;
+      default:
+        return '';
+    }
   }
 }

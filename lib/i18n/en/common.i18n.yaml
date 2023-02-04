@@ -16,3 +16,13 @@ timeSubtitle:
 copy:
   defaultText: 'Copy content'
   completedText: 'Copied!'
+
+weekDays:
+  short:
+    monday: Mon
+    tuesday: Tue
+    wednesday: Wed
+    thursday: Thu
+    friday: Fri
+    saturday: Sat
+    sunday: Sun

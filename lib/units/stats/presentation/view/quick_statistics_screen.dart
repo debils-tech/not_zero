@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:not_zero/components/adaptive/list_limiter.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
+import 'package:not_zero/themes/charts_colors.dart';
 import 'package:not_zero/units/stats/presentation/bloc/quick_statistics_cubit.dart';
 import 'package:not_zero/units/stats/presentation/bloc/states/quick_statistics_state.dart';
+import 'package:not_zero/units/stats/presentation/view/components/chart_card.dart';
 import 'package:not_zero/units/stats/presentation/view/components/weekly_stats_chart.dart';
 
 class QuickStatisticsScreen extends StatelessWidget {
@@ -34,9 +36,10 @@ class _QuickStatsBody extends StatelessWidget {
     return AdaptiveListLimiter(
       maxWidth: 600,
       child: ListView(
+        padding: const EdgeInsets.all(10),
         children: [
-          SizedBox(
-            height: 150,
+          ChartCard(
+            innerHeight: 200,
             child: BlocBuilder<QuickStatisticsCubit, QuickStatisticsState>(
               builder: (context, state) {
                 final stats = state.weeklyStats;
