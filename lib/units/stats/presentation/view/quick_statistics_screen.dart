@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:not_zero/components/adaptive/list_limiter.dart';
-import 'package:not_zero/components/date_range/date_range_switch.dart';
+import 'package:not_zero/components/common_widgets/date_range_switch.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/stats/presentation/bloc/quick_statistics_cubit.dart';

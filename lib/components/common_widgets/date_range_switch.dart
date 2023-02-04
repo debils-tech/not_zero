@@ -13,15 +13,14 @@ class DateRangeSwitch extends StatefulWidget {
 }
 
 class _DateRangeSwitchState extends State<DateRangeSwitch> {
-  late DateTime currentDate;
+  late DateTime _currentDate;
 
-  DateTime get rangeStart => currentDate.startOfWeek;
-
-  DateTime get rangeEnd => currentDate.endOfWeek;
+  DateTime get _rangeStart => _currentDate.startOfWeek;
+  DateTime get _rangeEnd => _currentDate.endOfWeek;
 
   @override
   void initState() {
-    currentDate = widget.initialDate ?? DateTime.now();
+    _currentDate = widget.initialDate ?? DateTime.now();
     super.initState();
   }
 
@@ -35,18 +34,10 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
           icon: const Icon(Icons.arrow_back_ios_rounded),
         ),
         const SizedBox(width: 4),
-        DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            border: Border.all(color: Theme.of(context).dividerColor),
-          ),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minWidth: 230),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: _DateRangeText(rangeStart, rangeEnd),
-            ),
-          ),
+        _MiddleButton(
+          onTap: _todayRange,
+          rangeStart: _rangeStart,
+          rangeEnd: _rangeEnd,
         ),
         const SizedBox(width: 4),
         IconButton(
@@ -57,26 +48,88 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
     );
   }
 
+  void _todayRange() {
+    setState(() {
+      _currentDate = DateTime.now();
+    });
+    widget.onChanged?.call(_rangeStart, _rangeEnd);
+  }
+
   void _previousRange() {
     setState(() {
-      currentDate = currentDate.weekBefore;
+      _currentDate = _currentDate.weekBefore;
     });
-    widget.onChanged?.call(rangeStart, rangeEnd);
+    widget.onChanged?.call(_rangeStart, _rangeEnd);
   }
 
   void _nextRange() {
     setState(() {
-      currentDate = currentDate.weekAfter;
+      _currentDate = _currentDate.weekAfter;
     });
-    widget.onChanged?.call(rangeStart, rangeEnd);
+    widget.onChanged?.call(_rangeStart, _rangeEnd);
+  }
+}
+
+class _MiddleButton extends StatelessWidget {
+  const _MiddleButton({
+    required this.onTap,
+    required this.rangeStart,
+    required this.rangeEnd,
+  });
+
+  final void Function() onTap;
+
+  final DateTime rangeStart;
+  final DateTime rangeEnd;
+
+  bool get _isTodayInRange {
+    final today = DateTime.now();
+    return today.isAfter(rangeStart) && today.isBefore(rangeEnd);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const radius = BorderRadius.all(Radius.circular(20));
+
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: radius,
+        child: DecoratedBox(
+          key: ValueKey('$rangeStart $rangeEnd'),
+          decoration: BoxDecoration(
+            borderRadius: radius,
+            border: Border.all(color: Theme.of(context).dividerColor),
+          ),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minWidth: 230),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: _DateRangeText(
+                rangeStart,
+                rangeEnd,
+                isSelected: _isTodayInRange,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
 class _DateRangeText extends StatelessWidget {
-  const _DateRangeText(this.rangeStart, this.rangeEnd);
+  const _DateRangeText(
+    this.rangeStart,
+    this.rangeEnd, {
+    this.isSelected = false,
+  });
 
   final DateTime rangeStart;
   final DateTime rangeEnd;
+
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +146,10 @@ class _DateRangeText extends StatelessWidget {
     return Text(
       text,
       textAlign: TextAlign.center,
-      style: const TextStyle(fontSize: 17),
+      style: TextStyle(
+        fontSize: 17,
+        color: isSelected ? Theme.of(context).colorScheme.primary : null,
+      ),
     );
   }
 
