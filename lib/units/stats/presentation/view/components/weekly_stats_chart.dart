@@ -1,44 +1,39 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:not_zero/helpers/date_transformations.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/themes/charts_colors.dart';
 
 class WeeklyStatsChart extends StatelessWidget {
-  const WeeklyStatsChart(
-    this.weeklyStats, {
+  WeeklyStatsChart(
+    this.stats, {
     super.key,
     required this.rendererKey,
-  });
+    DateTime? start,
+    DateTime? end,
+  })  : rangeStart = start ?? DateTime.now().startOfWeek,
+        rangeEnd = end ?? DateTime.now().endOfWeek;
 
   final Key rendererKey;
-  final List<int> weeklyStats;
+  final List<int> stats;
+  final DateTime rangeStart;
+  final DateTime rangeEnd;
 
   @override
   Widget build(BuildContext context) {
     final chartsColors = Theme.of(context).chartsColorScheme;
 
-    final maxHeight = weeklyStats.fold<int>(
-          0,
-          (element, previousValue) {
-            if (element > previousValue) {
-              return element;
-            }
-            return previousValue;
-          },
-        ) +
-        8.0;
-
     return LineChart(
       LineChartData(
         minX: 0,
-        maxX: 6,
+        maxX: daysCount.toDouble(),
         minY: 0,
         maxY: maxHeight,
         lineBarsData: [
           LineChartBarData(
             spots: _getChartSpots(),
             isCurved: false,
-            // curveSmoothness: 2,
+            // curveSmoothness: 0.3,
             barWidth: 5,
             isStrokeCapRound: true,
             color: chartsColors.weeklyStatsLine,
@@ -90,13 +85,27 @@ class WeeklyStatsChart extends StatelessWidget {
     );
   }
 
+  double get maxHeight =>
+      stats.fold<int>(
+        0,
+        (element, previousValue) {
+          if (element > previousValue) {
+            return element;
+          }
+          return previousValue;
+        },
+      ) +
+      8.0;
+
+  int get daysCount => rangeEnd.difference(rangeStart).inDays;
+
   List<FlSpot> _getChartSpots() {
     return List.generate(
-      weeklyStats.length,
+      stats.length,
       (index) {
         return FlSpot(
           index.toDouble(),
-          weeklyStats[index].toDouble(),
+          stats[index].toDouble(),
         );
       },
     );
@@ -104,12 +113,9 @@ class WeeklyStatsChart extends StatelessWidget {
 
   // It is normal to return widgets since it is builder function for chart.
   // ignore: avoid-returning-widgets
-  static Widget _getBottomTitleWidget(double value, TitleMeta _) {
-    final weekDay = DateTime.now()
-        .subtract(
-          Duration(days: 6 - value.round()),
-        )
-        .weekday;
+  Widget _getBottomTitleWidget(double value, TitleMeta _) {
+    final start = rangeStart;
+    final weekDay = start.add(Duration(days: value.round())).weekday;
     final title = _getShortNameOfWeekDay(weekDay);
     return Text(title);
   }

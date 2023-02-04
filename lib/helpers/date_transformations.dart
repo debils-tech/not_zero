@@ -37,6 +37,10 @@ extension DateTimeTransformations on DateTime {
     return subtract(const Duration(days: 7));
   }
 
+  DateTime get weekAfter {
+    return add(const Duration(days: 7));
+  }
+
   DateTime get startOfMonth {
     return startOfDay.copyWith(day: 1);
   }

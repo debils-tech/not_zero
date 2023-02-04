@@ -4,8 +4,11 @@ part 'quick_statistics_state.freezed.dart';
 
 @freezed
 class QuickStatisticsState with _$QuickStatisticsState {
-  factory QuickStatisticsState({List<int>? weeklyStats}) =
-      _QuickStatisticsState;
+  factory QuickStatisticsState({
+    List<int>? chartStats,
+    DateTime? chartRangeStart,
+    DateTime? chartRangeEnd,
+  }) = _QuickStatisticsState;
 
   const QuickStatisticsState._();
 }
