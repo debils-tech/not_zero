@@ -16,11 +16,33 @@ class QuickStatisticsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<QuickStatisticsCubit>()..loadStats(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(t.stats.quickView.title),
+      child: const Scaffold(
+        appBar: _QuickStatsAppBar(),
+        body: _QuickStatsBody(),
+      ),
+    );
+  }
+}
+
+class _QuickStatsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _QuickStatsAppBar();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(100);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(t.stats.quickView.title),
+      bottom: PreferredSize(
+        preferredSize: Size.zero,
+        child: Padding(
+          padding: const EdgeInsets.all(4),
+          child: DateRangeSwitch(
+            onChanged: (start, end) =>
+                context.read<QuickStatisticsCubit>().loadStats(start, end),
+          ),
         ),
-        body: const _QuickStatsBody(),
       ),
     );
   }
@@ -37,11 +59,14 @@ class _QuickStatsBody extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(10),
         children: [
-          DateRangeSwitch(
-            onChanged: (start, end) =>
-                context.read<QuickStatisticsCubit>().loadStats(start, end),
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Text(
+              t.stats.quickView.weeklyChart,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           ChartCard(
             innerHeight: 200,
             child: BlocBuilder<QuickStatisticsCubit, QuickStatisticsState>(

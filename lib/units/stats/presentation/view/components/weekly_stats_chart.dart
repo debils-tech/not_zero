@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:not_zero/helpers/date_transformations.dart';
-import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/themes/charts_colors.dart';
 
 class WeeklyStatsChart extends StatelessWidget {
@@ -115,29 +115,8 @@ class WeeklyStatsChart extends StatelessWidget {
   // ignore: avoid-returning-widgets
   Widget _getBottomTitleWidget(double value, TitleMeta _) {
     final start = rangeStart;
-    final weekDay = start.add(Duration(days: value.round())).weekday;
-    final title = _getShortNameOfWeekDay(weekDay);
+    final specificDay = start.add(Duration(days: value.round()));
+    final title = DateFormat.E().format(specificDay);
     return Text(title);
-  }
-
-  static String _getShortNameOfWeekDay(int weekDay) {
-    switch (weekDay) {
-      case 1:
-        return t.common.weekDays.short.monday;
-      case 2:
-        return t.common.weekDays.short.tuesday;
-      case 3:
-        return t.common.weekDays.short.wednesday;
-      case 4:
-        return t.common.weekDays.short.thursday;
-      case 5:
-        return t.common.weekDays.short.friday;
-      case 6:
-        return t.common.weekDays.short.saturday;
-      case 7:
-        return t.common.weekDays.short.sunday;
-      default:
-        return '';
-    }
   }
 }
