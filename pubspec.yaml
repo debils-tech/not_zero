@@ -1,10 +1,10 @@
 name: not_zero
 description: Task management and wellbeing app.
 publish_to: 'none'
-version: 0.8.0+9
+version: 0.9.0+10
 
 environment:
-  sdk: '>=2.17.6 <3.0.0'
+  sdk: '>=2.19.0 <3.0.0'
 
 dependencies:
   # Main Flutter SDK
