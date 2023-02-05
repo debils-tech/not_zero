@@ -19,8 +19,9 @@ class NotZeroDatabase extends _$NotZeroDatabase {
 
   NotZeroDatabase.memory() : super(openDriftDatabase(permament: false));
 
+  // version 1 - DateTime values was stored as string
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   Future<void> drop() {
     return transaction(() async {
