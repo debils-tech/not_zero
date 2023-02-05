@@ -35,11 +35,11 @@ class StatsRepositoryImpl implements StatsRepository {
   }
 
   @override
-  Future<List<int>> getStatsForWeek(DateTime start, DateTime end) async {
+  Future<List<int>> getStatsByDays(DateTime start, DateTime end) async {
     final result = <int>[];
 
     var day = start;
-    for (var i = 0; i <= end.difference(start).inDays; i++) {
+    while (day.isBefore(end)) {
       final importances = await _localService.getCompletedTasksImportance(
         startPeriod: day.startOfDay,
         endPeriod: day.endOfDay,

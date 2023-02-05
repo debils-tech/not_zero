@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'dart:isolate';
 
 import 'package:drift/drift.dart';

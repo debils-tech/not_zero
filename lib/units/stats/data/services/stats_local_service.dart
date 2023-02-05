@@ -37,11 +37,13 @@ class StatsLocalService {
 
         // in range [start, end]
         return completed &
-            taskTable.completedAt.isBetweenValues(startPeriod!, endPeriod!);
+            taskTable.completedAt.isSmallerOrEqualValue(endPeriod!) &
+            taskTable.completedAt.isBiggerOrEqualValue(startPeriod!);
+        // taskTable.completedAt.isBetweenValues(startPeriod!, endPeriod!);
       });
 
-    final completedTasks = await query.get();
+    final completedTasks = await query.map((e) => e.importance).get();
 
-    return completedTasks.map((e) => e.importance).toList();
+    return completedTasks;
   }
 }

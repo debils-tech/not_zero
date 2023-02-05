@@ -52,12 +52,51 @@ void main() {
       );
     });
 
+    test('Just week after', () {
+      expect(
+        niceDay.weekAfter,
+        DateTime(
+          2022,
+          2,
+          9,
+          niceDay.hour,
+          niceDay.minute,
+          niceDay.second,
+          niceDay.millisecond,
+          niceDay.microsecond,
+        ),
+      );
+    });
+
     test('Range week before', () {
-      expect(niceDay.weekBefore.startOfWeek, DateTime(2022, 1, 24));
+      expect(niceDay.startOfWeek.weekBefore, DateTime(2022, 1, 24));
 
       expect(
-        niceDay.weekBefore.endOfWeek,
+        niceDay.endOfWeek.weekBefore,
         DateTime(2022, 1, 30, 23, 59, 59, 999, 999),
+      );
+    });
+
+    test('Just day after', () {
+      expect(
+        niceDay.dayAfter,
+        DateTime(
+          2022,
+          2,
+          3,
+          niceDay.hour,
+          niceDay.minute,
+          niceDay.second,
+          niceDay.millisecond,
+          niceDay.microsecond,
+        ),
+      );
+    });
+
+    test('Day after on month border', () {
+      expect(
+        DateTime(2022, 2, 28).dayAfter,
+        DateTime(2022, 3),
       );
     });
   });

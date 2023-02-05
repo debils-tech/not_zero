@@ -34,6 +34,7 @@ abstract class MultiplatformFileHelper {
   });
 }
 
+// coverage:ignore-start
 class _UniversalFileHelper implements MultiplatformFileHelper {
   final log = Logger('UniversalFileHelper');
 
@@ -141,3 +142,4 @@ class _UniversalFileHelper implements MultiplatformFileHelper {
     return File(filePath).readAsBytes();
   }
 }
+// coverage:ignore-end

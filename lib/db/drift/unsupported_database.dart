@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:drift/drift.dart';
 
 QueryExecutor openDriftDatabase({bool permament = true}) {

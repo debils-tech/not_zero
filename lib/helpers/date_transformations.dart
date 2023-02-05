@@ -49,4 +49,8 @@ extension DateTimeTransformations on DateTime {
     final justDate = endOfDay;
     return justDate.copyWith(month: justDate.month + 1, day: 0);
   }
+
+  DateTime get withSecondsAccuracy {
+    return copyWith(millisecond: 0, microsecond: 0);
+  }
 }

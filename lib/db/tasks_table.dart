@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:drift/drift.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 

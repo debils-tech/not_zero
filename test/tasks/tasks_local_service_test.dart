@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/helpers/date_transformations.dart';
 import 'package:not_zero/units/tasks/data/services/tasks_local_service.dart';
 
 import '../global_init.dart';
@@ -38,7 +39,7 @@ void main() {
     // Overwriting some record.
     final taskForCopy = templateTasks2[1].copyWith(
       title: 'New task!',
-      completedAt: DateTime.now(),
+      completedAt: DateTime.now().withSecondsAccuracy,
     );
     await service.saveTask(taskForCopy);
     final recordFromDb = await db.findByKey(db.tasksTable, taskForCopy.id);

@@ -13,7 +13,7 @@ class QuickStatisticsCubit extends Cubit<QuickStatisticsState> {
   Future<void> loadStats([DateTime? start, DateTime? end]) async {
     final rangeStart = start ?? DateTime.now().startOfWeek;
     final rangeEnd = end ?? DateTime.now().endOfWeek;
-    final weeklyStats = await _repository.getStatsForWeek(rangeStart, rangeEnd);
+    final weeklyStats = await _repository.getStatsByDays(rangeStart, rangeEnd);
 
     emit(
       QuickStatisticsState(
