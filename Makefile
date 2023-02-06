@@ -17,11 +17,15 @@ test:
 	flutter test
 
 build-android:
-	flutter build apk --split-per-abi & flutter build apk & flutter build appbundle & wait
+	rm -r build/releases/android
+	flutter build apk --split-per-abi
+	flutter build apk
+	flutter build appbundle
 	sh tools/android/move-builds.sh
 	sh tools/android/check-cert.sh
 
 build-linux:
+	rm -r build/releases/linux
 	flutter build linux
 	sh tools/linux/move-builds.sh
 
