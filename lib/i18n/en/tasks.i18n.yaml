@@ -1,8 +1,12 @@
 list:
   title: 'Tasks'
-  titleSelection: 'Selected ${count} tasks'
+  titleSelection:
+    one: 'Selected $n task'
+    other: 'Selected $n tasks'
   deleteDialog:
-    content: 'Are you sure you want delete selected tasks?'
+    content:
+      one: 'Are you sure you want delete selected task?'
+      other: 'Are you sure you want delete $n selected tasks?'
   tooltips:
     deleteSelectedButton: 'Delete selected'
     selectAllButton: 'Select all'

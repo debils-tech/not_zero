@@ -23,7 +23,7 @@ class TasksListAppBar extends StatelessWidget implements PreferredSizeWidget {
     } else {
       return AppBar(
         title: Text(
-          t.tasks.list.titleSelection(count: itemSelBloc.state.length),
+          t.tasks.list.titleSelection(n: itemSelBloc.state.length),
         ),
         actions: [
           IconButton(

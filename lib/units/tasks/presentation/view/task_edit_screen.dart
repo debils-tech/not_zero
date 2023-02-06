@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -59,18 +61,20 @@ class _DeleteTaskButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => showConfirmationDialog(
-        context,
-        title: t.common.dialog.deleteTitle,
-        content: t.tasks.edit.deleteDialog.content,
-        confirm: t.common.dialog.deleteButton,
-        dangerous: true,
-      ).then((value) {
-        if (value ?? false) {
-          context.read<TaskEditCubit>().deleteTask(task);
+      onPressed: () async {
+        final taskCubit = context.read<TaskEditCubit>();
+        final confirm = await showConfirmationDialog(
+          context,
+          title: t.common.dialog.deleteTitle,
+          content: t.tasks.edit.deleteDialog.content,
+          confirm: t.common.dialog.deleteButton,
+          dangerous: true,
+        );
+        if (confirm ?? false) {
+          unawaited(taskCubit.deleteTask(task));
           GoRouter.of(context).pop();
         }
-      }),
+      },
       iconSize: 26,
       tooltip: t.tasks.edit.tooltips.deleteTaskButton,
       icon: Icon(

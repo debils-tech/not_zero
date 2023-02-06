@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/adaptive/list_limiter.dart';
 import 'package:not_zero/components/common_widgets/universal_list_view.dart';
+import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/get_it.dart';
@@ -45,16 +46,22 @@ class _TasksListFloatingButton extends StatelessWidget {
         if (state.isNotEmpty) {
           return FloatingActionButton(
             backgroundColor: Theme.of(context).colorScheme.error,
-            onPressed: () {
-              // Delete all selected tasks.
-              context
-                  .read<TasksListBloc>()
-                  .add(TasksListEvent.deleteSelected(state));
+            onPressed: () async {
+              final taskListBloc = context.read<TasksListBloc>();
+              final selectionBloc = context.read<ItemSelectionBloc>();
 
-              // Clear the selection.
-              context
-                  .read<ItemSelectionBloc>()
-                  .add(const ItemSelectionEvent.removeAll(null));
+              final confirm = await showConfirmationDialog(
+                context,
+                title: t.common.dialog.deleteTitle,
+                content: t.tasks.list.deleteDialog
+                    .content(n: selectionBloc.state.length),
+                confirm: t.common.dialog.deleteButton,
+                dangerous: true,
+              );
+              if (confirm ?? false) {
+                taskListBloc.add(TasksListEvent.deleteSelected(state));
+                selectionBloc.add(const ItemSelectionEvent.removeAll(null));
+              }
             },
             tooltip: t.tasks.list.tooltips.deleteSelectedButton,
             child: const Icon(Icons.delete_outline_rounded),
