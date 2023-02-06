@@ -44,9 +44,7 @@ class TaskCard extends StatelessWidget {
 }
 
 class _TaskTextBlock extends StatelessWidget {
-  const _TaskTextBlock({
-    required this.task,
-  });
+  const _TaskTextBlock({required this.task});
 
   final Task task;
 
@@ -65,7 +63,7 @@ class _TaskTextBlock extends StatelessWidget {
         Text(
           task.title,
           overflow: TextOverflow.ellipsis,
-          maxLines: 2,
+          maxLines: 3,
           style: theme.textTheme.titleMedium
               ?.copyWith(fontWeight: FontWeight.w600),
         ),
@@ -134,7 +132,8 @@ class _ImportanceIndicatorBox extends StatelessWidget {
           left: BorderSide(
             width: 7,
             color: Theme.of(context)
-                    .tasksColorScheme.colorByImportance(importance),
+                .tasksColorScheme
+                .colorByImportance(importance),
           ),
         ),
       ),

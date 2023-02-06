@@ -19,14 +19,15 @@ class ChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      height: innerHeight + padding.vertical,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
-        color: Theme.of(context).chartsColorScheme.chartBackgroundColor,
+    return Material(
+      borderRadius: const BorderRadius.all(Radius.circular(16)),
+      color: Theme.of(context).chartsColorScheme.chartBackgroundColor,
+      elevation: 7,
+      child: Container(
+        padding: padding,
+        height: innerHeight,
+        child: child,
       ),
-      child: child,
     );
   }
 }

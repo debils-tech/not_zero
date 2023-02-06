@@ -91,24 +91,24 @@ class _MiddleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     const radius = BorderRadius.all(Radius.circular(20));
 
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: radius,
-        child: DecoratedBox(
-          key: ValueKey('$rangeStart $rangeEnd'),
-          decoration: BoxDecoration(
-            borderRadius: radius,
-            border: Border.all(color: Theme.of(context).dividerColor),
-          ),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minWidth: 230),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: radius,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: radius,
+          border: Border.all(color: Theme.of(context).dividerColor),
+        ),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minWidth: 230),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
               child: _DateRangeText(
                 rangeStart,
                 rangeEnd,
+                key: ValueKey('$rangeStart $rangeEnd'),
                 isSelected: _isTodayInRange,
               ),
             ),
@@ -123,6 +123,7 @@ class _DateRangeText extends StatelessWidget {
   const _DateRangeText(
     this.rangeStart,
     this.rangeEnd, {
+    super.key,
     this.isSelected = false,
   });
 

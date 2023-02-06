@@ -21,7 +21,7 @@ class TaskEditTitleField extends StatelessWidget {
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
       ]),
-      maxLength: 50,
+      maxLength: 75,
     );
   }
 }
