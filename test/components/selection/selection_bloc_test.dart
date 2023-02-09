@@ -4,7 +4,6 @@ import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../async.dart';
 import '../../global_init.dart';
 
 void main() {
@@ -18,70 +17,45 @@ void main() {
     const Uuid().v4(),
   ];
 
+  test('Initial state', () {
+    final bloc = getIt<ItemSelectionBloc>();
+    expect(bloc.state, <String>{});
+  });
+
   test('Add items', () async {
     final bloc = getIt<ItemSelectionBloc>();
 
-    expect(bloc.state, <String>{});
+    bloc.add(ItemSelectionEvent.add(uuids[0]));
+    await expectLater(bloc.stream, emits({uuids[0]}));
 
-    await testBlocSingle(
-      bloc,
-      ItemSelectionEvent.add(uuids[0]),
-      {uuids[0]},
-    );
+    bloc.add(ItemSelectionEvent.add(uuids[1]));
+    await expectLater(bloc.stream, emits({uuids[0], uuids[1]}));
 
-    await testBlocSingle(
-      bloc,
-      ItemSelectionEvent.add(uuids[1]),
-      {uuids[0], uuids[1]},
-    );
-
-    await testBlocSingle(
-      bloc,
-      ItemSelectionEvent.add(uuids[2]),
-      {uuids[0], uuids[1], uuids[2]},
-    );
+    bloc.add(ItemSelectionEvent.add(uuids[2]));
+    await expectLater(bloc.stream, emits({uuids[0], uuids[1], uuids[2]}));
   });
 
   test('Add and remove', () async {
     final bloc = getIt<ItemSelectionBloc>();
 
-    expect(bloc.state, <String>{});
+    bloc.add(ItemSelectionEvent.add(uuids[0]));
+    await expectLater(bloc.stream, emits({uuids[0]}));
 
-    await testBlocSingle(
-      bloc,
-      ItemSelectionEvent.add(uuids[0]),
-      {uuids[0]},
-    );
+    bloc.add(ItemSelectionEvent.remove(uuids[0]));
+    await expectLater(bloc.stream, emits(<String>{}));
 
-    await testBlocSingle(
-      bloc,
-      ItemSelectionEvent.remove(uuids[0]),
-      <String>{},
-    );
+    bloc.add(ItemSelectionEvent.add(uuids[1]));
+    await expectLater(bloc.stream, emits({uuids[1]}));
 
-    await testBlocSingle(
-      bloc,
-      ItemSelectionEvent.add(uuids[0]),
-      {uuids[0]},
-    );
+    bloc.add(ItemSelectionEvent.add(uuids[0]));
+    await expectLater(bloc.stream, emits({uuids[0], uuids[1]}));
 
-    await testBlocSingle(
-      bloc,
-      ItemSelectionEvent.add(uuids[1]),
-      {uuids[0], uuids[1]},
-    );
-
-    await testBlocSingle(
-      bloc,
-      ItemSelectionEvent.remove(uuids[0]),
-      {uuids[1]},
-    );
+    bloc.add(ItemSelectionEvent.remove(uuids[0]));
+    await expectLater(bloc.stream, emits({uuids[1]}));
   });
 
   test('Add multiple', () async {
     final bloc = getIt<ItemSelectionBloc>();
-
-    expect(bloc.state, <String>{});
 
     expect(
       bloc.stream,
@@ -100,8 +74,6 @@ void main() {
 
   test('Add and remove multiple', () {
     final bloc = getIt<ItemSelectionBloc>();
-
-    expect(bloc.state, <String>{});
 
     expect(
       bloc.stream,

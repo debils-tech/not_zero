@@ -9,11 +9,8 @@ void main() {
 
   test('Form changes', () {
     final cubit = getIt<TaskEditCubit>();
-
     expect(cubit.state, false);
 
-    // Somehow my async cubit tests doesn't work with
-    // `flutter test --coverage` command
     expect(cubit.stream, emitsInOrder([true, false]));
 
     cubit.changeForm(isCorrect: true);

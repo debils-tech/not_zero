@@ -3,7 +3,6 @@ import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
 import 'package:not_zero/units/settings/presentation/bloc/theme_bloc.dart';
 
-import '../async.dart';
 import '../global_init.dart';
 
 void main() {
@@ -19,7 +18,8 @@ void main() {
     final bloc = getIt<AppThemeBloc>();
 
     for (final value in ThemeState.values) {
-      await testBlocSingle(bloc, value, value);
+      bloc.add(value);
+      await expectLater(bloc.stream, emits(value));
     }
   });
 }

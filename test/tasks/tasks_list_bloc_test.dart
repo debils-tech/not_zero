@@ -13,6 +13,8 @@ void main() {
   globalInit();
   configDatabaseForTasks();
 
+  // TODO(uSlashVlad): Get rid of `Future.delayed` code.
+
   // Clear repository for eliminating results of previous test.
   tearDown(() async {
     getIt.resetLazySingleton<TasksRepository>();
@@ -22,16 +24,11 @@ void main() {
     final bloc = getIt<TasksListBloc>();
     expect(bloc.state, const TasksListState.loading());
 
+    bloc.add(const TasksListEvent.loadTasks());
     expect(
       bloc.stream,
-      emitsInOrder([
-        TasksListState.loaded(
-          templateTasks1.reversed.toList(),
-        ),
-      ]),
+      emits(TasksListState.loaded(templateTasks1.reversed.toList())),
     );
-
-    bloc.add(const TasksListEvent.loadTasks());
   });
 
   test('Complete tasks', () async {
@@ -50,7 +47,6 @@ void main() {
     );
 
     bloc.add(const TasksListEvent.loadTasks());
-    await Future<void>.delayed(const Duration(seconds: 1));
 
     bloc
       ..add(

@@ -5,7 +5,6 @@ import 'package:not_zero/units/home/presentation/bloc/states/home_score_state.da
 import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
 
-import '../async.dart';
 import '../global_init.dart';
 import '../tasks/tasks_db_config.dart';
 import '../tasks/template_tasks.dart';
@@ -22,13 +21,12 @@ void main() {
 
   test('Score loading', () async {
     final cubit = getIt<HomeScoreCubit>();
-
     expect(cubit.state, const HomeScoreState());
 
-    await testCubitSingle(
-      cubit,
-      cubit.init,
-      const HomeScoreState(totalPoints: baseScore),
+    await cubit.init();
+    await expectLater(
+      cubit.stream,
+      emits(const HomeScoreState(totalPoints: baseScore)),
     );
   });
 
