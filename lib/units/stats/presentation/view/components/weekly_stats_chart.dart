@@ -5,17 +5,20 @@ import 'package:not_zero/helpers/date_transformations.dart';
 import 'package:not_zero/themes/charts_colors.dart';
 
 class WeeklyStatsChart extends StatelessWidget {
-  WeeklyStatsChart(
-    this.stats, {
+  WeeklyStatsChart({
     super.key,
+    required this.stats,
     required this.rendererKey,
+    this.selectedIndex,
     DateTime? start,
     DateTime? end,
   })  : rangeStart = start ?? DateTime.now().startOfWeek,
         rangeEnd = end ?? DateTime.now().endOfWeek;
 
-  final Key rendererKey;
   final List<int> stats;
+  final int? selectedIndex;
+  final Key rendererKey;
+
   final DateTime rangeStart;
   final DateTime rangeEnd;
 
@@ -23,26 +26,27 @@ class WeeklyStatsChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final chartsColors = Theme.of(context).chartsColorScheme;
 
+    final barData = LineChartBarData(
+      spots: _getChartSpots(),
+      isCurved: false,
+      // curveSmoothness: 0.3,
+      barWidth: 5,
+      isStrokeCapRound: true,
+      color: chartsColors.weeklyStatsLine,
+      belowBarData: BarAreaData(
+        show: true,
+        gradient: chartsColors.weeklyStatsBelowGradient,
+      ),
+      showingIndicators: selectedIndex != null ? [selectedIndex!] : null,
+    );
+
     return LineChart(
       LineChartData(
         minX: 0,
         maxX: daysCount.toDouble(),
         minY: 0,
         maxY: maxHeight,
-        lineBarsData: [
-          LineChartBarData(
-            spots: _getChartSpots(),
-            isCurved: false,
-            // curveSmoothness: 0.3,
-            barWidth: 5,
-            isStrokeCapRound: true,
-            color: chartsColors.weeklyStatsLine,
-            belowBarData: BarAreaData(
-              show: true,
-              gradient: chartsColors.weeklyStatsBelowGradient,
-            ),
-          ),
-        ],
+        lineBarsData: [barData],
         titlesData: FlTitlesData(
           show: true,
           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -52,14 +56,37 @@ class WeeklyStatsChart extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               interval: 1,
+              reservedSize: 30,
               getTitlesWidget: _getBottomTitleWidget,
             ),
           ),
         ),
+        showingTooltipIndicators: selectedIndex != null
+            ? [
+                ShowingTooltipIndicators(
+                  [
+                    LineBarSpot(barData, 0, barData.spots[selectedIndex!]),
+                  ],
+                )
+              ]
+            : null,
         lineTouchData: LineTouchData(
-          enabled: true,
+          enabled: false,
+          // },
           touchTooltipData: LineTouchTooltipData(
             tooltipBgColor: chartsColors.tooltipBackgroundColor,
+            tooltipRoundedRadius: 8,
+            getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
+              return lineBarsSpot.map((lineBarSpot) {
+                return LineTooltipItem(
+                  lineBarSpot.y.toInt().toString(),
+                  TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              }).toList();
+            },
           ),
         ),
         gridData: FlGridData(
@@ -117,6 +144,9 @@ class WeeklyStatsChart extends StatelessWidget {
     final start = rangeStart;
     final specificDay = start.add(Duration(days: value.round()));
     final title = DateFormat.E().format(specificDay);
-    return Text(title);
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Text(title),
+    );
   }
 }

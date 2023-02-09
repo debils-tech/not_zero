@@ -8,6 +8,7 @@ class QuickStatisticsState with _$QuickStatisticsState {
     List<int>? chartStats,
     DateTime? chartRangeStart,
     DateTime? chartRangeEnd,
+    int? selectedDayIndex,
   }) = _QuickStatisticsState;
 
   const QuickStatisticsState._();

@@ -15,7 +15,7 @@ class QuickStatisticsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<QuickStatisticsCubit>()..loadStats(),
+      create: (_) => getIt<QuickStatisticsCubit>()..loadDays(),
       child: const Scaffold(
         appBar: _QuickStatsAppBar(),
         body: _QuickStatsBody(),
@@ -40,7 +40,7 @@ class _QuickStatsAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.all(4),
           child: DateRangeSwitch(
             onChanged: (start, end) =>
-                context.read<QuickStatisticsCubit>().loadStats(start, end),
+                context.read<QuickStatisticsCubit>().loadDays(start, end),
           ),
         ),
       ),
@@ -53,7 +53,6 @@ class _QuickStatsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final weeklyRendererKey = UniqueKey();
     return AdaptiveListLimiter(
       maxWidth: 600,
       child: ListView(
@@ -67,25 +66,90 @@ class _QuickStatsBody extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          ChartCard(
-            innerHeight: 200,
-            child: BlocBuilder<QuickStatisticsCubit, QuickStatisticsState>(
-              builder: (context, state) {
-                final stats = state.chartStats;
-                if (stats == null) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return WeeklyStatsChart(
-                  stats,
-                  rendererKey: weeklyRendererKey,
-                  start: state.chartRangeStart,
-                  end: state.chartRangeEnd,
-                );
-              },
-            ),
-          ),
+          const _WeeklyChartWithSelection(),
         ],
       ),
     );
+  }
+}
+
+class _WeeklyChartWithSelection extends StatelessWidget {
+  const _WeeklyChartWithSelection();
+
+  @override
+  Widget build(BuildContext context) {
+    final weeklyRendererKey = UniqueKey();
+
+    return ChartCard(
+      innerHeight: 220,
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: BlocBuilder<QuickStatisticsCubit, QuickStatisticsState>(
+        builder: (context, state) {
+          final stats = state.chartStats;
+          if (stats == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: WeeklyStatsChart(
+                  stats: stats,
+                  rendererKey: weeklyRendererKey,
+                  selectedIndex: state.selectedDayIndex,
+                  start: state.chartRangeStart,
+                  end: state.chartRangeEnd,
+                ),
+              ),
+              const _SelectionGesture(),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _SelectionGesture extends StatelessWidget {
+  const _SelectionGesture();
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<QuickStatisticsCubit>();
+    return LayoutBuilder(
+      builder: (context, constrains) {
+        return SizedBox(
+          width: constrains.maxWidth,
+          height: constrains.maxHeight,
+          child: Listener(
+            onPointerDown: (event) =>
+                _processTap(cubit, event.localPosition, constrains),
+            onPointerMove: (event) =>
+                _processTap(cubit, event.localPosition, constrains),
+            behavior: HitTestBehavior.opaque,
+          ),
+        );
+      },
+    );
+  }
+
+  static void _processTap(
+    QuickStatisticsCubit cubit,
+    Offset eventPosition,
+    BoxConstraints parentConstrains,
+  ) {
+    final eventX = eventPosition.dx;
+    final fullWidth = parentConstrains.maxWidth;
+    const sectorsCount = 7;
+    final sectorWidth = fullWidth / sectorsCount;
+
+    var index = eventX ~/ sectorWidth;
+    if (index < 0) {
+      index = 0;
+    } else if (index > sectorsCount - 1) {
+      index = sectorsCount - 1;
+    }
+
+    cubit.selectDay(index);
   }
 }

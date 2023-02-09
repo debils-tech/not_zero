@@ -10,7 +10,7 @@ class QuickStatisticsCubit extends Cubit<QuickStatisticsState> {
 
   final StatsRepository _repository;
 
-  Future<void> loadStats([DateTime? start, DateTime? end]) async {
+  Future<void> loadDays([DateTime? start, DateTime? end]) async {
     final rangeStart = start ?? DateTime.now().startOfWeek;
     final rangeEnd = end ?? DateTime.now().endOfWeek;
     final weeklyStats = await _repository.getStatsByDays(rangeStart, rangeEnd);
@@ -20,7 +20,26 @@ class QuickStatisticsCubit extends Cubit<QuickStatisticsState> {
         chartStats: weeklyStats,
         chartRangeStart: rangeStart,
         chartRangeEnd: rangeEnd,
+        selectedDayIndex:
+            state.selectedDayIndex ?? _findTodayInRange(rangeStart, rangeEnd),
       ),
     );
+  }
+
+  int? _findTodayInRange(DateTime start, DateTime end) {
+    final today = DateTime.now();
+
+    if (today.isAfter(start) && today.isBefore(end)) {
+      // Works while we want to show only a week
+      return today.weekday - 1;
+    }
+
+    return null;
+  }
+
+  void selectDay(int selectIndex) {
+    if (selectIndex == state.selectedDayIndex) return;
+
+    emit(state.copyWith(selectedDayIndex: selectIndex));
   }
 }
