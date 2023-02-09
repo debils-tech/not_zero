@@ -3,9 +3,9 @@ import 'package:not_zero/themes/charts_colors.dart';
 
 class ChartCard extends StatelessWidget {
   const ChartCard({
-    super.key,
     required this.child,
     required this.innerHeight,
+    super.key,
     EdgeInsets? padding,
   }) : padding = padding ??
             const EdgeInsets.symmetric(

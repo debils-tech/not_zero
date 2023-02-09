@@ -6,12 +6,12 @@ import 'package:not_zero/themes/charts_colors.dart';
 
 class WeeklyStatsChart extends StatelessWidget {
   WeeklyStatsChart({
-    super.key,
     required this.stats,
     required this.rendererKey,
     this.selectedIndex,
     DateTime? start,
     DateTime? end,
+    super.key,
   })  : rangeStart = start ?? DateTime.now().startOfWeek,
         rangeEnd = end ?? DateTime.now().endOfWeek;
 

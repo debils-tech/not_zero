@@ -75,7 +75,7 @@ dev_dependencies:
 
   # Analysis
   flutter_lints: ^2.0.1
-  very_good_analysis: ^3.1.0
+  very_good_analysis: ^4.0.0+1
   dart_code_metrics: ^5.3.0
 
   # Code generation

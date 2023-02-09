@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ClickableCard extends StatelessWidget {
-  const ClickableCard({super.key, required this.child});
+  const ClickableCard({required this.child, super.key});
 
   final Widget child;
 

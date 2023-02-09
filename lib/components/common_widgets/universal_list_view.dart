@@ -5,10 +5,10 @@ import 'package:not_zero/helpers/object_id_mixin.dart';
 
 class UniversalListView<T extends ObjectIdMixin> extends StatelessWidget {
   const UniversalListView({
-    super.key,
     required this.listKey,
     required this.items,
     required this.itemBuilder,
+    super.key,
   });
 
   final Key? listKey;

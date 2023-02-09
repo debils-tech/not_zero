@@ -29,11 +29,11 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   factory Task({
     required String id,
     required String title,
-    @Default('') String description,
+    required TaskImportance importance,
     required DateTime createdAt,
+    @Default('') String description,
     DateTime? modifiedAt,
     DateTime? completedAt,
-    required TaskImportance importance,
   }) = _Task;
 
   const Task._();
@@ -42,8 +42,8 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
 
   factory Task.create({
     required String title,
-    String? description,
     required TaskImportance importance,
+    String? description,
   }) =>
       Task(
         id: const Uuid().v4(),

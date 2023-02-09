@@ -6,9 +6,9 @@ import 'package:not_zero/components/selection/bloc/selection_event.dart';
 
 class SelectableCard extends StatelessWidget {
   const SelectableCard({
-    this.onTap,
     required this.identifier,
     required this.child,
+    this.onTap,
     super.key,
   });
 

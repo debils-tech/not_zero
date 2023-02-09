@@ -8,9 +8,9 @@ part 'backup_model.g.dart';
 class BackupModel with _$BackupModel {
   @JsonSerializable(explicitToJson: true)
   factory BackupModel({
+    required Map<String, dynamic> data,
     @Default(1) int version,
     AppInfo? appInfo,
-    required Map<String, dynamic> data,
   }) = _BackupModel;
 
   factory BackupModel.fromJson(Map<String, dynamic> json) =>

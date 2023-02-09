@@ -63,6 +63,7 @@ class _DeleteTaskButton extends StatelessWidget {
     return IconButton(
       onPressed: () async {
         final taskCubit = context.read<TaskEditCubit>();
+        final navigator = GoRouter.of(context);
         final confirm = await showConfirmationDialog(
           context,
           title: t.common.dialog.deleteTitle,
@@ -72,7 +73,7 @@ class _DeleteTaskButton extends StatelessWidget {
         );
         if (confirm ?? false) {
           unawaited(taskCubit.deleteTask(task));
-          GoRouter.of(context).pop();
+          navigator.pop();
         }
       },
       iconSize: 26,

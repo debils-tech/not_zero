@@ -45,16 +45,18 @@ class StorageSettingsScreen extends StatelessWidget {
       title: t.settings.storage.exportStatus.process,
     );
 
+    final navigator = Navigator.of(context, rootNavigator: true);
+    final messenger = ScaffoldMessenger.of(context);
+
     final result = await getIt<SettingsRepository>().exportData();
 
     final infoText = result
         ? t.settings.storage.exportStatus.success
         : t.settings.storage.exportStatus.failure;
 
-    Navigator.of(context, rootNavigator: true).pop();
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(infoText)));
+    navigator.pop();
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(SnackBar(content: Text(infoText)));
   }
 
   Future<void> _importData(BuildContext context) async {
@@ -64,12 +66,15 @@ class StorageSettingsScreen extends StatelessWidget {
       title: t.settings.storage.importStatus.process,
     );
 
+    final navigator = Navigator.of(context, rootNavigator: true);
+    final messenger = ScaffoldMessenger.of(context);
+
     final result = await getIt<SettingsRepository>().importData();
 
-    Navigator.of(context, rootNavigator: true).pop();
+    navigator.pop();
     if (!result) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
+      messenger.hideCurrentSnackBar();
+      messenger.showSnackBar(
         SnackBar(content: Text(t.settings.storage.importStatus.failure)),
       );
       return;
