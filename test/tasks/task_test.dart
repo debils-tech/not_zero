@@ -23,7 +23,7 @@ void main() {
     expect(task.isCompleted, false);
   });
 
-  test('Task edit', () {
+  test('Task edit with fields', () {
     final originalTask = templateTasks1.first;
     final task = originalTask.edit(
       title: 'Edited title',
@@ -38,6 +38,21 @@ void main() {
     expect(task.createdAt, originalTask.createdAt);
     expect(task.modifiedAt, isNotNull);
     expect(task.importance, TaskImportance.notImportant);
+    expect(task.isCompleted, originalTask.isCompleted);
+  });
+
+  test('Task edit without fields', () {
+    final originalTask = templateTasks1.first;
+    final task = originalTask.edit();
+
+
+    expect(task.id, originalTask.id);
+    expect(task.title, originalTask.title);
+    expect(task.description, originalTask.description);
+    expect(task.createdAt, originalTask.createdAt);
+    expect(task.createdAt, originalTask.createdAt);
+    expect(task.modifiedAt, isNotNull);
+    expect(task.importance, originalTask.importance);
     expect(task.isCompleted, originalTask.isCompleted);
   });
 

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/helpers/global_navigation.dart';
 import 'package:not_zero/helpers/platform_checks.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/settings/domain/repositories/settings_repository.dart';
@@ -39,8 +40,7 @@ class StorageSettingsScreen extends StatelessWidget {
   }
 
   Future<void> _exportData(BuildContext context) async {
-    _showDialog(
-      context,
+    _showExportingDialog(
       icon: Icons.save_rounded,
       title: t.settings.storage.exportStatus.process,
     );
@@ -60,8 +60,7 @@ class StorageSettingsScreen extends StatelessWidget {
   }
 
   Future<void> _importData(BuildContext context) async {
-    _showDialog(
-      context,
+    _showExportingDialog(
       icon: Icons.download_rounded,
       title: t.settings.storage.importStatus.process,
     );
@@ -93,33 +92,16 @@ class StorageSettingsScreen extends StatelessWidget {
       )
     ];
 
-    unawaited(
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          // There is an option to close an app only on this platforms
-          final isClosingSupported = Platform.isAndroid || isPlatformDesktop;
-
-          return AlertDialog(
-            icon: const Icon(Icons.warning_amber_rounded),
-            title: Text(t.settings.storage.importStatus.successTitle),
-            content: Text(t.settings.storage.importStatus.success),
-            actions: isClosingSupported ? closeDialogAction : null,
-          );
-        },
-      ),
-    );
+    _showSuccessfulImportDialog(actions: closeDialogAction);
   }
 
-  void _showDialog(
-    BuildContext context, {
+  void _showExportingDialog({
     required IconData icon,
     required String title,
   }) =>
       unawaited(
         showDialog(
-          context: context,
+          context: GlobalNavigation.context,
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
@@ -131,6 +113,24 @@ class StorageSettingsScreen extends StatelessWidget {
                   CircularProgressIndicator(),
                 ],
               ),
+            );
+          },
+        ),
+      );
+
+  void _showSuccessfulImportDialog({List<Widget>? actions}) => unawaited(
+        showDialog(
+          context: GlobalNavigation.context,
+          barrierDismissible: false,
+          builder: (context) {
+            // There is an option to close an app only on this platforms
+            final isClosingSupported = Platform.isAndroid || isPlatformDesktop;
+
+            return AlertDialog(
+              icon: const Icon(Icons.warning_amber_rounded),
+              title: Text(t.settings.storage.importStatus.successTitle),
+              content: Text(t.settings.storage.importStatus.success),
+              actions: isClosingSupported ? actions : null,
             );
           },
         ),

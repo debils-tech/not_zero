@@ -47,6 +47,7 @@ void main() {
     );
 
     bloc.add(const TasksListEvent.loadTasks());
+    await Future<void>.delayed(const Duration(seconds: 1));
 
     bloc
       ..add(

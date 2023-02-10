@@ -79,7 +79,8 @@ void main() {
       bloc.stream,
       emitsInOrder([
         <String>{uuids[0], uuids[1], uuids[2], uuids[3]},
-        <String>{uuids[1]},
+        <String>{uuids[1], uuids[3]},
+        <String>{},
       ]),
     );
 
@@ -87,6 +88,7 @@ void main() {
       ..add(ItemSelectionEvent.addAll({uuids[0], uuids[1], uuids[2], uuids[3]}))
       // This specific event (empty set) shouldn't emit event.
       ..add(const ItemSelectionEvent.removeAll({}))
-      ..add(ItemSelectionEvent.removeAll({uuids[0], uuids[2], uuids[3]}));
+      ..add(ItemSelectionEvent.removeAll({uuids[0], uuids[2]}))
+      ..add(const ItemSelectionEvent.removeAll(null));
   });
 }
