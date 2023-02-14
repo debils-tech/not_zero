@@ -131,11 +131,12 @@ class TasksRepositoryImpl implements TasksRepository {
   }
 
   @override
-  void disposeTaskSubscription(String taskId) {
+  bool disposeTaskSubscription(String taskId) {
     final taskStream = _subscribedTasks[taskId];
-    if (taskStream == null) return;
+    if (taskStream == null) return false;
 
     taskStream.close();
     _subscribedTasks.remove(taskId);
+    return true;
   }
 }

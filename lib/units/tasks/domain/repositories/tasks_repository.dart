@@ -17,5 +17,5 @@ abstract class TasksRepository {
 
   Stream<Task> subscribeOnTaskById(String taskId);
 
-  void disposeTaskSubscription(String taskId);
+  bool disposeTaskSubscription(String taskId);
 }

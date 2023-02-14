@@ -11,19 +11,19 @@ class TaskViewCubit extends Cubit<Task?> {
 
   final TasksRepository _repository;
 
-  String? taskId;
+  String? _taskId;
   StreamSubscription<Task>? _taskSubscription;
 
   void init(String taskId) {
-    this.taskId = taskId;
+    _taskId = taskId;
     _taskSubscription = _repository.subscribeOnTaskById(taskId).listen(emit);
   }
 
   @override
   Future<void> close() {
     _taskSubscription?.cancel();
-    if (taskId != null) {
-      _repository.disposeTaskSubscription(taskId!);
+    if (_taskId != null) {
+      _repository.disposeTaskSubscription(_taskId!);
     }
     return super.close();
   }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
@@ -29,78 +31,80 @@ void main() {
     await repository.syncTasks();
   });
 
-  test('Save tasks', () async {
-    final repository = getIt<TasksRepository>();
+  group('Save, update, delete of tasks', () {
+    test('Save tasks', () async {
+      final repository = getIt<TasksRepository>();
 
-    expect(
-      repository.getTasks(),
-      emitsInOrder([
-        <Task>[],
-        [templateTasks2[0]],
-        [templateTasks2[1], templateTasks2[0]],
-        [templateTasks2[2], templateTasks2[1], templateTasks2[0]],
-      ]),
-    );
+      expect(
+        repository.getTasks(),
+        emitsInOrder([
+          <Task>[],
+          [templateTasks2[0]],
+          [templateTasks2[1], templateTasks2[0]],
+          [templateTasks2[2], templateTasks2[1], templateTasks2[0]],
+        ]),
+      );
 
-    for (final t in templateTasks2) {
-      await repository.addTask(t);
-    }
-  });
+      for (final t in templateTasks2) {
+        await repository.addTask(t);
+      }
+    });
 
-  test('Update task + sync', () async {
-    final repository = getIt<TasksRepository>();
+    test('Update task + sync', () async {
+      final repository = getIt<TasksRepository>();
 
-    final editedTask = templateTasks1.first.copyWith(
-      title: 'Edited task 1',
-      description: '(edited)',
-      completedAt: DateTime.fromMillisecondsSinceEpoch(1664392368),
-    );
+      final editedTask = templateTasks1.first.copyWith(
+        title: 'Edited task 1',
+        description: '(edited)',
+        completedAt: DateTime.fromMillisecondsSinceEpoch(1664392368),
+      );
 
-    await repository.syncTasks();
+      await repository.syncTasks();
 
-    expect(
-      repository.getTasks(),
-      emitsInOrder([
-        templateTasks1.reversed.toList(),
-        <Task>[templateTasks1[2], templateTasks1[1], editedTask],
-      ]),
-    );
+      expect(
+        repository.getTasks(),
+        emitsInOrder([
+          templateTasks1.reversed.toList(),
+          <Task>[templateTasks1[2], templateTasks1[1], editedTask],
+        ]),
+      );
 
-    await repository.updateTask(editedTask);
-  });
+      await repository.updateTask(editedTask);
+    });
 
-  test('Delete task + sync', () async {
-    final repository = getIt<TasksRepository>();
+    test('Delete task + sync', () async {
+      final repository = getIt<TasksRepository>();
 
-    await repository.syncTasks();
+      await repository.syncTasks();
 
-    expect(
-      repository.getTasks(),
-      emitsInOrder([
-        templateTasks1.reversed.toList(),
-        <Task>[templateTasks1[2], templateTasks1[0]],
-      ]),
-    );
+      expect(
+        repository.getTasks(),
+        emitsInOrder([
+          templateTasks1.reversed.toList(),
+          <Task>[templateTasks1[2], templateTasks1[0]],
+        ]),
+      );
 
-    await repository.deleteTask(templateTasks1[1].id);
-  });
+      await repository.deleteTask(templateTasks1[1].id);
+    });
 
-  test('Delete multiple tasks + sync', () async {
-    final repository = getIt<TasksRepository>();
+    test('Delete multiple tasks + sync', () async {
+      final repository = getIt<TasksRepository>();
 
-    await repository.syncTasks();
+      await repository.syncTasks();
 
-    expect(
-      repository.getTasks(),
-      emitsInOrder([
-        templateTasks1.reversed.toList(),
-        <Task>[templateTasks1.first],
-      ]),
-    );
+      expect(
+        repository.getTasks(),
+        emitsInOrder([
+          templateTasks1.reversed.toList(),
+          <Task>[templateTasks1.first],
+        ]),
+      );
 
-    await repository.deleteMultipleTasks({
-      templateTasks1[2].id,
-      templateTasks1[1].id,
+      await repository.deleteMultipleTasks({
+        templateTasks1[2].id,
+        templateTasks1[1].id,
+      });
     });
   });
 
@@ -132,5 +136,48 @@ void main() {
     await repository.addTask(newTask);
 
     await repository.updateTask(completedTask);
+  });
+
+  group('Working with specific task', () {
+    test('Get task by ID existing', () async {
+      final repository = getIt<TasksRepository>();
+
+      await repository.syncTasks();
+
+      final originalTask = templateTasks1.first;
+      final takenTask = repository.getTaskById(originalTask.id);
+      expect(takenTask, originalTask);
+    });
+
+    test('Get task by ID not existing', () async {
+      final repository = getIt<TasksRepository>();
+
+      await repository.syncTasks();
+
+      final takenTask = repository.getTaskById(templateTasks2.first.id);
+      expect(takenTask, isNull);
+    });
+
+    test('Subscribing on task', () async {
+      final repository = getIt<TasksRepository>();
+
+      await repository.syncTasks();
+
+      final taskToUpdate = templateTasks1.first;
+      final taskStream = repository.subscribeOnTaskById(taskToUpdate.id);
+
+      final updatedTask = taskToUpdate.edit(
+        title: 'Updated task!',
+        description: 'This task was updated',
+        importance: TaskImportance.important,
+      );
+      // Checking emiting from stream
+      unawaited(repository.updateTask(updatedTask));
+      await expectLater(taskStream, emits(updatedTask));
+
+      // Checking if subscription is disposed
+      final disposed = repository.disposeTaskSubscription(taskToUpdate.id);
+      expect(disposed, isTrue);
+    });
   });
 }
