@@ -30,7 +30,7 @@ class QuickStatisticsCubit extends Cubit<QuickStatisticsState> {
     final today = DateTime.now();
 
     if (today.isAfter(start) && today.isBefore(end)) {
-      // Works while we want to show only a week
+      // Works onlt if we want to show only a week.
       return today.weekday - 1;
     }
 
@@ -38,7 +38,7 @@ class QuickStatisticsCubit extends Cubit<QuickStatisticsState> {
   }
 
   void selectDay(int selectIndex) {
-    if (selectIndex == state.selectedDayIndex) return;
+    if (selectIndex == state.selectedDayIndex || selectIndex < 0) return;
 
     emit(state.copyWith(selectedDayIndex: selectIndex));
   }
