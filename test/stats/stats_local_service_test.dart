@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/date_transformations.dart';
-import 'package:not_zero/units/stats/data/services/stats_local_service.dart';
+import 'package:not_zero/units/stats/data/stats_local_service.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 
 import '../global_init.dart';

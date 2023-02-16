@@ -1,13 +1,65 @@
+import 'package:injectable/injectable.dart';
+import 'package:not_zero/helpers/date_transformations.dart';
+import 'package:not_zero/units/stats/data/stats_local_service.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
+import 'package:rxdart/subjects.dart';
 
-abstract class StatsRepository {
-  Stream<int> getTotalPoints();
+@lazySingleton
+class StatsRepository {
+  StatsRepository(this._localService);
 
-  Future<void> countTotalPoints();
+  final StatsLocalService _localService;
 
-  void includeCompletedTask(TaskImportance importance);
+  final _totalPointsStreamController = BehaviorSubject<int>.seeded(-1);
 
-  void excludeCompletedTask(TaskImportance importance);
+  Stream<int> getTotalPoints() =>
+      _totalPointsStreamController.asBroadcastStream();
 
-  Future<List<int>> getStatsByDays(DateTime start, DateTime end);
+  Future<void> countTotalPoints() async {
+    final importances = await _localService.getCompletedTasksImportance();
+
+    _totalPointsStreamController.add(_importancesToScore(importances));
+  }
+
+  void includeCompletedTask(TaskImportance importance) {
+    _totalPointsStreamController.value += _importanceToScore(importance);
+  }
+
+  void excludeCompletedTask(TaskImportance importance) {
+    _totalPointsStreamController.value -= _importanceToScore(importance);
+  }
+
+  Future<List<int>> getStatsByDays(DateTime start, DateTime end) async {
+    final result = <int>[];
+
+    var day = start;
+    while (day.isBefore(end)) {
+      final importances = await _localService.getCompletedTasksImportance(
+        startPeriod: day.startOfDay,
+        endPeriod: day.endOfDay,
+      );
+      result.add(_importancesToScore(importances));
+      day = day.dayAfter;
+    }
+
+    return result;
+  }
+
+  int _importancesToScore(List<TaskImportance> importances) {
+    return importances.fold(
+      0,
+      (previousValue, element) => previousValue + _importanceToScore(element),
+    );
+  }
+
+  int _importanceToScore(TaskImportance importance) {
+    switch (importance) {
+      case TaskImportance.notImportant:
+        return 3;
+      case TaskImportance.normal:
+        return 5;
+      case TaskImportance.important:
+        return 8;
+    }
+  }
 }
