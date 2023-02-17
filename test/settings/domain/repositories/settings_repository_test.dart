@@ -8,9 +8,9 @@ import 'package:not_zero/units/settings/domain/models/backup_model.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
 import 'package:not_zero/units/settings/domain/repositories/settings_repository.dart';
 
-import '../global_init.dart';
-import '../tasks/tasks_db_config.dart';
-import '../tasks/template_tasks.dart';
+import '../../../global_init.dart';
+import '../../../tasks/tasks_db_config.dart';
+import '../../../tasks/template_tasks.dart';
 
 void main() {
   globalInit();

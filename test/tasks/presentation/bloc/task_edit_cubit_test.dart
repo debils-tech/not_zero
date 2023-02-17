@@ -4,9 +4,9 @@ import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 
-import '../global_init.dart';
-import 'tasks_db_config.dart';
-import 'template_tasks.dart';
+import '../../../global_init.dart';
+import '../../tasks_db_config.dart';
+import '../../template_tasks.dart';
 
 void main() {
   globalInit();

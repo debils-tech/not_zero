@@ -3,9 +3,9 @@ import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/date_transformations.dart';
 import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
 
-import '../global_init.dart';
-import '../tasks/tasks_db_config.dart';
-import '../tasks/template_tasks.dart';
+import '../../../global_init.dart';
+import '../../../tasks/tasks_db_config.dart';
+import '../../../tasks/template_tasks.dart';
 
 void main() {
   const notImportantScore = 3;

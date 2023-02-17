@@ -3,7 +3,7 @@ import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/units/settings/domain/models/backup_model.dart';
 
-import '../tasks/template_tasks.dart';
+import '../../../tasks/template_tasks.dart';
 
 void main() {
   test('Backup toJson', () {

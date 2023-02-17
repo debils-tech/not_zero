@@ -4,9 +4,9 @@ import 'package:not_zero/helpers/date_transformations.dart';
 import 'package:not_zero/units/stats/data/stats_local_service.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 
-import '../global_init.dart';
-import '../tasks/tasks_db_config.dart';
-import '../tasks/template_tasks.dart';
+import '../../global_init.dart';
+import '../../tasks/tasks_db_config.dart';
+import '../../tasks/template_tasks.dart';
 
 void main() {
   globalInit();

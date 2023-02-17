@@ -5,9 +5,9 @@ import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.d
 import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 
-import '../global_init.dart';
-import 'tasks_db_config.dart';
-import 'template_tasks.dart';
+import '../../../global_init.dart';
+import '../../tasks_db_config.dart';
+import '../../template_tasks.dart';
 
 void main() {
   globalInit();

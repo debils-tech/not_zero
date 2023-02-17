@@ -1,28 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:not_zero/helpers/object_id_mixin.dart';
+import 'package:not_zero/units/tasks/domain/models/task_importance.dart';
 import 'package:uuid/uuid.dart';
+
+export 'package:not_zero/units/tasks/domain/models/task_importance.dart';
 
 part 'task.freezed.dart';
 part 'task.g.dart';
-
-enum TaskImportance {
-  notImportant,
-  normal,
-  important;
-
-  factory TaskImportance.fromIndex(int? index) {
-    switch (index) {
-      case 0:
-        return TaskImportance.notImportant;
-      case 1:
-        return TaskImportance.normal;
-      case 2:
-        return TaskImportance.important;
-      default:
-        return TaskImportance.normal;
-    }
-  }
-}
 
 @freezed
 class Task with _$Task, ObjectIdMixin implements Comparable<Task> {

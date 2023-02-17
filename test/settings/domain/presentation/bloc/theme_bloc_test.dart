@@ -3,7 +3,7 @@ import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
 import 'package:not_zero/units/settings/presentation/bloc/theme_bloc.dart';
 
-import '../global_init.dart';
+import '../../../../global_init.dart';
 
 void main() {
   globalInit();

@@ -3,7 +3,7 @@ import 'package:not_zero/helpers/pattern_validator.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:uuid/uuid.dart';
 
-import 'template_tasks.dart';
+import '../../template_tasks.dart';
 
 void main() {
   test('Task create', () {

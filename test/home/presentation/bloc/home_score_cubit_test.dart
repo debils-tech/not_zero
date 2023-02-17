@@ -5,9 +5,9 @@ import 'package:not_zero/units/home/presentation/bloc/states/home_score_state.da
 import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
 
-import '../global_init.dart';
-import '../tasks/tasks_db_config.dart';
-import '../tasks/template_tasks.dart';
+import '../../../global_init.dart';
+import '../../../tasks/tasks_db_config.dart';
+import '../../../tasks/template_tasks.dart';
 
 void main() {
   globalInit();

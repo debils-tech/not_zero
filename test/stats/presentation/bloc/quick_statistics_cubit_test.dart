@@ -6,9 +6,9 @@ import 'package:not_zero/helpers/date_transformations.dart';
 import 'package:not_zero/units/stats/presentation/bloc/quick_statistics_cubit.dart';
 import 'package:not_zero/units/stats/presentation/bloc/states/quick_statistics_state.dart';
 
-import '../global_init.dart';
-import '../tasks/tasks_db_config.dart';
-import '../tasks/template_tasks.dart';
+import '../../../global_init.dart';
+import '../../../tasks/tasks_db_config.dart';
+import '../../../tasks/template_tasks.dart';
 
 void main() {
   globalInit();
