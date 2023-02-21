@@ -68,7 +68,7 @@ class _TasksListFloatingButton extends StatelessWidget {
           );
         }
         return FloatingActionButton(
-          onPressed: () => GoRouter.of(context).push('/tasks/new'),
+          onPressed: () => context.push('/tasks/new'),
           tooltip: t.tasks.list.tooltips.addNewButton,
           child: const Icon(Icons.add_task_rounded),
         );

@@ -17,11 +17,11 @@ Future<bool?> showConfirmationDialog(
       content: content != null ? Text(content) : null,
       actions: [
         TextButton(
-          onPressed: () => GoRouter.of(context).pop(false),
+          onPressed: () => context.pop(false),
           child: Text(cancel ?? t.common.dialog.cancelButton),
         ),
         TextButton(
-          onPressed: () => GoRouter.of(context).pop(true),
+          onPressed: () => context.pop(true),
           child: Text(
             confirm ?? t.common.dialog.okButton,
             style: dangerous

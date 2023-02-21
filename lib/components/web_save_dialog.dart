@@ -39,7 +39,7 @@ class WebSaveDialog extends StatelessWidget {
                 ElevatedCopyButton(stringContent),
                 const SizedBox(width: 10),
                 TextButton(
-                  onPressed: GoRouter.of(context).pop,
+                  onPressed: context.pop,
                   child: Text(t.common.dialog.cancelButton),
                 ),
               ],

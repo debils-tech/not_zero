@@ -34,7 +34,7 @@ class SettingsMenuEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => GoRouter.of(context).push(route),
+      onTap: () => context.push(route),
       leading: icon != null ? Icon(icon) : null,
       title: Text(title),
     );

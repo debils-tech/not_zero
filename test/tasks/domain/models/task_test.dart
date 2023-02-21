@@ -67,6 +67,7 @@ void main() {
       'modifiedAt': task.modifiedAt?.toIso8601String(),
       'completedAt': task.completedAt?.toIso8601String(),
       'importance': task.importance.name,
+      'tags': <Map<String, dynamic>>[],
     });
   });
 

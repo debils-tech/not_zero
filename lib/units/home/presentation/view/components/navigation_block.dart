@@ -55,7 +55,7 @@ class _NavigationCard extends StatelessWidget {
       height: 70,
       child: ClickableCard(
         child: InkWell(
-          onTap: () => GoRouter.of(context).push(route),
+          onTap: () => context.push(route),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(

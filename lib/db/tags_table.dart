@@ -1,7 +1,7 @@
 // coverage:ignore-file
 
 import 'package:drift/drift.dart';
-import 'package:not_zero/units/tasks/domain/models/tag.dart';
+import 'package:not_zero/units/tags/domain/models/tag.dart';
 
 @UseRowClass(ItemTag, generateInsertable: true)
 class TagsTable extends Table {

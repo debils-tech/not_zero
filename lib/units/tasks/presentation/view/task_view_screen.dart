@@ -104,7 +104,7 @@ class _EditFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () => GoRouter.of(context).push(
+      onPressed: () => context.pushReplacement(
         '/tasks/edit/${taskToView.id}',
         extra: context.read<TaskViewCubit>().state ?? taskToView,
       ),

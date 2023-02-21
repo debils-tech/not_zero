@@ -21,7 +21,7 @@ class TaskCard extends StatelessWidget {
       opacity: task.isCompleted ? 0.5 : 1,
       child: SelectableCard(
         onTap: () =>
-            GoRouter.of(context).push('/tasks/view/${task.id}', extra: task),
+            context.push('/tasks/view/${task.id}', extra: task),
         identifier: task.id,
         child: _ImportanceIndicatorBox(
           importance: task.importance,

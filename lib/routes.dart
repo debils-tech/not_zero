@@ -125,5 +125,5 @@ Task? _getTaskById(String taskId) {
 ///
 /// Usually needed when no task found in router callback.
 void _redirectToNewTask(BuildContext context) {
-  context.go('/tasks/new');
+  context.pushReplacement('/tasks/new');
 }

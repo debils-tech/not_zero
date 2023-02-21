@@ -168,7 +168,7 @@ class _FloatingSubmitButton extends StatelessWidget {
               taskToEdit: taskToEdit,
             );
 
-        GoRouter.of(context).pop();
+        context.pop();
       },
       style: const ButtonStyle(
         elevation: MaterialStatePropertyAll(20),

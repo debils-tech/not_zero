@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 import 'package:not_zero/db/provider.dart';
-import 'package:not_zero/units/tasks/domain/models/tag.dart';
+import 'package:not_zero/units/tags/domain/models/tag.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 
 @lazySingleton
