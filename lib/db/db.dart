@@ -27,9 +27,6 @@ class NotZeroDatabase extends _$NotZeroDatabase {
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
-      onCreate: (Migrator m) async {
-        await m.createAll();
-      },
       onUpgrade: (Migrator m, int from, int to) async {
         if (from < 2) {
           // DateTime values was stored as string
@@ -37,8 +34,10 @@ class NotZeroDatabase extends _$NotZeroDatabase {
         }
         if (from < 3) {
           // no "tags_table" and "tasks_tag_entries"
-          await m.createTable(tagsTable);
-          await m.createTable(tasksTagEntries);
+          await transaction(() async {
+            await m.createTable(tagsTable);
+            await m.createTable(tasksTagEntries);
+          });
         }
       },
     );
