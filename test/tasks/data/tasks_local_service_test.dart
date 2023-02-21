@@ -15,7 +15,8 @@ void main() {
   test('Get tasks', () async {
     final service = getIt<TasksLocalService>();
 
-    final tasks = await service.getTasks();
+    final tasks =
+        await service.getTasks();
 
     expect(tasks, unorderedEquals(templateTasks1));
   });

@@ -4,14 +4,16 @@
 import 'package:drift/drift.dart';
 import 'package:not_zero/db/drift/open_database.dart';
 import 'package:not_zero/db/provider.dart';
+import 'package:not_zero/db/tags_table.dart';
 import 'package:not_zero/db/tasks_table.dart';
+import 'package:not_zero/units/tasks/domain/models/tag.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
 part 'db.g.dart';
 
-@DriftDatabase(tables: [TasksTable])
+@DriftDatabase(tables: [TasksTable, TagsTable, TasksTagEntries])
 class NotZeroDatabase extends _$NotZeroDatabase {
   NotZeroDatabase() : super(openDriftDatabase());
 
