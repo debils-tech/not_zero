@@ -6,11 +6,9 @@ import 'package:not_zero/units/tasks/domain/models/task.dart';
 
 @lazySingleton
 class TasksLocalService {
-  TasksLocalService(StorageProvider storage) {
-    _db = storage.database;
-  }
+  TasksLocalService(StorageProvider storage) : _db = storage.database;
 
-  late final NotZeroDatabase _db;
+  final NotZeroDatabase _db;
 
   Future<List<Task>> getTasks({String? tagId}) {
     if (tagId == null) {

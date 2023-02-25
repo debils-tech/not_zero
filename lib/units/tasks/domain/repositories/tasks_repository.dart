@@ -15,7 +15,7 @@ class TasksRepository {
 
   final _subscribedTasks = <String, BehaviorSubject<Task>>{};
 
-  Stream<List<Task>> getTasks() => _tasksStreamController.asBroadcastStream();
+  Stream<List<Task>> getTasks() => _tasksStreamController;
 
   Task? getTaskById(String taskId) {
     final currentList = _tasksStreamController.value;

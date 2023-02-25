@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
+import 'package:not_zero/units/tags/presentation/view/tag_selector.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_edit_fields.dart';
@@ -107,6 +108,7 @@ class _TaskEditScreenBody extends StatelessWidget {
         isCorrect: formKey.currentState?.validate() ?? false,
       ),
       onWillPop: () async {
+        //TODO(uSlashVlad): Use state instead of Cubit's variable.
         if (!taskEditCubit.isChanged) {
           return true;
         }
@@ -140,6 +142,8 @@ class _TaskEditScreenBody extends StatelessWidget {
               const TaskEditDescriptionField(),
               const SizedBox(height: 8),
               if (taskToEdit != null) TaskEditingInfo(taskToEdit!),
+              const SizedBox(height: 20),
+              const ItemTagSelector(),
             ],
           ),
         ],
