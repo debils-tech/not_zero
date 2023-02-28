@@ -7,11 +7,19 @@ import 'package:not_zero/units/tags/domain/models/tag.dart';
 import 'package:not_zero/units/tags/domain/repositories/tags_repository.dart';
 
 class TagCreationDialog extends StatelessWidget {
-  const TagCreationDialog({super.key});
+  const TagCreationDialog({super.key, this.tagToEdit});
 
-  static Future<void> show(BuildContext context) => showModalBottomSheet(
+  final ItemTag? tagToEdit;
+
+  static Future<void> show(
+    BuildContext context, [
+    ItemTag? tagToEdit,
+  ]) =>
+      showModalBottomSheet(
         context: context,
-        builder: (_) => const TagCreationDialog(),
+        builder: (_) => TagCreationDialog(
+          tagToEdit: tagToEdit,
+        ),
       );
 
   @override
@@ -47,7 +55,13 @@ class TagCreationDialog extends StatelessWidget {
               const SizedBox(height: 8),
               const _TagColorField(),
               const Spacer(),
-              _SubmitButton(formKey),
+              Row(
+                children: [
+                  if (tagToEdit != null) _DeleteButton(tagToEdit!.id),
+                  // TODO(uSlashVlad): Add cancel button.
+                  _SubmitButton(formKey),
+                ],
+              ),
             ],
           ),
         ),
@@ -107,6 +121,25 @@ class _TagColorField extends StatelessWidget {
     if (intRepresentation == null) return null;
 
     return Color(intRepresentation);
+  }
+}
+
+class _DeleteButton extends StatelessWidget {
+  const _DeleteButton(this.tagId);
+
+  final String tagId;
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO(uSlashVlad): Tune a style a bit.
+    return OutlinedButton(
+      onPressed: () => getIt<TagsRepository>().deleteTag(tagId),
+      // TODO(uSlashVlad): Replace with translation.
+      child: const Text(
+        'Delete',
+        style: TextStyle(fontSize: 20),
+      ),
+    );
   }
 }
 

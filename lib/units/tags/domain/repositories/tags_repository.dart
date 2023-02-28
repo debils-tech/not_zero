@@ -25,4 +25,11 @@ class TagsRepository {
     ]);
     return _localService.saveTag(tag);
   }
+
+  Future<void> deleteTag(String tagId) {
+    final newList = [..._tagsStreamController.value]
+      ..removeWhere((element) => element.id == tagId);
+    _tagsStreamController.add(newList);
+    return _localService.deleteTags(tagId);
+  }
 }

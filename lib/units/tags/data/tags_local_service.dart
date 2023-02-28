@@ -16,7 +16,8 @@ class TagsLocalService {
     return _db.upsertIn(_db.tagsTable, tag.toInsertable());
   }
 
-  Future<void> deleteTags(Iterable<String> tags) {
-    return (_db.delete(_db.tagsTable)..where((tbl) => tbl.id.isIn(tags))).go();
+  Future<void> deleteTags(String tagId) {
+    return (_db.delete(_db.tagsTable)..where((tbl) => tbl.id.equals(tagId)))
+        .go();
   }
 }
