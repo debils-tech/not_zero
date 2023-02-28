@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero/get_it.dart';
+import 'package:not_zero/units/tags/domain/models/tag.dart';
+import 'package:not_zero/units/tags/domain/repositories/tags_repository.dart';
 
 class TagCreationDialog extends StatelessWidget {
   const TagCreationDialog({super.key});
@@ -121,7 +124,12 @@ class _SubmitButton extends StatelessWidget {
           formKey.currentState!.save();
           final values = formKey.currentState!.value;
 
-          print('Tag saved: ${values['name']}, ${values['color']}');
+          getIt<TagsRepository>().addTag(
+            ItemTag.create(
+              name: values['name'] as String,
+              color: values['color'] as Color?,
+            ),
+          );
           context.pop();
         }
       },

@@ -19,7 +19,10 @@ class TagsRepository {
   }
 
   Future<void> addTag(ItemTag tag) {
-    _tagsStreamController.add([tag, ..._tagsStreamController.value]);
+    _tagsStreamController.add([
+      tag,
+      if (_tagsStreamController.hasValue) ..._tagsStreamController.value,
+    ]);
     return _localService.saveTag(tag);
   }
 }

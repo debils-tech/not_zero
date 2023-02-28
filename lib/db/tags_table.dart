@@ -10,6 +10,7 @@ class TagsTable extends Table {
   TextColumn get name => text()();
   TextColumn get color =>
       text().map(const ColorDatabaseConverter()).nullable()();
+  DateTimeColumn get createdAt => dateTime()();
 
   @override
   Set<Column<Object>>? get primaryKey => {id};
