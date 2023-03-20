@@ -1,0 +1,14 @@
+creation:
+  title:
+    create: 'New tag'
+    existing: 'Edit tag'
+  fields:
+    name: 'Name'
+    color: 'Tag color'
+  submit: 'Save'
+  deleteDialog:
+    content: |
+      Are you sure you want delete this tag?
+      All tasks with this tag lose it too
+  tooltips:
+    deleteTagButton: 'Delete'

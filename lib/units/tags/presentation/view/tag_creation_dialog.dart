@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/tags/domain/models/tag.dart';
 import 'package:not_zero/units/tags/domain/repositories/tags_repository.dart';
 
@@ -26,6 +30,8 @@ class TagCreationDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
 
+    final isEdit = tagToEdit != null;
+
     return Material(
       elevation: 1,
       borderRadius: const BorderRadius.only(
@@ -36,10 +42,18 @@ class TagCreationDialog extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: FormBuilder(
           key: formKey,
+          initialValue: isEdit
+              ? {
+                  'name': tagToEdit!.name,
+                  'color': tagToEdit!.color,
+                }
+              : {},
           child: Column(
             children: [
               Text(
-                'New tag', // TODO(uSlashVlad): Replace with translation.
+                isEdit
+                    ? t.tags.creation.title.existing
+                    : t.tags.creation.title.create,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 8),
@@ -50,16 +64,24 @@ class TagCreationDialog extends StatelessWidget {
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(),
                 ]),
+                decoration: InputDecoration(
+                  labelText: t.tags.creation.fields.name,
+                ),
                 maxLength: 30,
               ),
               const SizedBox(height: 8),
               const _TagColorField(),
               const Spacer(),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (tagToEdit != null) _DeleteButton(tagToEdit!.id),
-                  // TODO(uSlashVlad): Add cancel button.
-                  _SubmitButton(formKey),
+                  SizedBox(
+                    width: 48,
+                    child: isEdit ? _DeleteButton(tagToEdit!.id) : null,
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(child: _SubmitButton(formKey, tagToEdit: tagToEdit)),
+                  const SizedBox(width: 48 + 4),
                 ],
               ),
             ],
@@ -94,8 +116,8 @@ class _TagColorField extends StatelessWidget {
               child: TextFormField(
                 initialValue: _colorToText(field.value),
                 onChanged: (value) => field.didChange(_textToColor(value)),
-                decoration: const InputDecoration(
-                  labelText: 'Color',
+                decoration: InputDecoration(
+                  labelText: t.tags.creation.fields.color,
                   hintText: '#FFFFFF',
                 ),
               ),
@@ -131,22 +153,35 @@ class _DeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(uSlashVlad): Tune a style a bit.
-    return OutlinedButton(
-      onPressed: () => getIt<TagsRepository>().deleteTag(tagId),
-      // TODO(uSlashVlad): Replace with translation.
-      child: const Text(
-        'Delete',
-        style: TextStyle(fontSize: 20),
+    return IconButton(
+      onPressed: () async {
+        final navigator = GoRouter.of(context);
+        final confirm = await showConfirmationDialog(
+          context,
+          title: t.common.dialog.deleteTitle,
+          content: t.tags.creation.deleteDialog.content,
+          confirm: t.common.dialog.deleteButton,
+          dangerous: true,
+        );
+        if (confirm ?? false) {
+          unawaited(getIt<TagsRepository>().deleteTag(tagId));
+          navigator.pop();
+        }
+      },
+      tooltip: t.tags.creation.tooltips.deleteTagButton,
+      icon: Icon(
+        Icons.delete_outline_rounded,
+        color: Theme.of(context).colorScheme.error,
       ),
     );
   }
 }
 
 class _SubmitButton extends StatelessWidget {
-  const _SubmitButton(this.formKey);
+  const _SubmitButton(this.formKey, {required this.tagToEdit});
 
   final GlobalKey<FormBuilderState> formKey;
+  final ItemTag? tagToEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -156,19 +191,28 @@ class _SubmitButton extends StatelessWidget {
         if (isValid) {
           formKey.currentState!.save();
           final values = formKey.currentState!.value;
+          final name = values['name'] as String;
+          final color = values['color'] as Color?;
 
-          getIt<TagsRepository>().addTag(
-            ItemTag.create(
-              name: values['name'] as String,
-              color: values['color'] as Color?,
-            ),
-          );
+          final ItemTag tag;
+          if (tagToEdit == null) {
+            tag = ItemTag.create(name: name, color: color);
+          } else {
+            tag = tagToEdit!.edit(name: name, color: color);
+          }
+
+          getIt<TagsRepository>().addTag(tag);
           context.pop();
         }
       },
-      child: const Text(
-        'Create new tag!', // TODO(uSlashVlad): Replace with translation.
-        style: TextStyle(fontSize: 20),
+      style: const ButtonStyle(
+        padding: MaterialStatePropertyAll(
+          EdgeInsets.symmetric(vertical: 16),
+        ),
+      ),
+      child: Text(
+        t.tags.creation.submit,
+        style: const TextStyle(fontSize: 20),
       ),
     );
   }

@@ -19,10 +19,18 @@ class TagsRepository {
   }
 
   Future<void> addTag(ItemTag tag) {
-    _tagsStreamController.add([
-      tag,
+    final listCopy = [
       if (_tagsStreamController.hasValue) ..._tagsStreamController.value,
-    ]);
+    ];
+
+    final tagIndex = listCopy.indexWhere((element) => element.id == tag.id);
+    if (tagIndex == -1) {
+      listCopy.insert(0, tag);
+    } else {
+      listCopy[tagIndex] = tag;
+    }
+
+    _tagsStreamController.add(listCopy);
     return _localService.saveTag(tag);
   }
 

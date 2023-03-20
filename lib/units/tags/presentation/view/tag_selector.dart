@@ -32,20 +32,26 @@ class _SelectorBody extends StatelessWidget {
       builder: (context, state) {
         return state.map(
           loading: (state) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           },
           loaded: (state) {
-            return _TagsList(
-              itemBuilder: (index) {
-                final tag = state.tags[index];
-                return _TagButton(
-                  tag,
-                  selected: state.selected.contains(tag.id),
-                );
-              },
-              separatorBuilder: () => const SizedBox(width: 8),
-              addButtonBuilder: () => const _AddButton(),
-              itemCount: state.tags.length,
+            return Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: List.generate(
+                state.tags.length + 1,
+                (index) {
+                  if (index == state.tags.length) {
+                    return const _AddButton();
+                  }
+
+                  final tag = state.tags[index];
+                  return _TagButton(
+                    tag,
+                    selected: state.selected.contains(tag.id),
+                  );
+                },
+              ),
             );
           },
         );
@@ -54,41 +60,40 @@ class _SelectorBody extends StatelessWidget {
   }
 }
 
-class _TagsList extends StatelessWidget {
-  const _TagsList({
-    required this.itemBuilder,
-    required this.separatorBuilder,
-    required this.addButtonBuilder,
-    required this.itemCount,
-  });
+// class _TagsList extends StatelessWidget {
+//   const _TagsList({
+//     required this.itemBuilder,
+//     required this.separatorBuilder,
+//     required this.addButtonBuilder,
+//     required this.itemCount,
+//   });
 
-  final Widget Function(int index) itemBuilder;
-  final Widget Function() separatorBuilder;
-  final Widget Function() addButtonBuilder;
-  final int itemCount;
+//   final Widget Function(int index) itemBuilder;
+//   final Widget Function() addButtonBuilder;
+//   final int itemCount;
 
-  @override
-  Widget build(BuildContext context) {
-    final wrapLength = itemCount * 2 + 1;
-    return Wrap(
-      children: List.generate(
-        wrapLength,
-        (index) {
-          if (index.isOdd) {
-            return separatorBuilder();
-          }
+//   @override
+//   Widget build(BuildContext context) {
+//     final wrapLength = itemCount * 2 + 1;
+//     return Wrap(
+//       children: List.generate(
+//         wrapLength,
+//         (index) {
+//           if (index.isOdd) {
+//             return separatorBuilder();
+//           }
 
-          final itemIndex = index ~/ 2;
-          if (itemIndex == itemCount) {
-            return addButtonBuilder();
-          }
+//           final itemIndex = index ~/ 2;
+//           if (itemIndex == itemCount) {
+//             return addButtonBuilder();
+//           }
 
-          return itemBuilder(itemIndex);
-        },
-      ),
-    );
-  }
-}
+//           return itemBuilder(itemIndex);
+//         },
+//       ),
+//     );
+//   }
+// }
 
 class _TagButton extends StatelessWidget {
   const _TagButton(this.tag, {this.selected = false});

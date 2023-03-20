@@ -108,7 +108,7 @@ class _TaskEditScreenBody extends StatelessWidget {
         isCorrect: formKey.currentState?.validate() ?? false,
       ),
       onWillPop: () async {
-        //TODO(uSlashVlad): Use state instead of Cubit's variable.
+        // TODO(uSlashVlad): Use state instead of Cubit's variable.
         if (!taskEditCubit.isChanged) {
           return true;
         }
