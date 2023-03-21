@@ -7,10 +7,11 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
+import 'package:not_zero/themes/tags_colors.dart';
 import 'package:not_zero/units/tags/domain/models/tag.dart';
 import 'package:not_zero/units/tags/domain/repositories/tags_repository.dart';
 
-class TagCreationDialog extends StatelessWidget {
+class TagCreationDialog extends StatefulWidget {
   const TagCreationDialog({super.key, this.tagToEdit});
 
   final ItemTag? tagToEdit;
@@ -18,131 +19,144 @@ class TagCreationDialog extends StatelessWidget {
   static Future<void> show(
     BuildContext context, [
     ItemTag? tagToEdit,
-  ]) =>
-      showModalBottomSheet(
-        context: context,
-        builder: (_) => TagCreationDialog(
-          tagToEdit: tagToEdit,
+  ]) {
+    print(Theme.of(context).bottomSheetTheme);
+    return showModalBottomSheet(
+      context: context,
+      useSafeArea: true,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(28),
+          topRight: Radius.circular(28),
         ),
-      );
+      ),
+      builder: (_) => TagCreationDialog(
+        tagToEdit: tagToEdit,
+      ),
+    );
+  }
+
+  @override
+  State<TagCreationDialog> createState() => _TagCreationDialogState();
+}
+
+class _TagCreationDialogState extends State<TagCreationDialog> {
+  final formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormBuilderState>();
+    final isEdit = widget.tagToEdit != null;
 
-    final isEdit = tagToEdit != null;
-
-    return Material(
-      elevation: 1,
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(28),
-        topRight: Radius.circular(28),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: FormBuilder(
-          key: formKey,
-          initialValue: isEdit
-              ? {
-                  'name': tagToEdit!.name,
-                  'color': tagToEdit!.color,
-                }
-              : {},
-          child: Column(
-            children: [
-              Text(
-                isEdit
-                    ? t.tags.creation.title.existing
-                    : t.tags.creation.title.create,
-                style: Theme.of(context).textTheme.headlineSmall,
+    return Padding(
+      padding: const EdgeInsets.all(8) + MediaQuery.of(context).viewInsets,
+      child: FormBuilder(
+        key: formKey,
+        initialValue: isEdit
+            ? {
+                'name': widget.tagToEdit!.name,
+                'color': widget.tagToEdit!.colorIndex,
+              }
+            : {
+                'color': 0,
+              },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              isEdit
+                  ? t.tags.creation.title.existing
+                  : t.tags.creation.title.create,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: 8),
+            FormBuilderTextField(
+              name: 'name',
+              // autofocus: true,
+              textCapitalization: TextCapitalization.words,
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(),
+              ]),
+              decoration: InputDecoration(
+                labelText: t.tags.creation.fields.name,
               ),
-              const SizedBox(height: 8),
-              FormBuilderTextField(
-                name: 'name',
-                autofocus: true,
-                textCapitalization: TextCapitalization.words,
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
-                ]),
-                decoration: InputDecoration(
-                  labelText: t.tags.creation.fields.name,
+              maxLength: 30,
+            ),
+            const SizedBox(height: 8),
+            const _TagColorField(),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: 48,
+                  child: isEdit ? _DeleteButton(widget.tagToEdit!.id) : null,
                 ),
-                maxLength: 30,
-              ),
-              const SizedBox(height: 8),
-              const _TagColorField(),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    width: 48,
-                    child: isEdit ? _DeleteButton(tagToEdit!.id) : null,
-                  ),
-                  const SizedBox(width: 4),
-                  Expanded(child: _SubmitButton(formKey, tagToEdit: tagToEdit)),
-                  const SizedBox(width: 48 + 4),
-                ],
-              ),
-            ],
-          ),
+                const SizedBox(width: 4),
+                Expanded(
+                  child: _SubmitButton(formKey, tagToEdit: widget.tagToEdit),
+                ),
+                const SizedBox(width: 48 + 4),
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-// TODO(uSlashVlad): Replace with normal color picker.
 class _TagColorField extends StatelessWidget {
   const _TagColorField();
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilderField<Color>(
+    final theme = Theme.of(context);
+    final colors = theme.tagsColorScheme.allColors;
+
+    const verticalPadding = 10.0;
+    const iconSize = 34.0;
+    const iconButtonPadding = 8.0;
+
+    return FormBuilderField<int>(
       name: 'color',
       builder: (field) {
-        return Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(right: 8),
-              width: 20,
-              height: 20,
-              decoration: BoxDecoration(
-                color: field.value ?? Colors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-              ),
-            ),
-            Expanded(
-              child: TextFormField(
-                initialValue: _colorToText(field.value),
-                onChanged: (value) => field.didChange(_textToColor(value)),
-                decoration: InputDecoration(
-                  labelText: t.tags.creation.fields.color,
-                  hintText: '#FFFFFF',
+        return Container(
+          height: 2 * (verticalPadding + iconButtonPadding) + iconSize,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: verticalPadding,
+          ),
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (_, index) {
+              final isSelected = field.value == index;
+              return IconButton(
+                onPressed: () => field.didChange(index),
+                icon: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: colors[index],
+                    border: isSelected
+                        ? Border.all(
+                            color: theme.colorScheme.onBackground,
+                            width: 3,
+                            strokeAlign: BorderSide.strokeAlignCenter,
+                          )
+                        : null,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const SizedBox.square(dimension: iconSize),
                 ),
-              ),
-            ),
-          ],
+              );
+            },
+            separatorBuilder: (_, __) {
+              return const SizedBox(width: 2);
+            },
+            itemCount: colors.length,
+          ),
         );
       },
     );
-  }
-
-  String _colorToText(Color? color) {
-    if (color == null) return '#ffffff';
-
-    final hex = (color.value & 0xffffff).toRadixString(16);
-    return '#$hex';
-  }
-
-  Color? _textToColor(String? value) {
-    if (value == null) return null;
-    if (value.length < 7 || !value.startsWith('#')) return null;
-
-    final intRepresentation = int.tryParse('0xff${value.substring(1)}');
-    if (intRepresentation == null) return null;
-
-    return Color(intRepresentation);
   }
 }
 
@@ -192,13 +206,13 @@ class _SubmitButton extends StatelessWidget {
           formKey.currentState!.save();
           final values = formKey.currentState!.value;
           final name = values['name'] as String;
-          final color = values['color'] as Color?;
+          final color = values['color'] as int;
 
           final ItemTag tag;
           if (tagToEdit == null) {
-            tag = ItemTag.create(name: name, color: color);
+            tag = ItemTag.create(name: name, colorIndex: color);
           } else {
-            tag = tagToEdit!.edit(name: name, color: color);
+            tag = tagToEdit!.edit(name: name, colorIndex: color);
           }
 
           getIt<TagsRepository>().addTag(tag);
@@ -206,6 +220,7 @@ class _SubmitButton extends StatelessWidget {
         }
       },
       style: const ButtonStyle(
+        elevation: MaterialStatePropertyAll(20),
         padding: MaterialStatePropertyAll(
           EdgeInsets.symmetric(vertical: 16),
         ),

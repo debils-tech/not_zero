@@ -15,6 +15,7 @@ class TagsRepository {
 
   Future<void> syncTags() async {
     final localTags = await _localService.getTags();
+    print('DEBUG LOCAL TAGS: $localTags');
     _tagsStreamController.add(localTags);
   }
 
@@ -25,7 +26,7 @@ class TagsRepository {
 
     final tagIndex = listCopy.indexWhere((element) => element.id == tag.id);
     if (tagIndex == -1) {
-      listCopy.insert(0, tag);
+      listCopy.add(tag);
     } else {
       listCopy[tagIndex] = tag;
     }

@@ -162,17 +162,20 @@ class _FloatingSubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        formKey.currentState!.save();
-        final values = formKey.currentState!.value;
+        final isValid = formKey.currentState!.validate();
+        if (isValid) {
+          formKey.currentState!.save();
+          final values = formKey.currentState!.value;
 
-        context.read<TaskEditCubit>().saveTask(
-              title: values['title'] as String,
-              description: values['description'] as String?,
-              importance: values['importance'] as TaskImportance,
-              taskToEdit: taskToEdit,
-            );
+          context.read<TaskEditCubit>().saveTask(
+                title: values['title'] as String,
+                description: values['description'] as String?,
+                importance: values['importance'] as TaskImportance,
+                taskToEdit: taskToEdit,
+              );
 
-        context.pop();
+          context.pop();
+        }
       },
       style: const ButtonStyle(
         elevation: MaterialStatePropertyAll(20),

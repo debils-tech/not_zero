@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:not_zero/helpers/color_converter.dart';
 import 'package:not_zero/helpers/object_id_mixin.dart';
 import 'package:uuid/uuid.dart';
 
@@ -13,7 +11,7 @@ class ItemTag with _$ItemTag, ObjectIdMixin {
     required String id,
     required String name,
     required DateTime createdAt,
-    @ColorJsonConverter() Color? color,
+    @JsonKey(name: 'color') @Default(0) int colorIndex,
   }) = _ItemTag;
 
   const ItemTag._();
@@ -21,15 +19,15 @@ class ItemTag with _$ItemTag, ObjectIdMixin {
   factory ItemTag.fromJson(Map<String, dynamic> json) =>
       _$ItemTagFromJson(json);
 
-  factory ItemTag.create({required String name, Color? color}) => ItemTag(
+  factory ItemTag.create({required String name, int? colorIndex}) => ItemTag(
         id: const Uuid().v4(),
         name: name,
-        color: color,
+        colorIndex: colorIndex ?? 0,
         createdAt: DateTime.now(),
       );
 
-  ItemTag edit({String? name, Color? color}) => copyWith(
+  ItemTag edit({String? name, int? colorIndex}) => copyWith(
         name: name ?? this.name,
-        color: color ?? this.color,
+        colorIndex: colorIndex ?? this.colorIndex,
       );
 }

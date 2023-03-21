@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
-import 'package:not_zero/themes/task_colors.dart';
+import 'package:not_zero/themes/tasks_colors.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_editing_info.dart';

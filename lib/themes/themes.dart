@@ -1,13 +1,15 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:not_zero/themes/charts_colors.dart';
-import 'package:not_zero/themes/task_colors.dart';
+import 'package:not_zero/themes/tags_colors.dart';
+import 'package:not_zero/themes/tasks_colors.dart';
 
 final _lightThemeBase = FlexThemeData.light(
   scheme: FlexScheme.material,
   extensions: <ThemeExtension>[
     TasksColorScheme.light,
     ChartsColorScheme.light,
+    TagsColorScheme.light,
   ],
 );
 
@@ -37,6 +39,7 @@ final _darkThemeBase = FlexThemeData.dark(
   extensions: <ThemeExtension>[
     TasksColorScheme.dark,
     ChartsColorScheme.dark,
+    TagsColorScheme.dark,
   ],
 );
 

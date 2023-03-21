@@ -13,6 +13,7 @@ class TagsLocalService {
   }
 
   Future<void> saveTag(ItemTag tag) {
+    print('DEBUG ADD TAG: $tag');
     return _db.upsertIn(_db.tagsTable, tag.toInsertable());
   }
 

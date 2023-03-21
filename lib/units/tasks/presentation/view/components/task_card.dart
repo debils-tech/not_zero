@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero/helpers/time.dart';
 import 'package:not_zero/i18n/translations.g.dart';
-import 'package:not_zero/themes/task_colors.dart';
+import 'package:not_zero/themes/tasks_colors.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
@@ -20,8 +20,7 @@ class TaskCard extends StatelessWidget {
       duration: const Duration(milliseconds: 200),
       opacity: task.isCompleted ? 0.5 : 1,
       child: SelectableCard(
-        onTap: () =>
-            context.push('/tasks/view/${task.id}', extra: task),
+        onTap: () => context.push('/tasks/view/${task.id}', extra: task),
         identifier: task.id,
         child: _ImportanceIndicatorBox(
           importance: task.importance,
