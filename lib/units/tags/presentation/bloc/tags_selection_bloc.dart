@@ -1,21 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:not_zero/units/tags/domain/models/tag.dart';
 import 'package:not_zero/units/tags/domain/repositories/tags_repository.dart';
-import 'package:not_zero/units/tags/presentation/bloc/events/tags_selection_events.dart';
-import 'package:not_zero/units/tags/presentation/bloc/states/tags_selection_states.dart';
+
+part 'tags_selection_bloc.freezed.dart';
+part 'tags_selection_event.dart';
+part 'tags_selection_state.dart';
 
 @injectable
 class TagsSelectionBloc extends Bloc<TagsSelectionEvent, TagsSelectionState> {
   TagsSelectionBloc(this._repository)
       : super(const TagsSelectionState.loading()) {
-    on<LoadTagsEvent>(_onLoadTags);
-    on<SelectTagEvent>(_onSelectTags);
+    on<_LoadTagsEvent>(_onLoadTags);
+    on<_SelectTagEvent>(_onSelectTags);
   }
 
   final TagsRepository _repository;
 
   Future<void> _onLoadTags(
-    LoadTagsEvent event,
+    _LoadTagsEvent event,
     Emitter<TagsSelectionState> emit,
   ) async {
     await _repository.syncTags();
@@ -27,12 +31,11 @@ class TagsSelectionBloc extends Bloc<TagsSelectionEvent, TagsSelectionState> {
   }
 
   Future<void> _onSelectTags(
-    SelectTagEvent event,
+    _SelectTagEvent event,
     Emitter<TagsSelectionState> emit,
   ) async {
-    final currentState = state;
-    if (currentState is TagsLoadedState) {
-      final newSelection = {...currentState.selected};
+    state.mapOrNull(loaded: (state) {
+      final newSelection = {...state.selected};
       if (newSelection.contains(event.id)) {
         newSelection.remove(event.id);
       } else {
@@ -41,10 +44,10 @@ class TagsSelectionBloc extends Bloc<TagsSelectionEvent, TagsSelectionState> {
 
       emit(
         TagsSelectionState.loaded(
-          tags: currentState.tags,
+          tags: state.tags,
           selected: newSelection,
         ),
       );
-    }
+    });
   }
 }

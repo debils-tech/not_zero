@@ -1,22 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
+
+part 'tasks_list_bloc.freezed.dart';
+part 'tasks_list_event.dart';
+part 'tasks_list_state.dart';
 
 @injectable
 class TasksListBloc extends Bloc<TasksListEvent, TasksListState> {
   TasksListBloc(this._repository) : super(const TasksListState.loading()) {
-    on<LoadTasksEvent>(_onLoadTasks);
-    on<ChangeTaskCompletionEvent>(_onChangeTaskCompletion);
-    on<DeleteSelectedTasksEvent>(_onDeleteSelectedTasks);
+    on<_LoadTasksEvent>(_onLoadTasks);
+    on<_ChangeTaskCompletionEvent>(_onChangeTaskCompletion);
+    on<_DeleteSelectedTasksEvent>(_onDeleteSelectedTasks);
   }
 
   final TasksRepository _repository;
 
   Future<void> _onLoadTasks(
-    LoadTasksEvent event,
+    _LoadTasksEvent event,
     Emitter<TasksListState> emit,
   ) async {
     await _repository.syncTasks();
@@ -28,7 +31,7 @@ class TasksListBloc extends Bloc<TasksListEvent, TasksListState> {
   }
 
   Future<void> _onChangeTaskCompletion(
-    ChangeTaskCompletionEvent event,
+    _ChangeTaskCompletionEvent event,
     Emitter<TasksListState> _,
   ) {
     return _repository.updateTask(
@@ -37,7 +40,7 @@ class TasksListBloc extends Bloc<TasksListEvent, TasksListState> {
   }
 
   Future<void> _onDeleteSelectedTasks(
-    DeleteSelectedTasksEvent event,
+    _DeleteSelectedTasksEvent event,
     Emitter<TasksListState> _,
   ) {
     return _repository.deleteMultipleTasks(event.tasks);

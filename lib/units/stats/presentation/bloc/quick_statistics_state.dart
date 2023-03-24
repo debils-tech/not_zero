@@ -1,6 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'quick_statistics_state.freezed.dart';
+part of 'quick_statistics_cubit.dart';
 
 @freezed
 class QuickStatisticsState with _$QuickStatisticsState {

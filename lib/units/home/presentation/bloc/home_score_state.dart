@@ -1,6 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'home_score_state.freezed.dart';
+part of 'home_score_cubit.dart';
 
 @freezed
 class HomeScoreState with _$HomeScoreState {

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/themes/tags_colors.dart';
 import 'package:not_zero/units/tags/domain/models/tag.dart';
-import 'package:not_zero/units/tags/presentation/bloc/events/tags_selection_events.dart';
-import 'package:not_zero/units/tags/presentation/bloc/states/tags_selection_states.dart';
 import 'package:not_zero/units/tags/presentation/bloc/tags_selection_bloc.dart';
+import 'package:not_zero/units/tags/presentation/bloc/tags_selection_events.dart';
+import 'package:not_zero/units/tags/presentation/bloc/tags_selection_states.dart';
 import 'package:not_zero/units/tags/presentation/view/tag_creation_dialog.dart';
 
 class ItemTagSelector extends StatelessWidget {
