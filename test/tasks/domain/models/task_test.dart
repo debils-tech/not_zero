@@ -45,7 +45,6 @@ void main() {
     final originalTask = templateTasks1.first;
     final task = originalTask.edit();
 
-
     expect(task.id, originalTask.id);
     expect(task.title, originalTask.title);
     expect(task.description, originalTask.description);
@@ -67,7 +66,7 @@ void main() {
       'modifiedAt': task.modifiedAt?.toIso8601String(),
       'completedAt': task.completedAt?.toIso8601String(),
       'importance': task.importance.name,
-      'tags': <Map<String, dynamic>>[],
+      'tags': <String>[],
     });
   });
 

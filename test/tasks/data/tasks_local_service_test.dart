@@ -5,6 +5,7 @@ import 'package:not_zero/helpers/date_transformations.dart';
 import 'package:not_zero/units/tasks/data/tasks_local_service.dart';
 
 import '../../global_init.dart';
+import '../../tags/template_tags.dart';
 import '../tasks_db_config.dart';
 import '../template_tasks.dart';
 
@@ -15,8 +16,7 @@ void main() {
   test('Get tasks', () async {
     final service = getIt<TasksLocalService>();
 
-    final tasks =
-        await service.getTasks();
+    final tasks = await service.getTasks();
 
     expect(tasks, unorderedEquals(templateTasks1));
   });
@@ -46,6 +46,26 @@ void main() {
     final recordFromDb = await db.findByKey(db.tasksTable, taskForCopy.id);
     expect(recordFromDb, isNotNull);
     expect(recordFromDb, taskForCopy);
+  });
+
+  test('Save with tags', () async {
+    final service = getIt<TasksLocalService>();
+    final db = getIt<StorageProvider>().database;
+
+    await service.deleteTasks(templateTasks1.map((e) => e.id));
+    expect(await service.getTasks(), isEmpty);
+
+    for (final tag in templateTags) {
+      await db.upsertIn(db.tagsTable, tag.toInsertable());
+    }
+
+    final taskWithTag = templateTasks2.first.copyWith(
+      tags: [templateTags[0], templateTags[1]],
+    );
+    await service.saveTask(taskWithTag);
+
+    expect((await service.getTasks()).single, taskWithTag);
+
   });
 
   test('Delete tasks', () async {

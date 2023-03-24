@@ -39,6 +39,6 @@ class TagsRepository {
     final newList = [..._tagsStreamController.value]
       ..removeWhere((element) => element.id == tagId);
     _tagsStreamController.add(newList);
-    return _localService.deleteTags(tagId);
+    return _localService.deleteTag(tagId);
   }
 }

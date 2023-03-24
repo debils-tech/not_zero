@@ -69,11 +69,24 @@ class TasksLocalService {
   }
 
   Future<void> saveTask(Task task) {
-    return _db.upsertIn(_db.tasksTable, task.toInsertable());
+    return _db.transaction(() async {
+      await _db.upsertIn(_db.tasksTable, task.toInsertable());
+      for (final tag in task.tags) {
+        await _db.upsertIn(
+          _db.tagsTable,
+          TasksTagEntry(task: task.id, tag: tag.id),
+        );
+      }
+    });
   }
 
   Future<void> deleteTasks(Iterable<String> tasks) {
-    return (_db.delete(_db.tasksTable)..where((tbl) => tbl.id.isIn(tasks)))
-        .go();
+    return _db.transaction(() async {
+      await (_db.delete(_db.tasksTable)..where((tbl) => tbl.id.isIn(tasks)))
+          .go();
+      await (_db.delete(_db.tasksTagEntries)
+            ..where((tbl) => tbl.task.isIn(tasks)))
+          .go();
+    });
   }
 }

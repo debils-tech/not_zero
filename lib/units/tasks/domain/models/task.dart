@@ -19,7 +19,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     @Default('') String description,
     DateTime? modifiedAt,
     DateTime? completedAt,
-    @JsonKey(ignore: true) @Default([]) List<ItemTag> tags,
+    @JsonKey(toJson: Task._tagsToJson) @Default([]) List<ItemTag> tags,
   }) = _Task;
 
   const Task._();
@@ -82,4 +82,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     // Sorting by time that task was created
     return createdAt.compareTo(other.createdAt);
   }
+
+  static List<String> _tagsToJson(List<ItemTag> field) =>
+      field.map((e) => e.id).toList();
 }

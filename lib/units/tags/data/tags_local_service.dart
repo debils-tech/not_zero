@@ -13,11 +13,10 @@ class TagsLocalService {
   }
 
   Future<void> saveTag(ItemTag tag) {
-    print('DEBUG ADD TAG: $tag');
     return _db.upsertIn(_db.tagsTable, tag.toInsertable());
   }
 
-  Future<void> deleteTags(String tagId) {
+  Future<void> deleteTag(String tagId) {
     return (_db.delete(_db.tagsTable)..where((tbl) => tbl.id.equals(tagId)))
         .go();
   }
