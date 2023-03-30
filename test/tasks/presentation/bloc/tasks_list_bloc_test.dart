@@ -1,8 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 
 import '../../../global_init.dart';
@@ -65,8 +63,10 @@ void main() {
 
     await Future<void>.delayed(const Duration(seconds: 1));
 
-    expect(bloc.state is TasksLoadedState, true);
-    expect((bloc.state as TasksLoadedState).tasks.last.isCompleted, true);
+    final isLoaded = bloc.state.mapOrNull(
+      loaded: (state) => expect(state.tasks.last.isCompleted, isTrue),
+    );
+    expect(isLoaded, isTrue);
   });
 
   test('Delete  tasks', () async {

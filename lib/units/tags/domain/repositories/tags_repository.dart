@@ -15,7 +15,6 @@ class TagsRepository {
 
   Future<void> syncTags() async {
     final localTags = await _localService.getTags();
-    print('DEBUG LOCAL TAGS: $localTags');
     _tagsStreamController.add(localTags);
   }
 

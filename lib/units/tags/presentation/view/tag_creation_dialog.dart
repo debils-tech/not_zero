@@ -20,7 +20,6 @@ class TagCreationDialog extends StatefulWidget {
     BuildContext context, [
     ItemTag? tagToEdit,
   ]) {
-    print(Theme.of(context).bottomSheetTheme);
     return showModalBottomSheet(
       context: context,
       useSafeArea: true,

@@ -9,8 +9,6 @@ import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/states/tasks_list_state.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_card.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/tasks_list_app_bar.dart';
@@ -24,7 +22,8 @@ class TasksListScreen extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => getIt<ItemSelectionBloc>()),
         BlocProvider(
-          create: (_) => getIt<TasksListBloc>()..add(const LoadTasksEvent()),
+          create: (_) =>
+              getIt<TasksListBloc>()..add(const TasksListEvent.loadTasks()),
         )
       ],
       child: const Scaffold(

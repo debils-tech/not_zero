@@ -6,7 +6,6 @@ import 'package:not_zero/helpers/time.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/themes/tasks_colors.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/events/tasks_list_event.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 
 class TaskCard extends StatelessWidget {
@@ -155,7 +154,7 @@ class _TaskCheckbox extends StatelessWidget {
         shape: const CircleBorder(),
         onChanged: (value) => context.read<TasksListBloc>()
           ..add(
-            ChangeTaskCompletionEvent(
+            TasksListEvent.changeTaskCompletion(
               task,
               completion: value ?? false,
             ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:not_zero/helpers/not_zero_icons.dart';
 import 'package:not_zero/units/home/presentation/bloc/home_score_cubit.dart';
-import 'package:not_zero/units/home/presentation/bloc/home_score_state.dart';
 
 class HomeStatsHeader extends StatelessWidget {
   const HomeStatsHeader({super.key});

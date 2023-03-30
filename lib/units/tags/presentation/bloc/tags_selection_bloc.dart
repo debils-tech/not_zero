@@ -34,20 +34,22 @@ class TagsSelectionBloc extends Bloc<TagsSelectionEvent, TagsSelectionState> {
     _SelectTagEvent event,
     Emitter<TagsSelectionState> emit,
   ) async {
-    state.mapOrNull(loaded: (state) {
-      final newSelection = {...state.selected};
-      if (newSelection.contains(event.id)) {
-        newSelection.remove(event.id);
-      } else {
-        newSelection.add(event.id);
-      }
+    state.mapOrNull(
+      loaded: (state) {
+        final newSelection = {...state.selected};
+        if (newSelection.contains(event.id)) {
+          newSelection.remove(event.id);
+        } else {
+          newSelection.add(event.id);
+        }
 
-      emit(
-        TagsSelectionState.loaded(
-          tags: state.tags,
-          selected: newSelection,
-        ),
-      );
-    });
+        emit(
+          TagsSelectionState.loaded(
+            tags: state.tags,
+            selected: newSelection,
+          ),
+        );
+      },
+    );
   }
 }

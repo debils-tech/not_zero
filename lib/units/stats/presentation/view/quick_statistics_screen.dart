@@ -5,7 +5,6 @@ import 'package:not_zero/components/common_widgets/date_range_switch.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/stats/presentation/bloc/quick_statistics_cubit.dart';
-import 'package:not_zero/units/stats/presentation/bloc/quick_statistics_state.dart';
 import 'package:not_zero/units/stats/presentation/view/components/chart_card.dart';
 import 'package:not_zero/units/stats/presentation/view/components/weekly_stats_chart.dart';
 
