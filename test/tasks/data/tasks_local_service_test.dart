@@ -65,7 +65,6 @@ void main() {
     await service.saveTask(taskWithTag);
 
     expect((await service.getTasks()).single, taskWithTag);
-
   });
 
   test('Delete tasks', () async {

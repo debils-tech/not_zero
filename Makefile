@@ -7,6 +7,9 @@ format:
 	dart format .
 fmt: format
 
+fix: fmt
+	dart fix --apply .
+
 
 # Building and running
 
