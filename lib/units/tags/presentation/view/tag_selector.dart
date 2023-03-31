@@ -29,7 +29,6 @@ class ItemTagSelector extends StatelessWidget {
                 return const Center(child: LinearProgressIndicator());
               },
               loaded: (state) {
-                print('SELECTED TAGS: $selectedTags');
                 return ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: state.tags.length + 1,
@@ -43,15 +42,9 @@ class ItemTagSelector extends StatelessWidget {
                     return _TagButton(
                       tag: tag,
                       onPressed: () {
-                        print(
-                            'Pressed on $tag when selected = $isSelected and tags = $selectedTags');
-                        if (!isSelected) {
-                          if (selectedTags.add(tag.id)) {
-                            print('Selected');
-                            onSelection(state.filterOn(selectedTags));
-                          }
+                        if (!isSelected && selectedTags.add(tag.id)) {
+                          onSelection(state.filterOn(selectedTags));
                         } else if (selectedTags.remove(tag.id)) {
-                          print('Unselected');
                           onSelection(state.filterOn(selectedTags));
                         }
                       },
