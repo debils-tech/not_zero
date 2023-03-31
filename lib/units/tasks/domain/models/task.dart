@@ -30,6 +30,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     required String title,
     required TaskImportance importance,
     String? description,
+    List<ItemTag>? tags,
   }) =>
       Task(
         id: const Uuid().v4(),
@@ -37,18 +38,21 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
         description: description ?? '',
         createdAt: DateTime.now(),
         importance: importance,
+        tags: tags ?? [],
       );
 
   Task edit({
     String? title,
     String? description,
     TaskImportance? importance,
+    List<ItemTag>? tags,
   }) =>
       copyWith(
         title: title ?? this.title,
         description: description ?? this.description,
         importance: importance ?? this.importance,
         modifiedAt: DateTime.now(),
+        tags: tags ?? this.tags,
       );
 
   Task complete({required bool completed}) => copyWith(

@@ -4,6 +4,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:not_zero/components/common_widgets/stars_rate.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/themes/tasks_colors.dart';
+import 'package:not_zero/units/tags/domain/models/tag.dart';
+import 'package:not_zero/units/tags/presentation/view/tag_selector.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 
 class TaskEditTitleField extends StatelessWidget {
@@ -63,6 +65,26 @@ class TaskEditImportanceField extends StatelessWidget {
             taskColors.normalColor,
             taskColors.importantColor,
           ],
+        );
+      },
+    );
+  }
+}
+
+class TaskEditTagsSelectionField extends StatelessWidget {
+  const TaskEditTagsSelectionField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FormBuilderField<List<ItemTag>>(
+      name: 'tags',
+      builder: (field) {
+        return ItemTagSelector(
+          selectedTags: (field.value ?? []).map((e) => e.id).toSet(),
+          onSelection: (tags) {
+            print('tags: $tags');
+            field.didChange(tags);
+          },
         );
       },
     );

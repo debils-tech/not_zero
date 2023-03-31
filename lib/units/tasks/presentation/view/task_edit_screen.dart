@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
-import 'package:not_zero/units/tags/presentation/view/tag_selector.dart';
+import 'package:not_zero/units/tags/domain/models/tag.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_edit_fields.dart';
@@ -103,6 +103,7 @@ class _TaskEditScreenBody extends StatelessWidget {
         'title': taskToEdit?.title,
         'description': taskToEdit?.description,
         'importance': taskToEdit?.importance ?? TaskImportance.normal,
+        'tags': taskToEdit?.tags,
       },
       onChanged: () => taskEditCubit.changeForm(
         isCorrect: formKey.currentState?.validate() ?? false,
@@ -140,10 +141,10 @@ class _TaskEditScreenBody extends StatelessWidget {
               const TaskEditTitleField(),
               const SizedBox(height: 12),
               const TaskEditDescriptionField(),
-              const SizedBox(height: 8),
-              if (taskToEdit != null) TaskEditingInfo(taskToEdit!),
               const SizedBox(height: 20),
-              const ItemTagSelector(),
+              const TaskEditTagsSelectionField(),
+              const SizedBox(height: 12),
+              if (taskToEdit != null) TaskEditingInfo(taskToEdit!),
             ],
           ),
         ],
@@ -169,8 +170,9 @@ class _FloatingSubmitButton extends StatelessWidget {
 
           context.read<TaskEditCubit>().saveTask(
                 title: values['title'] as String,
-                description: values['description'] as String?,
                 importance: values['importance'] as TaskImportance,
+                description: values['description'] as String?,
+                tags: values['tags'] as List<ItemTag>?,
                 taskToEdit: taskToEdit,
               );
 

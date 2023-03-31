@@ -58,6 +58,9 @@ class _TaskTextBlock extends StatelessWidget {
           height: 20,
           child: _TaskTimeText(task),
         ),
+        Wrap(
+          children: task.tags.map((e) => Text(e.name)).toList(),
+        ),
         Text(
           task.title,
           overflow: TextOverflow.ellipsis,

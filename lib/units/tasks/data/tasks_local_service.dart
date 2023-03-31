@@ -73,7 +73,7 @@ class TasksLocalService {
       await _db.upsertIn(_db.tasksTable, task.toInsertable());
       for (final tag in task.tags) {
         await _db.upsertIn(
-          _db.tagsTable,
+          _db.tasksTagEntries,
           TasksTagEntry(task: task.id, tag: tag.id),
         );
       }
