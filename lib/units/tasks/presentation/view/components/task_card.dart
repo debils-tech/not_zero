@@ -5,6 +5,7 @@ import 'package:not_zero/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero/helpers/time.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/themes/tasks_colors.dart';
+import 'package:not_zero/units/tags/presentation/view/tag_list_indicator.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 
@@ -58,8 +59,9 @@ class _TaskTextBlock extends StatelessWidget {
           height: 20,
           child: _TaskTimeText(task),
         ),
-        Wrap(
-          children: task.tags.map((e) => Text(e.name)).toList(),
+        Padding(
+          padding: const EdgeInsets.only(top: 2, bottom: 8),
+          child: TagListIndicator(tags: task.tags),
         ),
         Text(
           task.title,
