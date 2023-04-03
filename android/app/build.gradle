@@ -65,9 +65,11 @@ android {
             dimension "not_zero_app"
             applicationIdSuffix ".dev"
             versionNameSuffix ".dev"
+            resValue "string", "app_name", "Not Zero Dev"
         }
         prod {
             dimension "not_zero_app"
+            resValue "string", "app_name", "Not Zero"
         }
     }
 

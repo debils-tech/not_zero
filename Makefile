@@ -21,9 +21,9 @@ test:
 
 build-android:
 	rm -r build/releases/android
-	flutter build apk --split-per-abi
-	flutter build apk
-	flutter build appbundle
+	flutter build apk --flavor prod --split-per-abi
+	flutter build apk --flavor prod
+	flutter build appbundle --flavor prod
 	sh tools/android/move-builds.sh
 	sh tools/android/check-cert.sh
 
