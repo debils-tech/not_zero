@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/themes/tasks_colors.dart';
+import 'package:not_zero/units/tags/presentation/view/tag_list_indicator.dart';
 import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_editing_info.dart';
@@ -36,26 +37,17 @@ class _TaskViewImportanceIndicator extends StatelessWidget
   final Task task;
 
   @override
-  Size get preferredSize => const Size.fromHeight(7);
+  Size get preferredSize => const Size.fromHeight(8);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TaskViewCubit, Task?>(
-      builder: (context, state) {
-        return LayoutBuilder(
-          builder: (context, constrains) {
-            return SizedBox(
-              width: constrains.maxWidth,
-              height: preferredSize.height,
-              child: ColoredBox(
-                color: Theme.of(context)
-                    .tasksColorScheme
-                    .colorByImportance(task.importance),
-              ),
-            );
-          },
-        );
-      },
+    return ConstrainedBox(
+      constraints: BoxConstraints.expand(height: preferredSize.height),
+      child: ColoredBox(
+        color: Theme.of(context)
+            .tasksColorScheme
+            .colorByImportance(task.importance),
+      ),
     );
   }
 }
@@ -74,8 +66,14 @@ class _TaskViewScreenBody extends StatelessWidget {
         final task = state ?? taskToView;
 
         return ListView(
-          padding: const EdgeInsets.only(top: 5, bottom: 75, left: 7, right: 7),
+          padding: const EdgeInsets.only(top: 7, bottom: 75, left: 7, right: 7),
           children: [
+            TagListIndicator(
+              tags: task.tags,
+              fontSize: 13,
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
+            ),
+            const SizedBox(height: 8),
             SelectableText(
               task.title,
               style: theme.textTheme.titleLarge
