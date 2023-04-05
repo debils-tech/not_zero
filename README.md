@@ -27,8 +27,9 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [x] Stable database version
 - [x] Automatic builds and basic packaging
 - [x] Export and import of app's data
-- [ ] Basic stats
-- [ ] Sublists
+- [x] Basic stats
+- [ ] Tags & Sublists `(in progress)`
+- [ ] Guides
 </details>
 
 <details>
