@@ -30,7 +30,7 @@ dependencies:
   rxdart: ^0.27.7
 
   # App theme
-  flex_color_scheme: ^6.1.2
+  flex_color_scheme: ^7.0.0
   theme_tailor_annotation: ^1.0.3
 
   # Dependency injection
@@ -44,8 +44,8 @@ dependencies:
   # Widgets
   flutter_form_builder: ^7.8.0
   form_builder_validators: ^8.5.0
-  animated_list_plus: ^0.4.4
-  fl_chart: ^0.60.0
+  animated_list_plus: ^0.5.0
+  fl_chart: ^0.61.0
 
   # Database
   drift: ^2.4.0
@@ -55,7 +55,7 @@ dependencies:
   # Utilities
   path_provider: ^2.0.11
   path: ^1.8.2
-  document_file_save_plus: ^1.0.9
+  document_file_save_plus: ^2.0.0
   file_picker: ^5.2.4
   logging: ^1.1.1
 

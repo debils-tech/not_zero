@@ -73,7 +73,7 @@ class _UniversalFileHelper implements MultiplatformFileHelper {
     required String mimetype,
   }) async {
     try {
-      await DocumentFileSavePlus.saveFile(
+      await DocumentFileSavePlus().saveFile(
         Uint8List.fromList(bytes),
         name,
         mimetype,
