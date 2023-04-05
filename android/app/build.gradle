@@ -30,6 +30,10 @@ def keystorePropertiesFile = rootProject.file('key.properties')
 def releaseSigning = true
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    if (!keystoreProperties['storeFile'] || !file(keystoreProperties['storeFile']).exists()) {
+        println('No keystore at ' + keystoreProperties['storeFile'] + ' found')
+        releaseSigning = false
+    }
 } else {
     releaseSigning = false
 }
@@ -78,7 +82,7 @@ android {
             release {
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
-                storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+                storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
             }
         }
@@ -90,7 +94,7 @@ android {
                 println('Signing build using "key.properties" file...')
                 signingConfig signingConfigs.release
             } else {
-                println('No "key.properties" file created. Debug signing...')
+                println('No "key.properties" or keystore files found. Debug signing...')
                 signingConfig signingConfigs.debug
             }
         }

@@ -4,7 +4,7 @@
 RELEASE_DIR=build/releases/android
 FINGERPRINT="SHA256: 38:47:CF:E3:A5:2D:FD:DE:BC:FA:51:AF:3E:D3:22:A4:19:6E:A7:6B:3D:65:9E:10:01:B9:22:ED:0A:17:FD:8A"
 
-function check_cert {
+check_cert () {
     FILE_CERT=$(keytool -printcert -jarfile $1)
 
     if echo $FILE_CERT | grep -q "$FINGERPRINT"; then

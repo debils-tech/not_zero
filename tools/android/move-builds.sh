@@ -12,11 +12,11 @@ alias copy_artifact="sh tools/copy_artifact.sh"
 mkdir -p $RELEASE_DIR
 rm -f $RELEASE_DIR/*
 
-copy_artifact $APK_DIR/app-arm64-v8a-release.apk $RELEASE_DIR/$APP_NAME-arm64-v8a-$BUILD_TAG.apk &
-copy_artifact $APK_DIR/app-armeabi-v7a-release.apk $RELEASE_DIR/$APP_NAME-armeabi-v7a-$BUILD_TAG.apk &
-copy_artifact $APK_DIR/app-x86_64-release.apk $RELEASE_DIR/$APP_NAME-x86_64-$BUILD_TAG.apk &
-copy_artifact $APK_DIR/app-release.apk $RELEASE_DIR/$APP_NAME-multiabi-$BUILD_TAG.apk &
-copy_artifact $AAB_DIR/app-release.aab $RELEASE_DIR/$APP_NAME-$BUILD_TAG.aab
+copy_artifact $APK_DIR/app-arm64-v8a-prod-release.apk $RELEASE_DIR/$APP_NAME-arm64-v8a-$BUILD_TAG.apk &
+copy_artifact $APK_DIR/app-armeabi-v7a-prod-release.apk $RELEASE_DIR/$APP_NAME-armeabi-v7a-$BUILD_TAG.apk &
+copy_artifact $APK_DIR/app-x86_64-prod-release.apk $RELEASE_DIR/$APP_NAME-x86_64-$BUILD_TAG.apk &
+copy_artifact $APK_DIR/app-prod-release.apk $RELEASE_DIR/$APP_NAME-multiabi-$BUILD_TAG.apk &
+copy_artifact $AAB_DIR/app-prod-release.aab $RELEASE_DIR/$APP_NAME-$BUILD_TAG.aab
 
 wait
 

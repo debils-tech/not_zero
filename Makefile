@@ -20,15 +20,15 @@ test:
 	flutter test
 
 build-android:
-	rm -r build/releases/android
+	rm -rf build/releases/android
 	flutter build apk --flavor prod --split-per-abi
 	flutter build apk --flavor prod
-	flutter build appbundle --flavor prod
-	sh tools/android/move-builds.sh
+	#flutter build appbundle --flavor prod
+	TAG=foss sh tools/android/move-builds.sh
 	sh tools/android/check-cert.sh
 
 build-linux:
-	rm -r build/releases/linux
+	rm -rf build/releases/linux
 	flutter build linux
 	sh tools/linux/move-builds.sh
 
