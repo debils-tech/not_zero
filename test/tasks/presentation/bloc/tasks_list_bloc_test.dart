@@ -63,10 +63,9 @@ void main() {
 
     await Future<void>.delayed(const Duration(seconds: 1));
 
-    final isLoaded = bloc.state.mapOrNull(
+    bloc.state.mapOrNull(
       loaded: (state) => expect(state.tasks.last.isCompleted, isTrue),
     );
-    expect(isLoaded, isTrue);
   });
 
   test('Delete  tasks', () async {

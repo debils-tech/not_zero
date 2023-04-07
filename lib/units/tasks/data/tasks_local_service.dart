@@ -10,12 +10,12 @@ class TasksLocalService {
 
   final NotZeroDatabase _db;
 
-  Future<List<Task>> getTasks({String? tagId}) {
-    if (tagId == null) {
+  Future<List<Task>> getTasks({Set<String>? searchTags}) {
+    if (searchTags == null) {
       return _getTasksWithoutFilter();
     }
 
-    return _getTasksForTag(tagId: tagId);
+    return _getTasksForTag(searchTags: searchTags);
   }
 
   Future<List<Task>> _getTasksWithoutFilter() async {
@@ -30,16 +30,18 @@ class TasksLocalService {
     return tasks.get();
   }
 
-  Future<List<Task>> _getTasksForTag({required String tagId}) async {
+  Future<List<Task>> _getTasksForTag({required Set<String> searchTags}) async {
     final allTags = await _getTagMappings();
-    final tasksEntries = (_db.select(_db.tasksTagEntries).join([
+    final joinedTagsWithTasks = _db.select(_db.tasksTagEntries).join([
       innerJoin(
         _db.tasksTable,
         _db.tasksTagEntries.task.equalsExp(_db.tasksTable.id),
       )
     ])
-          ..where(_db.tasksTagEntries.tag.equals(tagId)))
-        .map((rows) {
+      ..groupBy([_db.tasksTagEntries.task])
+      ..where(_db.tasksTagEntries.tag.isIn(searchTags));
+
+    final tasksEntries = joinedTagsWithTasks.map((rows) {
       final task = rows.readTable(_db.tasksTable);
       final tagsForTask = allTags[task.id];
       if (tagsForTask == null) return task;
