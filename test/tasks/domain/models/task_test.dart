@@ -17,7 +17,7 @@ void main() {
     expect(task.id, matches(PatternValidator.uuidPattern));
     expect(task.title, 'Test task');
     expect(task.description, 'Test description');
-    expect(task.createdAt.isAfter(timeBeforeCreation), true);
+    expect(task.createdAt.isAfter(timeBeforeCreation), isTrue);
     expect(task.modifiedAt, isNull);
     expect(task.importance, TaskImportance.important);
     expect(task.isCompleted, false);
