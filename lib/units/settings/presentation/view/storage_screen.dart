@@ -107,9 +107,9 @@ class StorageSettingsScreen extends StatelessWidget {
             return AlertDialog(
               icon: const Icon(Icons.save_rounded),
               title: Text(title),
-              content: Row(
+              content: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   CircularProgressIndicator(),
                 ],
               ),

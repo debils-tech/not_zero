@@ -40,7 +40,7 @@ final appRouter = GoRouter(
                 assert(extra is Task?, 'Extra should be Task object');
                 var taskObject = extra is Task? ? extra : null;
 
-                final taskId = state.params['id'];
+                final taskId = state.pathParameters['id'];
                 if (taskObject == null && taskId != null) {
                   taskObject = _getTaskById(taskId);
                 }
@@ -62,7 +62,7 @@ final appRouter = GoRouter(
                 assert(extra is Task?, 'Extra should be Task object');
                 var taskObject = extra is Task? ? extra : null;
 
-                final taskId = state.params['id'];
+                final taskId = state.pathParameters['id'];
                 if (taskObject == null && taskId != null) {
                   taskObject = _getTaskById(taskId);
                 }
