@@ -52,15 +52,15 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.14
   hive_flutter: ^1.1.0
 
+  # For getting info about app's package
+  package_info_plus: ^4.0.0
+
   # Utilities
   path_provider: ^2.0.15
   path: ^1.8.3
   document_file_save_plus: ^2.0.0
   file_picker: ^5.3.0
   logging: ^1.1.1
-
-  # For getting info about app's package
-  package_info_plus: ^4.0.0
   universal_io: ^2.2.0
 
 dev_dependencies:
@@ -75,7 +75,7 @@ dev_dependencies:
 
   # Analysis
   flutter_lints: ^2.0.1
-  very_good_analysis: ^4.0.0+1
+  very_good_analysis: ^5.0.0+1
   dart_code_metrics: ^5.7.3
 
   # Code generation
