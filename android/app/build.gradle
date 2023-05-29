@@ -57,7 +57,7 @@ android {
 
     defaultConfig {
         applicationId "tech.debils.not_zero"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion Math.max(flutter.minSdkVersion, 19)
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
