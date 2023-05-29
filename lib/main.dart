@@ -63,7 +63,11 @@ class MyApp extends StatelessWidget {
           },
 
           //-- Themes --
-          themeMode: _stateToModMap[state],
+          themeMode: switch (state) {
+            ThemeState.light => ThemeMode.light,
+            ThemeState.dark => ThemeMode.dark,
+            ThemeState.system => ThemeMode.system,
+          },
           theme: defaultLightTheme,
           darkTheme: defaultDarkTheme,
 
