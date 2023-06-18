@@ -70,6 +70,7 @@ class BackupLocalService {
 
   Future<void> applyAllTags(List<Map<String, dynamic>> tags) {
     return _db.transaction(() async {
+      await _db.delete(_db.tasksTagEntries).go();
       await _db.delete(_db.tagsTable).go();
       for (final t in tags) {
         await _db
