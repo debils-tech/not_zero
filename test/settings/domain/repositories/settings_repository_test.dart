@@ -3,18 +3,21 @@ import 'package:not_zero/constants/database.dart';
 import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/app_info.dart';
+import 'package:not_zero/units/settings/data/backup_local_service.dart';
 import 'package:not_zero/units/settings/data/settings_local_service.dart';
 import 'package:not_zero/units/settings/domain/models/backup_model.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
 import 'package:not_zero/units/settings/domain/repositories/settings_repository.dart';
 
 import '../../../global_init.dart';
+import '../../../tags/tags_db_config.dart';
 import '../../../tasks/tasks_db_config.dart';
 import '../../../tasks/template_tasks.dart';
 
 void main() {
   globalInit();
   configDatabaseForTasks();
+  configDatabaseForTags();
 
   group('Themes', () {
     test('Get value', () async {
@@ -47,7 +50,7 @@ void main() {
     test('Export', () async {
       final settingsBox = getIt<StorageProvider>().settings;
       final repository = getIt<SettingsRepository>();
-      final service = getIt<SettingsLocalService>();
+      final service = getIt<BackupLocalService>();
 
       // Save some template settings
       await settingsBox.putAll(tempSettings);
@@ -67,7 +70,7 @@ void main() {
 
     test('Wrong version import', () async {
       final repository = getIt<SettingsRepository>();
-      final service = getIt<SettingsLocalService>();
+      final service = getIt<BackupLocalService>();
 
       // Wrong version import is not allowed
       await service.exportDataToFile(BackupModel(version: 2, data: {}));
@@ -76,7 +79,7 @@ void main() {
 
     test('Normal import', () async {
       final repository = getIt<SettingsRepository>();
-      final service = getIt<SettingsLocalService>();
+      final service = getIt<BackupLocalService>();
 
       await service.exportDataToFile(
         BackupModel(
