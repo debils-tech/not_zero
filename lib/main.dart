@@ -38,12 +38,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const _stateToModMap = {
-    ThemeState.light: ThemeMode.light,
-    ThemeState.dark: ThemeMode.dark,
-    ThemeState.system: ThemeMode.system,
-  };
-
   @override
   Widget build(BuildContext context) {
     final locale = TranslationProvider.of(context).flutterLocale;

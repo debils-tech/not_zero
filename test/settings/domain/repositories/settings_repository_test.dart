@@ -4,7 +4,6 @@ import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/units/settings/data/backup_local_service.dart';
-import 'package:not_zero/units/settings/data/settings_local_service.dart';
 import 'package:not_zero/units/settings/domain/models/backup_model.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
 import 'package:not_zero/units/settings/domain/repositories/settings_repository.dart';
