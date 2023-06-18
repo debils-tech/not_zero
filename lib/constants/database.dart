@@ -8,6 +8,7 @@ abstract class TableNames {
   TableNames._();
 
   static const String tasks = 'tasks';
+  static const String tags = 'tags';
 }
 
 abstract class SettingsKeys {

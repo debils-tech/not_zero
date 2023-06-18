@@ -87,6 +87,9 @@ On Debian-based distributions can be installed using a single command:
 sudo apt-get install libgtk-3-0 libblkid1 liblzma5 libsqlite3
 ```
 
+For backup feature to work properly on Linux it is required to have dialog library be installed.
+It can be either `zenity` (for GTK), `qarma` (for Qt), `kdialog` (for KDE).
+
 <!--
 TODO Add any words about usage of sql.js from here: https://github.com/sql-js/sql.js
 -->

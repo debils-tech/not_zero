@@ -19,7 +19,9 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     @Default('') String description,
     DateTime? modifiedAt,
     DateTime? completedAt,
-    @JsonKey(toJson: Task._tagsToJson) @Default([]) List<ItemTag> tags,
+    @JsonKey(toJson: Task._tagsToJson, includeFromJson: false)
+    @Default([])
+    List<ItemTag> tags,
   }) = _Task;
 
   const Task._();
