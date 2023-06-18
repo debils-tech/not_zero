@@ -28,7 +28,6 @@ class WeeklyStatsChart extends StatelessWidget {
 
     final barData = LineChartBarData(
       spots: _getChartSpots(),
-      isCurved: false,
       // curveSmoothness: 0.3,
       barWidth: 5,
       isStrokeCapRound: true,
@@ -37,7 +36,7 @@ class WeeklyStatsChart extends StatelessWidget {
         show: true,
         gradient: chartsColors.weeklyStatsBelowGradient,
       ),
-      showingIndicators: selectedIndex != null ? [selectedIndex!] : null,
+      showingIndicators: selectedIndex != null ? [selectedIndex!] : [],
     );
 
     return LineChart(
@@ -48,10 +47,9 @@ class WeeklyStatsChart extends StatelessWidget {
         maxY: maxHeight,
         lineBarsData: [barData],
         titlesData: FlTitlesData(
-          show: true,
-          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: const AxisTitles(),
+          leftTitles: const AxisTitles(),
+          rightTitles: const AxisTitles(),
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
@@ -69,7 +67,7 @@ class WeeklyStatsChart extends StatelessWidget {
                   ],
                 )
               ]
-            : null,
+            : [],
         lineTouchData: LineTouchData(
           enabled: false,
           // },
@@ -90,8 +88,6 @@ class WeeklyStatsChart extends StatelessWidget {
           ),
         ),
         gridData: FlGridData(
-          show: true,
-          drawVerticalLine: true,
           drawHorizontalLine: false,
           verticalInterval: 1,
           getDrawingVerticalLine: (_) {
