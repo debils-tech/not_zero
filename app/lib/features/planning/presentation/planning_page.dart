@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:not_zero/features/planning/models/daily_plan_model.dart';
+import 'package:not_zero/features/planning/presentation/plan_edit_bottom_sheet.dart';
 import 'package:not_zero/features/planning/presentation/widgets/daily_plan_card.dart';
 import 'package:not_zero/features/planning/providers.dart';
 
@@ -18,7 +19,11 @@ class PlanningPage extends ConsumerWidget {
         title: const Text('Planning'),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () => showModalBottomSheet<void>(
+          context: context,
+          showDragHandle: true,
+          builder: (_) => const PlanEditBottomSheet(),
+        ),
         icon: const Icon(Icons.add_rounded),
         label: const Text('Add'),
       ),

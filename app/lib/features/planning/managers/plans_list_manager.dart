@@ -85,28 +85,7 @@ class PlansListManager implements AsyncLifecycleObject {
       completedAt: completed ? DateTime.now() : null,
     );
 
-    final itemList =
-        List<DailyPlanModel>.from(_pagingController.itemList ?? []);
-    final itemIndex = itemList.indexWhere((item) => item.id == plan.id);
-    _log.finest('Item index for ${plan.id}: $itemIndex');
-    if (itemIndex == -1) {
-      _pagingController.value = PagingState(
-        nextPageKey: _pagingController.nextPageKey,
-        error: _pagingController.error,
-        itemList: [...itemList, updatedItem],
-      );
-      _log.finer('Added item with id ${plan.id} to the end of the list');
-    } else {
-      itemList[itemIndex] = updatedItem;
-      _pagingController.value = PagingState(
-        nextPageKey: _pagingController.nextPageKey,
-        error: _pagingController.error,
-        itemList: itemList,
-      );
-      _log.finer('Replaced item with id ${plan.id} in the list');
-    }
-
-    _mapStateHolder.add(updatedItem);
+    _updateItemInPagination(updatedItem);
 
     try {
       await _repository.updatePlan(updatedItem);
@@ -115,11 +94,12 @@ class PlansListManager implements AsyncLifecycleObject {
     }
   }
 
-  Future<void> addPlan({
+  Future<bool> addPlan({
     required String title,
     String? description,
+    DateTime? forDate,
   }) async {
-    final dateToAdd = _plansFiltersStateController.state.forDate;
+    final dateToAdd = forDate ?? _plansFiltersStateController.state.forDate;
 
     try {
       final newPlan = await _repository.insertPlan(
@@ -130,22 +110,76 @@ class PlansListManager implements AsyncLifecycleObject {
 
       _log.finer('Added plan in supabase: $newPlan');
 
-      final currentList =
-          List<DailyPlanModel>.from(_pagingController.itemList ?? []);
+      _addItemToPagination(newPlan);
+      _log.finer('Added plan in page state');
+      return true;
+    } catch (e, s) {
+      _log.severe('Error while adding plan in supabase', e, s);
+      return false;
+    }
+  }
+
+  Future<bool> editPlan(
+    DailyPlanModel plan, {
+    required String title,
+    String? description,
+  }) async {
+    final newPlan = plan.copyWith(
+      title: title,
+      description: description ?? '',
+    );
+
+    try {
+      await _repository.updatePlan(newPlan);
+
+      _log.finer('Updated plan in supabase: $newPlan');
+
+      _updateItemInPagination(newPlan);
+      _log.finer('Updated plan in page state');
+      return true;
+    } catch (e, s) {
+      _log.severe('Error while adding plan in supabase', e, s);
+      return false;
+    }
+  }
+
+  void _addItemToPagination(DailyPlanModel item) {
+    final currentList =
+        List<DailyPlanModel>.from(_pagingController.itemList ?? []);
+    _pagingController.value = PagingState(
+      nextPageKey: _pagingController.nextPageKey,
+      error: _pagingController.error,
+      itemList: [
+        ...currentList,
+        item,
+      ],
+    );
+
+    _mapStateHolder.add(item);
+  }
+
+  void _updateItemInPagination(DailyPlanModel item) {
+    final itemList =
+        List<DailyPlanModel>.from(_pagingController.itemList ?? []);
+    final itemIndex = itemList.indexWhere((item) => item.id == item.id);
+    _log.finest('Item index for ${item.id}: $itemIndex');
+    if (itemIndex == -1) {
       _pagingController.value = PagingState(
         nextPageKey: _pagingController.nextPageKey,
         error: _pagingController.error,
-        itemList: [
-          ...currentList,
-          newPlan,
-        ],
+        itemList: [...itemList, item],
       );
-
-    _mapStateHolder.add(newPlan);
-
-      _log.finer('Added plan in page state');
-    } catch (e, s) {
-      _log.severe('Error while adding plan in supabase', e, s);
+      _log.finer('Added item with id ${item.id} to the end of the list');
+    } else {
+      itemList[itemIndex] = item;
+      _pagingController.value = PagingState(
+        nextPageKey: _pagingController.nextPageKey,
+        error: _pagingController.error,
+        itemList: itemList,
+      );
+      _log.finer('Replaced item with id ${item.id} in the list');
     }
+
+    _mapStateHolder.add(item);
   }
 }
