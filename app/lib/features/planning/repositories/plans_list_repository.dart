@@ -23,6 +23,7 @@ class PlansListRepository {
         .select()
         .eq('for_date', forDate.toIso8601String())
         .range(rangeFrom, rangeFrom + rangeTo)
+        .order('completed_at', ascending: false, nullsFirst: true)
         .order('created_at', ascending: true);
 
     final plansList = plansRows.map(DailyPlanModel.fromJson).toList();
@@ -75,5 +76,13 @@ class PlansListRepository {
     _log.fine('Inserted plan. Database returned: $newRow');
 
     return DailyPlanModel.fromJson(newRow);
+  }
+
+  Future<void> deletePlan(DailyPlanModel plan) async {
+    _log.finer('Deleting plan: $plan');
+
+    await _supabase.from(_plansTableName).delete().eq('id', plan.id);
+
+    _log.fine('Deleted plan: $plan');
   }
 }

@@ -143,6 +143,21 @@ class PlansListManager implements AsyncLifecycleObject {
     }
   }
 
+  Future<bool> deletePlan(DailyPlanModel plan) async {
+    try {
+      await _repository.deletePlan(plan);
+
+      _log.finer('Deleted plan in supabase: $plan');
+
+      _removeItemFromPagination(plan);
+      _log.finer('Deleted plan in page state');
+      return true;
+    } catch (e, s) {
+      _log.severe('Error while deleting plan in supabase', e, s);
+      return false;
+    }
+  }
+
   void _addItemToPagination(DailyPlanModel item) {
     final currentList =
         List<DailyPlanModel>.from(_pagingController.itemList ?? []);
@@ -161,7 +176,7 @@ class PlansListManager implements AsyncLifecycleObject {
   void _updateItemInPagination(DailyPlanModel item) {
     final itemList =
         List<DailyPlanModel>.from(_pagingController.itemList ?? []);
-    final itemIndex = itemList.indexWhere((item) => item.id == item.id);
+    final itemIndex = itemList.indexWhere((e) => e.id == item.id);
     _log.finest('Item index for ${item.id}: $itemIndex');
     if (itemIndex == -1) {
       _pagingController.value = PagingState(
@@ -181,5 +196,19 @@ class PlansListManager implements AsyncLifecycleObject {
     }
 
     _mapStateHolder.add(item);
+  }
+
+  void _removeItemFromPagination(DailyPlanModel item) {
+    final itemList = List<DailyPlanModel>.from(_pagingController.itemList ?? [])
+      ..removeWhere((e) => e.id == item.id);
+
+    _pagingController.value = PagingState(
+      nextPageKey: _pagingController.nextPageKey,
+      error: _pagingController.error,
+      itemList: itemList,
+    );
+    _log.finer('Replaced item with id ${item.id} in the list');
+
+    _mapStateHolder.remove(item);
   }
 }

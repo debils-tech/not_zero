@@ -21,7 +21,6 @@ class PlanningPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showModalBottomSheet<void>(
           context: context,
-          showDragHandle: true,
           builder: (_) => const PlanEditBottomSheet(),
         ),
         icon: const Icon(Icons.add_rounded),

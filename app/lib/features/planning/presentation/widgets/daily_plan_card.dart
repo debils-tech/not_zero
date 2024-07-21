@@ -18,7 +18,6 @@ class DailyPlanCard extends ConsumerWidget {
       child: InkWell(
         onTap: () => showModalBottomSheet<void>(
           context: context,
-          showDragHandle: true,
           builder: (_) => PlanViewBottomSheet(plan: plan),
         ),
         child: Padding(

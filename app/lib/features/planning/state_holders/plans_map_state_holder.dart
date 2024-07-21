@@ -21,6 +21,11 @@ class PlansMapStateHolder extends Notifier<Map<String, DailyPlanModel>> {
     };
   }
 
+  void remove(DailyPlanModel plan) {
+    state = Map<String, DailyPlanModel>.from(state)
+      ..removeWhere((key, value) => key == plan.id);
+  }
+
   void reset() {
     state = build();
   }

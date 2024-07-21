@@ -7,6 +7,9 @@ ThemeData createAppDarkTheme() {
     checkboxTheme: base.checkboxTheme.copyWith(
       shape: const CircleBorder(),
     ),
+    bottomSheetTheme: base.bottomSheetTheme.copyWith(
+      showDragHandle: true,
+    ),
   );
 }
 

@@ -16,6 +16,10 @@ class PlanEditBottomSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return FormBuilder(
       key: ref.watch(_formBuilderKeyProvider),
+      initialValue: {
+        _TitleField.name: planToEdit?.title,
+        _DescriptionField.name: planToEdit?.description,
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
