@@ -24,6 +24,7 @@ class DailyPlanModel with _$DailyPlanModel {
 class DailyPlanModelInsert with _$DailyPlanModelInsert {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory DailyPlanModelInsert({
+    required String userId,
     required DateTime forDate,
     required String title,
     @Default('') String description,

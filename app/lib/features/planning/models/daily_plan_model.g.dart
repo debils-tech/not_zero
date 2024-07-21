@@ -34,6 +34,7 @@ Map<String, dynamic> _$$DailyPlanModelImplToJson(
 _$DailyPlanModelInsertImpl _$$DailyPlanModelInsertImplFromJson(
         Map<String, dynamic> json) =>
     _$DailyPlanModelInsertImpl(
+      userId: json['user_id'] as String,
       forDate: DateTime.parse(json['for_date'] as String),
       title: json['title'] as String,
       description: json['description'] as String? ?? '',
@@ -45,6 +46,7 @@ _$DailyPlanModelInsertImpl _$$DailyPlanModelInsertImplFromJson(
 Map<String, dynamic> _$$DailyPlanModelInsertImplToJson(
         _$DailyPlanModelInsertImpl instance) =>
     <String, dynamic>{
+      'user_id': instance.userId,
       'for_date': instance.forDate.toIso8601String(),
       'title': instance.title,
       'description': instance.description,

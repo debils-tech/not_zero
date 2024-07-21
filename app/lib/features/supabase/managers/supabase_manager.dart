@@ -8,6 +8,7 @@ class SupabaseManager {
     return Supabase.initialize(
       url: Env.supabaseUrl,
       anonKey: Env.supabaseAnonKey,
+      debug: true,
     );
   }
 

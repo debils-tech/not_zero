@@ -3,23 +3,21 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:logging/logging.dart';
 import 'package:not_zero/features/planning/models/daily_plan_model.dart';
 import 'package:not_zero/features/planning/models/plans_filter_model.dart';
+import 'package:not_zero/features/planning/repositories/plans_list_repository.dart';
 import 'package:not_zero/utils/async_lifecycle_object.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PlansListManager extends AsyncLifecycleObject {
   PlansListManager(
-    this._supabase,
+    this._repository,
     this._plansFiltersStateController,
     this._pagingController,
   );
 
-  final SupabaseClient _supabase;
+  final PlansListRepository _repository;
   final StateController<PlansFilterModel> _plansFiltersStateController;
   final PagingController<int, DailyPlanModel> _pagingController;
-
   static const _pageSize = 20;
   static final _log = Logger('PlansListManager');
-  static const _plansTableName = 'daily_plans';
 
   @override
   void init() {
@@ -40,18 +38,11 @@ class PlansListManager extends AsyncLifecycleObject {
 
       final filters = _plansFiltersStateController.state;
 
-      _log.finer('Starting loading plans page #$pageKey ($rangeFrom-$rangeTo) '
-          'with filters: $filters');
-
-      final plansRows = await _supabase
-          .from(_plansTableName)
-          .select()
-          // .eq('for_date', filters.forDate)
-          .range(rangeFrom, rangeFrom + rangeTo);
-
-      _log.finest('Loaded ${plansRows.length} plans');
-
-      final plansList = plansRows.map(DailyPlanModel.fromJson).toList();
+      final plansList = await _repository.getPlansPage(
+        rangeFrom: rangeFrom,
+        rangeTo: rangeTo,
+        forDate: filters.forDate,
+      );
 
       if (plansList.length < _pageSize) {
         _log.finer('Loaded last page: ${plansList.length} < $_pageSize');
@@ -108,26 +99,42 @@ class PlansListManager extends AsyncLifecycleObject {
       _log.finer('Replaced item with id ${plan.id} in the list');
     }
 
-    _log.finest('Updating plan in supabase');
-
     try {
-      await _upsertPlan(updatedItem);
-      _log.fine('Updated plan on screen and in supabase');
+      await _repository.updatePlan(updatedItem);
     } catch (e, s) {
       _log.severe('Error while updating plan completion in supabase', e, s);
     }
   }
 
-  Future<void> _upsertPlan(DailyPlanModel plan) {
-    final insertItem = DailyPlanModelInsert(
-      forDate: plan.forDate,
-      title: plan.title,
-      description: plan.description,
-      completedAt: plan.completedAt,
-    );
-    return _supabase
-        .from(_plansTableName)
-        .upsert(insertItem.toJson())
-        .eq('id', plan.id);
+  Future<void> addPlan({
+    required String title,
+    String? description,
+  }) async {
+    final dateToAdd = _plansFiltersStateController.state.forDate;
+
+    try {
+      final newPlan = await _repository.insertPlan(
+        forDate: dateToAdd,
+        title: title,
+        description: description,
+      );
+
+      _log.finer('Added plan in supabase: $newPlan');
+
+      final currentList =
+          List<DailyPlanModel>.from(_pagingController.itemList ?? []);
+      _pagingController.value = PagingState(
+        nextPageKey: _pagingController.nextPageKey,
+        error: _pagingController.error,
+        itemList: [
+          ...currentList,
+          newPlan,
+        ],
+      );
+
+      _log.finer('Added plan in page state');
+    } catch (e, s) {
+      _log.severe('Error while adding plan in supabase', e, s);
+    }
   }
 }

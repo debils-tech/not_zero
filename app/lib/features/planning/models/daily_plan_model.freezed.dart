@@ -288,6 +288,7 @@ DailyPlanModelInsert _$DailyPlanModelInsertFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DailyPlanModelInsert {
+  String get userId => throw _privateConstructorUsedError;
   DateTime get forDate => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -306,7 +307,8 @@ abstract class $DailyPlanModelInsertCopyWith<$Res> {
       _$DailyPlanModelInsertCopyWithImpl<$Res, DailyPlanModelInsert>;
   @useResult
   $Res call(
-      {DateTime forDate,
+      {String userId,
+      DateTime forDate,
       String title,
       String description,
       DateTime? completedAt});
@@ -326,12 +328,17 @@ class _$DailyPlanModelInsertCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = null,
     Object? forDate = null,
     Object? title = null,
     Object? description = null,
     Object? completedAt = freezed,
   }) {
     return _then(_value.copyWith(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
       forDate: null == forDate
           ? _value.forDate
           : forDate // ignore: cast_nullable_to_non_nullable
@@ -361,7 +368,8 @@ abstract class _$$DailyPlanModelInsertImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {DateTime forDate,
+      {String userId,
+      DateTime forDate,
       String title,
       String description,
       DateTime? completedAt});
@@ -378,12 +386,17 @@ class __$$DailyPlanModelInsertImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = null,
     Object? forDate = null,
     Object? title = null,
     Object? description = null,
     Object? completedAt = freezed,
   }) {
     return _then(_$DailyPlanModelInsertImpl(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
       forDate: null == forDate
           ? _value.forDate
           : forDate // ignore: cast_nullable_to_non_nullable
@@ -409,7 +422,8 @@ class __$$DailyPlanModelInsertImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$DailyPlanModelInsertImpl implements _DailyPlanModelInsert {
   const _$DailyPlanModelInsertImpl(
-      {required this.forDate,
+      {required this.userId,
+      required this.forDate,
       required this.title,
       this.description = '',
       this.completedAt});
@@ -417,6 +431,8 @@ class _$DailyPlanModelInsertImpl implements _DailyPlanModelInsert {
   factory _$DailyPlanModelInsertImpl.fromJson(Map<String, dynamic> json) =>
       _$$DailyPlanModelInsertImplFromJson(json);
 
+  @override
+  final String userId;
   @override
   final DateTime forDate;
   @override
@@ -429,7 +445,7 @@ class _$DailyPlanModelInsertImpl implements _DailyPlanModelInsert {
 
   @override
   String toString() {
-    return 'DailyPlanModelInsert(forDate: $forDate, title: $title, description: $description, completedAt: $completedAt)';
+    return 'DailyPlanModelInsert(userId: $userId, forDate: $forDate, title: $title, description: $description, completedAt: $completedAt)';
   }
 
   @override
@@ -437,6 +453,7 @@ class _$DailyPlanModelInsertImpl implements _DailyPlanModelInsert {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DailyPlanModelInsertImpl &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.forDate, forDate) || other.forDate == forDate) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -447,8 +464,8 @@ class _$DailyPlanModelInsertImpl implements _DailyPlanModelInsert {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, forDate, title, description, completedAt);
+  int get hashCode => Object.hash(
+      runtimeType, userId, forDate, title, description, completedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -468,7 +485,8 @@ class _$DailyPlanModelInsertImpl implements _DailyPlanModelInsert {
 
 abstract class _DailyPlanModelInsert implements DailyPlanModelInsert {
   const factory _DailyPlanModelInsert(
-      {required final DateTime forDate,
+      {required final String userId,
+      required final DateTime forDate,
       required final String title,
       final String description,
       final DateTime? completedAt}) = _$DailyPlanModelInsertImpl;
@@ -476,6 +494,8 @@ abstract class _DailyPlanModelInsert implements DailyPlanModelInsert {
   factory _DailyPlanModelInsert.fromJson(Map<String, dynamic> json) =
       _$DailyPlanModelInsertImpl.fromJson;
 
+  @override
+  String get userId;
   @override
   DateTime get forDate;
   @override

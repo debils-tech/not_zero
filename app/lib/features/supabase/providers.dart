@@ -9,3 +9,7 @@ final supabaseManagerProvider = Provider<SupabaseManager>((ref) {
 final supabaseClientProvider = Provider<SupabaseClient>((ref) {
   return Supabase.instance.client;
 });
+
+final supabaseUserProvider = Provider<String?>((ref) {
+  return Supabase.instance.client.auth.currentUser?.id;
+});

@@ -17,6 +17,11 @@ class PlanningPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Planning'),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        icon: const Icon(Icons.add_rounded),
+        label: const Text('Add'),
+      ),
       body: PagedListView(
         pagingController: pagingController,
         padding: const EdgeInsets.all(16),
