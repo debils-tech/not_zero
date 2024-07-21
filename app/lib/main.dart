@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/features/logging/logging.dart';
 import 'package:not_zero/features/router/router.dart';
+import 'package:not_zero/features/themes/providers.dart';
 
 void main() {
   configLogger();
@@ -20,8 +21,12 @@ class MainApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
 
+    final lightTheme = ref.watch(appLightThemeProvider);
+    final darkTheme = ref.watch(appDarkThemeProvider);
+
     return MaterialApp.router(
-      theme: ThemeData.dark(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       routerConfig: router,
     );
   }

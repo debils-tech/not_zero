@@ -4,6 +4,7 @@ import 'package:not_zero/features/planning/managers/plans_list_manager.dart';
 import 'package:not_zero/features/planning/models/daily_plan_model.dart';
 import 'package:not_zero/features/planning/models/plans_filter_model.dart';
 import 'package:not_zero/features/planning/repositories/plans_list_repository.dart';
+import 'package:not_zero/features/planning/state_holders/plans_map_state_holder.dart';
 import 'package:not_zero/features/supabase/providers.dart';
 import 'package:not_zero/utils/async_lifecycle_object.dart';
 
@@ -20,6 +21,7 @@ final plansListManagerProvider = Provider.autoDispose<PlansListManager>((ref) {
       ref.watch(plansListRepositoryProvider),
       ref.watch(plansFiltersStateProvider.notifier),
       ref.watch(plansPagingControllerProvider),
+      ref.watch(plansMapStateHolderProvider.notifier),
     ),
   );
 });
@@ -27,6 +29,11 @@ final plansListManagerProvider = Provider.autoDispose<PlansListManager>((ref) {
 final plansFiltersStateProvider =
     StateProvider.autoDispose<PlansFilterModel>((ref) {
   return PlansFilterModel(forDate: DateTime.now());
+});
+
+final plansMapStateHolderProvider =
+    NotifierProvider<PlansMapStateHolder, Map<String, DailyPlanModel>>(() {
+  return PlansMapStateHolder();
 });
 
 final plansPagingControllerProvider =

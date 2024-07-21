@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-abstract class AsyncLifecycleObject {
+abstract interface class AsyncLifecycleObject {
   void init();
 
   void dispose();

@@ -4,18 +4,22 @@ import 'package:logging/logging.dart';
 import 'package:not_zero/features/planning/models/daily_plan_model.dart';
 import 'package:not_zero/features/planning/models/plans_filter_model.dart';
 import 'package:not_zero/features/planning/repositories/plans_list_repository.dart';
+import 'package:not_zero/features/planning/state_holders/plans_map_state_holder.dart';
 import 'package:not_zero/utils/async_lifecycle_object.dart';
 
-class PlansListManager extends AsyncLifecycleObject {
+class PlansListManager implements AsyncLifecycleObject {
   PlansListManager(
     this._repository,
     this._plansFiltersStateController,
     this._pagingController,
+    this._mapStateHolder,
   );
 
   final PlansListRepository _repository;
   final StateController<PlansFilterModel> _plansFiltersStateController;
   final PagingController<int, DailyPlanModel> _pagingController;
+  final PlansMapStateHolder _mapStateHolder;
+
   static const _pageSize = 20;
   static final _log = Logger('PlansListManager');
 
@@ -53,6 +57,8 @@ class PlansListManager extends AsyncLifecycleObject {
         _pagingController.appendPage(plansList, pageKey + 1);
       }
 
+      _mapStateHolder.addAll(plansList);
+
       _log.finest('Loaded another page of plans: '
           '${_pagingController.itemList?.length} items , '
           '${_pagingController.nextPageKey} key');
@@ -65,6 +71,7 @@ class PlansListManager extends AsyncLifecycleObject {
   void updateFilters(PlansFilterModel filter) {
     _log.finer('Updating plan filters: $filter');
     _plansFiltersStateController.state = filter;
+    _mapStateHolder.reset();
 
     _pagingController.refresh();
   }
@@ -99,6 +106,8 @@ class PlansListManager extends AsyncLifecycleObject {
       _log.finer('Replaced item with id ${plan.id} in the list');
     }
 
+    _mapStateHolder.add(updatedItem);
+
     try {
       await _repository.updatePlan(updatedItem);
     } catch (e, s) {
@@ -131,6 +140,8 @@ class PlansListManager extends AsyncLifecycleObject {
           newPlan,
         ],
       );
+
+    _mapStateHolder.add(newPlan);
 
       _log.finer('Added plan in page state');
     } catch (e, s) {
