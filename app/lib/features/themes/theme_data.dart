@@ -10,6 +10,11 @@ ThemeData createAppDarkTheme() {
     bottomSheetTheme: base.bottomSheetTheme.copyWith(
       showDragHandle: true,
     ),
+    inputDecorationTheme: base.inputDecorationTheme.copyWith(
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+    ),
   );
 }
 

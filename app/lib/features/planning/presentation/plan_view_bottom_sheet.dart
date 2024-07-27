@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:not_zero/features/planning/models/daily_plan_model.dart';
-import 'package:not_zero/features/planning/presentation/plan_edit_bottom_sheet.dart';
 import 'package:not_zero/features/planning/providers.dart';
 import 'package:not_zero/features/router/router.dart';
 import 'package:not_zero/utils/build_context_extensions.dart';
 
 class PlanViewBottomSheet extends ConsumerWidget {
-  const PlanViewBottomSheet({required this.plan, super.key});
+  const PlanViewBottomSheet({required this.planId, super.key});
 
-  final DailyPlanModel plan;
+  final String planId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final plan = ref.watch(_specificPlanItemProvider(this.plan.id));
+    final plan = ref.watch(_specificPlanItemProvider(planId));
     if (plan == null) {
       return const SizedBox.shrink();
     }
@@ -61,11 +60,9 @@ class PlanViewBottomSheet extends ConsumerWidget {
               const SizedBox(width: 4),
               IconButton(
                 onPressed: () {
-                  router.pop();
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (_) => PlanEditBottomSheet(planToEdit: plan),
-                  );
+                  router
+                    ..pop()
+                    ..push('/plans/edit/$planId');
                 },
                 icon: const Icon(Icons.edit_rounded),
               ),

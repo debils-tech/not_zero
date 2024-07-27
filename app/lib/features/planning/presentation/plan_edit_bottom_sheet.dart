@@ -8,12 +8,19 @@ import 'package:not_zero/features/router/router.dart';
 import 'package:not_zero/utils/build_context_extensions.dart';
 
 class PlanEditBottomSheet extends ConsumerWidget {
-  const PlanEditBottomSheet({this.planToEdit, super.key});
+  const PlanEditBottomSheet({this.planId, super.key});
 
-  final DailyPlanModel? planToEdit;
+  final String? planId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final DailyPlanModel? planToEdit;
+    if (planId != null) {
+      planToEdit = ref.watch(_specificPlanItemProvider(planId!));
+    } else {
+      planToEdit = null;
+    }
+
     return FormBuilder(
       key: ref.watch(_formBuilderKeyProvider),
       initialValue: {
@@ -53,6 +60,7 @@ class _TitleField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: name,
+      decoration: const InputDecoration(labelText: 'Title'),
       validator: FormBuilderValidators.required(),
     );
   }
@@ -68,6 +76,8 @@ class _DescriptionField extends StatelessWidget {
     return Expanded(
       child: FormBuilderTextField(
         name: name,
+        decoration: const InputDecoration(labelText: 'Description'),
+        textAlignVertical: TextAlignVertical.top,
         expands: true,
         maxLines: null,
       ),
@@ -131,4 +141,10 @@ final _formBuilderKeyProvider =
 
 final _editLoadingStateProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
+});
+
+final _specificPlanItemProvider =
+    Provider.autoDispose.family<DailyPlanModel?, String>((ref, planId) {
+  final map = ref.watch(plansMapStateHolderProvider);
+  return map[planId];
 });
