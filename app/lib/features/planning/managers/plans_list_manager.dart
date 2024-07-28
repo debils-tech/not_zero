@@ -98,6 +98,7 @@ class PlansListManager implements AsyncLifecycleObject {
     required String title,
     String? description,
     DateTime? forDate,
+    bool persistent = false,
   }) async {
     final dateToAdd = forDate ?? _plansFiltersStateController.state.forDate;
 
@@ -106,6 +107,7 @@ class PlansListManager implements AsyncLifecycleObject {
         forDate: dateToAdd,
         title: title,
         description: description,
+        persistent: persistent,
       );
 
       _log.finer('Added plan in supabase: $newPlan');
@@ -123,10 +125,12 @@ class PlansListManager implements AsyncLifecycleObject {
     DailyPlanModel plan, {
     required String title,
     String? description,
+    bool persistent = false,
   }) async {
     final newPlan = plan.copyWith(
       title: title,
       description: description ?? '',
+      persistent: persistent,
     );
 
     try {

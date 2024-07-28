@@ -27,6 +27,7 @@ mixin _$DailyPlanModel {
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   DateTime? get completedAt => throw _privateConstructorUsedError;
+  bool get persistent => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +48,8 @@ abstract class $DailyPlanModelCopyWith<$Res> {
       DateTime forDate,
       String title,
       String description,
-      DateTime? completedAt});
+      DateTime? completedAt,
+      bool persistent});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$DailyPlanModelCopyWithImpl<$Res, $Val extends DailyPlanModel>
     Object? title = null,
     Object? description = null,
     Object? completedAt = freezed,
+    Object? persistent = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -100,6 +103,10 @@ class _$DailyPlanModelCopyWithImpl<$Res, $Val extends DailyPlanModel>
           ? _value.completedAt
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      persistent: null == persistent
+          ? _value.persistent
+          : persistent // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -119,7 +126,8 @@ abstract class _$$DailyPlanModelImplCopyWith<$Res>
       DateTime forDate,
       String title,
       String description,
-      DateTime? completedAt});
+      DateTime? completedAt,
+      bool persistent});
 }
 
 /// @nodoc
@@ -140,6 +148,7 @@ class __$$DailyPlanModelImplCopyWithImpl<$Res>
     Object? title = null,
     Object? description = null,
     Object? completedAt = freezed,
+    Object? persistent = null,
   }) {
     return _then(_$DailyPlanModelImpl(
       id: null == id
@@ -170,6 +179,10 @@ class __$$DailyPlanModelImplCopyWithImpl<$Res>
           ? _value.completedAt
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      persistent: null == persistent
+          ? _value.persistent
+          : persistent // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -185,7 +198,8 @@ class _$DailyPlanModelImpl implements _DailyPlanModel {
       required this.forDate,
       required this.title,
       this.description = '',
-      this.completedAt});
+      this.completedAt,
+      this.persistent = false});
 
   factory _$DailyPlanModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$DailyPlanModelImplFromJson(json);
@@ -205,10 +219,13 @@ class _$DailyPlanModelImpl implements _DailyPlanModel {
   final String description;
   @override
   final DateTime? completedAt;
+  @override
+  @JsonKey()
+  final bool persistent;
 
   @override
   String toString() {
-    return 'DailyPlanModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, forDate: $forDate, title: $title, description: $description, completedAt: $completedAt)';
+    return 'DailyPlanModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, forDate: $forDate, title: $title, description: $description, completedAt: $completedAt, persistent: $persistent)';
   }
 
   @override
@@ -226,13 +243,15 @@ class _$DailyPlanModelImpl implements _DailyPlanModel {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.completedAt, completedAt) ||
-                other.completedAt == completedAt));
+                other.completedAt == completedAt) &&
+            (identical(other.persistent, persistent) ||
+                other.persistent == persistent));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, createdAt, updatedAt,
-      forDate, title, description, completedAt);
+      forDate, title, description, completedAt, persistent);
 
   @JsonKey(ignore: true)
   @override
@@ -257,7 +276,8 @@ abstract class _DailyPlanModel implements DailyPlanModel {
       required final DateTime forDate,
       required final String title,
       final String description,
-      final DateTime? completedAt}) = _$DailyPlanModelImpl;
+      final DateTime? completedAt,
+      final bool persistent}) = _$DailyPlanModelImpl;
 
   factory _DailyPlanModel.fromJson(Map<String, dynamic> json) =
       _$DailyPlanModelImpl.fromJson;
@@ -277,6 +297,8 @@ abstract class _DailyPlanModel implements DailyPlanModel {
   @override
   DateTime? get completedAt;
   @override
+  bool get persistent;
+  @override
   @JsonKey(ignore: true)
   _$$DailyPlanModelImplCopyWith<_$DailyPlanModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -293,6 +315,7 @@ mixin _$DailyPlanModelInsert {
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   DateTime? get completedAt => throw _privateConstructorUsedError;
+  bool get persistent => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -311,7 +334,8 @@ abstract class $DailyPlanModelInsertCopyWith<$Res> {
       DateTime forDate,
       String title,
       String description,
-      DateTime? completedAt});
+      DateTime? completedAt,
+      bool persistent});
 }
 
 /// @nodoc
@@ -333,6 +357,7 @@ class _$DailyPlanModelInsertCopyWithImpl<$Res,
     Object? title = null,
     Object? description = null,
     Object? completedAt = freezed,
+    Object? persistent = null,
   }) {
     return _then(_value.copyWith(
       userId: null == userId
@@ -355,6 +380,10 @@ class _$DailyPlanModelInsertCopyWithImpl<$Res,
           ? _value.completedAt
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      persistent: null == persistent
+          ? _value.persistent
+          : persistent // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -372,7 +401,8 @@ abstract class _$$DailyPlanModelInsertImplCopyWith<$Res>
       DateTime forDate,
       String title,
       String description,
-      DateTime? completedAt});
+      DateTime? completedAt,
+      bool persistent});
 }
 
 /// @nodoc
@@ -391,6 +421,7 @@ class __$$DailyPlanModelInsertImplCopyWithImpl<$Res>
     Object? title = null,
     Object? description = null,
     Object? completedAt = freezed,
+    Object? persistent = null,
   }) {
     return _then(_$DailyPlanModelInsertImpl(
       userId: null == userId
@@ -413,6 +444,10 @@ class __$$DailyPlanModelInsertImplCopyWithImpl<$Res>
           ? _value.completedAt
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      persistent: null == persistent
+          ? _value.persistent
+          : persistent // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -426,7 +461,8 @@ class _$DailyPlanModelInsertImpl implements _DailyPlanModelInsert {
       required this.forDate,
       required this.title,
       this.description = '',
-      this.completedAt});
+      this.completedAt,
+      this.persistent = false});
 
   factory _$DailyPlanModelInsertImpl.fromJson(Map<String, dynamic> json) =>
       _$$DailyPlanModelInsertImplFromJson(json);
@@ -442,10 +478,13 @@ class _$DailyPlanModelInsertImpl implements _DailyPlanModelInsert {
   final String description;
   @override
   final DateTime? completedAt;
+  @override
+  @JsonKey()
+  final bool persistent;
 
   @override
   String toString() {
-    return 'DailyPlanModelInsert(userId: $userId, forDate: $forDate, title: $title, description: $description, completedAt: $completedAt)';
+    return 'DailyPlanModelInsert(userId: $userId, forDate: $forDate, title: $title, description: $description, completedAt: $completedAt, persistent: $persistent)';
   }
 
   @override
@@ -459,13 +498,15 @@ class _$DailyPlanModelInsertImpl implements _DailyPlanModelInsert {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.completedAt, completedAt) ||
-                other.completedAt == completedAt));
+                other.completedAt == completedAt) &&
+            (identical(other.persistent, persistent) ||
+                other.persistent == persistent));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, userId, forDate, title, description, completedAt);
+  int get hashCode => Object.hash(runtimeType, userId, forDate, title,
+      description, completedAt, persistent);
 
   @JsonKey(ignore: true)
   @override
@@ -489,7 +530,8 @@ abstract class _DailyPlanModelInsert implements DailyPlanModelInsert {
       required final DateTime forDate,
       required final String title,
       final String description,
-      final DateTime? completedAt}) = _$DailyPlanModelInsertImpl;
+      final DateTime? completedAt,
+      final bool persistent}) = _$DailyPlanModelInsertImpl;
 
   factory _DailyPlanModelInsert.fromJson(Map<String, dynamic> json) =
       _$DailyPlanModelInsertImpl.fromJson;
@@ -504,6 +546,8 @@ abstract class _DailyPlanModelInsert implements DailyPlanModelInsert {
   String get description;
   @override
   DateTime? get completedAt;
+  @override
+  bool get persistent;
   @override
   @JsonKey(ignore: true)
   _$$DailyPlanModelInsertImplCopyWith<_$DailyPlanModelInsertImpl>

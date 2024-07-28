@@ -18,17 +18,24 @@ class PlansListRepository {
     _log.finer('Loading plans page: $rangeFrom-$rangeTo '
         'with filters forDate: $forDate');
 
-    final plansRows = await _supabase
+    final forDateData = forDate.toIso8601String().split('T').first;
+    final nextDateDate =
+        forDate.add(const Duration(days: 1)).toIso8601String().split('T').first;
+
+    final forDatePlansRows = await _supabase
         .from(_plansTableName)
         .select()
-        .eq('for_date', forDate.toIso8601String())
+        .or(
+          'for_date.eq.$forDateData,'
+          // ignore: lines_longer_than_80_chars
+          'and(for_date.lte.$forDateData,persistent.eq.true,or(and(completed_at.gte.$forDateData,completed_at.lt.$nextDateDate),completed_at.is.null))',
+        )
         .range(rangeFrom, rangeFrom + rangeTo)
         .order('completed_at', ascending: false, nullsFirst: true)
         .order('created_at', ascending: true);
 
-    final plansList = plansRows.map(DailyPlanModel.fromJson).toList();
-
-    _log.fine('Loaded ${plansList.length} plans');
+    final plansList = forDatePlansRows.map(DailyPlanModel.fromJson).toList();
+    _log.fine('Loaded ${plansList.length} plans for date $forDate');
 
     return plansList;
   }
@@ -48,6 +55,7 @@ class PlansListRepository {
     required DateTime forDate,
     required String title,
     String? description,
+    bool persistent = false,
   }) async {
     _log.finer('Inserting plan: '
         'forDate $forDate, title $title, description $description');
@@ -63,6 +71,7 @@ class PlansListRepository {
       forDate: forDate,
       title: title,
       description: description ?? '',
+      persistent: persistent,
     );
 
     _log.finer('Created model: $planModel');

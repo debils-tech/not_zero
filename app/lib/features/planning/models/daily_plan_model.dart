@@ -14,6 +14,7 @@ class DailyPlanModel with _$DailyPlanModel {
     required String title,
     @Default('') String description,
     DateTime? completedAt,
+    @Default(false) bool persistent,
   }) = _DailyPlanModel;
 
   factory DailyPlanModel.fromJson(Map<String, dynamic> json) =>
@@ -29,6 +30,7 @@ class DailyPlanModelInsert with _$DailyPlanModelInsert {
     required String title,
     @Default('') String description,
     DateTime? completedAt,
+    @Default(false) bool persistent,
   }) = _DailyPlanModelInsert;
 
   factory DailyPlanModelInsert.fromJson(Map<String, dynamic> json) =>

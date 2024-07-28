@@ -26,6 +26,7 @@ class PlanEditBottomSheet extends ConsumerWidget {
       initialValue: {
         _TitleField.name: planToEdit?.title,
         _DescriptionField.name: planToEdit?.description,
+        _PersistanceField.name: planToEdit?.persistent,
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -41,6 +42,8 @@ class PlanEditBottomSheet extends ConsumerWidget {
             const _TitleField(),
             const SizedBox(height: 8),
             const _DescriptionField(),
+            const SizedBox(height: 8),
+            const _PersistanceField(),
             const SizedBox(height: 16),
             _AddButton(planToEdit),
             const SizedBox(height: 32),
@@ -85,6 +88,24 @@ class _DescriptionField extends StatelessWidget {
   }
 }
 
+class _PersistanceField extends StatelessWidget {
+  const _PersistanceField();
+
+  static const name = 'plan_persistent';
+
+  @override
+  Widget build(BuildContext context) {
+    return FormBuilderSwitch(
+      name: name,
+      decoration: const InputDecoration(border: InputBorder.none),
+      title: Text(
+        'Is persistent',
+        style: context.textTheme.bodyLarge,
+      ),
+    );
+  }
+}
+
 class _AddButton extends ConsumerWidget {
   const _AddButton(this.planToEdit);
 
@@ -110,6 +131,8 @@ class _AddButton extends ConsumerWidget {
         final title = key.currentState?.value[_TitleField.name] as String;
         final description =
             key.currentState?.value[_DescriptionField.name] as String?;
+        final isPersistent =
+            key.currentState?.value[_PersistanceField.name] as bool? ?? false;
 
         loadingNotifier.state = true;
 
@@ -117,6 +140,7 @@ class _AddButton extends ConsumerWidget {
           final _ = await plansListManager.addPlan(
             title: title,
             description: description,
+            persistent: isPersistent,
           );
           router.pop();
         } else {
@@ -124,6 +148,7 @@ class _AddButton extends ConsumerWidget {
             planToEdit!,
             title: title,
             description: description,
+            persistent: isPersistent,
           );
           router.pop();
         }

@@ -25,7 +25,7 @@ class PlansDaySelector extends ConsumerWidget {
                   ),
                 );
               },
-              child: const Text('Yesterday'),
+              child: const Text('Yest'),
             ),
           ),
           const SizedBox(width: 10),
@@ -51,7 +51,7 @@ class PlansDaySelector extends ConsumerWidget {
                   ),
                 );
               },
-              child: const Text('Tomorrow'),
+              child: const Text('Tmrw'),
             ),
           ),
           const SizedBox(width: 10),

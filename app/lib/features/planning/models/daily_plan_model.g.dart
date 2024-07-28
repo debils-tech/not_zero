@@ -17,6 +17,7 @@ _$DailyPlanModelImpl _$$DailyPlanModelImplFromJson(Map<String, dynamic> json) =>
       completedAt: json['completed_at'] == null
           ? null
           : DateTime.parse(json['completed_at'] as String),
+      persistent: json['persistent'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$DailyPlanModelImplToJson(
@@ -29,6 +30,7 @@ Map<String, dynamic> _$$DailyPlanModelImplToJson(
       'title': instance.title,
       'description': instance.description,
       'completed_at': instance.completedAt?.toIso8601String(),
+      'persistent': instance.persistent,
     };
 
 _$DailyPlanModelInsertImpl _$$DailyPlanModelInsertImplFromJson(
@@ -41,6 +43,7 @@ _$DailyPlanModelInsertImpl _$$DailyPlanModelInsertImplFromJson(
       completedAt: json['completed_at'] == null
           ? null
           : DateTime.parse(json['completed_at'] as String),
+      persistent: json['persistent'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$DailyPlanModelInsertImplToJson(
@@ -51,4 +54,5 @@ Map<String, dynamic> _$$DailyPlanModelInsertImplToJson(
       'title': instance.title,
       'description': instance.description,
       'completed_at': instance.completedAt?.toIso8601String(),
+      'persistent': instance.persistent,
     };
