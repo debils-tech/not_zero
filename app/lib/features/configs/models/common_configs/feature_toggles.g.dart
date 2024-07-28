@@ -10,7 +10,8 @@ _$FeatureTogglesConfigModelImpl _$$FeatureTogglesConfigModelImplFromJson(
         Map<String, dynamic> json) =>
     _$FeatureTogglesConfigModelImpl(
       features: (json['features'] as List<dynamic>?)
-              ?.map((e) => $enumDecode(_$AppFeaturesEnumMap, e))
+              ?.map((e) => $enumDecode(_$AppFeaturesEnumMap, e,
+                  unknownValue: AppFeatures.unknown))
               .toSet() ??
           const {},
     );
@@ -23,5 +24,7 @@ Map<String, dynamic> _$$FeatureTogglesConfigModelImplToJson(
     };
 
 const _$AppFeaturesEnumMap = {
+  AppFeatures.unknown: 'unknown',
   AppFeatures.planning: 'planning',
+  AppFeatures.serverSelection: 'server_selection',
 };

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:not_zero/features/configs/managers/configs_manager.dart';
 import 'package:not_zero/features/configs/models/common_configs/feature_toggles.dart';
 import 'package:not_zero/features/configs/models/config_model.dart';
@@ -35,5 +36,8 @@ T _buildConfig<T>(
   final configsState = ref.watch(configsStateHolderProvider);
   final data =
       configsState[key]?.data as Map<String, dynamic>? ?? <String, dynamic>{};
+
+  Logger('Config[$key]').info(data);
+
   return builder(data);
 }

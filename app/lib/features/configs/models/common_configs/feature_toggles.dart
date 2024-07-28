@@ -6,7 +6,9 @@ part 'feature_toggles.g.dart';
 @freezed
 class FeatureTogglesConfigModel with _$FeatureTogglesConfigModel {
   const factory FeatureTogglesConfigModel({
-    @Default({}) Set<AppFeatures> features,
+    @Default({})
+    @JsonKey(unknownEnumValue: AppFeatures.unknown)
+    Set<AppFeatures> features,
   }) = _FeatureTogglesConfigModel;
 
   factory FeatureTogglesConfigModel.fromJson(Map<String, dynamic> json) =>
@@ -14,5 +16,10 @@ class FeatureTogglesConfigModel with _$FeatureTogglesConfigModel {
 }
 
 enum AppFeatures {
+  unknown,
+
   planning,
+
+  @JsonValue('server_selection')
+  serverSelection,
 }

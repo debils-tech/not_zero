@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero/features/configs/models/common_configs/feature_toggles.dart';
-import 'package:not_zero/features/configs/providers.dart';
-import 'package:not_zero/features/router/router.dart';
-import 'package:not_zero/features/supabase/providers.dart';
+import 'package:not_zero/features/home/presentation/app_home_body.dart';
+import 'package:not_zero/features/home/presentation/app_login_body.dart';
+import 'package:not_zero/features/home/providers.dart';
+import 'package:not_zero/utils/build_context_extensions.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final initProgress = ref.watch(_initProgressProvider);
+    final initProgress = ref.watch(initProgressProvider);
 
     return switch (initProgress) {
-      AsyncData(:final value) => value ? const _HomeBody() : const _ErrorBody(),
+      AsyncData(:final value) =>
+        value ? const AppHomeBody() : const AppLoginBody(),
+      AsyncError(error: final e, stackTrace: final s) => _ErrorBody(e, s),
       _ => const _LoadingBody(),
     };
   }
@@ -30,53 +31,21 @@ class _LoadingBody extends StatelessWidget {
 }
 
 class _ErrorBody extends StatelessWidget {
-  const _ErrorBody();
+  const _ErrorBody(this.error, this.stack);
+
+  final Object? error;
+  final StackTrace? stack;
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Error on initialization')));
-  }
-}
-
-class _HomeBody extends ConsumerWidget {
-  const _HomeBody();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
-
-    final featureToggles = ref.watch(featureTogglesConfigProvider);
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('NotZero'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          if (featureToggles.features.contains(AppFeatures.planning))
-            ListTile(
-              leading: const Icon(Icons.note_alt_sharp),
-              title: const Text('Plans'),
-              onTap: () => router.push('/plans'),
-            ),
-        ],
+      body: Center(
+        child: Text(
+          'Error on initialization: $error\n\n$stack',
+          style: context.textTheme.bodyMedium
+              ?.copyWith(color: context.colors.error),
+        ),
       ),
     );
   }
 }
-
-final _initProgressProvider = FutureProvider<bool>((ref) async {
-  final supabaseManager = ref.watch(supabaseManagerProvider);
-
-  await supabaseManager.init();
-
-  final success =
-      await supabaseManager.login('u.slash.vlad@gmail.com', '123456');
-  if (!success) return false;
-
-  final configsManager = ref.watch(configsManagerProvider);
-  await configsManager.init();
-
-  return true;
-});

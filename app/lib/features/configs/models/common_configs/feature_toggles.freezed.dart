@@ -21,6 +21,7 @@ FeatureTogglesConfigModel _$FeatureTogglesConfigModelFromJson(
 
 /// @nodoc
 mixin _$FeatureTogglesConfigModel {
+  @JsonKey(unknownEnumValue: AppFeatures.unknown)
   Set<AppFeatures> get features => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +36,9 @@ abstract class $FeatureTogglesConfigModelCopyWith<$Res> {
           $Res Function(FeatureTogglesConfigModel) then) =
       _$FeatureTogglesConfigModelCopyWithImpl<$Res, FeatureTogglesConfigModel>;
   @useResult
-  $Res call({Set<AppFeatures> features});
+  $Res call(
+      {@JsonKey(unknownEnumValue: AppFeatures.unknown)
+      Set<AppFeatures> features});
 }
 
 /// @nodoc
@@ -72,7 +75,9 @@ abstract class _$$FeatureTogglesConfigModelImplCopyWith<$Res>
       __$$FeatureTogglesConfigModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Set<AppFeatures> features});
+  $Res call(
+      {@JsonKey(unknownEnumValue: AppFeatures.unknown)
+      Set<AppFeatures> features});
 }
 
 /// @nodoc
@@ -103,7 +108,8 @@ class __$$FeatureTogglesConfigModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FeatureTogglesConfigModelImpl implements _FeatureTogglesConfigModel {
   const _$FeatureTogglesConfigModelImpl(
-      {final Set<AppFeatures> features = const {}})
+      {@JsonKey(unknownEnumValue: AppFeatures.unknown)
+      final Set<AppFeatures> features = const {}})
       : _features = features;
 
   factory _$FeatureTogglesConfigModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -111,7 +117,7 @@ class _$FeatureTogglesConfigModelImpl implements _FeatureTogglesConfigModel {
 
   final Set<AppFeatures> _features;
   @override
-  @JsonKey()
+  @JsonKey(unknownEnumValue: AppFeatures.unknown)
   Set<AppFeatures> get features {
     if (_features is EqualUnmodifiableSetView) return _features;
     // ignore: implicit_dynamic_type
@@ -152,13 +158,15 @@ class _$FeatureTogglesConfigModelImpl implements _FeatureTogglesConfigModel {
 }
 
 abstract class _FeatureTogglesConfigModel implements FeatureTogglesConfigModel {
-  const factory _FeatureTogglesConfigModel({final Set<AppFeatures> features}) =
-      _$FeatureTogglesConfigModelImpl;
+  const factory _FeatureTogglesConfigModel(
+      {@JsonKey(unknownEnumValue: AppFeatures.unknown)
+      final Set<AppFeatures> features}) = _$FeatureTogglesConfigModelImpl;
 
   factory _FeatureTogglesConfigModel.fromJson(Map<String, dynamic> json) =
       _$FeatureTogglesConfigModelImpl.fromJson;
 
   @override
+  @JsonKey(unknownEnumValue: AppFeatures.unknown)
   Set<AppFeatures> get features;
   @override
   @JsonKey(ignore: true)
