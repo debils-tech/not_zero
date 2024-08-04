@@ -63,6 +63,7 @@ class _TitleField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: name,
+      enableSuggestions: true,
       decoration: const InputDecoration(labelText: 'Title'),
       validator: FormBuilderValidators.required(),
     );
@@ -76,12 +77,16 @@ class _DescriptionField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    final screenConstrains = MediaQuery.sizeOf(context).height * 0.3;
+    print('Constrains: $screenConstrains');
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: screenConstrains),
       child: FormBuilderTextField(
         name: name,
         decoration: const InputDecoration(labelText: 'Description'),
         textAlignVertical: TextAlignVertical.top,
-        expands: true,
+        enableSuggestions: true,
+        // expands: true,
         maxLines: null,
       ),
     );

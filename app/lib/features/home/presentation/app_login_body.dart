@@ -58,6 +58,7 @@ class _EmailField extends StatelessWidget {
         FormBuilderValidators.email(),
       ]),
       keyboardType: TextInputType.emailAddress,
+      enableSuggestions: true,
       decoration: const InputDecoration(
         labelText: 'Email',
       ),
