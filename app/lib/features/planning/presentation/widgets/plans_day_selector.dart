@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:not_zero/features/planning/providers.dart';
 import 'package:not_zero/utils/date_time_extensions.dart';
 
@@ -17,22 +18,22 @@ class PlansDaySelector extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(width: 32),
+          const Gap(32),
           _DateSelector(
             text: 'Yest',
             date: yesterDayDate,
           ),
-          const SizedBox(width: 10),
+          const Gap(10),
           _DateSelector(
             text: 'Today',
             date: currentDate,
           ),
-          const SizedBox(width: 10),
+          const Gap(10),
           _DateSelector(
             text: 'Tmrw',
             date: tomorrowDate,
           ),
-          const SizedBox(width: 10),
+          const Gap(10),
           _CustomDateSelector(
             excludeDates: [currentDate, yesterDayDate, tomorrowDate],
           ),

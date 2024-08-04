@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:not_zero/features/planning/models/daily_plan_model.dart';
 import 'package:not_zero/features/planning/providers.dart';
@@ -39,7 +40,7 @@ class PlanViewBottomSheet extends ConsumerWidget {
             'Plan for ${dateFormat.format(plan.forDate)}',
             style: context.textTheme.titleMedium,
           ),
-          const SizedBox(height: 8),
+          const Gap(8),
           CheckboxListTile(
             value: completionTime != null,
             onChanged: (value) => plansListManager
@@ -48,7 +49,7 @@ class PlanViewBottomSheet extends ConsumerWidget {
             visualDensity: VisualDensity.compact,
             title: Text(completionText),
           ),
-          const SizedBox(height: 16),
+          const Gap(16),
           Row(
             children: [
               Expanded(
@@ -57,7 +58,7 @@ class PlanViewBottomSheet extends ConsumerWidget {
                   style: context.textTheme.titleLarge,
                 ),
               ),
-              const SizedBox(width: 4),
+              const Gap(4),
               IconButton(
                 onPressed: () {
                   router
@@ -66,7 +67,7 @@ class PlanViewBottomSheet extends ConsumerWidget {
                 },
                 icon: const Icon(Icons.edit_rounded),
               ),
-              const SizedBox(width: 4),
+              const Gap(4),
               IconButton(
                 onPressed: () {
                   router.pop();
@@ -77,7 +78,7 @@ class PlanViewBottomSheet extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const Gap(8),
           Expanded(
             child: SingleChildScrollView(
               child: Text(
@@ -85,7 +86,7 @@ class PlanViewBottomSheet extends ConsumerWidget {
               ),
             ),
           ),
-          const SizedBox(height: 32),
+          const Gap(32),
         ],
       ),
     );

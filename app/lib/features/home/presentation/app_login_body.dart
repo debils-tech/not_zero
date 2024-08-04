@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:gap/gap.dart';
 import 'package:not_zero/features/env/providers.dart';
 import 'package:not_zero/features/home/providers.dart';
 import 'package:not_zero/utils/build_context_extensions.dart';
@@ -26,13 +27,13 @@ class AppLoginBody extends ConsumerWidget {
                     'Not Zero',
                     style: context.textTheme.titleLarge,
                   ),
-                  const SizedBox(height: 16),
+                  const Gap(16),
                   const _EmailField(),
-                  const SizedBox(height: 8),
+                  const Gap(8),
                   const _PasswordField(),
-                  const SizedBox(height: 16),
+                  const Gap(16),
                   const _SubmitButtons(),
-                  const SizedBox(height: 16),
+                  const Gap(16),
                   const _DevModeBlock(),
                 ],
               ),
@@ -128,7 +129,7 @@ class _SubmitButtons extends ConsumerWidget {
             icon: const Icon(Icons.login_rounded),
             label: const Text('Login'),
           ),
-          const SizedBox(height: 8),
+          const Gap(8),
           FilledButton.tonalIcon(
             onPressed: signUp,
             icon: const Icon(Icons.person_add_rounded),
@@ -161,7 +162,7 @@ class _DevModeBlock extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final devMode = ref.watch(devModeProvider);
-    if (!devMode) return const SizedBox();
+    if (!devMode) return const SizedBox.shrink();
 
     final devEnvironment = ref.watch(useDevFlagStateProvider);
     final envManager = ref.watch(envManagerProvider);
@@ -170,18 +171,17 @@ class _DevModeBlock extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Divider(),
-        const SizedBox(height: 8),
-        const SizedBox(height: 8),
+        const Gap(8),
+        const Gap(8),
         const Text('Environment:'),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('production'),
-            const SizedBox(width: 4),
+            const Gap(4),
             Switch(
               value: devEnvironment,
               onChanged: (value) {
-                print('val: $value');
                 if (value) {
                   envManager.switchToDev();
                 } else {
@@ -189,7 +189,7 @@ class _DevModeBlock extends ConsumerWidget {
                 }
               },
             ),
-            const SizedBox(width: 4),
+            const Gap(4),
             const Text('development'),
           ],
         ),

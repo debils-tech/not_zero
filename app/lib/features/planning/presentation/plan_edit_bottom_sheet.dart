@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:gap/gap.dart';
 import 'package:not_zero/features/planning/models/daily_plan_model.dart';
 import 'package:not_zero/features/planning/providers.dart';
 import 'package:not_zero/features/router/router.dart';
@@ -38,15 +39,15 @@ class PlanEditBottomSheet extends ConsumerWidget {
               'New plan',
               style: context.textTheme.titleLarge,
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             const _TitleField(),
-            const SizedBox(height: 8),
+            const Gap(8),
             const _DescriptionField(),
-            const SizedBox(height: 8),
+            const Gap(8),
             const _PersistanceField(),
-            const SizedBox(height: 16),
+            const Gap(16),
             _AddButton(planToEdit),
-            const SizedBox(height: 32),
+            const Gap(32),
           ],
         ),
       ),
