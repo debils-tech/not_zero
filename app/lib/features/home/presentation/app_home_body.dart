@@ -15,7 +15,7 @@ class AppHomeBody extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('NotZero'),
+        title: const Text('Not Zero'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),

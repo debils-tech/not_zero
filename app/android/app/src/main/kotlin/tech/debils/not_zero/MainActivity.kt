@@ -1,4 +1,4 @@
-package com.example.not_zero
+package tech.debils.not_zero
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
+            VALUE "CompanyName", "Debils Tech" "\0"
             VALUE "FileDescription", "not_zero" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "not_zero" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 Debils Tech. All rights reserved." "\0"
             VALUE "OriginalFilename", "not_zero.exe" "\0"
-            VALUE "ProductName", "not_zero" "\0"
+            VALUE "ProductName", "Not Zero" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
