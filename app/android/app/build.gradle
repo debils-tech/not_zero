@@ -23,6 +23,19 @@ if (flutterVersionName == null) {
     flutterVersionName = "1.0"
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+def releaseSigning = true
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    if (!keystoreProperties['storeFile'] || !file(keystoreProperties['storeFile']).exists()) {
+        println('No keystore at ' + keystoreProperties['storeFile'] + ' found')
+        releaseSigning = false
+    }
+} else {
+    releaseSigning = false
+}
+
 android {
     namespace = "tech.debils.not_zero"
     compileSdk = flutter.compileSdkVersion
@@ -41,13 +54,28 @@ android {
         versionName = flutterVersionName
     }
 
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+    if (releaseSigning) {
+        signingConfigs {
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
         }
-    }
+   }
+
+   buildTypes {
+        release {
+            if (releaseSigning) {
+                println('Signing build using "key.properties" file...')
+                signingConfig signingConfigs.release
+            } else {
+                println('No "key.properties" or keystore files found. Debug signing...')
+                signingConfig signingConfigs.debug
+            }
+        }
+   }
 }
 
 flutter {
