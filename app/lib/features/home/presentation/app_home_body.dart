@@ -26,6 +26,11 @@ class AppHomeBody extends ConsumerWidget {
               title: const Text('Plans'),
               onTap: () => router.push('/plans'),
             ),
+          ListTile(
+            leading: const Icon(Icons.settings_rounded),
+            title: const Text('Settings'),
+            onTap: () => router.push('/settings'),
+          ),
         ],
       ),
     );

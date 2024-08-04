@@ -15,14 +15,18 @@ class AuthManager {
   Future<bool> loginByPassword({
     required String email,
     required String password,
-  }) async {
+  }) {
     return _supabaseManager.login(email, password);
   }
 
   Future<bool> signUpByPassword({
     required String email,
     required String password,
-  }) async {
+  }) {
     return _supabaseManager.signUp(email, password);
+  }
+
+  Future<bool> logOut() {
+    return _supabaseManager.logOut();
   }
 }

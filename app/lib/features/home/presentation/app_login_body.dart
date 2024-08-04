@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:not_zero/features/env/providers.dart';
 import 'package:not_zero/features/home/providers.dart';
 import 'package:not_zero/utils/build_context_extensions.dart';
 
@@ -15,20 +16,27 @@ class AppLoginBody extends ConsumerWidget {
         key: ref.watch(_formKeyProvider),
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Not Zero',
-                style: context.textTheme.titleLarge,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 400),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Not Zero',
+                    style: context.textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 16),
+                  const _EmailField(),
+                  const SizedBox(height: 8),
+                  const _PasswordField(),
+                  const SizedBox(height: 16),
+                  const _SubmitButtons(),
+                  const SizedBox(height: 16),
+                  const _DevModeBlock(),
+                ],
               ),
-              const SizedBox(height: 16),
-              const _EmailField(),
-              const SizedBox(height: 8),
-              const _PasswordField(),
-              const SizedBox(height: 16),
-              const _SubmitButtons(),
-            ],
+            ),
           ),
         ),
       ),
@@ -93,8 +101,6 @@ class _SubmitButtons extends ConsumerWidget {
       );
       if (!success) return;
 
-      print('sccess');
-
       ref.invalidate(initProgressProvider);
     }
 
@@ -145,6 +151,49 @@ class _SubmitButtons extends ConsumerWidget {
     final password = state.value[_PasswordField.name];
 
     return (email, password);
+  }
+}
+
+class _DevModeBlock extends ConsumerWidget {
+  const _DevModeBlock();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final devMode = ref.watch(devModeProvider);
+    if (!devMode) return const SizedBox();
+
+    final devEnvironment = ref.watch(useDevFlagStateProvider);
+    final envManager = ref.watch(envManagerProvider);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Divider(),
+        const SizedBox(height: 8),
+        const SizedBox(height: 8),
+        const Text('Environment:'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('production'),
+            const SizedBox(width: 4),
+            Switch(
+              value: devEnvironment,
+              onChanged: (value) {
+                print('val: $value');
+                if (value) {
+                  envManager.switchToDev();
+                } else {
+                  envManager.switchToProduction();
+                }
+              },
+            ),
+            const SizedBox(width: 4),
+            const Text('development'),
+          ],
+        ),
+      ],
+    );
   }
 }
 

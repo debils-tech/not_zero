@@ -5,6 +5,7 @@ import 'package:not_zero/features/planning/presentation/plan_edit_bottom_sheet.d
 import 'package:not_zero/features/planning/presentation/plan_view_bottom_sheet.dart';
 import 'package:not_zero/features/planning/presentation/planning_page.dart';
 import 'package:not_zero/features/router/modal_bottom_sheet_page.dart';
+import 'package:not_zero/features/settings/presentation/settings_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -45,6 +46,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                 },
               ),
             ],
+          ),
+          GoRoute(
+            path: 'settings',
+            builder: (context, state) => const SettingsPage(),
           ),
         ],
       ),

@@ -1,16 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract interface class AsyncLifecycleObject {
-  void init();
+  FutureOr<void> init();
 
-  void dispose();
+  FutureOr<void> dispose();
 
   static T wrapProvider<T extends AsyncLifecycleObject>(
     ProviderRef<T> ref,
-    T object,
-  ) {
-    ref.onDispose(object.dispose);
-    object.init();
+    T object, {
+    bool callInit = true,
+    bool callDispose = true,
+  }) {
+    if (callDispose) ref.onDispose(object.dispose);
+    if (callInit) object.init();
     return object;
   }
 }
