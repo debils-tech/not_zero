@@ -27,4 +27,6 @@ const _$AppFeaturesEnumMap = {
   AppFeatures.unknown: 'unknown',
   AppFeatures.planning: 'planning',
   AppFeatures.serverSelection: 'server_selection',
+  AppFeatures.plansDescription: 'plans_description',
+  AppFeatures.showPlanCompletionCheckbox: 'show_plan_completion_checkbox',
 };

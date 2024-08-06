@@ -3,6 +3,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:gap/gap.dart';
+import 'package:not_zero/features/configs/models/common_configs/feature_toggles.dart';
+import 'package:not_zero/features/configs/providers.dart';
 import 'package:not_zero/features/planning/models/daily_plan_model.dart';
 import 'package:not_zero/features/planning/providers.dart';
 import 'package:not_zero/features/router/router.dart';
@@ -21,6 +23,12 @@ class PlanEditBottomSheet extends ConsumerWidget {
     } else {
       planToEdit = null;
     }
+
+    final hasDescription = ref.watch(
+      featureTogglesConfigProvider.select(
+        (value) => value.features.contains(AppFeatures.plansDescription),
+      ),
+    );
 
     return FormBuilder(
       key: ref.watch(_formBuilderKeyProvider),
@@ -42,8 +50,10 @@ class PlanEditBottomSheet extends ConsumerWidget {
             const Gap(16),
             const _TitleField(),
             const Gap(8),
-            const _DescriptionField(),
-            const Gap(8),
+            if (hasDescription) ...[
+              const _DescriptionField(),
+              const Gap(8),
+            ],
             const _PersistanceField(),
             const Gap(16),
             _AddButton(planToEdit),
@@ -85,7 +95,6 @@ class _DescriptionField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenConstrains = MediaQuery.sizeOf(context).height * 0.3;
-    print('Constrains: $screenConstrains');
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: screenConstrains),
       child: FormBuilderTextField(

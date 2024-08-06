@@ -22,4 +22,10 @@ enum AppFeatures {
 
   @JsonValue('server_selection')
   serverSelection,
+
+  @JsonValue('plans_description')
+  plansDescription,
+
+  @JsonValue('show_plan_completion_checkbox')
+  showPlanCompletionCheckbox,
 }
