@@ -62,11 +62,17 @@ class _TitleField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilderTextField(
-      name: name,
-      enableSuggestions: true,
-      decoration: const InputDecoration(labelText: 'Title'),
-      validator: FormBuilderValidators.required(),
+    final screenConstrains = MediaQuery.sizeOf(context).height * 0.3;
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: screenConstrains),
+      child: FormBuilderTextField(
+        name: name,
+        enableSuggestions: true,
+        decoration: const InputDecoration(labelText: 'Title'),
+        validator: FormBuilderValidators.required(),
+        maxLength: 150,
+        maxLines: null,
+      ),
     );
   }
 }

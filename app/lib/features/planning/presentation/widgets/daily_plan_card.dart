@@ -29,9 +29,11 @@ class DailyPlanCard extends ConsumerWidget {
                   completed: value ?? false,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(plan.title),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(plan.title),
+                ),
               ),
             ],
           ),

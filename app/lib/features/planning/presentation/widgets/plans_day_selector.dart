@@ -67,7 +67,7 @@ class _DateSelector extends ConsumerWidget {
     return Expanded(
       child: isSameDay
           ? FilledButton(
-              onPressed: onTap,
+              onPressed: () {},
               child: Text(text),
             )
           : OutlinedButton(
