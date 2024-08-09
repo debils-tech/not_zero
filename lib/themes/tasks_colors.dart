@@ -4,23 +4,21 @@ import 'package:theme_tailor_annotation/theme_tailor_annotation.dart';
 
 part 'tasks_colors.tailor.dart';
 
-@Tailor(themeGetter: ThemeGetter.onThemeData)
-class _$TasksColorScheme {
-  static final notImportantColor = [
-    Colors.blueGrey.shade400,
-    Colors.grey[350]!
-  ];
-  static const normalColor = [
-    Colors.amber,
-    Colors.amberAccent,
-  ];
-  static const importantColor = [
-    Colors.red,
-    Colors.redAccent,
-  ];
-}
+@TailorMixin(themeGetter: ThemeGetter.onThemeData)
+class TasksColorScheme extends ThemeExtension<TasksColorScheme>
+    with _$TasksColorSchemeTailorMixin {
+  const TasksColorScheme({
+    required this.notImportantColor,
+    required this.normalColor,
+    required this.importantColor,
+  });
 
-extension TasksColorsMethodExtension on TasksColorScheme {
+  final Color notImportantColor;
+
+  final Color normalColor;
+
+  final Color importantColor;
+
   Color colorByImportance(TaskImportance importance) {
     switch (importance) {
       case TaskImportance.notImportant:
@@ -31,4 +29,17 @@ extension TasksColorsMethodExtension on TasksColorScheme {
         return importantColor;
     }
   }
+
+  // static final notImportantColor = [
+  //   Colors.blueGrey.shade400,
+  //   Colors.grey[350]!
+  // ];
+  // static const normalColor = [
+  //   Colors.amber,
+  //   Colors.amberAccent,
+  // ];
+  // static const importantColor = [
+  //   Colors.red,
+  //   Colors.redAccent,
+  // ];
 }

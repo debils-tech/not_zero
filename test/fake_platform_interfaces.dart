@@ -56,7 +56,7 @@ Future<String> _futurePath(String v) => Future.value('$_rootPath/$v');
 
 class FakePackageInfoPlatform extends PackageInfoPlatform {
   @override
-  Future<PackageInfoData> getAll() async {
+  Future<PackageInfoData> getAll({String? baseUrl}) async {
     return PackageInfoData(
       appName: 'Not Zero Test',
       version: '0.0.0',

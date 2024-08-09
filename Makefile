@@ -36,14 +36,14 @@ build-linux:
 # Code generation
 
 dependencies:
-	flutter pub get
+	fvm flutter pub get
 deps: dependencies
 
 build_runner:
-	flutter pub run build_runner build --delete-conflicting-outputs lib
+	fvm flutter pub run build_runner build --delete-conflicting-outputs lib
 
 lib/i18n/translations.g.dart: $(shell find lib/i18n -name '*.i18n.yaml')
-	flutter pub run slang
+	fvm flutter pub run slang
 locale: lib/i18n/translations.g.dart
 
 web/sql-wasm.js:

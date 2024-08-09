@@ -108,24 +108,25 @@ class _TaskEditScreenBody extends StatelessWidget {
       onChanged: () => taskEditCubit.changeForm(
         isCorrect: formKey.currentState?.validate() ?? false,
       ),
-      onWillPop: () async {
-        // TODO(uSlashVlad): Use state instead of Cubit's variable.
-        if (!taskEditCubit.isChanged) {
-          return true;
-        }
+      // TODO(uSlashVlad): Implement proper check with dialog
+      canPop: true,
+      // onWillPop: () async {
+      //   if (!taskEditCubit.isChanged) {
+      //     return true;
+      //   }
 
-        final confirm = await showConfirmationDialog(
-          context,
-          title: t.common.dialog.exitTitle,
-          content: t.common.dialog.exitContent,
-          dangerous: true,
-        );
-        if (confirm ?? false) {
-          return true;
-        }
+      //   final confirm = await showConfirmationDialog(
+      //     context,
+      //     title: t.common.dialog.exitTitle,
+      //     content: t.common.dialog.exitContent,
+      //     dangerous: true,
+      //   );
+      //   if (confirm ?? false) {
+      //     return true;
+      //   }
 
-        return false;
-      },
+      //   return false;
+      // },
       child: Stack(
         children: [
           ListView(
