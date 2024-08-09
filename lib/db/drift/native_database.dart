@@ -5,7 +5,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:drift/native.dart';
 import 'package:not_zero/db/provider.dart';
-import 'package:not_zero/helpers/platform_checks.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 

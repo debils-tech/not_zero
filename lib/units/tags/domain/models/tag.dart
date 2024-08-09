@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:not_zero/helpers/object_id_mixin.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:uuid/uuid.dart';
 
 part 'tag.freezed.dart';

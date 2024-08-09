@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: nz_common
+dependency_overrides:
+  nz_common:
+    path: packages/nz_common

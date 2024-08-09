@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-extension FormatBasedOnToday on DateTime {
+extension DateTimeSmartFormatExt on DateTime {
   String localFormat() {
     final dateToCompare = DateTime.now();
     if (day == dateToCompare.day) {

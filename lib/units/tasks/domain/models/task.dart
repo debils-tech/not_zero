@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:not_zero/helpers/object_id_mixin.dart';
 import 'package:not_zero/units/tags/domain/models/tag.dart';
 import 'package:not_zero/units/tasks/domain/models/task_importance.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:uuid/uuid.dart';
 
 export 'package:not_zero/units/tasks/domain/models/task_importance.dart';

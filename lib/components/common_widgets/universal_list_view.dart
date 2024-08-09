@@ -1,7 +1,7 @@
 import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:animated_list_plus/transitions.dart';
 import 'package:flutter/material.dart';
-import 'package:not_zero/helpers/object_id_mixin.dart';
+import 'package:nz_common/nz_common.dart';
 
 class UniversalListView<T extends ObjectIdMixin> extends StatelessWidget {
   const UniversalListView({

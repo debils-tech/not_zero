@@ -1,0 +1,5 @@
+name: not_zero
+
+packages:
+  - .
+  - packages/**

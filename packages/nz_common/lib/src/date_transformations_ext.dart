@@ -1,4 +1,4 @@
-extension DateTimeTransformations on DateTime {
+extension DateTimeTransformationsExt on DateTime {
   DateTime get startOfDay {
     return copyWith(
       hour: 0,

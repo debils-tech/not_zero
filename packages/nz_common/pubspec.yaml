@@ -1,0 +1,16 @@
+name: nz_common
+description: Common lib for not_zero
+version: 1.0.0
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ^3.5.0
+
+# Add regular dependencies here.
+dependencies:
+  universal_io: ^2.2.2
+  intl: ^0.19.0
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.25.8
