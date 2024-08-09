@@ -753,6 +753,20 @@ packages:
       relative: true
     source: path
     version: "1.0.0"
+  nz_tags_models:
+    dependency: "direct main"
+    description:
+      path: "packages/features/nz_tags_models"
+      relative: true
+    source: path
+    version: "1.0.0"
+  nz_tasks_models:
+    dependency: "direct main"
+    description:
+      path: "packages/features/nz_tasks_models"
+      relative: true
+    source: path
+    version: "1.0.0"
   package_config:
     dependency: transitive
     description:

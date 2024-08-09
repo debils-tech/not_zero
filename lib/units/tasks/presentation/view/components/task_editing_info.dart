@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:not_zero/i18n/translations.g.dart';
-import 'package:not_zero/units/tasks/domain/models/task.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 class TaskEditingInfo extends StatelessWidget {
   const TaskEditingInfo(this.task, {super.key});

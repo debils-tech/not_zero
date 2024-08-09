@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/helpers/pattern_validator.dart';
-import 'package:not_zero/units/tags/domain/models/tag.dart';
+import 'package:nz_tags_models/nz_tags_models.dart';
 
 import '../../template_tags.dart';
 

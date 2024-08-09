@@ -8,8 +8,8 @@ import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/themes/tags_colors.dart';
-import 'package:not_zero/units/tags/domain/models/tag.dart';
 import 'package:not_zero/units/tags/domain/repositories/tags_repository.dart';
+import 'package:nz_tags_models/nz_tags_models.dart';
 
 class TagCreationDialog extends StatefulWidget {
   const TagCreationDialog({super.key, this.tagToEdit});

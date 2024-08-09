@@ -5,9 +5,9 @@ import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/themes/tasks_colors.dart';
 import 'package:not_zero/units/tags/presentation/view/tag_list_indicator.dart';
-import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_editing_info.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 class TaskViewScreen extends StatelessWidget {
   const TaskViewScreen({required this.taskToView, super.key});

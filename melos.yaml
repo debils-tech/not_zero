@@ -3,3 +3,4 @@ name: not_zero
 packages:
   - .
   - packages/**
+  - packages/features/**

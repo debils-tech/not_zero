@@ -5,8 +5,8 @@ import 'package:not_zero/db/drift/open_database.dart';
 import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/db/tags_table.dart';
 import 'package:not_zero/db/tasks_table.dart';
-import 'package:not_zero/units/tags/domain/models/tag.dart';
-import 'package:not_zero/units/tasks/domain/models/task.dart';
+import 'package:nz_tags_models/nz_tags_models.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 

@@ -1,4 +1,4 @@
-import 'package:not_zero/units/tasks/domain/models/task.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 final templateTasks1 = <Task>[
   Task(

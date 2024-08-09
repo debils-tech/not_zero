@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:not_zero/units/tasks/domain/models/task.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 import 'package:theme_tailor_annotation/theme_tailor_annotation.dart';
 
 part 'tasks_colors.tailor.dart';

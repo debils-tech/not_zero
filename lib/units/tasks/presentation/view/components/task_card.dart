@@ -5,9 +5,9 @@ import 'package:not_zero/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/themes/tasks_colors.dart';
 import 'package:not_zero/units/tags/presentation/view/tag_list_indicator.dart';
-import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 import 'package:nz_common/nz_common.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard(this.task, {super.key});

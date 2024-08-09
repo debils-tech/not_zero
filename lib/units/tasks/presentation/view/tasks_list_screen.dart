@@ -8,10 +8,10 @@ import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/i18n/translations.g.dart';
-import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_card.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/tasks_list_app_bar.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 class TasksListScreen extends StatelessWidget {
   const TasksListScreen({super.key});

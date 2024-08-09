@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/units/stats/data/stats_local_service.dart';
-import 'package:not_zero/units/tasks/domain/models/task.dart';
 import 'package:nz_common/nz_common.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 import '../../global_init.dart';
 import '../../tasks/tasks_db_config.dart';

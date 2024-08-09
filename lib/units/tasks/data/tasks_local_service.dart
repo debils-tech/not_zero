@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 import 'package:not_zero/db/provider.dart';
-import 'package:not_zero/units/tags/domain/models/tag.dart';
-import 'package:not_zero/units/tasks/domain/models/task.dart';
+import 'package:nz_tags_models/nz_tags_models.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 @lazySingleton
 class TasksLocalService {

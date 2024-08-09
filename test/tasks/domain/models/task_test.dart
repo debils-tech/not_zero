@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/helpers/pattern_validator.dart';
-import 'package:not_zero/units/tasks/domain/models/task.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../template_tasks.dart';
