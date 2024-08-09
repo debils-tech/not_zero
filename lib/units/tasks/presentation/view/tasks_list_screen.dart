@@ -24,7 +24,7 @@ class TasksListScreen extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               getIt<TasksListBloc>()..add(const TasksListEvent.loadTasks()),
-        )
+        ),
       ],
       child: const Scaffold(
         appBar: TasksListAppBar(),

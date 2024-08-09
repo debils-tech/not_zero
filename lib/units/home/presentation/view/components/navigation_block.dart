@@ -68,7 +68,7 @@ class _NavigationCard extends StatelessWidget {
                 Text(
                   title,
                   style: Theme.of(context).textTheme.titleLarge,
-                )
+                ),
               ],
             ),
           ),

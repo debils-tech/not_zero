@@ -65,7 +65,7 @@ class WeeklyStatsChart extends StatelessWidget {
                   [
                     LineBarSpot(barData, 0, barData.spots[selectedIndex!]),
                   ],
-                )
+                ),
               ]
             : [],
         lineTouchData: LineTouchData(

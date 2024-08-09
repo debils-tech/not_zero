@@ -13,10 +13,13 @@ class TasksColorScheme extends ThemeExtension<TasksColorScheme>
     required this.importantColor,
   });
 
+  @override
   final Color notImportantColor;
 
+  @override
   final Color normalColor;
 
+  @override
   final Color importantColor;
 
   Color colorByImportance(TaskImportance importance) {

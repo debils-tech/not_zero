@@ -19,24 +19,34 @@ class TagsColorScheme extends ThemeExtension<TagsColorScheme>
     required this.pink,
   });
 
+  @override
   final Color gray;
 
+  @override
   final Color red;
 
+  @override
   final Color orange;
 
+  @override
   final Color yellow;
 
+  @override
   final Color green;
 
+  @override
   final Color teal;
 
+  @override
   final Color blue;
 
+  @override
   final Color indigo;
 
+  @override
   final Color purple;
 
+  @override
   final Color pink;
 
   // static const gray = [

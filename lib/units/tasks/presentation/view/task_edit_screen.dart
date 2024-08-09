@@ -181,8 +181,8 @@ class _FloatingSubmitButton extends StatelessWidget {
         }
       },
       style: const ButtonStyle(
-        elevation: MaterialStatePropertyAll(20),
-        padding: MaterialStatePropertyAll(
+        elevation: WidgetStatePropertyAll(20),
+        padding: WidgetStatePropertyAll(
           EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 15,

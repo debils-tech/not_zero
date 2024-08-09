@@ -89,7 +89,7 @@ class StorageSettingsScreen extends StatelessWidget {
           }
         },
         child: Text(t.settings.storage.closeAppButton),
-      )
+      ),
     ];
 
     _showSuccessfulImportDialog(actions: closeDialogAction);

@@ -45,20 +45,19 @@ final _lightThemeBase = FlexThemeData.light(
 );
 
 final defaultLightTheme = _lightThemeBase.copyWith(
-  useMaterial3: true,
   textTheme: _lightThemeBase.textTheme.copyWith(
     titleSmall: TextStyle(color: Colors.grey.shade500),
   ),
   checkboxTheme: _lightThemeBase.checkboxTheme.copyWith(
-    fillColor: MaterialStateProperty.resolveWith(
-      (states) => states.contains(MaterialState.selected)
+    fillColor: WidgetStateProperty.resolveWith(
+      (states) => states.contains(WidgetState.selected)
           ? _lightThemeBase.primaryColorLight
           : null,
     ),
   ),
   radioTheme: _lightThemeBase.radioTheme.copyWith(
-    fillColor: MaterialStateProperty.resolveWith(
-      (states) => states.contains(MaterialState.selected)
+    fillColor: WidgetStateProperty.resolveWith(
+      (states) => states.contains(WidgetState.selected)
           ? _lightThemeBase.primaryColorLight
           : null,
     ),
@@ -106,20 +105,19 @@ final _darkThemeBase = FlexThemeData.dark(
 );
 
 final defaultDarkTheme = _darkThemeBase.copyWith(
-  useMaterial3: true,
   textTheme: _darkThemeBase.textTheme.copyWith(
     titleSmall: TextStyle(color: Colors.grey.shade700),
   ),
   checkboxTheme: _darkThemeBase.checkboxTheme.copyWith(
-    fillColor: MaterialStateProperty.resolveWith(
-      (states) => states.contains(MaterialState.selected)
+    fillColor: WidgetStateProperty.resolveWith(
+      (states) => states.contains(WidgetState.selected)
           ? _darkThemeBase.primaryColor
           : null,
     ),
   ),
   radioTheme: _darkThemeBase.radioTheme.copyWith(
-    fillColor: MaterialStateProperty.resolveWith(
-      (states) => states.contains(MaterialState.selected)
+    fillColor: WidgetStateProperty.resolveWith(
+      (states) => states.contains(WidgetState.selected)
           ? _darkThemeBase.primaryColor
           : null,
     ),

@@ -45,7 +45,7 @@ class HomeStatsHeader extends StatelessWidget {
             },
           ),
           const SizedBox(width: 6),
-          const Icon(NotZeroIcons.zero)
+          const Icon(NotZeroIcons.zero),
         ],
       ),
     );

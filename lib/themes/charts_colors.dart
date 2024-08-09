@@ -15,16 +15,22 @@ class ChartsColorScheme extends ThemeExtension<ChartsColorScheme>
     required this.weeklyStatsBelowGradient,
   });
 
+  @override
   final Color chartBackgroundColor;
 
+  @override
   final Color gridColor;
 
+  @override
   final Color borderColor;
 
+  @override
   final Color tooltipBackgroundColor;
 
+  @override
   final Color weeklyStatsLine;
 
+  @override
   final LinearGradient weeklyStatsBelowGradient;
 
   // static const chartBackgroundColor = [

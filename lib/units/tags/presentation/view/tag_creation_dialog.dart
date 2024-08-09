@@ -137,7 +137,7 @@ class _TagColorField extends StatelessWidget {
                     color: colors[index],
                     border: isSelected
                         ? Border.all(
-                            color: theme.colorScheme.onBackground,
+                            color: theme.colorScheme.onSurface,
                             width: 3,
                             strokeAlign: BorderSide.strokeAlignCenter,
                           )
@@ -219,8 +219,8 @@ class _SubmitButton extends StatelessWidget {
         }
       },
       style: const ButtonStyle(
-        elevation: MaterialStatePropertyAll(20),
-        padding: MaterialStatePropertyAll(
+        elevation: WidgetStatePropertyAll(20),
+        padding: WidgetStatePropertyAll(
           EdgeInsets.symmetric(vertical: 16),
         ),
       ),

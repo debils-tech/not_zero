@@ -31,12 +31,12 @@ void main() {
           'name': 'Not Zero Test',
           'platform': 'test',
           'version': '0.0.0',
-          'build': 0
+          'build': 0,
         },
         'data': {
           BoxNames.settings: settingsJson,
           TableNames.tasks: tasksJson,
-        }
+        },
       },
     );
   });
@@ -51,12 +51,12 @@ void main() {
         'name': 'Not Zero Test',
         'platform': 'test',
         'version': '0.0.0',
-        'build': 0
+        'build': 0,
       },
       'data': {
         BoxNames.settings: settingsJson,
         TableNames.tasks: tasksJson,
-      }
+      },
     });
 
     expect(backup.version, 1);

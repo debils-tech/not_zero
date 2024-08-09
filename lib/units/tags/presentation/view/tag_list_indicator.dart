@@ -35,8 +35,8 @@ class TagListIndicator extends StatelessWidget {
                     vertical: 4,
                   ),
               decoration: BoxDecoration(
-                borderRadius: borderRadius ??
-                    const BorderRadius.all(Radius.circular(10)),
+                borderRadius:
+                    borderRadius ?? const BorderRadius.all(Radius.circular(10)),
                 color: theme.tagsColorScheme.colorByIndex(tag.colorIndex),
               ),
               child: Text(

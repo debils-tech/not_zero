@@ -26,5 +26,4 @@ class SettingsLocalService {
   Future<void> setThemeState(ThemeState state) {
     return _settingsBox.put(SettingsKeys.themeState, state.name);
   }
-
 }

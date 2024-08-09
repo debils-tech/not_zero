@@ -129,11 +129,11 @@ class _RoundedButton extends StatelessWidget {
       onPressed: onPressed,
       onLongPress: onLongPress,
       style: ButtonStyle(
-        foregroundColor: MaterialStatePropertyAll(
+        foregroundColor: WidgetStatePropertyAll(
           selected ? backgroundColor : color,
         ),
-        backgroundColor: selected ? MaterialStatePropertyAll(color) : null,
-        side: MaterialStatePropertyAll(
+        backgroundColor: selected ? WidgetStatePropertyAll(color) : null,
+        side: WidgetStatePropertyAll(
           BorderSide(color: color, width: 3),
         ),
       ),

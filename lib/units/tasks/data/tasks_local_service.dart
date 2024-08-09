@@ -36,7 +36,7 @@ class TasksLocalService {
       innerJoin(
         _db.tasksTable,
         _db.tasksTagEntries.task.equalsExp(_db.tasksTable.id),
-      )
+      ),
     ])
       ..groupBy([_db.tasksTagEntries.task])
       ..where(_db.tasksTagEntries.tag.isIn(searchTags));

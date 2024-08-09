@@ -25,7 +25,7 @@ void _printConsoleWrapped(LogRecord record) {
   resultingText += '${iter.current}';
 
   debugPrint(resultingText);
-  while(iter.moveNext()) {
+  while (iter.moveNext()) {
     debugPrint(iter.current);
   }
 
