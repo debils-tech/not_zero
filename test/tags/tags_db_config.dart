@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/get_it.dart';
+import 'package:nz_drift/nz_drift.dart';
 
 import 'template_tags.dart';
 

@@ -15,6 +15,4 @@ QueryExecutor openDriftDatabase({bool permament = true}) {
   return WebDatabase('NotZero');
 }
 
-DatabaseConnection openIsolateConnection() {
-  throw UnsupportedError("Flutter web doesn't support isolates");
-}
+Future<String?> getDatabasePath() async => null;

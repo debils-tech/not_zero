@@ -31,6 +31,8 @@ dependencies:
   json_annotation: ^4.9.0
   logging: ^1.2.0
   nz_common: ^1.0.0
+  nz_drift:
+    path: packages/nz_drift
   nz_tags_models:
     path: packages/features/nz_tags_models
   nz_tasks_models:

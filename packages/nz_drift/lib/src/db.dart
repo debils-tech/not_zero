@@ -1,22 +1,19 @@
 // Try to use "primary key" for selecting data by unique key.
 // ignore_for_file: invalid_use_of_visible_for_overriding_member
 import 'package:drift/drift.dart';
-import 'package:not_zero/db/drift/open_database.dart';
-import 'package:not_zero/db/provider.dart';
-import 'package:not_zero/db/tags_table.dart';
-import 'package:not_zero/db/tasks_table.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
-import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
+
+import 'database/open_database.dart';
+import 'tables/tags_table.dart';
+import 'tables/tasks_table.dart';
 
 part 'db.g.dart';
 
 @DriftDatabase(tables: [TasksTable, TagsTable, TasksTagEntries])
 class NotZeroDatabase extends _$NotZeroDatabase {
   NotZeroDatabase() : super(openDriftDatabase());
-
-  NotZeroDatabase.connect(super.connection) : super.connect();
 
   NotZeroDatabase.memory() : super(openDriftDatabase(permament: false));
 
@@ -51,7 +48,10 @@ class NotZeroDatabase extends _$NotZeroDatabase {
   }
 
   Future<void> deleteFromDisk() async {
-    final dbFile = File(await _getDatabasePath());
+    final path = await getDatabasePath();
+    if (path == null) return;
+
+    final dbFile = File(path);
     if (dbFile.existsSync()) {
       await close();
       dbFile.deleteSync();
@@ -80,9 +80,4 @@ class NotZeroDatabase extends _$NotZeroDatabase {
     return (delete(table)..where((tbl) => tbl.primaryKey!.single.equals(key)))
         .go();
   }
-}
-
-Future<String> _getDatabasePath() async {
-  final storagePath = await StorageProvider.storageDirectory;
-  return p.join(storagePath, 'db.sqlite');
 }
