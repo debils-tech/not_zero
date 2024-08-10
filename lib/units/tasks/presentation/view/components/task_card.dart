@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/selection/widgets/selectable_card.dart';
-import 'package:not_zero/i18n/translations.g.dart';
-import 'package:not_zero/themes/tasks_colors.dart';
 import 'package:not_zero/units/tags/presentation/view/tag_list_indicator.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 import 'package:nz_common/nz_common.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 class TaskCard extends StatelessWidget {
@@ -134,15 +133,26 @@ class _ImportanceIndicatorBox extends StatelessWidget {
         border: Border(
           left: BorderSide(
             width: 7,
-            color: Theme.of(context)
-                .tasksColorScheme
-                .colorByImportance(importance),
+            color: _colorByImportance(
+              importance,
+              Theme.of(context).tasksColorScheme,
+            ),
           ),
         ),
       ),
       child: child,
     );
   }
+
+  Color _colorByImportance(
+    TaskImportance importance,
+    TasksColorScheme colorScheme,
+  ) =>
+      switch (importance) {
+        TaskImportance.notImportant => colorScheme.notImportantColor,
+        TaskImportance.normal => colorScheme.normalColor,
+        TaskImportance.important => colorScheme.importantColor,
+      };
 }
 
 class _TaskCheckbox extends StatelessWidget {

@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/global_navigation.dart';
-import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/settings/domain/repositories/settings_repository.dart';
 import 'package:not_zero/units/settings/presentation/view/components/list_elements.dart';
 import 'package:nz_common/nz_common.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:universal_io/io.dart';
 
 class StorageSettingsScreen extends StatelessWidget {

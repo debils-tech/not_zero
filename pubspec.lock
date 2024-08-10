@@ -760,6 +760,20 @@ packages:
       relative: true
     source: path
     version: "1.0.0"
+  nz_flutter_core:
+    dependency: "direct main"
+    description:
+      path: "packages/nz_flutter_core"
+      relative: true
+    source: path
+    version: "0.0.1"
+  nz_logger:
+    dependency: "direct main"
+    description:
+      path: "packages/nz_logger"
+      relative: true
+    source: path
+    version: "1.0.0"
   nz_tags_models:
     dependency: "direct main"
     description:

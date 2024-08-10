@@ -1,12 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 
-void configLogger() {
-  Logger.root.level = Level.ALL;
+void configLogger({bool production = false}) {
+  Logger.root.level = production ? Level.INFO : Level.ALL;
 
-  if (kDebugMode || kProfileMode) {
-    Logger.root.onRecord.listen(_printConsoleWrapped);
-  }
+  Logger.root.onRecord.listen(_printConsoleWrapped);
 }
 
 void _printConsoleWrapped(LogRecord record) {
@@ -24,13 +21,13 @@ void _printConsoleWrapped(LogRecord record) {
   final iter = splitMessage.iterator..moveNext();
   resultingText += '${iter.current}';
 
-  debugPrint(resultingText);
+  print(resultingText);
   while (iter.moveNext()) {
-    debugPrint(iter.current);
+    print(iter.current);
   }
 
   final logStackTrace = record.stackTrace;
   if (logStackTrace != null) {
-    debugPrintStack(stackTrace: logStackTrace);
+    print(logStackTrace);
   }
 }

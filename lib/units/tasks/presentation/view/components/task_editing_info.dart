@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:not_zero/i18n/translations.g.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 class TaskEditingInfo extends StatelessWidget {

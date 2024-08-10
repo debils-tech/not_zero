@@ -6,9 +6,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/get_it.dart';
-import 'package:not_zero/i18n/translations.g.dart';
-import 'package:not_zero/themes/tags_colors.dart';
 import 'package:not_zero/units/tags/domain/repositories/tags_repository.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 
 class TagCreationDialog extends StatefulWidget {
@@ -111,7 +110,7 @@ class _TagColorField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colors = theme.tagsColorScheme.allColors;
+    final colors = theme.tagsColorScheme.allColors();
 
     const verticalPadding = 10.0;
     const iconSize = 34.0;

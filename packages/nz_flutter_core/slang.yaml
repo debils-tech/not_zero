@@ -1,5 +1,6 @@
 namespaces: true
-input_directory: lib/i18n
+input_directory: assets/lang
 input_file_pattern: .i18n.yaml
-output_directory: lib/i18n
+output_directory: lib/src/translations
 output_file_name: translations.g.dart
+timestamp: false

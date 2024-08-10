@@ -3,8 +3,8 @@ import 'package:not_zero/constants/links.dart';
 import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/helpers/not_zero_icons.dart';
-import 'package:not_zero/i18n/translations.g.dart';
 import 'package:not_zero/units/settings/presentation/view/components/list_elements.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});

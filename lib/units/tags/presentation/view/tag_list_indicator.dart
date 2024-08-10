@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:not_zero/themes/tags_colors.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 
 class TagListIndicator extends StatelessWidget {

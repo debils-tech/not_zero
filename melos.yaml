@@ -1,5 +1,22 @@
 name: not_zero
 
+scripts:
+  generate:
+    exec: dart run build_runner build -d
+    orderDependents: true
+    packageFilters:
+      dependsOn:
+        - build_runner
+  l10n:
+    exec: dart run slang
+    packageFilters:
+      dependsOn:
+        - slang
+  format:
+    exec: dart format .
+  fix:
+    exec: dart fix --apply .
+
 packages:
   - .
   - packages/**

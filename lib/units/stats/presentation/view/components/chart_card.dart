@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:not_zero/themes/charts_colors.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class ChartCard extends StatelessWidget {
   const ChartCard({

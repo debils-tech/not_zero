@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:not_zero/i18n/translations.g.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class ElevatedCopyButton extends StatefulWidget {
   const ElevatedCopyButton(

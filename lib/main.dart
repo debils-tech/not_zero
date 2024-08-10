@@ -9,21 +9,21 @@ import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/custom_scroll_behavior.dart';
 import 'package:not_zero/helpers/global_navigation.dart';
 import 'package:not_zero/helpers/licenses.dart';
-import 'package:not_zero/i18n/translations.g.dart';
-import 'package:not_zero/logger/config.dart';
 import 'package:not_zero/routes.dart';
-import 'package:not_zero/themes/themes.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
 import 'package:not_zero/units/settings/presentation/bloc/theme_bloc.dart';
 import 'package:nz_common/nz_common.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
+import 'package:nz_logger/nz_logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StorageProvider.initHiveBoxes();
 
+  // ignore: avoid_redundant_argument_values
+  configLogger(production: !kDebugMode);
   configureDependencies();
   addAppLicenses();
-  configLogger();
 
   runApp(
     TranslationProvider(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/adaptive/list_limiter.dart';
 import 'package:not_zero/components/common_widgets/clickable_card.dart';
-import 'package:not_zero/i18n/translations.g.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class HomeNavigationBlock extends StatelessWidget {
   const HomeNavigationBlock({super.key});

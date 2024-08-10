@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:not_zero/get_it.dart';
-import 'package:not_zero/themes/tags_colors.dart';
 import 'package:not_zero/units/tags/presentation/bloc/tags_selection_cubit.dart';
 import 'package:not_zero/units/tags/presentation/view/tag_creation_dialog.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 
 class ItemTagSelector extends StatelessWidget {

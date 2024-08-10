@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/get_it.dart';
-import 'package:not_zero/i18n/translations.g.dart';
-import 'package:not_zero/themes/tasks_colors.dart';
 import 'package:not_zero/units/tags/presentation/view/tag_list_indicator.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_editing_info.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 class TaskViewScreen extends StatelessWidget {
@@ -44,12 +43,23 @@ class _TaskViewImportanceIndicator extends StatelessWidget
     return ConstrainedBox(
       constraints: BoxConstraints.expand(height: preferredSize.height),
       child: ColoredBox(
-        color: Theme.of(context)
-            .tasksColorScheme
-            .colorByImportance(task.importance),
+        color: _colorByImportance(
+          task.importance,
+          Theme.of(context).tasksColorScheme,
+        ),
       ),
     );
   }
+
+  Color _colorByImportance(
+    TaskImportance importance,
+    TasksColorScheme colorScheme,
+  ) =>
+      switch (importance) {
+        TaskImportance.notImportant => colorScheme.notImportantColor,
+        TaskImportance.normal => colorScheme.normalColor,
+        TaskImportance.important => colorScheme.importantColor,
+      };
 }
 
 class _TaskViewScreenBody extends StatelessWidget {

@@ -33,6 +33,10 @@ dependencies:
   nz_common: ^1.0.0
   nz_drift:
     path: packages/nz_drift
+  nz_flutter_core:
+    path: packages/nz_flutter_core
+  nz_logger:
+    path: packages/nz_logger
   nz_tags_models:
     path: packages/features/nz_tags_models
   nz_tasks_models:
