@@ -8,8 +8,8 @@ import 'package:logging/logging.dart';
 import 'package:not_zero/components/web_save_dialog.dart';
 import 'package:not_zero/helpers/global_navigation.dart';
 import 'package:nz_common/nz_common.dart';
+import 'package:nz_io/nz_io.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:universal_io/io.dart';
 
 abstract class MultiplatformFileHelper {
   static MultiplatformFileHelper? _instance;

@@ -14,6 +14,9 @@ scripts:
         - slang
   fix:
     exec: dart fix --apply .
+  upgrade:
+    exec: dart pub upgrade --major-versions
+    orderDependents: true
 
 packages:
   - .

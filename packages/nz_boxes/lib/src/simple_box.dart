@@ -1,9 +1,9 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nz_boxes/src/not_zero_box.dart';
 import 'package:nz_common/nz_common.dart';
+import 'package:nz_io/nz_io.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:universal_io/io.dart';
 
 class NotZeroSimpleBox implements NotZeroBox<String> {
   final String _boxName;

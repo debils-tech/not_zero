@@ -1,4 +1,6 @@
-# melos_managed_dependency_overrides: nz_common
+# melos_managed_dependency_overrides: nz_common,nz_io
 dependency_overrides:
   nz_common:
     path: ../nz_common
+  nz_io:
+    path: ../nz_io

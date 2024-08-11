@@ -1,9 +1,9 @@
 // Try to use "primary key" for selecting data by unique key.
 // ignore_for_file: invalid_use_of_visible_for_overriding_member
 import 'package:drift/drift.dart';
+import 'package:nz_io/nz_io.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
-import 'package:universal_io/io.dart';
 
 import 'database/open_database.dart';
 import 'tables/tags_table.dart';

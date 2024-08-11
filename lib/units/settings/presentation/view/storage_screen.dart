@@ -5,7 +5,7 @@ import 'package:not_zero/helpers/global_navigation.dart';
 import 'package:not_zero/units/settings/presentation/view/components/list_elements.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
-import 'package:universal_io/io.dart';
+import 'package:nz_io/nz_io.dart';
 
 class StorageSettingsScreen extends StatelessWidget {
   const StorageSettingsScreen({super.key});
@@ -93,45 +93,45 @@ class StorageSettingsScreen extends StatelessWidget {
   //
   //   _showSuccessfulImportDialog(actions: closeDialogAction);
   // }
-
-  void _showExportingDialog({
-    required IconData icon,
-    required String title,
-  }) =>
-      unawaited(
-        showDialog(
-          context: GlobalNavigation.context,
-          barrierDismissible: false,
-          builder: (context) {
-            return AlertDialog(
-              icon: const Icon(Icons.save_rounded),
-              title: Text(title),
-              content: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                ],
-              ),
-            );
-          },
-        ),
-      );
-
-  void _showSuccessfulImportDialog({List<Widget>? actions}) => unawaited(
-        showDialog(
-          context: GlobalNavigation.context,
-          barrierDismissible: false,
-          builder: (context) {
-            // There is an option to close an app only on this platforms
-            final isClosingSupported = Platform.isAndroid || isPlatformDesktop;
-
-            return AlertDialog(
-              icon: const Icon(Icons.warning_amber_rounded),
-              title: Text(t.settings.storage.importStatus.successTitle),
-              content: Text(t.settings.storage.importStatus.success),
-              actions: isClosingSupported ? actions : null,
-            );
-          },
-        ),
-      );
+  //
+  // void _showExportingDialog({
+  //   required IconData icon,
+  //   required String title,
+  // }) =>
+  //     unawaited(
+  //       showDialog(
+  //         context: GlobalNavigation.context,
+  //         barrierDismissible: false,
+  //         builder: (context) {
+  //           return AlertDialog(
+  //             icon: const Icon(Icons.save_rounded),
+  //             title: Text(title),
+  //             content: const Row(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               children: [
+  //                 CircularProgressIndicator(),
+  //               ],
+  //             ),
+  //           );
+  //         },
+  //       ),
+  //     );
+  //
+  // void _showSuccessfulImportDialog({List<Widget>? actions}) => unawaited(
+  //       showDialog(
+  //         context: GlobalNavigation.context,
+  //         barrierDismissible: false,
+  //         builder: (context) {
+  //           // There is an option to close an app only on this platforms
+  //           final isClosingSupported = Platform.isAndroid || isPlatformDesktop;
+  //
+  //           return AlertDialog(
+  //             icon: const Icon(Icons.warning_amber_rounded),
+  //             title: Text(t.settings.storage.importStatus.successTitle),
+  //             content: Text(t.settings.storage.importStatus.success),
+  //             actions: isClosingSupported ? actions : null,
+  //           );
+  //         },
+  //       ),
+  //     );
 }

@@ -1,4 +1,4 @@
-import 'package:universal_io/io.dart';
+import 'package:nz_io/nz_io.dart';
 
 /// Checks if code is running using `flutter test` or not.
 ///
