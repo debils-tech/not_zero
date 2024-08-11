@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/constants/links.dart';
-import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/helpers/not_zero_icons.dart';
 import 'package:not_zero/units/settings/presentation/view/components/list_elements.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
-class AboutScreen extends StatelessWidget {
+class AboutScreen extends ConsumerWidget {
   const AboutScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final appInfo = getIt<AppInfo>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appInfo = AppInfo.fromJson({}); // TODO(uSlashVlad): Fix AppInfo here
     return Scaffold(
       appBar: AppBar(
         title: Text(t.settings.about.title),

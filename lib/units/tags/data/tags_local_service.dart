@@ -1,11 +1,8 @@
-import 'package:injectable/injectable.dart';
-import 'package:not_zero/db/provider.dart';
 import 'package:nz_drift/nz_drift.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 
-@lazySingleton
 class TagsLocalService {
-  TagsLocalService(StorageProvider storage) : _db = storage.database;
+  TagsLocalService(this._db);
 
   final NotZeroDatabase _db;
 

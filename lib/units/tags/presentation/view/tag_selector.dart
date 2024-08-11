@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:not_zero/get_it.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero/units/tags/di.dart';
 import 'package:not_zero/units/tags/presentation/bloc/tags_selection_cubit.dart';
 import 'package:not_zero/units/tags/presentation/view/tag_creation_dialog.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 
-class ItemTagSelector extends StatelessWidget {
+class ItemTagSelector extends ConsumerWidget {
   const ItemTagSelector({
     required this.selectedTags,
     required this.onSelection,
@@ -17,9 +18,9 @@ class ItemTagSelector extends StatelessWidget {
   final void Function(List<ItemTag> tags) onSelection;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return BlocProvider(
-      create: (_) => getIt<TagsSelectionCubit>(),
+      create: (_) => ref.watch(tagsSelectionCubitProvider),
       child: SizedBox(
         height: 40,
         child: BlocBuilder<TagsSelectionCubit, TagsSelectionState>(

@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
 
 part 'home_score_cubit.freezed.dart';
 part 'home_score_state.dart';
 
-@injectable
 class HomeScoreCubit extends Cubit<HomeScoreState> {
   HomeScoreCubit(this._repository) : super(const HomeScoreState()) {
     _countingSub = _repository.getTotalPoints().listen(_countChangeListener);

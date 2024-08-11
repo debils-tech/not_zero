@@ -1,5 +1,7 @@
-# melos_managed_dependency_overrides: nz_common,nz_tags_models,nz_tasks_models,nz_drift,nz_logger,nz_flutter_core
+# melos_managed_dependency_overrides: nz_common,nz_tags_models,nz_tasks_models,nz_drift,nz_logger,nz_flutter_core,nz_boxes
 dependency_overrides:
+  nz_boxes:
+    path: packages/nz_boxes
   nz_common:
     path: packages/nz_common
   nz_drift:

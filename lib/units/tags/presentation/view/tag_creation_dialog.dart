@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
-import 'package:not_zero/get_it.dart';
-import 'package:not_zero/units/tags/domain/repositories/tags_repository.dart';
+import 'package:not_zero/units/tags/di.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 
@@ -158,13 +158,13 @@ class _TagColorField extends StatelessWidget {
   }
 }
 
-class _DeleteButton extends StatelessWidget {
+class _DeleteButton extends ConsumerWidget {
   const _DeleteButton(this.tagId);
 
   final String tagId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       onPressed: () async {
         final navigator = GoRouter.of(context);
@@ -176,7 +176,7 @@ class _DeleteButton extends StatelessWidget {
           dangerous: true,
         );
         if (confirm ?? false) {
-          unawaited(getIt<TagsRepository>().deleteTag(tagId));
+          unawaited(ref.read(tagsRepositoryProvider).deleteTag(tagId));
           navigator.pop();
         }
       },
@@ -189,14 +189,14 @@ class _DeleteButton extends StatelessWidget {
   }
 }
 
-class _SubmitButton extends StatelessWidget {
+class _SubmitButton extends ConsumerWidget {
   const _SubmitButton(this.formKey, {required this.tagToEdit});
 
   final GlobalKey<FormBuilderState> formKey;
   final ItemTag? tagToEdit;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () {
         final isValid = formKey.currentState!.validate();
@@ -213,7 +213,7 @@ class _SubmitButton extends StatelessWidget {
             tag = tagToEdit!.edit(name: name, colorIndex: color);
           }
 
-          getIt<TagsRepository>().addTag(tag);
+          ref.read(tagsRepositoryProvider).addTag(tag);
           context.pop();
         }
       },

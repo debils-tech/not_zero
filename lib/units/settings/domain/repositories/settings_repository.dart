@@ -1,14 +1,10 @@
-import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:not_zero/constants/database.dart';
-import 'package:not_zero/get_it.dart';
-import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/units/settings/data/backup_local_service.dart';
 import 'package:not_zero/units/settings/data/settings_local_service.dart';
 import 'package:not_zero/units/settings/domain/models/backup_model.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
 
-@lazySingleton
 class SettingsRepository {
   SettingsRepository(this._settingsLocalService, this._backupLocalService);
 
@@ -40,7 +36,7 @@ class SettingsRepository {
 
     final backupContent = BackupModel(
       version: 2,
-      appInfo: getIt<AppInfo>(),
+      // appInfo: getIt<AppInfo>(), // TODO(uSlashVlad): Return AppInfo here
       data: {
         BoxNames.settings: settings,
         TableNames.tasks: tasks,

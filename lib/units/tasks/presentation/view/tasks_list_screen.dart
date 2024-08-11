@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/adaptive/list_limiter.dart';
 import 'package:not_zero/components/common_widgets/universal_list_view.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
-import 'package:not_zero/get_it.dart';
+import 'package:not_zero/units/tasks/di.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_card.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/tasks_list_app_bar.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
-class TasksListScreen extends StatelessWidget {
+class TasksListScreen extends ConsumerWidget {
   const TasksListScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => getIt<ItemSelectionBloc>()),
         BlocProvider(
-          create: (_) =>
-              getIt<TasksListBloc>()..add(const TasksListEvent.loadTasks()),
+          create: (_) => ref.watch(tasksSelectionBlocProvider),
+        ),
+        BlocProvider(
+          create: (_) => ref.watch(tasksListBlocProvider)
+            ..add(const TasksListEvent.loadTasks()),
         ),
       ],
       child: const Scaffold(

@@ -7,7 +7,6 @@ part 'app_info.freezed.dart';
 part 'app_info.g.dart';
 
 @freezed
-@singleton
 class AppInfo with _$AppInfo {
   const factory AppInfo({
     required String name,

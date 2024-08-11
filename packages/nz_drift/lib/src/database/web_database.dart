@@ -2,8 +2,8 @@
 import 'package:drift/drift.dart';
 import 'package:drift/web.dart';
 
-QueryExecutor openDriftDatabase({bool permament = true}) {
-  if (permament) {
+QueryExecutor openDriftDatabase({bool permanent = true}) {
+  if (permanent) {
     return LazyDatabase(() async {
       return WebDatabase.withStorage(
         await DriftWebStorage.indexedDbIfSupported('NotZero'),

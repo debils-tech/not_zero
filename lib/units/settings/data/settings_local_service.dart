@@ -1,21 +1,17 @@
-import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:not_zero/constants/database.dart';
-import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/units/settings/domain/models/theme_state.dart';
+import 'package:nz_boxes/nz_boxes.dart';
 
-@lazySingleton
 class SettingsLocalService {
-  SettingsLocalService(StorageProvider storage) {
-    _settingsBox = storage.settings;
-  }
+  SettingsLocalService(this._settingsBox);
 
-  late final Box<String> _settingsBox;
+  final NotZeroSimpleBox _settingsBox;
 
   final log = Logger('SettingsLocalService');
 
   ThemeState? getThemeState() {
-    final stringValue = _settingsBox.get(SettingsKeys.themeState);
+    final stringValue = _settingsBox.value(SettingsKeys.themeState);
 
     if (stringValue != null) {
       return ThemeState.values.byName(stringValue);

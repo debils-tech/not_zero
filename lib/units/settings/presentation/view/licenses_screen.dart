@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:not_zero/get_it.dart';
 import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/helpers/not_zero_icons.dart';
 
@@ -8,7 +7,7 @@ class LicensesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appInfo = getIt<AppInfo>();
+    final appInfo = AppInfo.fromJson({}); // TODO(uSlashVlad): Fix AppInfo here
     return LicensePage(
       applicationName: appInfo.name,
       applicationIcon: const Padding(

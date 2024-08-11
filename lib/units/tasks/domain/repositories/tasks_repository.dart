@@ -1,10 +1,8 @@
-import 'package:injectable/injectable.dart';
 import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
 import 'package:not_zero/units/tasks/data/tasks_local_service.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 import 'package:rxdart/rxdart.dart';
 
-@lazySingleton
 class TasksRepository {
   TasksRepository(this._localService, this._statsRepository);
 

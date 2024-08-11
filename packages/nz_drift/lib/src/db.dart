@@ -15,7 +15,7 @@ part 'db.g.dart';
 class NotZeroDatabase extends _$NotZeroDatabase {
   NotZeroDatabase() : super(openDriftDatabase());
 
-  NotZeroDatabase.memory() : super(openDriftDatabase(permament: false));
+  NotZeroDatabase.memory() : super(openDriftDatabase(permanent: false));
 
   @override
   int get schemaVersion => 3;

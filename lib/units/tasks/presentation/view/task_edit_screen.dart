@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
-import 'package:not_zero/get_it.dart';
+import 'package:not_zero/units/tasks/di.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_edit_fields.dart';
 import 'package:not_zero/units/tasks/presentation/view/components/task_editing_info.dart';
@@ -13,13 +14,13 @@ import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
-class TaskEditScreen extends StatelessWidget {
+class TaskEditScreen extends ConsumerWidget {
   const TaskEditScreen({this.taskToEdit, super.key});
 
   final Task? taskToEdit;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormBuilderState>();
 
     final screenTitle = taskToEdit == null
@@ -29,7 +30,7 @@ class TaskEditScreen extends StatelessWidget {
         taskToEdit != null ? [_DeleteTaskButton(taskToEdit!)] : null;
 
     return BlocProvider(
-      create: (_) => getIt<TaskEditCubit>(),
+      create: (_) => ref.watch(taskEditCubitProvider),
       child: BlocBuilder<TaskEditCubit, bool>(
         builder: (context, state) {
           return Scaffold(

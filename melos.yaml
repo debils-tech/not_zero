@@ -12,8 +12,6 @@ scripts:
     packageFilters:
       dependsOn:
         - slang
-  format:
-    exec: dart format .
   fix:
     exec: dart fix --apply .
 

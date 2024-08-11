@@ -1,16 +1,11 @@
 import 'package:drift/drift.dart';
-import 'package:injectable/injectable.dart';
-import 'package:not_zero/db/provider.dart';
 import 'package:nz_drift/nz_drift.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
-@lazySingleton
 class StatsLocalService {
-  StatsLocalService(StorageProvider storage) {
-    _db = storage.database;
-  }
+  StatsLocalService(this._db);
 
-  late final NotZeroDatabase _db;
+  final NotZeroDatabase _db;
 
   Future<List<TaskImportance>> getCompletedTasksImportance({
     DateTime? startPeriod,

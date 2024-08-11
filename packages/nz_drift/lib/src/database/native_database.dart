@@ -6,8 +6,8 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';
 
-QueryExecutor openDriftDatabase({bool permament = true}) {
-  if (permament) {
+QueryExecutor openDriftDatabase({bool permanent = true}) {
+  if (permanent) {
     return LazyDatabase(() async {
       final path = await getDatabasePath();
       final file = File(path!);

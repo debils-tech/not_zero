@@ -1,30 +1,26 @@
 import 'dart:convert';
 
 import 'package:drift/drift.dart';
-import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
-import 'package:not_zero/db/provider.dart';
 import 'package:not_zero/helpers/file_helper.dart';
 import 'package:not_zero/units/settings/domain/models/backup_model.dart';
 import 'package:not_zero/units/tags/data/tags_local_service.dart';
 import 'package:not_zero/units/tasks/data/tasks_local_service.dart';
+import 'package:nz_boxes/nz_boxes.dart';
 import 'package:nz_drift/nz_drift.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
-@lazySingleton
 class BackupLocalService {
   BackupLocalService(
-    StorageProvider storage,
+    this._db,
+    this._settingsBox,
     this._tasksLocalService,
     this._tagsLocalService,
-  ) {
-    _settingsBox = storage.settings;
-    _db = storage.database;
-  }
+  );
 
-  late final Box<String> _settingsBox;
-  late final NotZeroDatabase _db;
+  final NotZeroSimpleBox _settingsBox;
+  final NotZeroDatabase _db;
 
   final TasksLocalService _tasksLocalService;
   final TagsLocalService _tagsLocalService;
@@ -32,7 +28,7 @@ class BackupLocalService {
   final log = Logger('BackupLocalService');
 
   Map<String, String> getAllSettings() {
-    return _settingsBox.toMap().cast();
+    return _settingsBox.dump();
   }
 
   Future<List<Map<String, dynamic>>> getAllTasks() async {
@@ -46,7 +42,7 @@ class BackupLocalService {
   }
 
   Future<void> applyAllSettings(Map<String, String> settings) async {
-    await _settingsBox.clear();
+    await _settingsBox.clearAll();
     await _settingsBox.putAll(settings);
   }
 
