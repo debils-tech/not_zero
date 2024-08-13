@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero/units/settings/di.dart';
 import 'package:not_zero/units/settings/models/theme_state.dart';
-import 'package:not_zero/units/settings/bloc/theme_bloc.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class ThemeSettingsScreen extends StatelessWidget {
@@ -33,22 +33,25 @@ class ThemeSettingsScreen extends StatelessWidget {
   }
 }
 
-class _ThemeSettingsOption extends StatelessWidget {
+class _ThemeSettingsOption extends ConsumerWidget {
   const _ThemeSettingsOption({required this.name, required this.state});
 
   final String name;
   final ThemeState state;
 
   @override
-  Widget build(BuildContext context) {
-    final themeBloc = context.watch<AppThemeBloc>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeState = ref.watch(themeStateNotifierProvider);
+    final themeStateController = ref.watch(themeStateNotifierProvider.notifier);
 
     return RadioListTile<ThemeState>(
       value: state,
-      groupValue: themeBloc.state,
+      groupValue: themeState,
       title: Text(name),
       onChanged: (value) {
-        if (value != themeBloc.state) themeBloc.add(value!);
+        if (value != null && value != themeState) {
+          themeStateController.setTheme(value);
+        }
       },
     );
   }

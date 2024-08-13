@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero/units/settings/bloc/theme_bloc.dart';
+import 'package:not_zero/units/settings/models/theme_state.dart';
+import 'package:not_zero/units/settings/notifiers/theme_state_notifier.dart';
 import 'package:not_zero/units/settings/repositories/settings_repository.dart';
 import 'package:not_zero/units/settings/services/backup_local_service.dart';
 import 'package:not_zero/units/settings/services/settings_local_service.dart';
@@ -29,10 +30,9 @@ final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   );
 });
 
-// BLOC
+// RIVERPOD
 
-final appThemeBlocProvider = Provider.autoDispose<AppThemeBloc>((ref) {
-  return AppThemeBloc(
-    ref.watch(settingsRepositoryProvider),
-  );
-});
+final themeStateNotifierProvider =
+    NotifierProvider.autoDispose<ThemeStateNotifier, ThemeState>(
+  ThemeStateNotifier.new,
+);
