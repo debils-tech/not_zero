@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:not_zero/units/settings/domain/models/theme_state.dart';
-import 'package:not_zero/units/settings/presentation/bloc/theme_bloc.dart';
+import 'package:not_zero/units/settings/models/theme_state.dart';
+import 'package:not_zero/units/settings/bloc/theme_bloc.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class ThemeSettingsScreen extends StatelessWidget {

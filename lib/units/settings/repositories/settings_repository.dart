@@ -1,9 +1,9 @@
 import 'package:logging/logging.dart';
 import 'package:not_zero/constants/database.dart';
-import 'package:not_zero/units/settings/data/backup_local_service.dart';
-import 'package:not_zero/units/settings/data/settings_local_service.dart';
-import 'package:not_zero/units/settings/domain/models/backup_model.dart';
-import 'package:not_zero/units/settings/domain/models/theme_state.dart';
+import 'package:not_zero/units/settings/services/backup_local_service.dart';
+import 'package:not_zero/units/settings/services/settings_local_service.dart';
+import 'package:not_zero/units/settings/models/backup_model.dart';
+import 'package:not_zero/units/settings/models/theme_state.dart';
 
 class SettingsRepository {
   SettingsRepository(this._settingsLocalService, this._backupLocalService);

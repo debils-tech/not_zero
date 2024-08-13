@@ -1,6 +1,6 @@
 import 'package:logging/logging.dart';
 import 'package:not_zero/constants/database.dart';
-import 'package:not_zero/units/settings/domain/models/theme_state.dart';
+import 'package:not_zero/units/settings/models/theme_state.dart';
 import 'package:nz_boxes/nz_boxes.dart';
 
 class SettingsLocalService {

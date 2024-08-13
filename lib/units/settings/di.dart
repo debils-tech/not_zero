@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero/units/settings/data/backup_local_service.dart';
-import 'package:not_zero/units/settings/data/settings_local_service.dart';
-import 'package:not_zero/units/settings/domain/repositories/settings_repository.dart';
-import 'package:not_zero/units/settings/presentation/bloc/theme_bloc.dart';
+import 'package:not_zero/units/settings/bloc/theme_bloc.dart';
+import 'package:not_zero/units/settings/repositories/settings_repository.dart';
+import 'package:not_zero/units/settings/services/backup_local_service.dart';
+import 'package:not_zero/units/settings/services/settings_local_service.dart';
 import 'package:not_zero/units/storage/di.dart';
 import 'package:not_zero/units/tags/di.dart';
 import 'package:not_zero/units/tasks/di.dart';

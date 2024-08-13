@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:logging/logging.dart';
 import 'package:not_zero/helpers/file_helper.dart';
-import 'package:not_zero/units/settings/domain/models/backup_model.dart';
+import 'package:not_zero/units/settings/models/backup_model.dart';
 import 'package:not_zero/units/tags/data/tags_local_service.dart';
 import 'package:not_zero/units/tasks/data/tasks_local_service.dart';
 import 'package:nz_boxes/nz_boxes.dart';
