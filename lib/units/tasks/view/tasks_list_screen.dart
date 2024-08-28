@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/adaptive/list_limiter.dart';
 import 'package:not_zero/components/common_widgets/universal_list_view.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
-import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
-import 'package:not_zero/components/selection/bloc/selection_event.dart';
+import 'package:not_zero/components/selection/di.dart';
+import 'package:not_zero/components/selection/notifiers/item_selection_notifier.dart';
 import 'package:not_zero/units/tasks/di.dart';
 import 'package:not_zero/units/tasks/view/components/task_card.dart';
 import 'package:not_zero/units/tasks/view/components/tasks_list_app_bar.dart';
@@ -20,11 +19,9 @@ class TasksListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => ref.watch(tasksSelectionBlocProvider),
-        ),
+    return ProviderScope(
+      overrides: [
+        itemSelectionNotifierProvider.overrideWith(ItemSelectionNotifier.new),
       ],
       child: const Scaffold(
         appBar: TasksListAppBar(),
@@ -40,39 +37,40 @@ class _TasksListFloatingButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return BlocBuilder<ItemSelectionBloc, Set<String>>(
-      builder: (context, state) {
-        if (state.isNotEmpty) {
-          return FloatingActionButton(
-            backgroundColor: Theme.of(context).colorScheme.error,
-            onPressed: () async {
-              final selectionBloc = context.read<ItemSelectionBloc>();
+    final selectionState = ref.watch(itemSelectionNotifierProvider);
 
-              final confirm = await showConfirmationDialog(
-                context,
-                title: t.common.dialog.deleteTitle,
-                content: t.tasks.list.deleteDialog
-                    .content(n: selectionBloc.state.length),
-                confirm: t.common.dialog.deleteButton,
-                dangerous: true,
-              );
-              if (confirm ?? false) {
-                unawaited(
-                  ref.read(tasksRepositoryProvider).deleteMultipleTasks(state),
-                );
-                selectionBloc.add(const ItemSelectionEvent.removeAll(null));
-              }
-            },
-            tooltip: t.tasks.list.tooltips.deleteSelectedButton,
-            child: const Icon(Icons.delete_outline_rounded),
+    if (selectionState.isNotEmpty) {
+      return FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.error,
+        onPressed: () async {
+          final selectedCount = ref.read(itemSelectionNotifierProvider).length;
+
+          final confirm = await showConfirmationDialog(
+            context,
+            title: t.common.dialog.deleteTitle,
+            content: t.tasks.list.deleteDialog.content(n: selectedCount),
+            confirm: t.common.dialog.deleteButton,
+            dangerous: true,
           );
-        }
-        return FloatingActionButton(
-          onPressed: () => context.push('/tasks/new'),
-          tooltip: t.tasks.list.tooltips.addNewButton,
-          child: const Icon(Icons.add_task_rounded),
-        );
-      },
+          if (confirm ?? false) {
+            final notifier = ref.read(itemSelectionNotifierProvider.notifier);
+            unawaited(
+              ref
+                  .read(tasksRepositoryProvider)
+                  .deleteMultipleTasks(selectionState),
+            );
+            notifier.removeAll();
+          }
+        },
+        tooltip: t.tasks.list.tooltips.deleteSelectedButton,
+        child: const Icon(Icons.delete_outline_rounded),
+      );
+    }
+
+    return FloatingActionButton(
+      onPressed: () => context.push('/tasks/new'),
+      tooltip: t.tasks.list.tooltips.addNewButton,
+      child: const Icon(Icons.add_task_rounded),
     );
   }
 }
@@ -82,23 +80,23 @@ class _TasksListScreenBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listKey = GlobalKey();
-
     final state = ref.watch(tasksListStreamProvider);
 
-    return WillPopScope(
-      onWillPop: () {
-        final selectionBloc = context.read<ItemSelectionBloc>();
-        if (selectionBloc.state.isEmpty) {
-          return Future.value(true);
-        }
+    final hasSelection = ref.watch(
+      itemSelectionNotifierProvider.select((selection) => selection.isNotEmpty),
+    );
 
-        selectionBloc.add(const ItemSelectionEvent.removeAll(null));
-        return Future.value(false);
+    return PopScope(
+      canPop: !hasSelection,
+      onPopInvokedWithResult: (canPop, _) {
+        if (!canPop) {
+          final selectionNotifier =
+              ref.read(itemSelectionNotifierProvider.notifier);
+          selectionNotifier.removeAll();
+        }
       },
       child: switch (state) {
-        AsyncData(value: final tasks) =>
-          _TasksListView(tasks, listKey: listKey),
+        AsyncData(value: final tasks) => _TasksListView(tasks),
         _ => const _TasksLoadingView(),
       },
     );
@@ -117,17 +115,16 @@ class _TasksLoadingView extends StatelessWidget {
 }
 
 class _TasksListView extends StatelessWidget {
-  const _TasksListView(this.tasks, {this.listKey});
+  const _TasksListView(this.tasks);
 
   final List<Task> tasks;
-  final GlobalKey? listKey;
 
   @override
   Widget build(BuildContext context) {
     return AdaptiveListLimiter(
       maxWidth: 600,
       child: UniversalListView<Task>(
-        listKey: listKey,
+        listKey: null,
         items: tasks,
         itemBuilder: (_, item, __) => TaskCard(
           item,

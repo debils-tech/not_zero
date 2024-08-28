@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/components/common_widgets/clickable_card.dart';
-import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
-import 'package:not_zero/components/selection/bloc/selection_event.dart';
+import 'package:not_zero/components/selection/di.dart';
 
-class SelectableCard extends StatelessWidget {
+class SelectableCard extends ConsumerWidget {
   const SelectableCard({
     required this.identifier,
     required this.child,
@@ -19,17 +18,24 @@ class SelectableCard extends StatelessWidget {
   static const _animDuration = Duration(milliseconds: 150);
 
   @override
-  Widget build(BuildContext context) {
-    final bloc = context.watch<ItemSelectionBloc>();
-    final isSelected = bloc.state.contains(identifier);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifier = ref.watch(itemSelectionNotifierProvider.notifier);
+
+    final isSelected = ref.watch(
+      itemSelectionNotifierProvider
+          .select((selection) => selection.contains(identifier)),
+    );
+    final selectionIsActive = ref.watch(
+      itemSelectionNotifierProvider.select((selection) => selection.isNotEmpty),
+    );
 
     final theme = Theme.of(context);
 
     void toggleSelection() {
       if (isSelected) {
-        bloc.add(ItemSelectionEvent.remove(identifier));
+        notifier.remove(identifier);
       } else {
-        bloc.add(ItemSelectionEvent.add(identifier));
+        notifier.add(identifier);
       }
     }
 
@@ -49,7 +55,7 @@ class SelectableCard extends StatelessWidget {
         duration: _animDuration,
         child: ClickableCard(
           child: InkWell(
-            onTap: bloc.state.isNotEmpty ? toggleSelection : onTap,
+            onTap: selectionIsActive ? toggleSelection : onTap,
             onLongPress: toggleSelection,
             child: child,
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/units/stats/di.dart';
 import 'package:not_zero/units/storage/di.dart';
 import 'package:not_zero/units/tasks/repositories/tasks_repository.dart';
@@ -32,11 +31,4 @@ final taskStreamProvider =
   final repository = ref.watch(tasksRepositoryProvider);
   ref.onDispose(() => repository.disposeTaskSubscription(taskId));
   return repository.subscribeOnTaskById(taskId);
-});
-
-// BLOC
-
-final tasksSelectionBlocProvider =
-    Provider.autoDispose<ItemSelectionBloc>((ref) {
-  return ItemSelectionBloc();
 });
