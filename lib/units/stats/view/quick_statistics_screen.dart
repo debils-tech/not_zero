@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/components/adaptive/list_limiter.dart';
 import 'package:not_zero/components/common_widgets/date_range_switch.dart';
 import 'package:not_zero/units/stats/di.dart';
-import 'package:not_zero/units/stats/presentation/bloc/quick_statistics_cubit.dart';
-import 'package:not_zero/units/stats/presentation/view/components/chart_card.dart';
-import 'package:not_zero/units/stats/presentation/view/components/weekly_stats_chart.dart';
+import 'package:not_zero/units/stats/notifiers/quick_statistics_notifier.dart';
+import 'package:not_zero/units/stats/view/components/chart_card.dart';
+import 'package:not_zero/units/stats/view/components/weekly_stats_chart.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class QuickStatisticsScreen extends ConsumerWidget {
@@ -14,24 +13,23 @@ class QuickStatisticsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return BlocProvider(
-      create: (_) => ref.watch(quickStatisticsCubitProvider)..loadDays(),
-      child: const Scaffold(
-        appBar: _QuickStatsAppBar(),
-        body: _QuickStatsBody(),
-      ),
+    return const Scaffold(
+      appBar: _QuickStatsAppBar(),
+      body: _QuickStatsBody(),
     );
   }
 }
 
-class _QuickStatsAppBar extends StatelessWidget implements PreferredSizeWidget {
+class _QuickStatsAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const _QuickStatsAppBar();
 
   @override
   Size get preferredSize => const Size.fromHeight(100);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final quickStatsNotifier =
+        ref.watch(quickStatisticsNotifierProvider.notifier);
     return AppBar(
       title: Text(t.stats.quickView.title),
       bottom: PreferredSize(
@@ -39,8 +37,7 @@ class _QuickStatsAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: DateRangeSwitch(
-            onChanged: (start, end) =>
-                context.read<QuickStatisticsCubit>().loadDays(start, end),
+            onChanged: quickStatsNotifier.loadDays,
           ),
         ),
       ),
@@ -73,59 +70,66 @@ class _QuickStatsBody extends StatelessWidget {
   }
 }
 
-class _WeeklyChartWithSelection extends StatelessWidget {
+class _WeeklyChartWithSelection extends ConsumerWidget {
   const _WeeklyChartWithSelection();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final weeklyRendererKey = UniqueKey();
+
+    final state = ref.watch(quickStatisticsNotifierProvider);
+    final chartStats = state.chartStats;
+
+    if (chartStats == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return ChartCard(
       innerHeight: 220,
       padding: const EdgeInsets.symmetric(vertical: 15),
-      child: BlocBuilder<QuickStatisticsCubit, QuickStatisticsState>(
-        builder: (context, state) {
-          final stats = state.chartStats;
-          if (stats == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: WeeklyStatsChart(
-                  stats: stats,
-                  rendererKey: weeklyRendererKey,
-                  selectedIndex: state.selectedDayIndex,
-                  start: state.chartRangeStart,
-                  end: state.chartRangeEnd,
-                ),
-              ),
-              const _SelectionGesture(),
-            ],
-          );
-        },
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: WeeklyStatsChart(
+              stats: chartStats,
+              rendererKey: weeklyRendererKey,
+              selectedIndex: state.selectedDayIndex,
+              start: state.chartRangeStart,
+              end: state.chartRangeEnd,
+            ),
+          ),
+          const _SelectionGesture(),
+        ],
       ),
     );
   }
 }
 
-class _SelectionGesture extends StatelessWidget {
+class _SelectionGesture extends ConsumerWidget {
   const _SelectionGesture();
 
   @override
-  Widget build(BuildContext context) {
-    final cubit = context.read<QuickStatisticsCubit>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final quickStatsNotifier =
+        ref.watch(quickStatisticsNotifierProvider.notifier);
+
     return LayoutBuilder(
       builder: (context, constrains) {
         return SizedBox(
           width: constrains.maxWidth,
           height: constrains.maxHeight,
           child: Listener(
-            onPointerDown: (event) =>
-                _processTap(cubit, event.localPosition, constrains),
-            onPointerMove: (event) =>
-                _processTap(cubit, event.localPosition, constrains),
+            onPointerDown: (event) => _processTap(
+              quickStatsNotifier,
+              event.localPosition,
+              constrains,
+            ),
+            onPointerMove: (event) => _processTap(
+              quickStatsNotifier,
+              event.localPosition,
+              constrains,
+            ),
             behavior: HitTestBehavior.opaque,
           ),
         );
@@ -134,7 +138,7 @@ class _SelectionGesture extends StatelessWidget {
   }
 
   static void _processTap(
-    QuickStatisticsCubit cubit,
+    QuickStatisticsNotifier notifier,
     Offset eventPosition,
     BoxConstraints parentConstrains,
   ) {
@@ -150,6 +154,6 @@ class _SelectionGesture extends StatelessWidget {
       index = sectorsCount - 1;
     }
 
-    cubit.selectDay(index);
+    notifier.selectDay(index);
   }
 }

@@ -10,7 +10,7 @@ class BackupModel with _$BackupModel {
   factory BackupModel({
     required Map<String, dynamic> data,
     @Default(1) int version,
-    AppInfo? appInfo,
+    @JsonKey(name: 'app_info') AppInfo? appInfo,
   }) = _BackupModel;
 
   factory BackupModel.fromJson(Map<String, dynamic> json) =>

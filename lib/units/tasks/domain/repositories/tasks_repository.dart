@@ -1,4 +1,4 @@
-import 'package:not_zero/units/stats/domain/repositories/stats_repository.dart';
+import 'package:not_zero/units/stats/repositories/stats_repository.dart';
 import 'package:not_zero/units/tasks/data/tasks_local_service.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 import 'package:rxdart/rxdart.dart';

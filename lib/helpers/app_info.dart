@@ -5,6 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 part 'app_info.freezed.dart';
 part 'app_info.g.dart';
 
+@freezed
 class AppInfo with _$AppInfo {
   const factory AppInfo({
     required String name,
@@ -16,7 +17,7 @@ class AppInfo with _$AppInfo {
   factory AppInfo.fromJson(Map<String, dynamic> json) =>
       _$AppInfoFromJson(json);
 
-  static Future<AppInfo> fromEnviroment() async {
+  static Future<AppInfo> fromEnvironment() async {
     final packageInfo = await PackageInfo.fromPlatform();
 
     return AppInfo(
