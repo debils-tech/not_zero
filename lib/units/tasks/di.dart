@@ -4,9 +4,9 @@ import 'package:not_zero/units/stats/di.dart';
 import 'package:not_zero/units/storage/di.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 import 'package:not_zero/units/tasks/repositories/tasks_repository.dart';
 import 'package:not_zero/units/tasks/services/tasks_local_service.dart';
+import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 final tasksLocalServiceProvider = Provider<TasksLocalService>((ref) {
   return TasksLocalService(
@@ -21,6 +21,14 @@ final tasksRepositoryProvider = Provider<TasksRepository>((ref) {
   );
 });
 
+final tasksListStreamProvider =
+    StreamProvider.autoDispose<List<Task>>((ref) async* {
+  final repository = ref.watch(tasksRepositoryProvider);
+
+  await repository.syncTasks();
+  yield* repository.getTasks();
+});
+
 // BLOC
 
 final taskEditCubitProvider = Provider.autoDispose<TaskEditCubit>((ref) {
@@ -31,12 +39,6 @@ final taskEditCubitProvider = Provider.autoDispose<TaskEditCubit>((ref) {
 
 final taskViewCubitProvider = Provider.autoDispose<TaskViewCubit>((ref) {
   return TaskViewCubit(
-    ref.watch(tasksRepositoryProvider),
-  );
-});
-
-final tasksListBlocProvider = Provider.autoDispose<TasksListBloc>((ref) {
-  return TasksListBloc(
     ref.watch(tasksRepositoryProvider),
   );
 });

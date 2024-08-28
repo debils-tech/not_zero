@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero/units/tags/view/tag_list_indicator.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
+import 'package:not_zero/units/tasks/di.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
@@ -155,25 +155,21 @@ class _ImportanceIndicatorBox extends StatelessWidget {
       };
 }
 
-class _TaskCheckbox extends StatelessWidget {
+class _TaskCheckbox extends ConsumerWidget {
   const _TaskCheckbox({required this.task});
 
   final Task task;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Transform.scale(
       scale: 1.3,
       child: Checkbox(
         value: task.isCompleted,
         shape: const CircleBorder(),
-        onChanged: (value) => context.read<TasksListBloc>()
-          ..add(
-            TasksListEvent.changeTaskCompletion(
-              task,
-              completion: value ?? false,
+        onChanged: (value) => ref.read(tasksRepositoryProvider).updateTask(
+              task.complete(completed: value ?? false),
             ),
-          ),
       ),
     );
   }

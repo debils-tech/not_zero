@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +10,6 @@ import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/units/tasks/di.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
 import 'package:not_zero/units/tasks/view/components/task_card.dart';
 import 'package:not_zero/units/tasks/view/components/tasks_list_app_bar.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
@@ -24,10 +25,6 @@ class TasksListScreen extends ConsumerWidget {
         BlocProvider(
           create: (_) => ref.watch(tasksSelectionBlocProvider),
         ),
-        BlocProvider(
-          create: (_) => ref.watch(tasksListBlocProvider)
-            ..add(const TasksListEvent.loadTasks()),
-        ),
       ],
       child: const Scaffold(
         appBar: TasksListAppBar(),
@@ -38,18 +35,17 @@ class TasksListScreen extends ConsumerWidget {
   }
 }
 
-class _TasksListFloatingButton extends StatelessWidget {
+class _TasksListFloatingButton extends ConsumerWidget {
   const _TasksListFloatingButton();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return BlocBuilder<ItemSelectionBloc, Set<String>>(
       builder: (context, state) {
         if (state.isNotEmpty) {
           return FloatingActionButton(
             backgroundColor: Theme.of(context).colorScheme.error,
             onPressed: () async {
-              final taskListBloc = context.read<TasksListBloc>();
               final selectionBloc = context.read<ItemSelectionBloc>();
 
               final confirm = await showConfirmationDialog(
@@ -61,7 +57,9 @@ class _TasksListFloatingButton extends StatelessWidget {
                 dangerous: true,
               );
               if (confirm ?? false) {
-                taskListBloc.add(TasksListEvent.deleteSelected(state));
+                unawaited(
+                  ref.read(tasksRepositoryProvider).deleteMultipleTasks(state),
+                );
                 selectionBloc.add(const ItemSelectionEvent.removeAll(null));
               }
             },
@@ -79,12 +77,14 @@ class _TasksListFloatingButton extends StatelessWidget {
   }
 }
 
-class _TasksListScreenBody extends StatelessWidget {
+class _TasksListScreenBody extends ConsumerWidget {
   const _TasksListScreenBody();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final listKey = GlobalKey();
+
+    final state = ref.watch(tasksListStreamProvider);
 
     return WillPopScope(
       onWillPop: () {
@@ -96,14 +96,11 @@ class _TasksListScreenBody extends StatelessWidget {
         selectionBloc.add(const ItemSelectionEvent.removeAll(null));
         return Future.value(false);
       },
-      child: BlocBuilder<TasksListBloc, TasksListState>(
-        builder: (context, state) {
-          return state.when(
-            loading: () => const _TasksLoadingView(),
-            loaded: (tasks) => _TasksListView(tasks, listKey: listKey),
-          );
-        },
-      ),
+      child: switch (state) {
+        AsyncData(value: final tasks) =>
+          _TasksListView(tasks, listKey: listKey),
+        _ => const _TasksLoadingView(),
+      },
     );
   }
 }

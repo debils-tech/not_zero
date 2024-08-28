@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
+import 'package:not_zero/units/tasks/di.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
-class TasksListAppBar extends StatelessWidget implements PreferredSizeWidget {
+class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const TasksListAppBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final itemSelBloc = context.watch<ItemSelectionBloc>();
-    final tasksListBloc = context.watch<TasksListBloc>();
 
     if (itemSelBloc.state.isEmpty) {
       return AppBar(
@@ -28,14 +28,11 @@ class TasksListAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           IconButton(
             onPressed: () {
-              tasksListBloc.state.mapOrNull(
-                loaded: (tasksState) {
-                  itemSelBloc.add(
-                    ItemSelectionEvent.addAll(
-                      tasksState.tasks.map((e) => e.id).toSet(),
-                    ),
-                  );
-                },
+              final taskList = ref.read(tasksListStreamProvider).value;
+              itemSelBloc.add(
+                ItemSelectionEvent.addAll(
+                  taskList?.map((e) => e.id).toSet() ?? const {},
+                ),
               );
             },
             tooltip: t.tasks.list.tooltips.selectAllButton,
