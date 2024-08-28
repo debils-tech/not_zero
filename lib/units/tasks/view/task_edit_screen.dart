@@ -1,13 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/units/tasks/di.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 import 'package:not_zero/units/tasks/view/components/task_edit_fields.dart';
 import 'package:not_zero/units/tasks/view/components/task_editing_info.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
@@ -21,7 +19,7 @@ class TaskEditScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formKey = GlobalKey<FormBuilderState>();
+    final formKey = ref.watch(_formKeyProvider);
 
     final screenTitle = taskToEdit == null
         ? t.tasks.edit.title.create
@@ -29,42 +27,32 @@ class TaskEditScreen extends ConsumerWidget {
     final taskActions =
         taskToEdit != null ? [_DeleteTaskButton(taskToEdit!)] : null;
 
-    return BlocProvider(
-      create: (_) => ref.watch(taskEditCubitProvider),
-      child: BlocBuilder<TaskEditCubit, bool>(
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(screenTitle),
-              actions: taskActions,
-            ),
-            body: _TaskEditScreenBody(formKey, taskToEdit: taskToEdit),
-            // Bloc builder for TaskEditCubit here exist for this only feature.
-            floatingActionButton: state
-                ? _FloatingSubmitButton(
-                    formKey,
-                    taskToEdit: taskToEdit,
-                  )
-                : null,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-          );
-        },
+    final isChanged = ref.watch(_isTaskChangedProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(screenTitle),
+        actions: taskActions,
       ),
+      body: _TaskEditScreenBody(formKey, taskToEdit: taskToEdit),
+      // Bloc builder for TaskEditCubit here exist for this only feature.
+      floatingActionButton: isChanged
+          ? _FloatingSubmitButton(formKey, taskToEdit: taskToEdit)
+          : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
 
-class _DeleteTaskButton extends StatelessWidget {
+class _DeleteTaskButton extends ConsumerWidget {
   const _DeleteTaskButton(this.task);
 
   final Task task;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       onPressed: () async {
-        final taskCubit = context.read<TaskEditCubit>();
         final navigator = GoRouter.of(context);
         final confirm = await showConfirmationDialog(
           context,
@@ -74,7 +62,8 @@ class _DeleteTaskButton extends StatelessWidget {
           dangerous: true,
         );
         if (confirm ?? false) {
-          unawaited(taskCubit.deleteTask(task));
+          final repository = ref.read(tasksRepositoryProvider);
+          unawaited(repository.deleteTask(task.id));
           navigator.pop();
         }
       },
@@ -88,16 +77,14 @@ class _DeleteTaskButton extends StatelessWidget {
   }
 }
 
-class _TaskEditScreenBody extends StatelessWidget {
+class _TaskEditScreenBody extends ConsumerWidget {
   const _TaskEditScreenBody(this.formKey, {this.taskToEdit});
 
   final Task? taskToEdit;
   final GlobalKey<FormBuilderState> formKey;
 
   @override
-  Widget build(BuildContext context) {
-    final taskEditCubit = context.read<TaskEditCubit>();
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return FormBuilder(
       key: formKey,
       initialValue: {
@@ -106,9 +93,10 @@ class _TaskEditScreenBody extends StatelessWidget {
         'importance': taskToEdit?.importance ?? TaskImportance.normal,
         'tags': taskToEdit?.tags,
       },
-      onChanged: () => taskEditCubit.changeForm(
-        isCorrect: formKey.currentState?.validate() ?? false,
-      ),
+      onChanged: () {
+        final isValid = formKey.currentState?.validate() ?? false;
+        ref.read(_isTaskChangedProvider.notifier).state = isValid;
+      },
       // TODO(uSlashVlad): Implement proper check with dialog
       canPop: true,
       // onWillPop: () async {
@@ -155,14 +143,14 @@ class _TaskEditScreenBody extends StatelessWidget {
   }
 }
 
-class _FloatingSubmitButton extends StatelessWidget {
+class _FloatingSubmitButton extends ConsumerWidget {
   const _FloatingSubmitButton(this.formKey, {this.taskToEdit});
 
   final Task? taskToEdit;
   final GlobalKey<FormBuilderState> formKey;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () {
         final isValid = formKey.currentState!.validate();
@@ -170,13 +158,33 @@ class _FloatingSubmitButton extends StatelessWidget {
           formKey.currentState!.save();
           final values = formKey.currentState!.value;
 
-          context.read<TaskEditCubit>().saveTask(
-                title: values['title'] as String,
-                importance: values['importance'] as TaskImportance,
-                description: values['description'] as String?,
-                tags: values['tags'] as List<ItemTag>?,
-                taskToEdit: taskToEdit,
-              );
+          final repository = ref.read(tasksRepositoryProvider);
+
+          final title = values['title'] as String;
+          final importance = values['importance'] as TaskImportance;
+          final description = values['description'] as String?;
+          final tags = values['tags'] as List<ItemTag>?;
+
+          final prevTask = taskToEdit;
+          if (prevTask == null) {
+            repository.addTask(
+              Task.create(
+                title: title,
+                importance: importance,
+                description: description,
+                tags: tags,
+              ),
+            );
+          } else {
+            repository.updateTask(
+              prevTask.edit(
+                title: title,
+                importance: importance,
+                description: description,
+                tags: tags,
+              ),
+            );
+          }
 
           context.pop();
         }
@@ -199,3 +207,12 @@ class _FloatingSubmitButton extends StatelessWidget {
     );
   }
 }
+
+final _formKeyProvider =
+    Provider.autoDispose<GlobalKey<FormBuilderState>>((ref) {
+  return GlobalKey<FormBuilderState>();
+});
+
+final _isTaskChangedProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
+});
