@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/units/tags/di.dart';
-import 'package:not_zero/units/tags/presentation/bloc/tags_selection_cubit.dart';
-import 'package:not_zero/units/tags/presentation/view/tag_creation_dialog.dart';
+import 'package:not_zero/units/tags/view/tag_creation_dialog.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 
@@ -19,49 +17,48 @@ class ItemTagSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return BlocProvider(
-      create: (_) => ref.watch(tagsSelectionCubitProvider),
-      child: SizedBox(
-        height: 40,
-        child: BlocBuilder<TagsSelectionCubit, TagsSelectionState>(
-          builder: (context, state) {
-            return state.map(
-              loading: (state) {
-                return const Center(child: LinearProgressIndicator());
-              },
-              loaded: (state) {
-                return ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: state.tags.length + 1,
-                  itemBuilder: (_, index) {
-                    if (index == state.tags.length) {
-                      return const _AddButton();
-                    }
+    final state = ref.watch(tagsListStreamProvider);
 
-                    final tag = state.tags[index];
-                    final isSelected = selectedTags.contains(tag.id);
-                    return _TagButton(
-                      tag: tag,
-                      onPressed: () {
-                        if (!isSelected && selectedTags.add(tag.id)) {
-                          onSelection(state.filterOn(selectedTags));
-                        } else if (selectedTags.remove(tag.id)) {
-                          onSelection(state.filterOn(selectedTags));
-                        }
-                      },
-                      selected: isSelected,
-                    );
-                  },
-                  separatorBuilder: (_, __) {
-                    return const SizedBox(width: 6);
-                  },
-                );
-              },
-            );
-          },
-        ),
-      ),
+    return SizedBox(
+      height: 40,
+      child: switch (state) {
+        AsyncData(value: final tags) => ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: tags.length + 1,
+            itemBuilder: (_, index) {
+              if (index == tags.length) {
+                return const _AddButton();
+              }
+
+              final tag = tags[index];
+              final isSelected = selectedTags.contains(tag.id);
+              return _TagButton(
+                tag: tag,
+                onPressed: () {
+                  final shouldUpdate =
+                      !isSelected && selectedTags.add(tag.id) ||
+                          selectedTags.remove(tag.id);
+                  if (shouldUpdate) {
+                    onSelection(_filterTags(tags, selectedTags));
+                  }
+                },
+                selected: isSelected,
+              );
+            },
+            separatorBuilder: (_, __) {
+              return const SizedBox(width: 6);
+            },
+          ),
+        _ => const Center(child: LinearProgressIndicator()),
+      },
     );
+  }
+
+  List<ItemTag> _filterTags(
+    List<ItemTag> allTags,
+    Set<String> selectedIds,
+  ) {
+    return allTags.where((tag) => selectedIds.contains(tag.id)).toList();
   }
 }
 
