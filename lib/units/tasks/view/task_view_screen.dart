@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/units/tags/view/tag_list_indicator.dart';
 import 'package:not_zero/units/tasks/di.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
 import 'package:not_zero/units/tasks/view/components/task_editing_info.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
@@ -16,16 +14,13 @@ class TaskViewScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return BlocProvider(
-      create: (_) => ref.watch(taskViewCubitProvider)..init(taskToView.id),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(t.tasks.view.title),
-          bottom: _TaskViewImportanceIndicator(taskToView),
-        ),
-        body: _TaskViewScreenBody(taskToView),
-        floatingActionButton: _EditFloatingButton(taskToView),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(t.tasks.view.title),
+        bottom: _TaskViewImportanceIndicator(taskToView),
       ),
+      body: _TaskViewScreenBody(taskToView),
+      floatingActionButton: _EditFloatingButton(taskToView),
     );
   }
 }
@@ -63,59 +58,56 @@ class _TaskViewImportanceIndicator extends StatelessWidget
       };
 }
 
-class _TaskViewScreenBody extends StatelessWidget {
+class _TaskViewScreenBody extends ConsumerWidget {
   const _TaskViewScreenBody(this.taskToView);
 
   final Task taskToView;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final task =
+        ref.watch(taskStreamProvider(taskToView.id)).valueOrNull ?? taskToView;
 
-    return BlocBuilder<TaskViewCubit, Task?>(
-      builder: (context, state) {
-        final task = state ?? taskToView;
-
-        return ListView(
-          padding: const EdgeInsets.only(top: 7, bottom: 75, left: 7, right: 7),
-          children: [
-            TagListIndicator(
-              tags: task.tags,
-              fontSize: 13,
-              borderRadius: const BorderRadius.all(Radius.circular(12)),
-            ),
-            const SizedBox(height: 8),
-            SelectableText(
-              task.title,
-              style: theme.textTheme.titleLarge
-                  ?.copyWith(fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            if (task.description.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: SelectableText(task.description),
-              ),
-            const SizedBox(height: 10),
-            TaskEditingInfo(task),
-          ],
-        );
-      },
+    return ListView(
+      padding: const EdgeInsets.only(top: 7, bottom: 75, left: 7, right: 7),
+      children: [
+        TagListIndicator(
+          tags: task.tags,
+          fontSize: 13,
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        ),
+        const SizedBox(height: 8),
+        SelectableText(
+          task.title,
+          style:
+              theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+        ),
+        const SizedBox(height: 10),
+        if (task.description.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: SelectableText(task.description),
+          ),
+        const SizedBox(height: 10),
+        TaskEditingInfo(task),
+      ],
     );
   }
 }
 
-class _EditFloatingButton extends StatelessWidget {
+class _EditFloatingButton extends ConsumerWidget {
   const _EditFloatingButton(this.taskToView);
 
   final Task taskToView;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return FloatingActionButton(
       onPressed: () => context.pushReplacement(
         '/tasks/edit/${taskToView.id}',
-        extra: context.read<TaskViewCubit>().state ?? taskToView,
+        extra: ref.watch(taskStreamProvider(taskToView.id)).valueOrNull ??
+            taskToView,
       ),
       tooltip: t.tasks.view.tooltips.editTaskButton,
       child: const Icon(Icons.edit_rounded),

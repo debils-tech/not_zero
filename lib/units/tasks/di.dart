@@ -3,7 +3,6 @@ import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/units/stats/di.dart';
 import 'package:not_zero/units/storage/di.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
-import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
 import 'package:not_zero/units/tasks/repositories/tasks_repository.dart';
 import 'package:not_zero/units/tasks/services/tasks_local_service.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
@@ -29,16 +28,17 @@ final tasksListStreamProvider =
   yield* repository.getTasks();
 });
 
+final taskStreamProvider =
+    StreamProvider.autoDispose.family<Task, String>((ref, taskId) {
+  final repository = ref.watch(tasksRepositoryProvider);
+  ref.onDispose(() => repository.disposeTaskSubscription(taskId));
+  return repository.subscribeOnTaskById(taskId);
+});
+
 // BLOC
 
 final taskEditCubitProvider = Provider.autoDispose<TaskEditCubit>((ref) {
   return TaskEditCubit(
-    ref.watch(tasksRepositoryProvider),
-  );
-});
-
-final taskViewCubitProvider = Provider.autoDispose<TaskViewCubit>((ref) {
-  return TaskViewCubit(
     ref.watch(tasksRepositoryProvider),
   );
 });
