@@ -7,9 +7,9 @@ import 'package:not_zero/units/settings/view/settings_screen.dart';
 import 'package:not_zero/units/settings/view/storage_screen.dart';
 import 'package:not_zero/units/settings/view/theme_settings_screen.dart';
 import 'package:not_zero/units/stats/view/quick_statistics_screen.dart';
-import 'package:not_zero/units/tasks/presentation/view/task_edit_screen.dart';
-import 'package:not_zero/units/tasks/presentation/view/task_view_screen.dart';
-import 'package:not_zero/units/tasks/presentation/view/tasks_list_screen.dart';
+import 'package:not_zero/units/tasks/view/task_edit_screen.dart';
+import 'package:not_zero/units/tasks/view/task_view_screen.dart';
+import 'package:not_zero/units/tasks/view/tasks_list_screen.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 final appRouter = GoRouter(

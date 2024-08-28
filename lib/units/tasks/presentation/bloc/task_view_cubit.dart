@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
+import 'package:not_zero/units/tasks/repositories/tasks_repository.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 class TaskViewCubit extends Cubit<Task?> {

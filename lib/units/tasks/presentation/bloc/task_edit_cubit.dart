@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
+import 'package:not_zero/units/tasks/repositories/tasks_repository.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 

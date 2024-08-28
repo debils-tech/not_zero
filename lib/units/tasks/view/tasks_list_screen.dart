@@ -9,8 +9,8 @@ import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/components/selection/bloc/selection_event.dart';
 import 'package:not_zero/units/tasks/di.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
-import 'package:not_zero/units/tasks/presentation/view/components/task_card.dart';
-import 'package:not_zero/units/tasks/presentation/view/components/tasks_list_app_bar.dart';
+import 'package:not_zero/units/tasks/view/components/task_card.dart';
+import 'package:not_zero/units/tasks/view/components/tasks_list_app_bar.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 

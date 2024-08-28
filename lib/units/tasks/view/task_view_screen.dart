@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/units/tags/view/tag_list_indicator.dart';
 import 'package:not_zero/units/tasks/di.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
-import 'package:not_zero/units/tasks/presentation/view/components/task_editing_info.dart';
+import 'package:not_zero/units/tasks/view/components/task_editing_info.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 

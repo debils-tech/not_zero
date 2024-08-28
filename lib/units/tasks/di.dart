@@ -2,11 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/components/selection/bloc/selection_bloc.dart';
 import 'package:not_zero/units/stats/di.dart';
 import 'package:not_zero/units/storage/di.dart';
-import 'package:not_zero/units/tasks/data/tasks_local_service.dart';
-import 'package:not_zero/units/tasks/domain/repositories/tasks_repository.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_edit_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/task_view_cubit.dart';
 import 'package:not_zero/units/tasks/presentation/bloc/tasks_list_bloc.dart';
+import 'package:not_zero/units/tasks/repositories/tasks_repository.dart';
+import 'package:not_zero/units/tasks/services/tasks_local_service.dart';
 
 final tasksLocalServiceProvider = Provider<TasksLocalService>((ref) {
   return TasksLocalService(

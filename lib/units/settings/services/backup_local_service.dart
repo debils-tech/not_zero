@@ -5,7 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:not_zero/helpers/file_helper.dart';
 import 'package:not_zero/units/settings/models/backup_model.dart';
 import 'package:not_zero/units/tags/services/tags_local_service.dart';
-import 'package:not_zero/units/tasks/data/tasks_local_service.dart';
+import 'package:not_zero/units/tasks/services/tasks_local_service.dart';
 import 'package:nz_boxes/nz_boxes.dart';
 import 'package:nz_drift/nz_drift.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
