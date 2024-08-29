@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/helpers/not_zero_icons.dart';
-import 'package:not_zero/units/home/presentation/bloc/home_score_cubit.dart';
+import 'package:not_zero/units/home/di.dart';
 
-class HomeStatsHeader extends StatelessWidget {
+class HomeStatsHeader extends ConsumerWidget {
   const HomeStatsHeader({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+
+    final state = ref.watch(homeScoreStreamProvider);
+    final totalScore = switch (state) {
+      AsyncData(:final value) => value,
+      _ => null,
+    };
 
     return Container(
       height: 150,
@@ -29,21 +35,16 @@ class HomeStatsHeader extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          BlocBuilder<HomeScoreCubit, HomeScoreState>(
-            builder: (context, state) {
-              if (state.totalPoints != null) {
-                return Text(
-                  state.totalPoints.toString(),
-                  style: const TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.w700,
-                  ),
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
-          ),
+          if (totalScore != null)
+            Text(
+              totalScore.toString(),
+              style: const TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.w700,
+              ),
+            )
+          else
+            const CircularProgressIndicator(),
           const SizedBox(width: 6),
           const Icon(NotZeroIcons.zero),
         ],
