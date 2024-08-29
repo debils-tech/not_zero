@@ -1,4 +1,3 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +9,7 @@ export 'extensions/charts_colors.dart';
 export 'extensions/tags_colors.dart';
 export 'extensions/tasks_colors.dart';
 
-final _lightThemeBase = FlexThemeData.light(
-  scheme: FlexScheme.material,
-  useMaterial3: true,
+final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
   extensions: const <ThemeExtension>[
     TasksColorScheme(
       notImportantColor: Color(0xFF78909C),
@@ -70,9 +67,7 @@ final defaultLightTheme = _lightThemeBase.copyWith(
   splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
 );
 
-final _darkThemeBase = FlexThemeData.dark(
-  scheme: FlexScheme.material,
-  useMaterial3: true,
+final _darkThemeBase = ThemeData.dark(useMaterial3: true).copyWith(
   extensions: const <ThemeExtension>[
     TasksColorScheme(
       notImportantColor: Color(0xFFD6D6D6),

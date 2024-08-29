@@ -712,63 +712,26 @@ typedef $$TasksTableTableUpdateCompanionBuilder = TasksTableCompanion Function({
   Value<int> rowid,
 });
 
-class $$TasksTableTableTableManager extends RootTableManager<
-    _$NotZeroDatabase,
-    $TasksTableTable,
-    Task,
-    $$TasksTableTableFilterComposer,
-    $$TasksTableTableOrderingComposer,
-    $$TasksTableTableCreateCompanionBuilder,
-    $$TasksTableTableUpdateCompanionBuilder> {
-  $$TasksTableTableTableManager(_$NotZeroDatabase db, $TasksTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$TasksTableTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$TasksTableTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> title = const Value.absent(),
-            Value<String> description = const Value.absent(),
-            Value<DateTime> createdAt = const Value.absent(),
-            Value<DateTime?> modifiedAt = const Value.absent(),
-            Value<DateTime?> completedAt = const Value.absent(),
-            Value<TaskImportance> importance = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TasksTableCompanion(
-            id: id,
-            title: title,
-            description: description,
-            createdAt: createdAt,
-            modifiedAt: modifiedAt,
-            completedAt: completedAt,
-            importance: importance,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String title,
-            required String description,
-            required DateTime createdAt,
-            Value<DateTime?> modifiedAt = const Value.absent(),
-            Value<DateTime?> completedAt = const Value.absent(),
-            required TaskImportance importance,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TasksTableCompanion.insert(
-            id: id,
-            title: title,
-            description: description,
-            createdAt: createdAt,
-            modifiedAt: modifiedAt,
-            completedAt: completedAt,
-            importance: importance,
-            rowid: rowid,
-          ),
-        ));
+final class $$TasksTableTableReferences
+    extends BaseReferences<_$NotZeroDatabase, $TasksTableTable, Task> {
+  $$TasksTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$TasksTagEntriesTable, List<TasksTagEntry>>
+      _tasksTagEntriesRefsTable(_$NotZeroDatabase db) =>
+          MultiTypedResultKey.fromTable(db.tasksTagEntries,
+              aliasName: $_aliasNameGenerator(
+                  db.tasksTable.id, db.tasksTagEntries.task));
+
+  $$TasksTagEntriesTableProcessedTableManager get tasksTagEntriesRefs {
+    final manager =
+        $$TasksTagEntriesTableTableManager($_db, $_db.tasksTagEntries)
+            .filter((f) => f.task.id($_item.id));
+
+    final cache =
+        $_typedResult.readTableOrNull(_tasksTagEntriesRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
 }
 
 class $$TasksTableTableFilterComposer
@@ -865,6 +828,110 @@ class $$TasksTableTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
+class $$TasksTableTableTableManager extends RootTableManager<
+    _$NotZeroDatabase,
+    $TasksTableTable,
+    Task,
+    $$TasksTableTableFilterComposer,
+    $$TasksTableTableOrderingComposer,
+    $$TasksTableTableCreateCompanionBuilder,
+    $$TasksTableTableUpdateCompanionBuilder,
+    (Task, $$TasksTableTableReferences),
+    Task,
+    PrefetchHooks Function({bool tasksTagEntriesRefs})> {
+  $$TasksTableTableTableManager(_$NotZeroDatabase db, $TasksTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$TasksTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$TasksTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> title = const Value.absent(),
+            Value<String> description = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime?> modifiedAt = const Value.absent(),
+            Value<DateTime?> completedAt = const Value.absent(),
+            Value<TaskImportance> importance = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              TasksTableCompanion(
+            id: id,
+            title: title,
+            description: description,
+            createdAt: createdAt,
+            modifiedAt: modifiedAt,
+            completedAt: completedAt,
+            importance: importance,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String title,
+            required String description,
+            required DateTime createdAt,
+            Value<DateTime?> modifiedAt = const Value.absent(),
+            Value<DateTime?> completedAt = const Value.absent(),
+            required TaskImportance importance,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              TasksTableCompanion.insert(
+            id: id,
+            title: title,
+            description: description,
+            createdAt: createdAt,
+            modifiedAt: modifiedAt,
+            completedAt: completedAt,
+            importance: importance,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TasksTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({tasksTagEntriesRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (tasksTagEntriesRefs) db.tasksTagEntries
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (tasksTagEntriesRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$TasksTableTableReferences
+                            ._tasksTagEntriesRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TasksTableTableReferences(db, table, p0)
+                                .tasksTagEntriesRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) =>
+                                referencedItems.where((e) => e.task == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TasksTableTableProcessedTableManager = ProcessedTableManager<
+    _$NotZeroDatabase,
+    $TasksTableTable,
+    Task,
+    $$TasksTableTableFilterComposer,
+    $$TasksTableTableOrderingComposer,
+    $$TasksTableTableCreateCompanionBuilder,
+    $$TasksTableTableUpdateCompanionBuilder,
+    (Task, $$TasksTableTableReferences),
+    Task,
+    PrefetchHooks Function({bool tasksTagEntriesRefs})>;
 typedef $$TagsTableTableCreateCompanionBuilder = TagsTableCompanion Function({
   required String id,
   required String name,
@@ -880,51 +947,26 @@ typedef $$TagsTableTableUpdateCompanionBuilder = TagsTableCompanion Function({
   Value<int> rowid,
 });
 
-class $$TagsTableTableTableManager extends RootTableManager<
-    _$NotZeroDatabase,
-    $TagsTableTable,
-    ItemTag,
-    $$TagsTableTableFilterComposer,
-    $$TagsTableTableOrderingComposer,
-    $$TagsTableTableCreateCompanionBuilder,
-    $$TagsTableTableUpdateCompanionBuilder> {
-  $$TagsTableTableTableManager(_$NotZeroDatabase db, $TagsTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$TagsTableTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$TagsTableTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<int> colorIndex = const Value.absent(),
-            Value<DateTime> createdAt = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TagsTableCompanion(
-            id: id,
-            name: name,
-            colorIndex: colorIndex,
-            createdAt: createdAt,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String name,
-            required int colorIndex,
-            required DateTime createdAt,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TagsTableCompanion.insert(
-            id: id,
-            name: name,
-            colorIndex: colorIndex,
-            createdAt: createdAt,
-            rowid: rowid,
-          ),
-        ));
+final class $$TagsTableTableReferences
+    extends BaseReferences<_$NotZeroDatabase, $TagsTableTable, ItemTag> {
+  $$TagsTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$TasksTagEntriesTable, List<TasksTagEntry>>
+      _tasksTagEntriesRefsTable(_$NotZeroDatabase db) =>
+          MultiTypedResultKey.fromTable(db.tasksTagEntries,
+              aliasName: $_aliasNameGenerator(
+                  db.tagsTable.id, db.tasksTagEntries.tag));
+
+  $$TasksTagEntriesTableProcessedTableManager get tasksTagEntriesRefs {
+    final manager =
+        $$TasksTagEntriesTableTableManager($_db, $_db.tasksTagEntries)
+            .filter((f) => f.tag.id($_item.id));
+
+    final cache =
+        $_typedResult.readTableOrNull(_tasksTagEntriesRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
 }
 
 class $$TagsTableTableFilterComposer
@@ -989,6 +1031,98 @@ class $$TagsTableTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
+class $$TagsTableTableTableManager extends RootTableManager<
+    _$NotZeroDatabase,
+    $TagsTableTable,
+    ItemTag,
+    $$TagsTableTableFilterComposer,
+    $$TagsTableTableOrderingComposer,
+    $$TagsTableTableCreateCompanionBuilder,
+    $$TagsTableTableUpdateCompanionBuilder,
+    (ItemTag, $$TagsTableTableReferences),
+    ItemTag,
+    PrefetchHooks Function({bool tasksTagEntriesRefs})> {
+  $$TagsTableTableTableManager(_$NotZeroDatabase db, $TagsTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$TagsTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$TagsTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<int> colorIndex = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              TagsTableCompanion(
+            id: id,
+            name: name,
+            colorIndex: colorIndex,
+            createdAt: createdAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String name,
+            required int colorIndex,
+            required DateTime createdAt,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              TagsTableCompanion.insert(
+            id: id,
+            name: name,
+            colorIndex: colorIndex,
+            createdAt: createdAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TagsTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({tasksTagEntriesRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (tasksTagEntriesRefs) db.tasksTagEntries
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (tasksTagEntriesRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$TagsTableTableReferences
+                            ._tasksTagEntriesRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TagsTableTableReferences(db, table, p0)
+                                .tasksTagEntriesRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) =>
+                                referencedItems.where((e) => e.tag == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TagsTableTableProcessedTableManager = ProcessedTableManager<
+    _$NotZeroDatabase,
+    $TagsTableTable,
+    ItemTag,
+    $$TagsTableTableFilterComposer,
+    $$TagsTableTableOrderingComposer,
+    $$TagsTableTableCreateCompanionBuilder,
+    $$TagsTableTableUpdateCompanionBuilder,
+    (ItemTag, $$TagsTableTableReferences),
+    ItemTag,
+    PrefetchHooks Function({bool tasksTagEntriesRefs})>;
 typedef $$TasksTagEntriesTableCreateCompanionBuilder = TasksTagEntriesCompanion
     Function({
   required String task,
@@ -1002,44 +1136,38 @@ typedef $$TasksTagEntriesTableUpdateCompanionBuilder = TasksTagEntriesCompanion
   Value<int> rowid,
 });
 
-class $$TasksTagEntriesTableTableManager extends RootTableManager<
-    _$NotZeroDatabase,
-    $TasksTagEntriesTable,
-    TasksTagEntry,
-    $$TasksTagEntriesTableFilterComposer,
-    $$TasksTagEntriesTableOrderingComposer,
-    $$TasksTagEntriesTableCreateCompanionBuilder,
-    $$TasksTagEntriesTableUpdateCompanionBuilder> {
-  $$TasksTagEntriesTableTableManager(
-      _$NotZeroDatabase db, $TasksTagEntriesTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$TasksTagEntriesTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$TasksTagEntriesTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<String> task = const Value.absent(),
-            Value<String> tag = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TasksTagEntriesCompanion(
-            task: task,
-            tag: tag,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String task,
-            required String tag,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TasksTagEntriesCompanion.insert(
-            task: task,
-            tag: tag,
-            rowid: rowid,
-          ),
-        ));
+final class $$TasksTagEntriesTableReferences extends BaseReferences<
+    _$NotZeroDatabase, $TasksTagEntriesTable, TasksTagEntry> {
+  $$TasksTagEntriesTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $TasksTableTable _taskTable(_$NotZeroDatabase db) =>
+      db.tasksTable.createAlias(
+          $_aliasNameGenerator(db.tasksTagEntries.task, db.tasksTable.id));
+
+  $$TasksTableTableProcessedTableManager? get task {
+    if ($_item.task == null) return null;
+    final manager = $$TasksTableTableTableManager($_db, $_db.tasksTable)
+        .filter((f) => f.id($_item.task!));
+    final item = $_typedResult.readTableOrNull(_taskTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $TagsTableTable _tagTable(_$NotZeroDatabase db) =>
+      db.tagsTable.createAlias(
+          $_aliasNameGenerator(db.tasksTagEntries.tag, db.tagsTable.id));
+
+  $$TagsTableTableProcessedTableManager? get tag {
+    if ($_item.tag == null) return null;
+    final manager = $$TagsTableTableTableManager($_db, $_db.tagsTable)
+        .filter((f) => f.id($_item.tag!));
+    final item = $_typedResult.readTableOrNull(_tagTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
 }
 
 class $$TasksTagEntriesTableFilterComposer
@@ -1097,6 +1225,111 @@ class $$TasksTagEntriesTableOrderingComposer
     return composer;
   }
 }
+
+class $$TasksTagEntriesTableTableManager extends RootTableManager<
+    _$NotZeroDatabase,
+    $TasksTagEntriesTable,
+    TasksTagEntry,
+    $$TasksTagEntriesTableFilterComposer,
+    $$TasksTagEntriesTableOrderingComposer,
+    $$TasksTagEntriesTableCreateCompanionBuilder,
+    $$TasksTagEntriesTableUpdateCompanionBuilder,
+    (TasksTagEntry, $$TasksTagEntriesTableReferences),
+    TasksTagEntry,
+    PrefetchHooks Function({bool task, bool tag})> {
+  $$TasksTagEntriesTableTableManager(
+      _$NotZeroDatabase db, $TasksTagEntriesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$TasksTagEntriesTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$TasksTagEntriesTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<String> task = const Value.absent(),
+            Value<String> tag = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              TasksTagEntriesCompanion(
+            task: task,
+            tag: tag,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String task,
+            required String tag,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              TasksTagEntriesCompanion.insert(
+            task: task,
+            tag: tag,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TasksTagEntriesTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({task = false, tag = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (task) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.task,
+                    referencedTable:
+                        $$TasksTagEntriesTableReferences._taskTable(db),
+                    referencedColumn:
+                        $$TasksTagEntriesTableReferences._taskTable(db).id,
+                  ) as T;
+                }
+                if (tag) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.tag,
+                    referencedTable:
+                        $$TasksTagEntriesTableReferences._tagTable(db),
+                    referencedColumn:
+                        $$TasksTagEntriesTableReferences._tagTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TasksTagEntriesTableProcessedTableManager = ProcessedTableManager<
+    _$NotZeroDatabase,
+    $TasksTagEntriesTable,
+    TasksTagEntry,
+    $$TasksTagEntriesTableFilterComposer,
+    $$TasksTagEntriesTableOrderingComposer,
+    $$TasksTagEntriesTableCreateCompanionBuilder,
+    $$TasksTagEntriesTableUpdateCompanionBuilder,
+    (TasksTagEntry, $$TasksTagEntriesTableReferences),
+    TasksTagEntry,
+    PrefetchHooks Function({bool task, bool tag})>;
 
 class $NotZeroDatabaseManager {
   final _$NotZeroDatabase _db;
