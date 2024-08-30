@@ -1,72 +1,80 @@
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nz_boxes/src/not_zero_box.dart';
-import 'package:nz_common/nz_common.dart';
-import 'package:nz_io/nz_io.dart';
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotZeroSimpleBox implements NotZeroBox<String> {
   final String _boxName;
 
-  late final Box<String> _hiveBox = Hive.box<String>(_boxName);
+  late SharedPreferencesWithCache _prefs;
 
   NotZeroSimpleBox(this._boxName);
 
   @override
   Future<void> init() async {
-    final dbDir = await _databasePath;
-    await Hive.initFlutter(dbDir);
-    await Hive.openBox<String>(_boxName);
+    _prefs = await SharedPreferencesWithCache.create(
+      cacheOptions: const SharedPreferencesWithCacheOptions(),
+    );
   }
 
-  Future<String> get _databasePath async {
-    if (Platform.isLinux && !isPlatformTest) {
-      return p.join(
-        Platform.environment['HOME'] ?? '~',
-        '.config/not_zero',
-      );
-    } else {
-      return (await getApplicationDocumentsDirectory()).path;
+  @override
+  Future<void> dispose() async {}
+
+  @override
+  String? value(String key) => _get(key);
+
+  @override
+  Future<void> put(String key, String value) => _set(key, value);
+
+  @override
+  Future<void> putAll(Map<String, String> values) async {
+    for (final entry in values.entries) {
+      await _set(entry.key, entry.value);
     }
   }
 
   @override
-  Future<void> dispose() {
-    return _hiveBox.close();
-  }
+  Future<void> clear(String key) => _remove(key);
 
   @override
-  String? value(String key) {
-    return _hiveBox.get(key);
-  }
-
-  @override
-  Future<void> put(String key, String value) {
-    return _hiveBox.put(key, value);
-  }
-
-  @override
-  Future<void> putAll(Map<String, String> values) {
-    return _hiveBox.putAll(values);
-  }
-
-  @override
-  Future<void> clear(String key) {
-    return _hiveBox.delete(key);
-  }
-
-  @override
-  Future<void> clearAll() {
-    return _hiveBox.clear();
+  Future<void> clearAll() async {
+    for (final key in _keys) {
+      _prefs.remove(key);
+    }
   }
 
   @override
   Map<String, String> dump() {
-    return _hiveBox.toMap().cast();
+    final data = <String, String>{};
+
+    for (final key in _keys) {
+      final value = _prefs.getString(key);
+      if (value != null) {
+        data[key] = value;
+      }
+    }
+
+    return data;
   }
 
   @override
-  Future<void> deleteBox() {
-    return _hiveBox.deleteFromDisk();
+  Future<void> deleteBox() => clearAll();
+
+  String? _get(String key) {
+    return _prefs.getString(_key(key));
+  }
+
+  Future<void> _set(String key, String value) {
+    return _prefs.setString(_key(key), value);
+  }
+
+  Future<void> _remove(String key) {
+    return _prefs.remove(_key(key));
+  }
+
+  Set<String> get _keys =>
+      _prefs.keys.where((key) => key.startsWith(_boxName)).toSet();
+
+  String _key(String key) {
+    if (_boxName.isEmpty) return key;
+    return '${_boxName}_$key';
   }
 }
