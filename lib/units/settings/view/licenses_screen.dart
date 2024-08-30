@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/helpers/not_zero_icons.dart';
+import 'package:not_zero/units/settings/di.dart';
 
-class LicensesScreen extends StatelessWidget {
+class LicensesScreen extends ConsumerWidget {
   const LicensesScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final appInfo = AppInfo.fromJson({}); // TODO(uSlashVlad): Fix AppInfo here
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appInfo = ref.watch(appInfoProvider);
     return LicensePage(
-      applicationName: appInfo.name,
+      applicationName: switch (appInfo) {
+        AsyncData(value: final info) => info.name,
+        _ => '...',
+      },
       applicationIcon: const Padding(
         padding: EdgeInsets.only(top: 13, bottom: 8),
         child: Icon(NotZeroIcons.zero, size: 35),
