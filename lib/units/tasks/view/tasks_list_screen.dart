@@ -40,8 +40,10 @@ class _TasksListFloatingButton extends ConsumerWidget {
     final selectionState = ref.watch(itemSelectionNotifierProvider);
 
     if (selectionState.isNotEmpty) {
+      final theme = Theme.of(context);
       return FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.error,
+        foregroundColor: theme.colorScheme.onError,
+        backgroundColor: theme.colorScheme.error,
         onPressed: () async {
           final selectedCount = ref.read(itemSelectionNotifierProvider).length;
 

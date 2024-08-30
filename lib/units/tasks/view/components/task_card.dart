@@ -110,9 +110,10 @@ class _TaskTimeText extends StatelessWidget {
       finalTextTime = ts.createdAt(time: formattedTime);
     }
 
+    final textStyle = Theme.of(context).textTheme.labelMedium;
     return Text(
       finalTextTime,
-      style: Theme.of(context).textTheme.titleSmall,
+      style: textStyle?.copyWith(color: textStyle.color?.withOpacity(0.6)),
     );
   }
 }

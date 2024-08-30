@@ -47,23 +47,6 @@ final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
 );
 
 final defaultLightTheme = _lightThemeBase.copyWith(
-  textTheme: _lightThemeBase.textTheme.copyWith(
-    titleSmall: TextStyle(color: Colors.grey.shade500),
-  ),
-  checkboxTheme: _lightThemeBase.checkboxTheme.copyWith(
-    fillColor: WidgetStateProperty.resolveWith(
-      (states) => states.contains(WidgetState.selected)
-          ? _lightThemeBase.primaryColorLight
-          : null,
-    ),
-  ),
-  radioTheme: _lightThemeBase.radioTheme.copyWith(
-    fillColor: WidgetStateProperty.resolveWith(
-      (states) => states.contains(WidgetState.selected)
-          ? _lightThemeBase.primaryColorLight
-          : null,
-    ),
-  ),
   splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
 );
 
@@ -105,22 +88,5 @@ final _darkThemeBase = ThemeData.dark(useMaterial3: true).copyWith(
 );
 
 final defaultDarkTheme = _darkThemeBase.copyWith(
-  textTheme: _darkThemeBase.textTheme.copyWith(
-    titleSmall: TextStyle(color: Colors.grey.shade700),
-  ),
-  checkboxTheme: _darkThemeBase.checkboxTheme.copyWith(
-    fillColor: WidgetStateProperty.resolveWith(
-      (states) => states.contains(WidgetState.selected)
-          ? _darkThemeBase.primaryColor
-          : null,
-    ),
-  ),
-  radioTheme: _darkThemeBase.radioTheme.copyWith(
-    fillColor: WidgetStateProperty.resolveWith(
-      (states) => states.contains(WidgetState.selected)
-          ? _darkThemeBase.primaryColor
-          : null,
-    ),
-  ),
   splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
 );

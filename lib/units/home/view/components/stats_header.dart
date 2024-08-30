@@ -25,10 +25,10 @@ class HomeStatsHeader extends ConsumerWidget {
           end: Alignment.topCenter,
           colors: [
             theme.scaffoldBackgroundColor,
-            theme.primaryColorDark,
-            theme.primaryColor,
+            theme.colorScheme.primaryContainer,
+            theme.colorScheme.primary,
           ],
-          stops: const [0.0, 0.2, 1.0],
+          stops: const [0.0, 0.3, 1.0],
         ),
       ),
       padding: const EdgeInsets.only(bottom: 15),
