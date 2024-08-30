@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/units/settings/models/theme_state.dart';
 import 'package:not_zero/units/settings/notifiers/theme_state_notifier.dart';
 import 'package:not_zero/units/settings/repositories/settings_repository.dart';
@@ -30,9 +31,11 @@ final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   );
 });
 
-// RIVERPOD
-
 final themeStateNotifierProvider =
     NotifierProvider.autoDispose<ThemeStateNotifier, ThemeState>(
   ThemeStateNotifier.new,
 );
+
+final appInfoProvider = FutureProvider<AppInfo>((ref) async {
+  return AppInfo.fromEnvironment();
+});

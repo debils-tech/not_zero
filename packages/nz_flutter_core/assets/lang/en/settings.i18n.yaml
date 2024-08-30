@@ -13,7 +13,7 @@ theme:
     system: 'Prefer system theme'
 
 storage:
-  title: 'Backup data'
+  title: 'Backup data (work in progress)'
   aboutHeader: 'How it works'
   aboutContent: |
     You can export all of your app data into single JSON file and then import at any time on any device.

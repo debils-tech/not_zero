@@ -24,20 +24,33 @@ class SettingsMenuEntry extends StatelessWidget {
     required this.route,
     required this.title,
     this.icon,
+    this.disabled = false,
     super.key,
   });
 
   final String route;
   final String title;
   final IconData? icon;
+  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    final tile = ListTile(
       onTap: () => context.push(route),
       leading: icon != null ? Icon(icon) : null,
       title: Text(title),
     );
+
+    if (disabled) {
+      return IgnorePointer(
+        child: Opacity(
+          opacity: 0.3,
+          child: tile,
+        ),
+      );
+    }
+
+    return tile;
   }
 }
 

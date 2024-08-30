@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/constants/links.dart';
-import 'package:not_zero/helpers/app_info.dart';
 import 'package:not_zero/helpers/not_zero_icons.dart';
+import 'package:not_zero/units/settings/di.dart';
 import 'package:not_zero/units/settings/view/components/list_elements.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
-class AboutScreen extends ConsumerWidget {
+class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final appInfo = AppInfo.fromJson({}); // TODO(uSlashVlad): Fix AppInfo here
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(t.settings.about.title),
@@ -19,12 +18,7 @@ class AboutScreen extends ConsumerWidget {
       body: ListView(
         children: [
           SettingsBlocHeader(t.settings.about.blocks.version),
-          ListTile(
-            title: SelectableText(appInfo.name),
-            subtitle: SelectableText(appInfo.platform),
-            trailing:
-                SelectableText('${appInfo.version} (${appInfo.buildNumber})'),
-          ),
+          const _AppInfoTile(),
           SettingsBlocHeader(t.settings.about.blocks.links),
           SettingsUrlEntry(
             url: ContactLinks.telegram,
@@ -43,5 +37,25 @@ class AboutScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+class _AppInfoTile extends ConsumerWidget {
+  const _AppInfoTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appInfo = ref.watch(appInfoProvider);
+
+    return switch (appInfo) {
+      AsyncData(:final value) => ListTile(
+          title: SelectableText(value.name),
+          subtitle: SelectableText(value.platform),
+          trailing: SelectableText('${value.version} (${value.buildNumber})'),
+        ),
+      _ => const ListTile(
+          title: LinearProgressIndicator(),
+        ),
+    };
   }
 }
