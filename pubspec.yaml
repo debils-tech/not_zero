@@ -9,8 +9,6 @@ environment:
 dependencies:
   animated_list_plus: ^0.5.2
   cupertino_icons: ^1.0.8
-  document_file_save_plus: ^2.0.0
-  file_picker: ^8.0.7
   fl_chart: ^0.69.0
   flutter:
     sdk: flutter
@@ -20,7 +18,6 @@ dependencies:
   freezed_annotation: ^2.4.4
   form_builder_validators: ^11.0.0
   go_router: ^14.2.3
-  hive_flutter: ^1.1.0
   intl: ^0.19.0
   json_annotation: ^4.9.0
   logging: ^1.2.0

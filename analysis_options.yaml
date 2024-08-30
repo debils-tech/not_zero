@@ -1,8 +1,6 @@
 include: package:very_good_analysis/analysis_options.yaml
 
 analyzer:
-  plugins:
-    - dart_code_metrics
   exclude:
     - android/*
     - ios/*
@@ -24,56 +22,3 @@ linter:
     unnecessary_await_in_return: true
     prefer_final_locals: true
     cascade_invocations: false
-
-dart_code_metrics:
-  metrics-exclude:
-    - 'lib/**/*.g.dart'
-    - 'lib/**/*.freezed.dart'
-    - 'lib/get_it.config.dart'
-  metrics:
-    cyclomatic-complexity: 20
-    maximum-nesting-level: 10
-    technical-debt:
-      threshold: 400
-      todo-cost: 150
-      ignore-cost: 300
-      ignore-for-file-cost: 350
-      as-dynamic-cost: 200
-      deprecated-annotations-cost: 50
-  rules:
-    ##-- Common --
-    avoid-collection-methods-with-unrelated-types: true
-    avoid-dynamic: true
-    avoid-global-state: true
-    avoid-throw-in-catch-block: true
-    avoid-unnecessary-type-assertions: true
-    avoid-unnecessary-type-casts: true
-    avoid-unrelated-type-assertions: true
-    double-literal-format: true
-    # format-comment:
-    #   ignored-patterns:
-    #     - ^-- .* --$
-    no-boolean-literal-compare: true
-    no-empty-block:
-      severity: warning
-    no-equal-then-else:
-      severity: warning
-    no-object-declaration:
-      severity: warning
-    prefer-commenting-analyzer-ignores:
-      severity: style
-    prefer-enums-by-name: true
-    prefer-last: true
-    # I like this rule, but it doesn't work with slang structure
-    # prefer-moving-to-variable:
-    #   allowed-duplicated-chains: 1
-    #   severity: performance
-
-    #-- Flutter --
-    avoid-border-all: true
-    avoid-returning-widgets:
-      severity: performance
-    avoid-shrink-wrap-in-lists: true
-    avoid-use-expanded-as-spacer: true
-    prefer-const-border-radius: true
-    prefer-correct-edge-insets-constructor: true
