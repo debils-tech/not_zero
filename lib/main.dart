@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:not_zero/helpers/custom_scroll_behavior.dart';
 import 'package:not_zero/helpers/global_navigation.dart';
 import 'package:not_zero/helpers/licenses.dart';
 import 'package:not_zero/routes.dart';
@@ -49,7 +49,6 @@ class MyApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      scrollBehavior: CustomScrollBehavior(),
       shortcuts: {
         if (isPlatformDesktop || kIsWeb)
           const SingleActivator(LogicalKeyboardKey.escape): VoidCallbackIntent(
