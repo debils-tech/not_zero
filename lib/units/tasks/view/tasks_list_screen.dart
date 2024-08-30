@@ -7,6 +7,7 @@ import 'package:not_zero/components/adaptive/list_limiter.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/components/selection/di.dart';
 import 'package:not_zero/components/selection/notifiers/item_selection_notifier.dart';
+import 'package:not_zero/units/tags/view/tag_selector.dart';
 import 'package:not_zero/units/tasks/di.dart';
 import 'package:not_zero/units/tasks/view/components/task_card.dart';
 import 'package:not_zero/units/tasks/view/components/tasks_list_app_bar.dart';
@@ -126,15 +127,36 @@ class _TasksListView extends StatelessWidget {
       maxWidth: 600,
       child: ListView(
         padding: const EdgeInsets.only(top: 5, bottom: 75, left: 10, right: 10),
-        children: tasks
-            .map(
-              (t) => TaskCard(
-                t,
-                key: Key('Task ${t.id}'),
-              ),
-            )
-            .toList(),
+        children: [
+          const _TasksFilters(),
+          const SizedBox(height: 10),
+          ...tasks.map(
+            (t) => TaskCard(
+              t,
+              key: Key('Task ${t.id}'),
+            ),
+          ),
+        ],
       ),
+    );
+  }
+}
+
+class _TasksFilters extends ConsumerWidget {
+  const _TasksFilters();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedTagsNotifier =
+        ref.watch(tasksListTagsFilterProvider.notifier);
+    final selectedTags = ref.watch(tasksListTagsFilterProvider);
+
+    return ItemTagSelector(
+      selectedTags: selectedTags,
+      onSelection: (newValue) =>
+          selectedTagsNotifier.state = newValue.map((t) => t.id).toSet(),
+      showAddButton: false,
+      excludeSelection: true,
     );
   }
 }

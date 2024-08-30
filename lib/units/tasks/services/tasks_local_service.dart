@@ -9,7 +9,7 @@ class TasksLocalService {
   final NotZeroDatabase _db;
 
   Future<List<Task>> getTasks({Set<String>? searchTags}) {
-    if (searchTags == null) {
+    if (searchTags == null || searchTags.isEmpty) {
       return _getTasksWithoutFilter();
     }
 

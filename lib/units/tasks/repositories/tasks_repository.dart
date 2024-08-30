@@ -23,8 +23,10 @@ class TasksRepository {
     return null;
   }
 
-  Future<void> syncTasks() async {
-    final localTasks = await _localService.getTasks();
+  Future<void> syncTasks({Set<String>? searchTags}) async {
+    if (searchTags != null && searchTags.isEmpty) searchTags = null;
+
+    final localTasks = await _localService.getTasks(searchTags: searchTags);
     _tasksStreamController.add(localTasks);
   }
 

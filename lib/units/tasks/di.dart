@@ -21,15 +21,21 @@ final tasksRepositoryProvider = Provider<TasksRepository>((ref) {
 final tasksListStreamProvider =
     StreamProvider.autoDispose<List<Task>>((ref) async* {
   final repository = ref.watch(tasksRepositoryProvider);
+  final tagsFilter = ref.watch(tasksListTagsFilterProvider);
 
-  await repository.syncTasks();
+  await repository.syncTasks(searchTags: tagsFilter);
   yield* repository.getTasks();
 });
 
-final taskStreamProvider =
+final specificTaskStreamProvider =
     StreamProvider.autoDispose.family<Task, String>((ref, taskId) {
   final repository = ref.watch(tasksRepositoryProvider);
   return repository
       .getTasks()
       .map((items) => items.firstWhere((task) => task.id == taskId));
 });
+
+final tasksListTagsFilterProvider = StateProvider.autoDispose<Set<String>>((ref) {
+  return const {};
+});
+

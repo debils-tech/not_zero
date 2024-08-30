@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/units/tags/di.dart';
 import 'package:not_zero/units/tags/view/tag_creation_dialog.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 
@@ -9,11 +10,15 @@ class ItemTagSelector extends ConsumerWidget {
   const ItemTagSelector({
     required this.selectedTags,
     required this.onSelection,
+    this.showAddButton = true,
+    this.excludeSelection = false,
     super.key,
   });
 
   final Set<String> selectedTags;
   final void Function(List<ItemTag> tags) onSelection;
+  final bool showAddButton;
+  final bool excludeSelection;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,36 +27,45 @@ class ItemTagSelector extends ConsumerWidget {
     return SizedBox(
       height: 40,
       child: switch (state) {
-        AsyncData(value: final tags) => ListView.separated(
+        AsyncData(value: final tags) => ListView(
             scrollDirection: Axis.horizontal,
-            itemCount: tags.length + 1,
-            itemBuilder: (_, index) {
-              if (index == tags.length) {
-                return const _AddButton();
-              }
-
-              final tag = tags[index];
-              final isSelected = selectedTags.contains(tag.id);
-              return _TagButton(
-                tag: tag,
-                onPressed: () {
-                  final shouldUpdate =
-                      !isSelected && selectedTags.add(tag.id) ||
-                          selectedTags.remove(tag.id);
-                  if (shouldUpdate) {
-                    onSelection(_filterTags(tags, selectedTags));
-                  }
-                },
-                selected: isSelected,
-              );
-            },
-            separatorBuilder: (_, __) {
-              return const SizedBox(width: 6);
-            },
+            children: <Widget>[
+              ...tags.map((tag) {
+                final isSelected = selectedTags.contains(tag.id);
+                return _TagButton(
+                  tag: tag,
+                  onPressed: (value) => excludeSelection
+                      ? _onTagSelectionExclude(tag, value)
+                      : _onTagSelection(tags, tag, value),
+                  selected: isSelected,
+                );
+              }),
+              if (showAddButton) const _AddButton(),
+            ].insertSeparators(const SizedBox(width: 6)),
           ),
         _ => const Center(child: LinearProgressIndicator()),
       },
     );
+  }
+
+  void _onTagSelectionExclude(ItemTag tag, bool newValue) {
+    final wasSelected = selectedTags.contains(tag.id);
+    if (wasSelected == newValue) return;
+
+    if (newValue) {
+      onSelection([tag]);
+    } else {
+      onSelection([]);
+    }
+  }
+
+  void _onTagSelection(List<ItemTag> tags, ItemTag tag, bool newValue) {
+    final newSelectedTags = {...selectedTags};
+    final shouldUpdate = newValue && newSelectedTags.add(tag.id) ||
+        newSelectedTags.remove(tag.id);
+    if (shouldUpdate) {
+      onSelection(_filterTags(tags, newSelectedTags));
+    }
   }
 
   List<ItemTag> _filterTags(
@@ -70,7 +84,7 @@ class _TagButton extends StatelessWidget {
   });
 
   final ItemTag tag;
-  final VoidCallback onPressed;
+  final ValueChanged<bool> onPressed;
   final bool selected;
 
   @override
@@ -78,7 +92,7 @@ class _TagButton extends StatelessWidget {
     return _RoundedButton(
       selected: selected,
       color: Theme.of(context).tagsColorScheme.colorByIndex(tag.colorIndex),
-      onPressed: onPressed,
+      onPressed: () => onPressed(!selected),
       onLongPress: () => TagCreationDialog.show(context, tag),
       child: Text(
         tag.name.toUpperCase(),
