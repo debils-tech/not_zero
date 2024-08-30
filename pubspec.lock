@@ -30,14 +30,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.3"
-  animated_list_plus:
-    dependency: "direct main"
-    description:
-      name: animated_list_plus
-      sha256: fb3d7f1fbaf5af84907f3c739236bacda8bf32cbe1f118dd51510752883ff50c
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.2"
   ansi_styles:
     dependency: transitive
     description:
@@ -1251,10 +1243,10 @@ packages:
     dependency: "direct main"
     description:
       name: uuid
-      sha256: "83d37c7ad7aaf9aa8e275490669535c8080377cfa7a7004c24dfac53afffaa90"
+      sha256: f33d6bb662f0e4f79dcd7ada2e6170f3b3a2530c28fc41f49a411ddedd576a77
       url: "https://pub.dev"
     source: hosted
-    version: "4.4.2"
+    version: "4.5.0"
   vector_math:
     dependency: transitive
     description:

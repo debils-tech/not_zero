@@ -7,7 +7,6 @@ environment:
   sdk: ^3.0.0
 
 dependencies:
-  animated_list_plus: ^0.5.2
   cupertino_icons: ^1.0.8
   fl_chart: ^0.69.0
   flutter:

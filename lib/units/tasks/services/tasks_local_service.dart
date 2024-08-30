@@ -18,14 +18,15 @@ class TasksLocalService {
 
   Future<List<Task>> _getTasksWithoutFilter() async {
     final allTags = await _getTagMappings();
-    final tasks = _db.select(_db.tasksTable).map(
+    final tasksQuery = _db.select(_db.tasksTable)..orderBy(_tasksOrdering);
+    final tasksEntries = tasksQuery.map(
       (task) {
         final tagsForTask = allTags[task.id];
         if (tagsForTask == null) return task;
         return task.copyWith(tags: tagsForTask);
       },
     );
-    return tasks.get();
+    return tasksEntries.get();
   }
 
   Future<List<Task>> _getTasksForTag({required Set<String> searchTags}) async {
@@ -36,6 +37,7 @@ class TasksLocalService {
         _db.tasksTagEntries.task.equalsExp(_db.tasksTable.id),
       ),
     ])
+      ..orderBy(_tasksOrdering.map((e) => e(_db.tasksTable)).toList())
       ..groupBy([_db.tasksTagEntries.task])
       ..where(_db.tasksTagEntries.tag.isIn(searchTags));
 
@@ -67,6 +69,17 @@ class TasksLocalService {
 
     return map;
   }
+
+  List<OrderingTerm Function($TasksTableTable)> get _tasksOrdering => [
+        (u) => OrderingTerm(
+              expression: u.completedAt.isNotNull(),
+            ),
+        (u) => OrderingTerm(
+              expression: u.importance,
+              mode: OrderingMode.desc,
+            ),
+        (u) => OrderingTerm(expression: u.createdAt),
+      ];
 
   Future<void> saveTask(Task task) {
     return _db.transaction(() async {

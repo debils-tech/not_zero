@@ -29,6 +29,7 @@ final tasksListStreamProvider =
 final taskStreamProvider =
     StreamProvider.autoDispose.family<Task, String>((ref, taskId) {
   final repository = ref.watch(tasksRepositoryProvider);
-  ref.onDispose(() => repository.disposeTaskSubscription(taskId));
-  return repository.subscribeOnTaskById(taskId);
+  return repository
+      .getTasks()
+      .map((items) => items.firstWhere((task) => task.id == taskId));
 });

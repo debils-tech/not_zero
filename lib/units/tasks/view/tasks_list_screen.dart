@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/adaptive/list_limiter.dart';
-import 'package:not_zero/components/common_widgets/universal_list_view.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/components/selection/di.dart';
 import 'package:not_zero/components/selection/notifiers/item_selection_notifier.dart';
@@ -125,13 +124,16 @@ class _TasksListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return AdaptiveListLimiter(
       maxWidth: 600,
-      child: UniversalListView<Task>(
-        listKey: null,
-        items: tasks,
-        itemBuilder: (_, item, __) => TaskCard(
-          item,
-          key: Key('Task ${item.id}'),
-        ),
+      child: ListView(
+        padding: const EdgeInsets.only(top: 5, bottom: 75, left: 10, right: 10),
+        children: tasks
+            .map(
+              (t) => TaskCard(
+                t,
+                key: Key('Task ${t.id}'),
+              ),
+            )
+            .toList(),
       ),
     );
   }

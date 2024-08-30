@@ -11,8 +11,6 @@ class TasksRepository {
 
   final _tasksStreamController = BehaviorSubject<List<Task>>.seeded([]);
 
-  final _subscribedTasks = <String, BehaviorSubject<Task>>{};
-
   Stream<List<Task>> getTasks() => _tasksStreamController;
 
   Task? getTaskById(String taskId) {
@@ -27,7 +25,7 @@ class TasksRepository {
 
   Future<void> syncTasks() async {
     final localTasks = await _localService.getTasks();
-    _tasksStreamController.add(localTasks..sort(_tasksSorting));
+    _tasksStreamController.add(localTasks);
   }
 
   Future<void> addTask(Task task) {
@@ -47,10 +45,6 @@ class TasksRepository {
       final oldTask = currentList[indexOfSavedTask];
 
       if (oldTask.isCompleted != task.isCompleted) {
-        // Sorting for ensuring that completed tasks will be at the bottom of
-        // the list.
-        newList.sort(_tasksSorting);
-
         if (task.isCompleted) {
           _statsRepository.includeCompletedTask(task.importance);
         } else {
@@ -63,11 +57,6 @@ class TasksRepository {
       }
 
       _tasksStreamController.add(newList);
-    }
-
-    final taskSub = _subscribedTasks[task.id];
-    if (taskSub != null) {
-      taskSub.add(task);
     }
 
     return _localService.saveTask(task);
@@ -102,29 +91,5 @@ class TasksRepository {
     _tasksStreamController.add(newList);
 
     return _localService.deleteTasks(tasks);
-  }
-
-  int _tasksSorting(Task a, Task b) {
-    return b.compareTo(a);
-  }
-
-  Stream<Task> subscribeOnTaskById(String taskId) {
-    // Trying to find already created subscription.
-    var taskStream = _subscribedTasks[taskId];
-    if (taskStream != null) return taskStream;
-
-    // Creating a new one if such subscription doesn't exist.
-    taskStream = BehaviorSubject<Task>();
-    _subscribedTasks[taskId] = taskStream;
-    return taskStream;
-  }
-
-  bool disposeTaskSubscription(String taskId) {
-    final taskStream = _subscribedTasks[taskId];
-    if (taskStream == null) return false;
-
-    taskStream.close();
-    _subscribedTasks.remove(taskId);
-    return true;
   }
 }
