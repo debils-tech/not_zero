@@ -279,7 +279,7 @@ packages:
     source: hosted
     version: "2.3.6"
   drift:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: drift
       sha256: "15b51e0ee1970455c0c3f7e560f3ac02ecb9c04711a9657586e470b234659dba"

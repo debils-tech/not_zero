@@ -7,7 +7,6 @@ analyzer:
     - lib/**/*.g.dart
     - lib/**/*.freezed.dart
     - lib/**/*.tailor.dart
-    - lib/get_it.config.dart
   errors:
     unnecessary_await_in_return: warning
     # Added since JsonKey and JsonSerializable should be used in "invalid" place with freezed
