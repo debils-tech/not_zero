@@ -31,7 +31,7 @@ class NotZeroDatabase extends _$NotZeroDatabase {
         await customStatement('PRAGMA foreign_keys = OFF');
 
         if (from < 2) {
-          // Tasks table was broken in v0
+          // Tasks table was broken in v0 (string DateTime)
           await transaction(() async {
             await m.drop(tasksTable);
             await m.createTable(tasksTable);
@@ -47,10 +47,18 @@ class NotZeroDatabase extends _$NotZeroDatabase {
               await m.createTable(schema.tasksTagEntries);
             },
             from3To4: (m, schema) async {
-              await m.addColumn(schema.tasksTable, schema.tasksTable.forDate);
-              await m.addColumn(
-                schema.tasksTable,
-                schema.tasksTable.persistent,
+              await m.alterTable(
+                TableMigration(
+                  schema.tasksTable,
+                  columnTransformer: {
+                    schema.tasksTable.forDate:
+                        schema.tasksTable.completedAt.iif(
+                      schema.tasksTable.completedAt.isNotNull(),
+                      schema.tasksTable.createdAt,
+                    ),
+                    schema.tasksTable.persistent: const Constant(false),
+                  },
+                ),
               );
             },
           ),
