@@ -31,6 +31,22 @@ class $TasksTableTable extends TasksTable
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
       'created_at', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _forDateMeta =
+      const VerificationMeta('forDate');
+  @override
+  late final GeneratedColumn<DateTime> forDate = GeneratedColumn<DateTime>(
+      'for_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _persistentMeta =
+      const VerificationMeta('persistent');
+  @override
+  late final GeneratedColumn<bool> persistent = GeneratedColumn<bool>(
+      'persistent', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("persistent" IN (0, 1))'),
+      defaultValue: const Constant(false));
   static const VerificationMeta _modifiedAtMeta =
       const VerificationMeta('modifiedAt');
   @override
@@ -51,8 +67,17 @@ class $TasksTableTable extends TasksTable
               type: DriftSqlType.int, requiredDuringInsert: true)
           .withConverter<TaskImportance>($TasksTableTable.$converterimportance);
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, title, description, createdAt, modifiedAt, completedAt, importance];
+  List<GeneratedColumn> get $columns => [
+        id,
+        title,
+        description,
+        createdAt,
+        forDate,
+        persistent,
+        modifiedAt,
+        completedAt,
+        importance
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -88,6 +113,18 @@ class $TasksTableTable extends TasksTable
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
+    if (data.containsKey('for_date')) {
+      context.handle(_forDateMeta,
+          forDate.isAcceptableOrUnknown(data['for_date']!, _forDateMeta));
+    } else if (isInserting) {
+      context.missing(_forDateMeta);
+    }
+    if (data.containsKey('persistent')) {
+      context.handle(
+          _persistentMeta,
+          persistent.isAcceptableOrUnknown(
+              data['persistent']!, _persistentMeta));
+    }
     if (data.containsKey('modified_at')) {
       context.handle(
           _modifiedAtMeta,
@@ -119,12 +156,16 @@ class $TasksTableTable extends TasksTable
           .read(DriftSqlType.int, data['${effectivePrefix}importance'])!),
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      forDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}for_date'])!,
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
       modifiedAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}modified_at']),
       completedAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}completed_at']),
+      persistent: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}persistent'])!,
     );
   }
 
@@ -142,6 +183,8 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
   final Value<String> title;
   final Value<String> description;
   final Value<DateTime> createdAt;
+  final Value<DateTime> forDate;
+  final Value<bool> persistent;
   final Value<DateTime?> modifiedAt;
   final Value<DateTime?> completedAt;
   final Value<TaskImportance> importance;
@@ -151,6 +194,8 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     this.title = const Value.absent(),
     this.description = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.forDate = const Value.absent(),
+    this.persistent = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     this.completedAt = const Value.absent(),
     this.importance = const Value.absent(),
@@ -161,6 +206,8 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     required String title,
     required String description,
     required DateTime createdAt,
+    required DateTime forDate,
+    this.persistent = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     this.completedAt = const Value.absent(),
     required TaskImportance importance,
@@ -169,12 +216,15 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
         title = Value(title),
         description = Value(description),
         createdAt = Value(createdAt),
+        forDate = Value(forDate),
         importance = Value(importance);
   static Insertable<Task> custom({
     Expression<String>? id,
     Expression<String>? title,
     Expression<String>? description,
     Expression<DateTime>? createdAt,
+    Expression<DateTime>? forDate,
+    Expression<bool>? persistent,
     Expression<DateTime>? modifiedAt,
     Expression<DateTime>? completedAt,
     Expression<int>? importance,
@@ -185,6 +235,8 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
       if (title != null) 'title': title,
       if (description != null) 'description': description,
       if (createdAt != null) 'created_at': createdAt,
+      if (forDate != null) 'for_date': forDate,
+      if (persistent != null) 'persistent': persistent,
       if (modifiedAt != null) 'modified_at': modifiedAt,
       if (completedAt != null) 'completed_at': completedAt,
       if (importance != null) 'importance': importance,
@@ -197,6 +249,8 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
       Value<String>? title,
       Value<String>? description,
       Value<DateTime>? createdAt,
+      Value<DateTime>? forDate,
+      Value<bool>? persistent,
       Value<DateTime?>? modifiedAt,
       Value<DateTime?>? completedAt,
       Value<TaskImportance>? importance,
@@ -206,6 +260,8 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
       title: title ?? this.title,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
+      forDate: forDate ?? this.forDate,
+      persistent: persistent ?? this.persistent,
       modifiedAt: modifiedAt ?? this.modifiedAt,
       completedAt: completedAt ?? this.completedAt,
       importance: importance ?? this.importance,
@@ -227,6 +283,12 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (forDate.present) {
+      map['for_date'] = Variable<DateTime>(forDate.value);
+    }
+    if (persistent.present) {
+      map['persistent'] = Variable<bool>(persistent.value);
     }
     if (modifiedAt.present) {
       map['modified_at'] = Variable<DateTime>(modifiedAt.value);
@@ -251,6 +313,8 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
           ..write('title: $title, ')
           ..write('description: $description, ')
           ..write('createdAt: $createdAt, ')
+          ..write('forDate: $forDate, ')
+          ..write('persistent: $persistent, ')
           ..write('modifiedAt: $modifiedAt, ')
           ..write('completedAt: $completedAt, ')
           ..write('importance: $importance, ')
@@ -270,9 +334,11 @@ class _$TaskInsertable implements Insertable<Task> {
       title: Value(_object.title),
       importance: Value(_object.importance),
       createdAt: Value(_object.createdAt),
+      forDate: Value(_object.forDate),
       description: Value(_object.description),
       modifiedAt: Value(_object.modifiedAt),
       completedAt: Value(_object.completedAt),
+      persistent: Value(_object.persistent),
     ).toColumns(false);
   }
 }
@@ -696,6 +762,8 @@ typedef $$TasksTableTableCreateCompanionBuilder = TasksTableCompanion Function({
   required String title,
   required String description,
   required DateTime createdAt,
+  required DateTime forDate,
+  Value<bool> persistent,
   Value<DateTime?> modifiedAt,
   Value<DateTime?> completedAt,
   required TaskImportance importance,
@@ -706,6 +774,8 @@ typedef $$TasksTableTableUpdateCompanionBuilder = TasksTableCompanion Function({
   Value<String> title,
   Value<String> description,
   Value<DateTime> createdAt,
+  Value<DateTime> forDate,
+  Value<bool> persistent,
   Value<DateTime?> modifiedAt,
   Value<DateTime?> completedAt,
   Value<TaskImportance> importance,
@@ -754,6 +824,16 @@ class $$TasksTableTableFilterComposer
 
   ColumnFilters<DateTime> get createdAt => $state.composableBuilder(
       column: $state.table.createdAt,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get forDate => $state.composableBuilder(
+      column: $state.table.forDate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get persistent => $state.composableBuilder(
+      column: $state.table.persistent,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -812,6 +892,16 @@ class $$TasksTableTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
+  ColumnOrderings<DateTime> get forDate => $state.composableBuilder(
+      column: $state.table.forDate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get persistent => $state.composableBuilder(
+      column: $state.table.persistent,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
   ColumnOrderings<DateTime> get modifiedAt => $state.composableBuilder(
       column: $state.table.modifiedAt,
       builder: (column, joinBuilders) =>
@@ -852,6 +942,8 @@ class $$TasksTableTableTableManager extends RootTableManager<
             Value<String> title = const Value.absent(),
             Value<String> description = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> forDate = const Value.absent(),
+            Value<bool> persistent = const Value.absent(),
             Value<DateTime?> modifiedAt = const Value.absent(),
             Value<DateTime?> completedAt = const Value.absent(),
             Value<TaskImportance> importance = const Value.absent(),
@@ -862,6 +954,8 @@ class $$TasksTableTableTableManager extends RootTableManager<
             title: title,
             description: description,
             createdAt: createdAt,
+            forDate: forDate,
+            persistent: persistent,
             modifiedAt: modifiedAt,
             completedAt: completedAt,
             importance: importance,
@@ -872,6 +966,8 @@ class $$TasksTableTableTableManager extends RootTableManager<
             required String title,
             required String description,
             required DateTime createdAt,
+            required DateTime forDate,
+            Value<bool> persistent = const Value.absent(),
             Value<DateTime?> modifiedAt = const Value.absent(),
             Value<DateTime?> completedAt = const Value.absent(),
             required TaskImportance importance,
@@ -882,6 +978,8 @@ class $$TasksTableTableTableManager extends RootTableManager<
             title: title,
             description: description,
             createdAt: createdAt,
+            forDate: forDate,
+            persistent: persistent,
             modifiedAt: modifiedAt,
             completedAt: completedAt,
             importance: importance,

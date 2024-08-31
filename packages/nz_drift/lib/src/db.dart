@@ -1,6 +1,10 @@
 // Try to use "primary key" for selecting data by unique key.
 // ignore_for_file: invalid_use_of_visible_for_overriding_member
+import 'dart:math' as math;
+
 import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart';
+import 'package:nz_drift/src/migrations/schema_versions.dart';
 import 'package:nz_io/nz_io.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
@@ -18,23 +22,51 @@ class NotZeroDatabase extends _$NotZeroDatabase {
   NotZeroDatabase.memory() : super(openDriftDatabase(permanent: false));
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
       onUpgrade: (Migrator m, int from, int to) async {
+        await customStatement('PRAGMA foreign_keys = OFF');
+
         if (from < 2) {
-          // DateTime values was stored as string
-          throw Exception('Not supported version');
-        }
-        if (from < 3) {
-          // no "tags_table" and "tasks_tag_entries"
+          // Tasks table was broken in v0
           await transaction(() async {
-            await m.createTable(tagsTable);
-            await m.createTable(tasksTagEntries);
+            await m.drop(tasksTable);
+            await m.createTable(tasksTable);
           });
         }
+
+        await m.runMigrationSteps(
+          from: math.max(2, from),
+          to: to,
+          steps: migrationSteps(
+            from2To3: (m, schema) async {
+              await m.createTable(schema.tagsTable);
+              await m.createTable(schema.tasksTagEntries);
+            },
+            from3To4: (m, schema) async {
+              await m.addColumn(schema.tasksTable, schema.tasksTable.forDate);
+              await m.addColumn(
+                schema.tasksTable,
+                schema.tasksTable.persistent,
+              );
+            },
+          ),
+        );
+
+        if (kDebugMode) {
+          // Fail if the migration broke foreign keys
+          final wrongForeignKeys =
+              await customSelect('PRAGMA foreign_key_check').get();
+          assert(
+            wrongForeignKeys.isEmpty,
+            'Wrong foreign keys: ${wrongForeignKeys.map((e) => e.data)}',
+          );
+        }
+
+        await customStatement('PRAGMA foreign_keys = ON;');
       },
     );
   }
