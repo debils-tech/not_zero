@@ -11,6 +11,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       title: json['title'] as String,
       importance: $enumDecode(_$TaskImportanceEnumMap, json['importance']),
       createdAt: DateTime.parse(json['createdAt'] as String),
+      forDate: DateTime.parse(json['forDate'] as String),
       description: json['description'] as String? ?? '',
       modifiedAt: json['modifiedAt'] == null
           ? null
@@ -18,6 +19,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       completedAt: json['completedAt'] == null
           ? null
           : DateTime.parse(json['completedAt'] as String),
+      persistent: json['persistent'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
@@ -26,9 +28,11 @@ Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
       'title': instance.title,
       'importance': _$TaskImportanceEnumMap[instance.importance]!,
       'createdAt': instance.createdAt.toIso8601String(),
+      'forDate': instance.forDate.toIso8601String(),
       'description': instance.description,
       'modifiedAt': instance.modifiedAt?.toIso8601String(),
       'completedAt': instance.completedAt?.toIso8601String(),
+      'persistent': instance.persistent,
       'tags': Task._tagsToJson(instance.tags),
     };
 

@@ -14,9 +14,11 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     required String title,
     required TaskImportance importance,
     required DateTime createdAt,
+    required DateTime forDate,
     @Default('') String description,
     DateTime? modifiedAt,
     DateTime? completedAt,
+    @Default(false) bool persistent,
     @JsonKey(
       toJson: Task._tagsToJson,
       includeToJson: true,
@@ -33,6 +35,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   factory Task.create({
     required String title,
     required TaskImportance importance,
+    DateTime? forDate, // TODO(uSlashVlad): Make it required
     String? description,
     List<ItemTag>? tags,
   }) =>
@@ -41,6 +44,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
         title: title,
         description: description ?? '',
         createdAt: DateTime.now(),
+        forDate: forDate ?? DateTime.now(),
         importance: importance,
         tags: tags ?? [],
       );
@@ -50,12 +54,14 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     String? description,
     TaskImportance? importance,
     List<ItemTag>? tags,
+    DateTime? forDate,
   }) =>
       copyWith(
         title: title ?? this.title,
         description: description ?? this.description,
         importance: importance ?? this.importance,
         modifiedAt: DateTime.now(),
+        forDate: forDate ?? this.forDate,
         tags: tags ?? this.tags,
       );
 
