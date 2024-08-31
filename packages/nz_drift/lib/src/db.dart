@@ -97,27 +97,4 @@ class NotZeroDatabase extends _$NotZeroDatabase {
       dbFile.deleteSync();
     }
   }
-
-  Future<void> upsertIn<T extends Table, D>(
-    TableInfo<T, D> table,
-    Insertable<D> insertable,
-  ) {
-    return into(table).insertOnConflictUpdate(insertable);
-  }
-
-  Future<D?> findByKey<T extends Table, D>(
-    TableInfo<T, D> table,
-    Object key,
-  ) {
-    return (select(table)..where((tbl) => tbl.primaryKey!.single.equals(key)))
-        .getSingleOrNull();
-  }
-
-  Future<void> deleteByKey<T extends Table, D>(
-    TableInfo<T, D> table,
-    Object key,
-  ) {
-    return (delete(table)..where((tbl) => tbl.primaryKey!.single.equals(key)))
-        .go();
-  }
 }

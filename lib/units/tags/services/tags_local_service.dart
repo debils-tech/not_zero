@@ -11,7 +11,7 @@ class TagsLocalService {
   }
 
   Future<void> saveTag(ItemTag tag) {
-    return _db.upsertIn(_db.tagsTable, tag.toInsertable());
+    return _db.into(_db.tagsTable).insertOnConflictUpdate(tag.toInsertable());
   }
 
   Future<void> deleteTag(String tagId) {

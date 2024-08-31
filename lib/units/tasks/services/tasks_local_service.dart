@@ -83,12 +83,14 @@ class TasksLocalService {
 
   Future<void> saveTask(Task task) {
     return _db.transaction(() async {
-      await _db.upsertIn(_db.tasksTable, task.toInsertable());
+      await _db
+          .into(_db.tasksTable)
+          .insertOnConflictUpdate(task.toInsertable());
+
       for (final tag in task.tags) {
-        await _db.upsertIn(
-          _db.tasksTagEntries,
-          TasksTagEntry(task: task.id, tag: tag.id),
-        );
+        await _db
+            .into(_db.tasksTagEntries)
+            .insertOnConflictUpdate(TasksTagEntry(task: task.id, tag: tag.id));
       }
     });
   }
