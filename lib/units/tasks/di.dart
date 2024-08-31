@@ -35,7 +35,7 @@ final specificTaskStreamProvider =
       .map((items) => items.firstWhere((task) => task.id == taskId));
 });
 
-final tasksListTagsFilterProvider = StateProvider.autoDispose<Set<String>>((ref) {
+final tasksListTagsFilterProvider =
+    StateProvider.autoDispose<Set<String>>((ref) {
   return const {};
 });
-

@@ -67,7 +67,8 @@ class _TaskViewScreenBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final task =
-        ref.watch(specificTaskStreamProvider(taskToView.id)).valueOrNull ?? taskToView;
+        ref.watch(specificTaskStreamProvider(taskToView.id)).valueOrNull ??
+            taskToView;
 
     return ListView(
       padding: const EdgeInsets.only(top: 7, bottom: 75, left: 7, right: 7),
@@ -106,8 +107,9 @@ class _EditFloatingButton extends ConsumerWidget {
     return FloatingActionButton(
       onPressed: () => context.pushReplacement(
         '/tasks/edit/${taskToView.id}',
-        extra: ref.watch(specificTaskStreamProvider(taskToView.id)).valueOrNull ??
-            taskToView,
+        extra:
+            ref.watch(specificTaskStreamProvider(taskToView.id)).valueOrNull ??
+                taskToView,
       ),
       tooltip: t.tasks.view.tooltips.editTaskButton,
       child: const Icon(Icons.edit_rounded),
