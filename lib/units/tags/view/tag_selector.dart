@@ -11,14 +11,13 @@ class ItemTagSelector extends ConsumerWidget {
     required this.selectedTags,
     required this.onSelection,
     this.showAddButton = true,
-    this.excludeSelection = false,
     super.key,
   });
 
   final Set<String> selectedTags;
-  final void Function(List<ItemTag> tags) onSelection;
+  // ignore: avoid_positional_boolean_parameters
+  final void Function(ItemTag tag, bool isSelected) onSelection;
   final bool showAddButton;
-  final bool excludeSelection;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,9 +33,7 @@ class ItemTagSelector extends ConsumerWidget {
                 final isSelected = selectedTags.contains(tag.id);
                 return _TagButton(
                   tag: tag,
-                  onPressed: (value) => excludeSelection
-                      ? _onTagSelectionExclude(tag, value)
-                      : _onTagSelection(tags, tag, value),
+                  onPressed: (value) => _onTagSelectionExclude(tag, value),
                   selected: isSelected,
                 );
               }),
@@ -52,27 +49,7 @@ class ItemTagSelector extends ConsumerWidget {
     final wasSelected = selectedTags.contains(tag.id);
     if (wasSelected == newValue) return;
 
-    if (newValue) {
-      onSelection([tag]);
-    } else {
-      onSelection([]);
-    }
-  }
-
-  void _onTagSelection(List<ItemTag> tags, ItemTag tag, bool newValue) {
-    final newSelectedTags = {...selectedTags};
-    final shouldUpdate = newValue && newSelectedTags.add(tag.id) ||
-        newSelectedTags.remove(tag.id);
-    if (shouldUpdate) {
-      onSelection(_filterTags(tags, newSelectedTags));
-    }
-  }
-
-  List<ItemTag> _filterTags(
-    List<ItemTag> allTags,
-    Set<String> selectedIds,
-  ) {
-    return allTags.where((tag) => selectedIds.contains(tag.id)).toList();
+    onSelection(tag, newValue);
   }
 }
 

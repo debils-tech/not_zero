@@ -147,16 +147,20 @@ class _TasksFilters extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedTagsNotifier =
-        ref.watch(tasksListTagsFilterProvider.notifier);
-    final selectedTags = ref.watch(tasksListTagsFilterProvider);
+    final filtersNotifier = ref.watch(tasksFiltersNotifier.notifier);
+    final selectedTags =
+        ref.watch(tasksFiltersNotifier.select((state) => state.searchTags));
 
     return ItemTagSelector(
       selectedTags: selectedTags,
-      onSelection: (newValue) =>
-          selectedTagsNotifier.state = newValue.map((t) => t.id).toSet(),
+      onSelection: (tag, isSelected) {
+        if (isSelected) {
+          filtersNotifier.selectTag(tag);
+        } else {
+          filtersNotifier.unSelectTag(tag);
+        }
+      },
       showAddButton: false,
-      excludeSelection: true,
     );
   }
 }

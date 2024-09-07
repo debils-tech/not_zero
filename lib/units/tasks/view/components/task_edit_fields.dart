@@ -80,7 +80,15 @@ class TaskEditTagsSelectionField extends StatelessWidget {
       builder: (field) {
         return ItemTagSelector(
           selectedTags: (field.value ?? []).map((e) => e.id).toSet(),
-          onSelection: field.didChange,
+          onSelection: (tag, isSelected) {
+            final newValue = field.value?.toSet() ?? {};
+            if (isSelected) {
+              newValue.add(tag);
+            } else {
+              newValue.remove(tag);
+            }
+            field.didChange(newValue.toList());
+          },
         );
       },
     );

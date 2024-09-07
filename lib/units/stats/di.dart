@@ -19,6 +19,5 @@ final statsRepositoryProvider = Provider<StatsRepository>((ref) {
 
 final quickStatisticsNotifierProvider =
     NotifierProvider.autoDispose<QuickStatisticsNotifier, QuickStatisticsState>(
-        () {
-  return QuickStatisticsNotifier();
-});
+  QuickStatisticsNotifier.new,
+);
