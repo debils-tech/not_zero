@@ -96,6 +96,9 @@ class TasksLocalService {
           .into(_db.tasksTable)
           .insertOnConflictUpdate(task.toInsertable());
 
+      await (_db.delete(_db.tasksTagEntries)
+            ..where((tbl) => tbl.task.equals(task.id)))
+          .go();
       for (final tag in task.tags) {
         await _db
             .into(_db.tasksTagEntries)
