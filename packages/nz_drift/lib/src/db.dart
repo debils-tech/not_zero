@@ -1,15 +1,11 @@
-// Try to use "primary key" for selecting data by unique key.
-// ignore_for_file: invalid_use_of_visible_for_overriding_member
-import 'dart:math' as math;
-
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nz_drift/src/migrations/schema_versions.dart';
 import 'package:nz_io/nz_io.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 import 'database/open_database.dart';
+import 'migrations/migrations.dart';
 import 'tables/tags_table.dart';
 import 'tables/tasks_table.dart';
 
@@ -30,38 +26,10 @@ class NotZeroDatabase extends _$NotZeroDatabase {
       onUpgrade: (Migrator m, int from, int to) async {
         await customStatement('PRAGMA foreign_keys = OFF');
 
-        if (from < 2) {
-          // Tasks table was broken in v0 (string DateTime)
-          await transaction(() async {
-            await m.drop(tasksTable);
-            await m.createTable(tasksTable);
-          });
-        }
-
         await m.runMigrationSteps(
-          from: math.max(2, from),
+          from: from,
           to: to,
-          steps: migrationSteps(
-            from2To3: (m, schema) async {
-              await m.createTable(schema.tagsTable);
-              await m.createTable(schema.tasksTagEntries);
-            },
-            from3To4: (m, schema) async {
-              await m.alterTable(
-                TableMigration(
-                  schema.tasksTable,
-                  columnTransformer: {
-                    schema.tasksTable.forDate:
-                        schema.tasksTable.completedAt.iif(
-                      schema.tasksTable.completedAt.isNotNull(),
-                      schema.tasksTable.createdAt,
-                    ),
-                    schema.tasksTable.persistent: const Constant(false),
-                  },
-                ),
-              );
-            },
-          ),
+          steps: notZeroMigrationSteps,
         );
 
         if (kDebugMode) {
