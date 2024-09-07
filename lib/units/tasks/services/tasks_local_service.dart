@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:not_zero/units/tasks/models/tasks_filters.dart';
 import 'package:nz_drift/nz_drift.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
@@ -8,38 +9,17 @@ class TasksLocalService {
 
   final NotZeroDatabase _db;
 
-  Future<List<Task>> getTasks({Set<String>? searchTags}) {
-    if (searchTags == null || searchTags.isEmpty) {
-      return _getTasksWithoutFilter();
-    }
-
-    return _getTasksForTag(searchTags: searchTags);
-  }
-
-  Future<List<Task>> _getTasksWithoutFilter() async {
-    final allTags = await _getTagMappings();
-    final tasksQuery = _db.select(_db.tasksTable)..orderBy(_tasksOrdering);
-    final tasksEntries = tasksQuery.map(
-      (task) {
-        final tagsForTask = allTags[task.id];
-        if (tagsForTask == null) return task;
-        return task.copyWith(tags: tagsForTask);
-      },
-    );
-    return tasksEntries.get();
-  }
-
-  Future<List<Task>> _getTasksForTag({required Set<String> searchTags}) async {
-    final allTags = await _getTagMappings();
-    final joinedTagsWithTasks = _db.select(_db.tasksTagEntries).join([
-      innerJoin(
-        _db.tasksTable,
+  Future<List<Task>> getTasks(TasksFilters filters) async {
+    final allTags = await _tagMappings;
+    final joinedTagsWithTasks = _db.select(_db.tasksTable).join([
+      leftOuterJoin(
+        _db.tasksTagEntries,
         _db.tasksTagEntries.task.equalsExp(_db.tasksTable.id),
       ),
     ])
-      ..orderBy(_tasksOrdering.map((e) => e(_db.tasksTable)).toList())
-      ..groupBy([_db.tasksTagEntries.task])
-      ..where(_db.tasksTagEntries.tag.isIn(searchTags));
+      ..orderBy(_tasksOrdering)
+      ..groupBy([_db.tasksTable.id])
+      ..where(_createFilterForTasks(filters));
 
     final tasksEntries = joinedTagsWithTasks.map((rows) {
       final task = rows.readTable(_db.tasksTable);
@@ -47,10 +27,41 @@ class TasksLocalService {
       if (tagsForTask == null) return task;
       return task.copyWith(tags: tagsForTask);
     });
+
     return tasksEntries.get();
   }
 
-  Future<Map<String, List<ItemTag>>> _getTagMappings() async {
+  Expression<bool> _createFilterForTasks(TasksFilters filters) {
+    final tasksTable = _db.tasksTable;
+    final dbFilters = <Expression<bool>>[];
+
+    final searchTags = filters.searchTags;
+    if (searchTags.isNotEmpty) {
+      dbFilters.add(_db.tasksTagEntries.tag.isIn(searchTags));
+    }
+
+    final forDate = filters.forDate;
+    if (forDate != null) {
+      dbFilters.add(
+        // If completed at queried day
+        tasksTable.isCompleted & tasksTable.completedAt.sameDayAs(forDate) |
+            // If not completed
+            tasksTable.isNotCompleted &
+                // Task for queried day
+                (tasksTable.forDate.sameDayAs(forDate) |
+                    // Persistent task for date before
+                    tasksTable.isPersistent &
+                        tasksTable.forDate.dayBefore(forDate)),
+      );
+    }
+
+    if (dbFilters.isEmpty) {
+      return const Constant(true);
+    }
+    return Expression.and(dbFilters);
+  }
+
+  Future<Map<String, List<ItemTag>>> get _tagMappings async {
     final tags = await _db.select(_db.tasksTagEntries).join(
       [
         innerJoin(
@@ -70,15 +81,13 @@ class TasksLocalService {
     return map;
   }
 
-  List<OrderingTerm Function($TasksTableTable)> get _tasksOrdering => [
-        (u) => OrderingTerm(
-              expression: u.completedAt.isNotNull(),
-            ),
-        (u) => OrderingTerm(
-              expression: u.importance,
-              mode: OrderingMode.desc,
-            ),
-        (u) => OrderingTerm(expression: u.createdAt),
+  List<OrderingTerm> get _tasksOrdering => [
+        OrderingTerm(expression: _db.tasksTable.isCompleted),
+        OrderingTerm(
+          expression: _db.tasksTable.importance,
+          mode: OrderingMode.desc,
+        ),
+        OrderingTerm(expression: _db.tasksTable.createdAt),
       ];
 
   Future<void> saveTask(Task task) {
