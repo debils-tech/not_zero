@@ -12,7 +12,7 @@ mkdir -p $RELEASE_DIR
 rm -f $RELEASE_DIR/*
 
 (cd $LINUX_DIR && tar -cz bundle -f bundle.tar.gz)
-copy_artifact $LINUX_DIR/bundle.tar.gz $RELEASE_DIR/$APP_NAME-x86_64-$BUILD_TAG.tar.gz
+copy_artifact $LINUX_DIR/bundle.tar.gz $RELEASE_DIR/$APP_NAME-x86_64-"$BUILD_TAG".tar.gz
 
-printf "\033[92m ✔️ Linux builds copied into \"$RELEASE_DIR\":\033[0m\n"
+echo -e "\033[92m ✔️ Linux builds copied into \"$RELEASE_DIR\":\033[0m"
 ls $RELEASE_DIR -1hs

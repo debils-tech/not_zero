@@ -5,17 +5,17 @@ RELEASE_DIR=build/releases/android
 FINGERPRINT="SHA256: 38:47:CF:E3:A5:2D:FD:DE:BC:FA:51:AF:3E:D3:22:A4:19:6E:A7:6B:3D:65:9E:10:01:B9:22:ED:0A:17:FD:8A"
 
 check_cert () {
-    FILE_CERT=$(keytool -printcert -jarfile $1)
+    FILE_CERT=$(keytool -printcert -jarfile "$1")
 
-    if echo $FILE_CERT | grep -q "$FINGERPRINT"; then
-        printf "\033[92m ✔️ \"$1\" certificate fingerprint valid\033[0m\n"
+    if echo "$FILE_CERT" | grep -q "$FINGERPRINT"; then
+        echo -e "\033[92m ✔️ \"$1\" certificate fingerprint valid\033[0m"
     else
-        printf "\033[93m ⚠️ \"$1\" hasn't got trusted certificate fingerprint\033[0m\n"
+        echo -e "\033[93m ⚠️ \"$1\" hasn't got trusted certificate fingerprint\033[0m"
     fi
 }
 
-for FILE in $RELEASE_DIR/*; do
-    check_cert $FILE &
+for FILE in "$RELEASE_DIR"/*; do
+    check_cert "$FILE" &
 done
 
 wait
