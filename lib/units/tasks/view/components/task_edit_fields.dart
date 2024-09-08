@@ -123,3 +123,22 @@ class TaskEditForDateField extends StatelessWidget {
     );
   }
 }
+
+class TaskEditPersistenceField extends StatelessWidget {
+  const TaskEditPersistenceField({super.key});
+
+  static const name = 'persistent';
+
+  @override
+  Widget build(BuildContext context) {
+    return FormBuilderSwitch(
+      name: name,
+      decoration: const InputDecoration(border: InputBorder.none),
+      controlAffinity: ListTileControlAffinity.leading,
+      title: Text(
+        t.tasks.edit.fields.taskPersistence,
+        style: const TextStyle(fontSize: 15),
+      ),
+    );
+  }
+}

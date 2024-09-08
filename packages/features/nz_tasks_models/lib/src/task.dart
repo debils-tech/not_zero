@@ -39,6 +39,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     required DateTime forDate,
     String? description,
     List<ItemTag>? tags,
+    bool? persistent,
   }) =>
       Task(
         id: const Uuid().v4(),
@@ -48,6 +49,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
         forDate: forDate,
         importance: importance,
         tags: tags ?? [],
+        persistent: persistent ?? true,
       );
 
   Task edit({
@@ -56,6 +58,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     TaskImportance? importance,
     List<ItemTag>? tags,
     DateTime? forDate,
+    bool? persistent,
   }) =>
       copyWith(
         title: title ?? this.title,
@@ -64,6 +67,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
         modifiedAt: DateTime.now(),
         forDate: forDate ?? this.forDate,
         tags: tags ?? this.tags,
+        persistent: persistent ?? this.persistent,
       );
 
   Task complete({required bool completed}) => copyWith(

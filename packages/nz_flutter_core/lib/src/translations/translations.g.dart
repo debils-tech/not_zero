@@ -4,7 +4,7 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 1
-/// Strings: 71
+/// Strings: 72
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -539,6 +539,7 @@ class _TranslationsTasksEditFieldsEn {
 	// Translations
 	String get taskTitle => 'Title';
 	String get taskDescription => 'Description';
+	String get taskPersistence => 'Keep this task until complete';
 }
 
 // Path: tasks.edit.submit
@@ -649,6 +650,7 @@ extension on Translations {
 			case 'tasks.edit.title.existing': return 'Edit task';
 			case 'tasks.edit.fields.taskTitle': return 'Title';
 			case 'tasks.edit.fields.taskDescription': return 'Description';
+			case 'tasks.edit.fields.taskPersistence': return 'Keep this task until complete';
 			case 'tasks.edit.submit.create': return 'Create new task!';
 			case 'tasks.edit.submit.existing': return 'Save changes';
 			case 'tasks.edit.deleteDialog.content': return 'Are you sure you want delete this task?';

@@ -96,6 +96,7 @@ class _TaskEditScreenBody extends ConsumerWidget {
             taskToEdit?.importance ?? TaskImportance.normal,
         TaskEditTagsSelectionField.name: taskToEdit?.tags,
         TaskEditForDateField.name: taskToEdit?.forDate ?? filters.forDate,
+        TaskEditPersistenceField.name: taskToEdit?.persistent ?? true,
       },
       onChanged: () {
         final isValid = formKey.currentState?.validate() ?? false;
@@ -137,10 +138,17 @@ class _TaskEditScreenBody extends ConsumerWidget {
               const TaskEditDescriptionField(),
               const SizedBox(height: 12),
               const TaskEditForDateField(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 8),
+              const TaskEditPersistenceField(),
+              // const SizedBox(height: 6),
+              const Divider(height: 24),
+              // const SizedBox(height: 20),
               const TaskEditTagsSelectionField(),
-              const SizedBox(height: 12),
-              if (taskToEdit != null) TaskEditingInfo(taskToEdit!),
+              if (taskToEdit != null) ...[
+                const SizedBox(height: 6),
+                const Divider(height: 24),
+                TaskEditingInfo(taskToEdit!),
+              ],
             ],
           ),
         ],
@@ -186,6 +194,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
       final description = values[TaskEditDescriptionField.name] as String?;
       final tags = values[TaskEditTagsSelectionField.name] as List<ItemTag>?;
       final forDate = values[TaskEditForDateField.name] as DateTime;
+      final persistent = values[TaskEditPersistenceField.name] as bool;
 
       final prevTask = taskToEdit;
       final repository = ref.read(tasksRepositoryProvider);
@@ -197,6 +206,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
             description: description,
             tags: tags,
             forDate: forDate,
+            persistent: persistent,
           ),
         );
       } else {
@@ -207,6 +217,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
             description: description,
             tags: tags,
             forDate: forDate,
+            persistent: persistent,
           ),
         );
       }
@@ -218,7 +229,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
 }
 
 final _formKeyProvider =
-    Provider.autoDispose<GlobalKey<FormBuilderState>>((ref) {
+    StateProvider.autoDispose<GlobalKey<FormBuilderState>>((ref) {
   return GlobalKey<FormBuilderState>();
 });
 

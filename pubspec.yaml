@@ -1,6 +1,6 @@
 name: not_zero
 description: Task management and well-being app.
-publish_to: "none"
+publish_to: 'none'
 version: 0.11.0+17
 
 environment:
