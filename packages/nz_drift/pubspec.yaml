@@ -1,0 +1,29 @@
+name: nz_drift
+description: "A new Flutter package project."
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  drift: ^2.19.1+1
+  nz_common:
+    path: ../nz_common
+  nz_io:
+    path: ../nz_io
+  nz_tags_models:
+    path: ../features/nz_tags_models
+  nz_tasks_models:
+    path: ../features/nz_tasks_models
+  path: ^1.9.0
+  path_provider: ^2.1.4
+  sqlite3: ^2.4.5
+
+dev_dependencies:
+  build_runner: ^2.4.12
+  drift_dev: ^2.19.1
+  lints: ^4.0.0

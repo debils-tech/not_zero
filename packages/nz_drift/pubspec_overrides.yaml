@@ -1,0 +1,10 @@
+# melos_managed_dependency_overrides: nz_common,nz_tags_models,nz_tasks_models,nz_io
+dependency_overrides:
+  nz_common:
+    path: ../nz_common
+  nz_io:
+    path: ../nz_io
+  nz_tags_models:
+    path: ../features/nz_tags_models
+  nz_tasks_models:
+    path: ../features/nz_tasks_models

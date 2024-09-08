@@ -42,15 +42,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Generated files
-lib/get_it.config.dart
-lib/**/*.g.dart
-lib/**/*.freezed.dart
-lib/**/*.tailor.dart
-
-# Enviroment variables
-/.env
-env.g.dart
-
 # Symbolic link to Flutter SDK created by FVM
 /.fvm/flutter_sdk

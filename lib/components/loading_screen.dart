@@ -5,9 +5,9 @@ class CommonLoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => Future.value(false),
-      child: const Scaffold(
+    return const PopScope(
+      canPop: false,
+      child: Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/common_widgets/copy_button.dart';
-import 'package:not_zero/i18n/translations.g.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class WebSaveDialog extends StatelessWidget {
   const WebSaveDialog(this.stringContent, {super.key});

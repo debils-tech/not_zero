@@ -1,0 +1,24 @@
+name: not_zero
+
+scripts:
+  generate:
+    exec: dart run build_runner build -d
+    orderDependents: true
+    packageFilters:
+      dependsOn:
+        - build_runner
+  l10n:
+    exec: dart run slang
+    packageFilters:
+      dependsOn:
+        - slang
+  fix:
+    exec: dart fix --apply .
+  upgrade:
+    exec: dart pub upgrade --major-versions
+    orderDependents: true
+
+packages:
+  - .
+  - packages/**
+  - packages/features/**
