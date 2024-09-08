@@ -151,16 +151,20 @@ class _TasksFilters extends ConsumerWidget {
     final selectedTags =
         ref.watch(tasksFiltersNotifier.select((state) => state.searchTags));
 
-    return ItemTagSelector(
-      selectedTags: selectedTags,
-      onSelection: (tag, isSelected) {
-        if (isSelected) {
-          filtersNotifier.selectTag(tag);
-        } else {
-          filtersNotifier.unSelectTag(tag);
-        }
-      },
-      showAddButton: false,
+    return Column(
+      children: [
+        ItemTagSelector(
+          selectedTags: selectedTags,
+          onSelection: (tag, isSelected) {
+            if (isSelected) {
+              filtersNotifier.selectTag(tag);
+            } else {
+              filtersNotifier.unSelectTag(tag);
+            }
+          },
+          showAddButton: false,
+        ),
+      ],
     );
   }
 }

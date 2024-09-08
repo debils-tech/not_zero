@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nz_common/nz_common.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
+
+enum DateRangeType {
+  day,
+  week,
+}
 
 class DateRangeSwitch extends StatefulWidget {
-  const DateRangeSwitch({super.key, this.initialDate, this.onChanged});
+  const DateRangeSwitch({
+    required this.rangeType,
+    this.initialDate,
+    this.onChanged,
+    super.key,
+  });
 
+  final DateRangeType rangeType;
   final DateTime? initialDate;
   final void Function(DateTime rangeStart, DateTime rangeEInd)? onChanged;
 
@@ -15,8 +27,15 @@ class DateRangeSwitch extends StatefulWidget {
 class _DateRangeSwitchState extends State<DateRangeSwitch> {
   late DateTime _currentDate;
 
-  DateTime get _rangeStart => _currentDate.startOfWeek;
-  DateTime get _rangeEnd => _currentDate.endOfWeek;
+  DateTime get _rangeStart => switch (widget.rangeType) {
+        DateRangeType.day => _currentDate.startOfDay,
+        DateRangeType.week => _currentDate.startOfWeek,
+      };
+
+  DateTime get _rangeEnd => switch (widget.rangeType) {
+        DateRangeType.day => _currentDate.endOfDay,
+        DateRangeType.week => _currentDate.endOfWeek,
+      };
 
   @override
   void initState() {
@@ -56,15 +75,23 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
   }
 
   void _previousRange() {
+    final newDate = switch (widget.rangeType) {
+      DateRangeType.day => _currentDate.dayBefore,
+      DateRangeType.week => _currentDate.weekBefore,
+    };
     setState(() {
-      _currentDate = _currentDate.weekBefore;
+      _currentDate = newDate;
     });
     widget.onChanged?.call(_rangeStart, _rangeEnd);
   }
 
   void _nextRange() {
+    final newDate = switch (widget.rangeType) {
+      DateRangeType.day => _currentDate.dayAfter,
+      DateRangeType.week => _currentDate.weekAfter,
+    };
     setState(() {
-      _currentDate = _currentDate.weekAfter;
+      _currentDate = newDate;
     });
     widget.onChanged?.call(_rangeStart, _rangeEnd);
   }
@@ -136,9 +163,11 @@ class _DateRangeText extends StatelessWidget {
   Widget build(BuildContext context) {
     final String text;
 
-    if (rangeStart.month == rangeEnd.month) {
+    if (rangeStart.isAtSameDay(rangeEnd)) {
+      text = _formatSameDay();
+    } else if (rangeStart.isAtSameMonth(rangeEnd)) {
       text = _formatSameMonth();
-    } else if (rangeStart.year == rangeEnd.year) {
+    } else if (rangeStart.isAtSameYear(rangeEnd)) {
       text = _formatSameYear();
     } else {
       text = _formatFull();
@@ -154,18 +183,35 @@ class _DateRangeText extends StatelessWidget {
     );
   }
 
+  String _formatSameDay() {
+    final dateToCompare = rangeStart;
+    final today = DateTime.now();
+
+    if (dateToCompare.isAtSameDay(today)) {
+      return t.common.timeOptions.today;
+    } else if (dateToCompare.isAtSameDay(today.dayBefore)) {
+      return t.common.timeOptions.yesterday;
+    } else if (dateToCompare.isAtSameDay(today.dayAfter)) {
+      return t.common.timeOptions.tomorrow;
+    }
+
+    if (rangeStart.isAtSameYear(rangeEnd)) {
+      return DateFormat.MMMd().format(rangeStart);
+    } else {
+      return DateFormat.yMMMd().format(rangeStart);
+    }
+  }
+
   String _formatSameMonth() {
     final start = DateFormat.d().format(rangeStart);
-    final end = DateFormat.d().format(rangeEnd);
-    final month = DateFormat.MMM().format(rangeStart);
-    return '$start - $end $month';
+    final end = DateFormat.MMMd().format(rangeEnd);
+    return '$start - $end';
   }
 
   String _formatSameYear() {
     final start = DateFormat.MMMd().format(rangeStart);
     final end = DateFormat.MMMd().format(rangeEnd);
-    final year = rangeStart.year.toString();
-    return '$start - $end $year';
+    return '$start - $end';
   }
 
   String _formatFull() {

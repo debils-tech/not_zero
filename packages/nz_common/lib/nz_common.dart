@@ -1,5 +1,6 @@
 library;
 
+export 'src/date_time_checks_ext.dart';
 export 'src/date_time_smart_format_ext.dart';
 export 'src/date_transformations_ext.dart';
 export 'src/insert_separators.dart';

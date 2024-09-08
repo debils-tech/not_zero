@@ -1,4 +1,6 @@
 extension DateTimeTransformationsExt on DateTime {
+  // Days transformations
+
   DateTime get startOfDay {
     return copyWith(
       hour: 0,
@@ -19,9 +21,15 @@ extension DateTimeTransformationsExt on DateTime {
     );
   }
 
+  DateTime get dayBefore {
+    return subtract(const Duration(days: 1));
+  }
+
   DateTime get dayAfter {
     return add(const Duration(days: 1));
   }
+
+  // Weeks transformations
 
   DateTime get startOfWeek {
     final justDate = startOfDay;
@@ -41,6 +49,8 @@ extension DateTimeTransformationsExt on DateTime {
     return add(const Duration(days: 7));
   }
 
+  // Month transformations
+
   DateTime get startOfMonth {
     return startOfDay.copyWith(day: 1);
   }
@@ -49,6 +59,8 @@ extension DateTimeTransformationsExt on DateTime {
     final justDate = endOfDay;
     return justDate.copyWith(month: justDate.month + 1, day: 0);
   }
+
+  // Other
 
   DateTime get withSecondsAccuracy {
     return copyWith(millisecond: 0, microsecond: 0);

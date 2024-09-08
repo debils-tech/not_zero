@@ -16,3 +16,8 @@ timeSubtitle:
 copy:
   defaultText: 'Copy content'
   completedText: 'Copied!'
+
+timeOptions:
+  today: 'Today'
+  yesterday: 'Yesterday'
+  tomorrow: 'Tomorrow'

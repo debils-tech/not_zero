@@ -37,6 +37,7 @@ class _QuickStatsAppBar extends ConsumerWidget implements PreferredSizeWidget {
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: DateRangeSwitch(
+            rangeType: DateRangeType.week,
             onChanged: quickStatsNotifier.loadDays,
           ),
         ),
