@@ -181,14 +181,14 @@ class _FloatingSubmitButton extends ConsumerWidget {
       formKey.currentState!.save();
       final values = formKey.currentState!.value;
 
-      final repository = ref.read(tasksRepositoryProvider);
-
       final title = values[TaskEditTitleField.name] as String;
       final importance = values[TaskEditImportanceField.name] as TaskImportance;
       final description = values[TaskEditDescriptionField.name] as String?;
       final tags = values[TaskEditTagsSelectionField.name] as List<ItemTag>?;
+      final forDate = values[TaskEditForDateField.name] as DateTime;
 
       final prevTask = taskToEdit;
+      final repository = ref.read(tasksRepositoryProvider);
       if (prevTask == null) {
         repository.addTask(
           Task.create(
@@ -196,6 +196,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
             importance: importance,
             description: description,
             tags: tags,
+            forDate: forDate,
           ),
         );
       } else {
@@ -205,6 +206,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
             importance: importance,
             description: description,
             tags: tags,
+            forDate: forDate,
           ),
         );
       }

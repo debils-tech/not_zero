@@ -5,6 +5,7 @@ import 'package:nz_tasks_models/src/task_importance.dart';
 import 'package:uuid/uuid.dart';
 
 part 'task.freezed.dart';
+
 part 'task.g.dart';
 
 @freezed
@@ -35,7 +36,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   factory Task.create({
     required String title,
     required TaskImportance importance,
-    DateTime? forDate, // TODO(uSlashVlad): Make it required
+    required DateTime forDate,
     String? description,
     List<ItemTag>? tags,
   }) =>
@@ -44,7 +45,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
         title: title,
         description: description ?? '',
         createdAt: DateTime.now(),
-        forDate: forDate ?? DateTime.now(),
+        forDate: forDate,
         importance: importance,
         tags: tags ?? [],
       );

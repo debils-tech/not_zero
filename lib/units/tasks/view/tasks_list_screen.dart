@@ -161,9 +161,9 @@ class _TasksFilters extends ConsumerWidget {
           initialDate: selectedDay,
           onChanged: (startDay, endDay) {
             assert(startDay.isAtSameDay(endDay), 'Invalid date range');
-            if (selectedDay?.isAtSameDay(startDay) ?? false) return;
+            if (selectedDay?.isAtSameDay(endDay) ?? false) return;
 
-            filtersNotifier.selectDay(startDay);
+            filtersNotifier.selectDay(endDay);
           },
         ),
         const SizedBox(height: 4),
