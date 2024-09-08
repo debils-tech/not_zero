@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:not_zero/components/common_widgets/fancy_date_picker_button.dart';
 import 'package:not_zero/components/common_widgets/stars_rate.dart';
 import 'package:not_zero/units/tags/view/tag_selector.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
@@ -10,14 +11,17 @@ import 'package:nz_tasks_models/nz_tasks_models.dart';
 class TaskEditTitleField extends StatelessWidget {
   const TaskEditTitleField({super.key});
 
+  static const name = 'title';
+
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
-      name: 'title',
+      name: name,
       autofocus: true,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         labelText: t.tasks.edit.fields.taskTitle,
+        counter: const SizedBox.shrink(),
       ),
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
@@ -30,10 +34,12 @@ class TaskEditTitleField extends StatelessWidget {
 class TaskEditDescriptionField extends StatelessWidget {
   const TaskEditDescriptionField({super.key});
 
+  static const name = 'description';
+
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
-      name: 'description',
+      name: name,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         labelText: t.tasks.edit.fields.taskDescription,
@@ -46,12 +52,14 @@ class TaskEditDescriptionField extends StatelessWidget {
 class TaskEditImportanceField extends StatelessWidget {
   const TaskEditImportanceField({super.key});
 
+  static const name = 'importance';
+
   @override
   Widget build(BuildContext context) {
     final taskColors = Theme.of(context).tasksColorScheme;
 
     return FormBuilderField<TaskImportance>(
-      name: 'importance',
+      name: name,
       builder: (field) {
         return StarsRateWidget(
           count: 3,
@@ -73,10 +81,12 @@ class TaskEditImportanceField extends StatelessWidget {
 class TaskEditTagsSelectionField extends StatelessWidget {
   const TaskEditTagsSelectionField({super.key});
 
+  static const name = 'tags';
+
   @override
   Widget build(BuildContext context) {
     return FormBuilderField<List<ItemTag>>(
-      name: 'tags',
+      name: name,
       builder: (field) {
         return ItemTagSelector(
           selectedTags: (field.value ?? []).map((e) => e.id).toSet(),
@@ -89,6 +99,25 @@ class TaskEditTagsSelectionField extends StatelessWidget {
             }
             field.didChange(newValue.toList());
           },
+        );
+      },
+    );
+  }
+}
+
+class TaskEditForDateField extends StatelessWidget {
+  const TaskEditForDateField({super.key});
+
+  static const name = 'for_date';
+
+  @override
+  Widget build(BuildContext context) {
+    return FormBuilderField<DateTime>(
+      name: name,
+      builder: (field) {
+        return FancyDatePickerButton(
+          value: field.value ?? DateTime.now(),
+          onChanged: field.didChange,
         );
       },
     );

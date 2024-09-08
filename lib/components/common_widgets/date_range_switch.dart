@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
@@ -118,6 +117,14 @@ class _MiddleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final String text;
+
+    if (rangeStart.isAtSameDay(rangeEnd)) {
+      text = NzDateTimeFormat.relativeLocalFormat(rangeStart);
+    } else {
+      text = NzDateTimeFormat.rangeLocalFormat(rangeStart, rangeEnd);
+    }
+
     return OutlinedButton(
       onPressed: onTap,
       style: OutlinedButton.styleFrom(
@@ -129,77 +136,11 @@ class _MiddleButton extends StatelessWidget {
       ),
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
-        child: _DateRangeText(
-          rangeStart,
-          rangeEnd,
-          key: ValueKey('$rangeStart $rangeEnd'),
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 17),
         ),
       ),
     );
-  }
-}
-
-class _DateRangeText extends StatelessWidget {
-  const _DateRangeText(
-    this.rangeStart,
-    this.rangeEnd, {
-    super.key,
-  });
-
-  final DateTime rangeStart;
-  final DateTime rangeEnd;
-
-  @override
-  Widget build(BuildContext context) {
-    final String text;
-
-    if (rangeStart.isAtSameDay(rangeEnd)) {
-      text = _formatSameDay();
-    } else if (rangeStart.isAtSameMonth(rangeEnd)) {
-      text = _formatSameMonth();
-    } else if (rangeStart.isAtSameYear(rangeEnd)) {
-      text = _formatSameYear();
-    } else {
-      text = _formatFull();
-    }
-
-    return Text(text, style: const TextStyle(fontSize: 17));
-  }
-
-  String _formatSameDay() {
-    final dateToCompare = rangeStart;
-    final today = DateTime.now();
-
-    if (dateToCompare.isAtSameDay(today)) {
-      return t.common.timeOptions.today;
-    } else if (dateToCompare.isAtSameDay(today.dayBefore)) {
-      return t.common.timeOptions.yesterday;
-    } else if (dateToCompare.isAtSameDay(today.dayAfter)) {
-      return t.common.timeOptions.tomorrow;
-    }
-
-    if (rangeStart.isAtSameYear(rangeEnd)) {
-      return DateFormat.MMMd().format(rangeStart);
-    } else {
-      return DateFormat.yMMMd().format(rangeStart);
-    }
-  }
-
-  String _formatSameMonth() {
-    final start = DateFormat.d().format(rangeStart);
-    final end = DateFormat.MMMd().format(rangeEnd);
-    return '$start - $end';
-  }
-
-  String _formatSameYear() {
-    final start = DateFormat.MMMd().format(rangeStart);
-    final end = DateFormat.MMMd().format(rangeEnd);
-    return '$start - $end';
-  }
-
-  String _formatFull() {
-    final start = DateFormat.yMMMd().format(rangeStart);
-    final end = DateFormat.yMMMd().format(rangeEnd);
-    return '$start - $end';
   }
 }

@@ -48,6 +48,11 @@ final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
 
 final defaultLightTheme = _lightThemeBase.copyWith(
   splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
+  inputDecorationTheme: _lightThemeBase.inputDecorationTheme.copyWith(
+    border: const OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+    ),
+  ),
 );
 
 final _darkThemeBase = ThemeData.dark(useMaterial3: true).copyWith(
@@ -89,4 +94,9 @@ final _darkThemeBase = ThemeData.dark(useMaterial3: true).copyWith(
 
 final defaultDarkTheme = _darkThemeBase.copyWith(
   splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
+  inputDecorationTheme: _lightThemeBase.inputDecorationTheme.copyWith(
+    border: const OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(12)),
+    ),
+  ),
 );

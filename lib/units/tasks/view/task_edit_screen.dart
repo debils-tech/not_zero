@@ -85,13 +85,17 @@ class _TaskEditScreenBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final filters = ref.read(tasksFiltersNotifier);
+
     return FormBuilder(
       key: formKey,
       initialValue: {
-        'title': taskToEdit?.title,
-        'description': taskToEdit?.description,
-        'importance': taskToEdit?.importance ?? TaskImportance.normal,
-        'tags': taskToEdit?.tags,
+        TaskEditTitleField.name: taskToEdit?.title,
+        TaskEditDescriptionField.name: taskToEdit?.description,
+        TaskEditImportanceField.name:
+            taskToEdit?.importance ?? TaskImportance.normal,
+        TaskEditTagsSelectionField.name: taskToEdit?.tags,
+        TaskEditForDateField.name: taskToEdit?.forDate ?? filters.forDate,
       },
       onChanged: () {
         final isValid = formKey.currentState?.validate() ?? false;
@@ -131,6 +135,8 @@ class _TaskEditScreenBody extends ConsumerWidget {
               const TaskEditTitleField(),
               const SizedBox(height: 12),
               const TaskEditDescriptionField(),
+              const SizedBox(height: 12),
+              const TaskEditForDateField(),
               const SizedBox(height: 20),
               const TaskEditTagsSelectionField(),
               const SizedBox(height: 12),
@@ -151,51 +157,13 @@ class _FloatingSubmitButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ElevatedButton(
-      onPressed: () {
-        final isValid = formKey.currentState!.validate();
-        if (isValid) {
-          formKey.currentState!.save();
-          final values = formKey.currentState!.value;
-
-          final repository = ref.read(tasksRepositoryProvider);
-
-          final title = values['title'] as String;
-          final importance = values['importance'] as TaskImportance;
-          final description = values['description'] as String?;
-          final tags = values['tags'] as List<ItemTag>?;
-
-          final prevTask = taskToEdit;
-          if (prevTask == null) {
-            repository.addTask(
-              Task.create(
-                title: title,
-                importance: importance,
-                description: description,
-                tags: tags,
-              ),
-            );
-          } else {
-            repository.updateTask(
-              prevTask.edit(
-                title: title,
-                importance: importance,
-                description: description,
-                tags: tags,
-              ),
-            );
-          }
-
-          context.pop();
-        }
-      },
-      style: const ButtonStyle(
-        elevation: WidgetStatePropertyAll(20),
-        padding: WidgetStatePropertyAll(
-          EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 15,
-          ),
+    return FilledButton(
+      onPressed: () => _onTap(context, ref),
+      style: FilledButton.styleFrom(
+        elevation: 20,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 15,
         ),
       ),
       child: Text(
@@ -205,6 +173,45 @@ class _FloatingSubmitButton extends ConsumerWidget {
         style: const TextStyle(fontSize: 20),
       ),
     );
+  }
+
+  void _onTap(BuildContext context, WidgetRef ref) {
+    final isValid = formKey.currentState!.validate();
+    if (isValid) {
+      formKey.currentState!.save();
+      final values = formKey.currentState!.value;
+
+      final repository = ref.read(tasksRepositoryProvider);
+
+      final title = values[TaskEditTitleField.name] as String;
+      final importance = values[TaskEditImportanceField.name] as TaskImportance;
+      final description = values[TaskEditDescriptionField.name] as String?;
+      final tags = values[TaskEditTagsSelectionField.name] as List<ItemTag>?;
+
+      final prevTask = taskToEdit;
+      if (prevTask == null) {
+        repository.addTask(
+          Task.create(
+            title: title,
+            importance: importance,
+            description: description,
+            tags: tags,
+          ),
+        );
+      } else {
+        repository.updateTask(
+          prevTask.edit(
+            title: title,
+            importance: importance,
+            description: description,
+            tags: tags,
+          ),
+        );
+      }
+
+      // TODO(uSlashVlad): Remove navigation using context
+      context.pop();
+    }
   }
 }
 

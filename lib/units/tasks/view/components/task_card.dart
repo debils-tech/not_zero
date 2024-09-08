@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero/units/tags/view/tag_list_indicator.dart';
 import 'package:not_zero/units/tasks/di.dart';
-import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
@@ -98,7 +97,7 @@ class _TaskTimeText extends StatelessWidget {
   Widget build(BuildContext context) {
     final timeToShow = task.completedAt ?? task.modifiedAt ?? task.createdAt;
 
-    final formattedTime = timeToShow.localFormat();
+    final formattedTime = NzDateTimeFormat.localFormat(timeToShow);
 
     final ts = t.common.timeSubtitle;
     final String finalTextTime;

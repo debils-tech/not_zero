@@ -197,7 +197,7 @@ class _SubmitButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ElevatedButton(
+    return FilledButton(
       onPressed: () {
         final isValid = formKey.currentState!.validate();
         if (isValid) {
@@ -217,11 +217,8 @@ class _SubmitButton extends ConsumerWidget {
           context.pop();
         }
       },
-      style: const ButtonStyle(
-        elevation: WidgetStatePropertyAll(20),
-        padding: WidgetStatePropertyAll(
-          EdgeInsets.symmetric(vertical: 16),
-        ),
+      style: FilledButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 16),
       ),
       child: Text(
         t.tags.creation.submit,
