@@ -39,7 +39,7 @@ class ItemTagSelector extends ConsumerWidget {
                 );
               }),
               if (showAddButton) const _AddButton(),
-            ].insertSeparators(const SizedBox(width: 6)),
+            ].listSeparate(const SizedBox(width: 6)),
           ),
         _ => const Center(child: LinearProgressIndicator()),
       },
