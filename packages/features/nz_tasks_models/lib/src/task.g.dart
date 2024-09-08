@@ -19,7 +19,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       completedAt: json['completedAt'] == null
           ? null
           : DateTime.parse(json['completedAt'] as String),
-      persistent: json['persistent'] as bool? ?? false,
+      persistent: json['persistent'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>

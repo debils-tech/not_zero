@@ -9,7 +9,7 @@ Future<void> _from3To4(Migrator m, Schema4 schema) {
           schema.tasksTable.completedAt.isNotNull(),
           schema.tasksTable.createdAt,
         ),
-        schema.tasksTable.persistent: const Constant(false),
+        schema.tasksTable.persistent: const Constant(true),
       },
     ),
   );

@@ -10,7 +10,7 @@ class TasksTable extends Table {
   TextColumn get description => text()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get forDate => dateTime()();
-  BoolColumn get persistent => boolean().withDefault(const Constant(false))();
+  BoolColumn get persistent => boolean()();
   DateTimeColumn get modifiedAt => dateTime().nullable()();
   DateTimeColumn get completedAt => dateTime().nullable()();
   IntColumn get importance => intEnum<TaskImportance>()();

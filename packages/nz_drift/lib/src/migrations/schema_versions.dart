@@ -264,8 +264,7 @@ i1.GeneratedColumn<bool> _column_12(String aliasedName) =>
     i1.GeneratedColumn<bool>('persistent', aliasedName, false,
         type: i1.DriftSqlType.bool,
         defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
-            'CHECK ("persistent" IN (0, 1))'),
-        defaultValue: const Constant(false));
+            'CHECK ("persistent" IN (0, 1))'));
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
   required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,

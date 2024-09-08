@@ -43,10 +43,9 @@ class $TasksTableTable extends TasksTable
   late final GeneratedColumn<bool> persistent = GeneratedColumn<bool>(
       'persistent', aliasedName, false,
       type: DriftSqlType.bool,
-      requiredDuringInsert: false,
+      requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("persistent" IN (0, 1))'),
-      defaultValue: const Constant(false));
+          GeneratedColumn.constraintIsAlways('CHECK ("persistent" IN (0, 1))'));
   static const VerificationMeta _modifiedAtMeta =
       const VerificationMeta('modifiedAt');
   @override
@@ -124,6 +123,8 @@ class $TasksTableTable extends TasksTable
           _persistentMeta,
           persistent.isAcceptableOrUnknown(
               data['persistent']!, _persistentMeta));
+    } else if (isInserting) {
+      context.missing(_persistentMeta);
     }
     if (data.containsKey('modified_at')) {
       context.handle(
@@ -207,7 +208,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     required String description,
     required DateTime createdAt,
     required DateTime forDate,
-    this.persistent = const Value.absent(),
+    required bool persistent,
     this.modifiedAt = const Value.absent(),
     this.completedAt = const Value.absent(),
     required TaskImportance importance,
@@ -217,6 +218,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
         description = Value(description),
         createdAt = Value(createdAt),
         forDate = Value(forDate),
+        persistent = Value(persistent),
         importance = Value(importance);
   static Insertable<Task> custom({
     Expression<String>? id,
@@ -763,7 +765,7 @@ typedef $$TasksTableTableCreateCompanionBuilder = TasksTableCompanion Function({
   required String description,
   required DateTime createdAt,
   required DateTime forDate,
-  Value<bool> persistent,
+  required bool persistent,
   Value<DateTime?> modifiedAt,
   Value<DateTime?> completedAt,
   required TaskImportance importance,
@@ -967,7 +969,7 @@ class $$TasksTableTableTableManager extends RootTableManager<
             required String description,
             required DateTime createdAt,
             required DateTime forDate,
-            Value<bool> persistent = const Value.absent(),
+            required bool persistent,
             Value<DateTime?> modifiedAt = const Value.absent(),
             Value<DateTime?> completedAt = const Value.absent(),
             required TaskImportance importance,

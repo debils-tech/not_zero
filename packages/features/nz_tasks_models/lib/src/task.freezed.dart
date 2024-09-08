@@ -122,7 +122,7 @@ as List<ItemTag>,
 @JsonSerializable()
 
 class _$TaskImpl extends _Task  {
-   _$TaskImpl({required this.id, required this.title, required this.importance, required this.createdAt, required this.forDate, this.description = '', this.modifiedAt, this.completedAt, this.persistent = false, @JsonKey(toJson: Task._tagsToJson, includeToJson: true, includeFromJson: false) final  List<ItemTag> tags = const []}): _tags = tags,super._();
+   _$TaskImpl({required this.id, required this.title, required this.importance, required this.createdAt, required this.forDate, this.description = '', this.modifiedAt, this.completedAt, this.persistent = true, @JsonKey(toJson: Task._tagsToJson, includeToJson: true, includeFromJson: false) final  List<ItemTag> tags = const []}): _tags = tags,super._();
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) => _$$TaskImplFromJson(json);
 

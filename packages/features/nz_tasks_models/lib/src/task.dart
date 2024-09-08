@@ -18,7 +18,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     @Default('') String description,
     DateTime? modifiedAt,
     DateTime? completedAt,
-    @Default(false) bool persistent,
+    @Default(true) bool persistent,
     @JsonKey(
       toJson: Task._tagsToJson,
       includeToJson: true,
