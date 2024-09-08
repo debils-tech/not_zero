@@ -116,30 +116,23 @@ class _MiddleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const radius = BorderRadius.all(Radius.circular(20));
+    final theme = Theme.of(context);
 
-    return InkWell(
-      onTap: onTap,
-      borderRadius: radius,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: radius,
-          border: Border.all(color: Theme.of(context).dividerColor),
-        ),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 230),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              child: _DateRangeText(
-                rangeStart,
-                rangeEnd,
-                key: ValueKey('$rangeStart $rangeEnd'),
-                isSelected: _isTodayInRange,
-              ),
-            ),
-          ),
+    return OutlinedButton(
+      onPressed: onTap,
+      style: OutlinedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        minimumSize: const Size(230, 45),
+        foregroundColor: _isTodayInRange
+            ? theme.colorScheme.primary
+            : theme.colorScheme.onSurface,
+      ),
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 200),
+        child: _DateRangeText(
+          rangeStart,
+          rangeEnd,
+          key: ValueKey('$rangeStart $rangeEnd'),
         ),
       ),
     );
@@ -151,13 +144,10 @@ class _DateRangeText extends StatelessWidget {
     this.rangeStart,
     this.rangeEnd, {
     super.key,
-    this.isSelected = false,
   });
 
   final DateTime rangeStart;
   final DateTime rangeEnd;
-
-  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -173,14 +163,7 @@ class _DateRangeText extends StatelessWidget {
       text = _formatFull();
     }
 
-    return Text(
-      text,
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 17,
-        color: isSelected ? Theme.of(context).colorScheme.primary : null,
-      ),
-    );
+    return Text(text, style: const TextStyle(fontSize: 17));
   }
 
   String _formatSameDay() {

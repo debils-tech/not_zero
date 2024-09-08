@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/adaptive/list_limiter.dart';
+import 'package:not_zero/components/common_widgets/date_range_switch.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/components/selection/di.dart';
 import 'package:not_zero/components/selection/notifiers/item_selection_notifier.dart';
@@ -11,6 +12,7 @@ import 'package:not_zero/units/tags/view/tag_selector.dart';
 import 'package:not_zero/units/tasks/di.dart';
 import 'package:not_zero/units/tasks/view/components/task_card.dart';
 import 'package:not_zero/units/tasks/view/components/tasks_list_app_bar.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
@@ -129,7 +131,6 @@ class _TasksListView extends StatelessWidget {
         padding: const EdgeInsets.only(top: 5, bottom: 75, left: 10, right: 10),
         children: [
           const _TasksFilters(),
-          const SizedBox(height: 10),
           ...tasks.map(
             (t) => TaskCard(
               t,
@@ -148,11 +149,24 @@ class _TasksFilters extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final filtersNotifier = ref.watch(tasksFiltersNotifier.notifier);
+    final selectedDay =
+        ref.watch(tasksFiltersNotifier.select((state) => state.forDate));
     final selectedTags =
         ref.watch(tasksFiltersNotifier.select((state) => state.searchTags));
 
     return Column(
       children: [
+        DateRangeSwitch(
+          rangeType: DateRangeType.day,
+          initialDate: selectedDay,
+          onChanged: (startDay, endDay) {
+            assert(startDay.isAtSameDay(endDay), 'Invalid date range');
+            if (selectedDay?.isAtSameDay(startDay) ?? false) return;
+
+            filtersNotifier.selectDay(startDay);
+          },
+        ),
+        const SizedBox(height: 4),
         ItemTagSelector(
           selectedTags: selectedTags,
           onSelection: (tag, isSelected) {
@@ -164,6 +178,7 @@ class _TasksFilters extends ConsumerWidget {
           },
           showAddButton: false,
         ),
+        const SizedBox(height: 10),
       ],
     );
   }

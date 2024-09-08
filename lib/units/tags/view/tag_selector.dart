@@ -15,6 +15,7 @@ class ItemTagSelector extends ConsumerWidget {
   });
 
   final Set<String> selectedTags;
+
   // ignore: avoid_positional_boolean_parameters
   final void Function(ItemTag tag, bool isSelected) onSelection;
   final bool showAddButton;
@@ -24,7 +25,7 @@ class ItemTagSelector extends ConsumerWidget {
     final state = ref.watch(tagsListStreamProvider);
 
     return SizedBox(
-      height: 40,
+      height: 35,
       child: switch (state) {
         AsyncData(value: final tags) => ListView(
             scrollDirection: Axis.horizontal,
@@ -114,19 +115,19 @@ class _RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
-    return OutlinedButton(
-      onPressed: onPressed,
-      onLongPress: onLongPress,
-      style: ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(
-          selected ? backgroundColor : color,
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 150),
+      child: OutlinedButton(
+        key: ValueKey('Tag button: ${color.value} | $selected'),
+        onPressed: onPressed,
+        onLongPress: onLongPress,
+        style: OutlinedButton.styleFrom(
+          foregroundColor: selected ? backgroundColor : color,
+          backgroundColor: selected ? color : null,
+          side: BorderSide(color: color, width: 3),
         ),
-        backgroundColor: selected ? WidgetStatePropertyAll(color) : null,
-        side: WidgetStatePropertyAll(
-          BorderSide(color: color, width: 3),
-        ),
+        child: child,
       ),
-      child: child,
     );
   }
 }

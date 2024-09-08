@@ -5,7 +5,7 @@ import 'package:nz_tags_models/nz_tags_models.dart';
 class TasksFiltersNotifier extends AutoDisposeNotifier<TasksFilters> {
   @override
   TasksFilters build() {
-    return const TasksFilters();
+    return TasksFilters(forDate: DateTime.now());
   }
 
   void selectTag(ItemTag tag) {
@@ -14,5 +14,9 @@ class TasksFiltersNotifier extends AutoDisposeNotifier<TasksFilters> {
 
   void unSelectTag(ItemTag tag) {
     state = state.copyWith(searchTags: {});
+  }
+
+  void selectDay(DateTime day) {
+    state = state.copyWith(forDate: day);
   }
 }
