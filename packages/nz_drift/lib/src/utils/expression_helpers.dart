@@ -1,8 +1,7 @@
 import 'package:drift/drift.dart';
 
 extension DateTimeExpressionHelper on Expression<DateTime> {
-  Expression<bool> sameDayAs(DateTime date) =>
-      this.date.equals(_dateStr(date));
+  Expression<bool> sameDayAs(DateTime date) => this.date.equals(_dateStr(date));
 
   Expression<bool> dayBefore(DateTime date) =>
       this.date.isSmallerThanValue(_dateStr(date));

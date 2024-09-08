@@ -13,9 +13,9 @@ extension ProviderRefEffectExt<T> on Ref<T> {
 
 extension ProviderAutoDisposeRefEffectExt<T> on AutoDisposeRef<T> {
   void effect<R>(
-      ProviderListenable<R> provider,
-      ValueSetter<R> listener,
-      ) {
+    ProviderListenable<R> provider,
+    ValueSetter<R> listener,
+  ) {
     listener(read(provider));
     listen(provider, (_, value) => listener(value));
   }
