@@ -166,7 +166,7 @@ class _TasksFilters extends ConsumerWidget {
             filtersNotifier.selectDay(endDay);
           },
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         ItemTagSelector(
           selectedTags: selectedTags,
           onSelection: (tag, isSelected) {

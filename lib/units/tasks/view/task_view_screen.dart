@@ -78,13 +78,24 @@ class _TaskViewScreenBody extends ConsumerWidget {
           fontSize: 13,
           borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
-        const SizedBox(height: 8),
-        SelectableText(
-          task.title,
-          style:
-              theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+        GestureDetector(
+          onTap: () => context.pushReplacement(
+            '/tasks/edit/${taskToView.id}',
+            extra: taskToView,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 8),
+              Text(
+                task.title,
+                style: theme.textTheme.titleLarge
+                    ?.copyWith(fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
-        const SizedBox(height: 10),
         if (task.description.isNotEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -107,9 +118,7 @@ class _EditFloatingButton extends ConsumerWidget {
     return FloatingActionButton(
       onPressed: () => context.pushReplacement(
         '/tasks/edit/${taskToView.id}',
-        extra:
-            ref.watch(specificTaskStreamProvider(taskToView.id)).valueOrNull ??
-                taskToView,
+        extra: taskToView,
       ),
       tooltip: t.tasks.view.tooltips.editTaskButton,
       child: const Icon(Icons.edit_rounded),

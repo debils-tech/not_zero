@@ -33,21 +33,8 @@ final appRouter = GoRouter(
               builder: (context, state) {
                 final extra = state.extra;
                 assert(extra is Task?, 'Extra should be Task object');
-                final taskObject = extra! as Task;
-
-                // final taskId = state.pathParameters['id'];
-                // if (taskObject == null && taskId != null) {
-                //   taskObject = _getTaskById(taskId);
-                // }
-                //
-                // if (taskObject == null) {
-                //   _redirectToNewTask(context);
-                //   return const CommonLoadingScreen();
-                // }
-                // TODO(uSlashVlad): Return logic about getting tasks by id
-
                 return TaskViewScreen(
-                  taskToView: taskObject,
+                  taskToView: extra! as Task,
                 );
               },
             ),
@@ -56,21 +43,8 @@ final appRouter = GoRouter(
               builder: (context, state) {
                 final extra = state.extra;
                 assert(extra is Task?, 'Extra should be Task object');
-                final taskObject = extra! as Task;
-
-                // final taskId = state.pathParameters['id'];
-                // if (taskObject == null && taskId != null) {
-                //   taskObject = _getTaskById(taskId);
-                // }
-                //
-                // if (taskObject == null) {
-                //   _redirectToNewTask(context);
-                //   return const CommonLoadingScreen();
-                // }
-                // TODO(uSlashVlad): Return logic about getting tasks by id
-
                 return TaskEditScreen(
-                  taskToEdit: taskObject,
+                  taskToEdit: extra! as Task,
                 );
               },
             ),

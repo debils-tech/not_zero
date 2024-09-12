@@ -28,7 +28,7 @@ class FancyDatePickerButton extends StatelessWidget {
         onChanged(newValue);
       },
       style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16),
       ),
       icon: const Icon(Icons.calendar_month_rounded),
       label: Text(

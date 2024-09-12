@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
+import 'package:not_zero/units/tags/di.dart';
 import 'package:not_zero/units/tasks/di.dart';
 import 'package:not_zero/units/tasks/view/components/task_edit_fields.dart';
 import 'package:not_zero/units/tasks/view/components/task_editing_info.dart';
@@ -86,6 +87,9 @@ class _TaskEditScreenBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final filters = ref.read(tasksFiltersNotifier);
+    final tags = ref.read(tagsListStreamProvider).value;
+    final selectedTags =
+        tags?.where((e) => filters.searchTags.contains(e.id)).toList();
 
     return FormBuilder(
       key: formKey,
@@ -94,7 +98,7 @@ class _TaskEditScreenBody extends ConsumerWidget {
         TaskEditDescriptionField.name: taskToEdit?.description,
         TaskEditImportanceField.name:
             taskToEdit?.importance ?? TaskImportance.normal,
-        TaskEditTagsSelectionField.name: taskToEdit?.tags,
+        TaskEditTagsSelectionField.name: taskToEdit?.tags ?? selectedTags,
         TaskEditForDateField.name: taskToEdit?.forDate ?? filters.forDate,
         TaskEditPersistenceField.name: taskToEdit?.persistent ?? true,
       },
@@ -102,25 +106,16 @@ class _TaskEditScreenBody extends ConsumerWidget {
         final isValid = formKey.currentState?.validate() ?? false;
         ref.read(_isTaskChangedProvider.notifier).state = isValid;
       },
-      // TODO(uSlashVlad): Implement proper check with dialog
-      canPop: true,
-      // onWillPop: () async {
-      //   if (!taskEditCubit.isChanged) {
-      //     return true;
-      //   }
+      canPop: false,
+      onPopInvokedWithResult: (didPop, __) async {
+        if (didPop) return;
 
-      //   final confirm = await showConfirmationDialog(
-      //     context,
-      //     title: t.common.dialog.exitTitle,
-      //     content: t.common.dialog.exitContent,
-      //     dangerous: true,
-      //   );
-      //   if (confirm ?? false) {
-      //     return true;
-      //   }
+        final router = GoRouter.of(context);
+        final isChanged = ref.read(_isTaskChangedProvider);
 
-      //   return false;
-      // },
+        final canPop = await _canPop(isChanged, context);
+        if (canPop) router.pop();
+      },
       child: Stack(
         children: [
           ListView(
@@ -154,6 +149,20 @@ class _TaskEditScreenBody extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  Future<bool> _canPop(bool isChanged, BuildContext context) async {
+    if (!isChanged) return true;
+
+    final confirm = await showConfirmationDialog(
+      context,
+      title: t.common.dialog.exitTitle,
+      content: t.common.dialog.exitContent,
+      dangerous: true,
+    );
+    if (confirm ?? false) return true;
+
+    return false;
   }
 }
 
