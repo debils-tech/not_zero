@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Run this file like this:
 # sh android/tools/check-cert.sh app-arm64-v8a-release.apk
 
@@ -11,6 +13,7 @@ check_cert () {
         echo -e "\033[92m ✔️ \"$1\" certificate fingerprint valid\033[0m"
     else
         echo -e "\033[93m ⚠️ \"$1\" hasn't got trusted certificate fingerprint\033[0m"
+        exit 1
     fi
 }
 

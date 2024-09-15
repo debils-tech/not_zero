@@ -1,7 +1,5 @@
 name: not_zero
 
-sdkPath: .fvm/flutter_sdk
-
 scripts:
   generate:
     exec: dart run build_runner build -d

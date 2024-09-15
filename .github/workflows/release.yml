@@ -1,0 +1,154 @@
+name: App release
+
+on:
+  push:
+    tags:
+      - 'release/*'
+
+jobs:
+  check:
+    name: Check application
+    runs-on: ubuntu-latest
+    steps:
+      # Init
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.2'
+          channel: stable
+          cache: true
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache/git
+            ~/.pub-cache/hosted
+      - name: Check flutter installation
+        run: flutter --version
+      # Preparation
+      - name: Get dependencies
+        run: dart run melos bootstrap
+      # Checks
+      - name: Ensure that code is formatted correctly
+        run: dart run melos format --set-exit-if-changed --output none $(git ls-files | grep --colour=never -e ".*\.dart")
+      - name: Analyze code to find critical problems
+        run: dart run melos exec flutter analyze --no-fatal-infos
+
+  version_update:
+    name: Update pubspec version
+    needs: check
+    runs-on: ubuntu-latest
+    outputs:
+      app_version: ${{ steps.update_version.outputs.app_version }}
+      app_build_number: ${{ steps.update_version.outputs.app_build_number }}
+      tag_name: ${{ steps.get_tag.outputs.tag_name }}
+      branch: ${{ steps.find_branch.outputs.branch }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get Tag Name
+        id: get_tag
+        run: echo "tag_name=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+      - name: Find Branch Containing the Tag Commit
+        id: find_branch
+        run: |
+          BRANCH=$(git branch -r --contains $GITHUB_SHA | grep -v HEAD | head -n 1 | sed 's|origin/||')
+          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
+      - name: Checkout Branch
+        run: git checkout ${{ steps.find_branch.outputs.branch }}
+      - name: Update Version
+        id: update_version
+        run: tools/update-version.sh ${{ steps.get_tag.outputs.tag_name }} >> $GITHUB_OUTPUT
+      - name: Validate release notes
+        run: tools/validate-release-notes.sh ${{ steps.update_version.outputs.app_version }}
+      - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add pubspec.yaml
+          git commit -m "Bump version to ${{ steps.update_version.outputs.app_version }}+${{ steps.update_version.outputs.app_build_number }} [skip ci]"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+          git push origin ${{ steps.find_branch.outputs.branch }}
+
+  build:
+    name: Build android
+    needs: version_update
+    runs-on: ubuntu-latest
+    steps:
+      # Init
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ needs.version_update.outputs.branch }}
+          fetch-depth: 0
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.2'
+          channel: stable
+          cache: true
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache/git
+            ~/.pub-cache/hosted
+      - name: Check flutter and Java installation installation
+        run: |
+          flutter --version
+          java --version
+      # Preparation
+      - name: Get dependencies
+        run: dart run melos bootstrap
+      - name: Decode and save android keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > $HOME/keystore.jks
+      - name: Save key.properties
+        run: |
+          touch android/key.properties
+          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties 
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties 
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties 
+          echo "storeFile=$HOME/keystore.jks" >> android/key.properties
+      # Build and upload
+      - name: Build APK
+        run: |
+          flutter build apk --flavor prod --split-per-abi
+          flutter build apk --flavor prod
+          TAG=foss tools/android/move-builds.sh
+          tools/android/check-cert.sh
+      - name: Upload FOSS APK Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts-apk-foss
+          path: build/releases/android
+
+  release:
+    name: Release to GitHub actions
+    needs:
+      - build
+      - version_update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Download APKs Directory
+        uses: actions/download-artifact@v3
+        with:
+          name: artifacts-apk-foss
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ needs.version_update.outputs.tag_name }}
+          name: v${{ needs.version_update.outputs.app_version }}
+          bodyFile: release_notes/${{ needs.version_update.outputs.app_version }}/github/RELEASE_NOTES.md
+          artifacts: 'artifacts-apk-foss/*.apk'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: true

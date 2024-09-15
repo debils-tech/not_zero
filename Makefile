@@ -20,7 +20,6 @@ test:
 	flutter test
 
 build-android:
-	rm -rf build/releases/android
 	flutter build apk --flavor prod --split-per-abi
 	flutter build apk --flavor prod
 	#flutter build appbundle --flavor prod

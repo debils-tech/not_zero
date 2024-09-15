@@ -6,15 +6,13 @@ on:
 jobs:
   check:
     name: Check application
-
     runs-on: ubuntu-latest
-
     steps:
       ### INITIAL ###
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.1'
+          flutter-version: '3.24.2'
           channel: stable
           cache: true
       - uses: actions/cache@v3
