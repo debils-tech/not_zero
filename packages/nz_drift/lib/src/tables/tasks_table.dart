@@ -1,6 +1,7 @@
 // coverage:ignore-file
 
 import 'package:drift/drift.dart';
+import 'package:nz_drift/src/converters/date_converter.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 @UseRowClass(Task, generateInsertable: true)
@@ -9,7 +10,7 @@ class TasksTable extends Table {
   TextColumn get title => text()();
   TextColumn get description => text()();
   DateTimeColumn get createdAt => dateTime()();
-  DateTimeColumn get forDate => dateTime()();
+  TextColumn get forDate => text().map(const DateConverter())();
   BoolColumn get persistent => boolean()();
   DateTimeColumn get modifiedAt => dateTime().nullable()();
   DateTimeColumn get completedAt => dateTime().nullable()();

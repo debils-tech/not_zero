@@ -34,9 +34,10 @@ class $TasksTableTable extends TasksTable
   static const VerificationMeta _forDateMeta =
       const VerificationMeta('forDate');
   @override
-  late final GeneratedColumn<DateTime> forDate = GeneratedColumn<DateTime>(
-      'for_date', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<DateTime, String> forDate =
+      GeneratedColumn<String>('for_date', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<DateTime>($TasksTableTable.$converterforDate);
   static const VerificationMeta _persistentMeta =
       const VerificationMeta('persistent');
   @override
@@ -112,12 +113,7 @@ class $TasksTableTable extends TasksTable
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
-    if (data.containsKey('for_date')) {
-      context.handle(_forDateMeta,
-          forDate.isAcceptableOrUnknown(data['for_date']!, _forDateMeta));
-    } else if (isInserting) {
-      context.missing(_forDateMeta);
-    }
+    context.handle(_forDateMeta, const VerificationResult.success());
     if (data.containsKey('persistent')) {
       context.handle(
           _persistentMeta,
@@ -157,8 +153,9 @@ class $TasksTableTable extends TasksTable
           .read(DriftSqlType.int, data['${effectivePrefix}importance'])!),
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
-      forDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}for_date'])!,
+      forDate: $TasksTableTable.$converterforDate.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}for_date'])!),
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
       modifiedAt: attachedDatabase.typeMapping
@@ -175,6 +172,8 @@ class $TasksTableTable extends TasksTable
     return $TasksTableTable(attachedDatabase, alias);
   }
 
+  static TypeConverter<DateTime, String> $converterforDate =
+      const DateConverter();
   static JsonTypeConverter2<TaskImportance, int, int> $converterimportance =
       const EnumIndexConverter<TaskImportance>(TaskImportance.values);
 }
@@ -225,7 +224,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     Expression<String>? title,
     Expression<String>? description,
     Expression<DateTime>? createdAt,
-    Expression<DateTime>? forDate,
+    Expression<String>? forDate,
     Expression<bool>? persistent,
     Expression<DateTime>? modifiedAt,
     Expression<DateTime>? completedAt,
@@ -287,7 +286,8 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
     if (forDate.present) {
-      map['for_date'] = Variable<DateTime>(forDate.value);
+      map['for_date'] = Variable<String>(
+          $TasksTableTable.$converterforDate.toSql(forDate.value));
     }
     if (persistent.present) {
       map['persistent'] = Variable<bool>(persistent.value);
@@ -829,10 +829,12 @@ class $$TasksTableTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<DateTime> get forDate => $state.composableBuilder(
-      column: $state.table.forDate,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnWithTypeConverterFilters<DateTime, DateTime, String> get forDate =>
+      $state.composableBuilder(
+          column: $state.table.forDate,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
 
   ColumnFilters<bool> get persistent => $state.composableBuilder(
       column: $state.table.persistent,
@@ -894,7 +896,7 @@ class $$TasksTableTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<DateTime> get forDate => $state.composableBuilder(
+  ColumnOrderings<String> get forDate => $state.composableBuilder(
       column: $state.table.forDate,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));

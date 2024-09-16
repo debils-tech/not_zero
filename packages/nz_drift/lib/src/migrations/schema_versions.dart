@@ -265,10 +265,101 @@ i1.GeneratedColumn<bool> _column_12(String aliasedName) =>
         type: i1.DriftSqlType.bool,
         defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
             'CHECK ("persistent" IN (0, 1))'));
+
+final class Schema5 extends i0.VersionedSchema {
+  Schema5({required super.database}) : super(version: 5);
+  @override
+  late final List<i1.DatabaseSchemaEntity> entities = [
+    tasksTable,
+    tagsTable,
+    tasksTagEntries,
+  ];
+  late final Shape4 tasksTable = Shape4(
+      source: i0.VersionedTable(
+        entityName: 'tasks_table',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'PRIMARY KEY(id)',
+        ],
+        columns: [
+          _column_0,
+          _column_1,
+          _column_2,
+          _column_3,
+          _column_13,
+          _column_12,
+          _column_4,
+          _column_5,
+          _column_6,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape1 tagsTable = Shape1(
+      source: i0.VersionedTable(
+        entityName: 'tags_table',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'PRIMARY KEY(id)',
+        ],
+        columns: [
+          _column_0,
+          _column_7,
+          _column_8,
+          _column_3,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape2 tasksTagEntries = Shape2(
+      source: i0.VersionedTable(
+        entityName: 'tasks_tag_entries',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'PRIMARY KEY(task, tag)',
+        ],
+        columns: [
+          _column_9,
+          _column_10,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+}
+
+class Shape4 extends i0.VersionedTable {
+  Shape4({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get title =>
+      columnsByName['title']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get description =>
+      columnsByName['description']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<DateTime> get createdAt =>
+      columnsByName['created_at']! as i1.GeneratedColumn<DateTime>;
+  i1.GeneratedColumn<String> get forDate =>
+      columnsByName['for_date']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<bool> get persistent =>
+      columnsByName['persistent']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<DateTime> get modifiedAt =>
+      columnsByName['modified_at']! as i1.GeneratedColumn<DateTime>;
+  i1.GeneratedColumn<DateTime> get completedAt =>
+      columnsByName['completed_at']! as i1.GeneratedColumn<DateTime>;
+  i1.GeneratedColumn<int> get importance =>
+      columnsByName['importance']! as i1.GeneratedColumn<int>;
+}
+
+i1.GeneratedColumn<String> _column_13(String aliasedName) =>
+    i1.GeneratedColumn<String>('for_date', aliasedName, false,
+        type: i1.DriftSqlType.string);
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
   required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
+  required Future<void> Function(i1.Migrator m, Schema5 schema) from4To5,
 }) {
   return (currentVersion, database) async {
     switch (currentVersion) {
@@ -287,6 +378,11 @@ i0.MigrationStepWithVersion migrationSteps({
         final migrator = i1.Migrator(database, schema);
         await from3To4(migrator, schema);
         return 4;
+      case 4:
+        final schema = Schema5(database: database);
+        final migrator = i1.Migrator(database, schema);
+        await from4To5(migrator, schema);
+        return 5;
       default:
         throw ArgumentError.value('Unknown migration from $currentVersion');
     }
@@ -297,10 +393,12 @@ i1.OnUpgrade stepByStep({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
   required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
+  required Future<void> Function(i1.Migrator m, Schema5 schema) from4To5,
 }) =>
     i0.VersionedSchema.stepByStepHelper(
         step: migrationSteps(
       from1To2: from1To2,
       from2To3: from2To3,
       from3To4: from3To4,
+      from4To5: from4To5,
     ));
