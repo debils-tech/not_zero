@@ -143,6 +143,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: artifacts-apk-foss
+      - name: Check files
+        run: pwd && ls -R
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
