@@ -2,8 +2,8 @@ name: App release
 
 on:
   push:
-    tags:
-      - 'release/*'
+    branches:
+      - 'release/**'
 
 jobs:
   check:
@@ -149,6 +149,6 @@ jobs:
           tag: ${{ needs.version_update.outputs.tag_name }}
           name: v${{ needs.version_update.outputs.app_version }}
           bodyFile: release_notes/${{ needs.version_update.outputs.app_version }}/github/RELEASE_NOTES.md
-          artifacts: 'artifacts-apk-foss/*.apk'
+          artifacts: 'artifacts-apk-foss/*'
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: true
