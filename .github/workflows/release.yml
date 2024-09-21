@@ -2,8 +2,8 @@ name: App release
 
 on:
   push:
-    tags:
-      - 'release/*'
+    branches:
+      - 'release/**'
 
 jobs:
   check:
@@ -20,6 +20,7 @@ jobs:
           cache: true
       - uses: actions/cache@v3
         with:
+          key: ${{ runner.os }}-pubcache
           path: |
             ~/.pub-cache/git
             ~/.pub-cache/hosted
@@ -85,6 +86,12 @@ jobs:
         with:
           ref: ${{ needs.version_update.outputs.branch }}
           fetch-depth: 0
+      - uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-pubcache
+          path: |
+            ~/.pub-cache/git
+            ~/.pub-cache/hosted
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -95,11 +102,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '17'
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.pub-cache/git
-            ~/.pub-cache/hosted
       - name: Check flutter and Java installation installation
         run: |
           flutter --version
@@ -143,12 +145,15 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: artifacts-apk-foss
+          path: artifacts/
+      - name: Check files
+        run: pwd && ls -l artifacts
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ needs.version_update.outputs.tag_name }}
           name: v${{ needs.version_update.outputs.app_version }}
           bodyFile: release_notes/${{ needs.version_update.outputs.app_version }}/github/RELEASE_NOTES.md
-          artifacts: 'artifacts-apk-foss/*.apk'
+          artifacts: 'artifacts/*'
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: true
