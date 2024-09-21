@@ -20,6 +20,7 @@ jobs:
           cache: true
       - uses: actions/cache@v3
         with:
+          key: ${{ runner.os }}-pubcache
           path: |
             ~/.pub-cache/git
             ~/.pub-cache/hosted
@@ -97,6 +98,7 @@ jobs:
           java-version: '17'
       - uses: actions/cache@v3
         with:
+          key: ${{ runner.os }}-pubcache
           path: |
             ~/.pub-cache/git
             ~/.pub-cache/hosted
@@ -143,14 +145,15 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: artifacts-apk-foss
+          path: $GITHUB_WORKSPACE/artifacts/
       - name: Check files
-        run: pwd && ls -R
+        run: pwd && ls -l artifacts
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ needs.version_update.outputs.tag_name }}
           name: v${{ needs.version_update.outputs.app_version }}
           bodyFile: release_notes/${{ needs.version_update.outputs.app_version }}/github/RELEASE_NOTES.md
-          artifacts: 'artifacts-apk-foss/*'
+          artifacts: 'artifacts/*'
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: true

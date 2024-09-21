@@ -17,6 +17,7 @@ jobs:
           cache: true
       - uses: actions/cache@v3
         with:
+          key: ${{ runner.os }}-pubcache
           path: |
             ~/.pub-cache/git
             ~/.pub-cache/hosted
