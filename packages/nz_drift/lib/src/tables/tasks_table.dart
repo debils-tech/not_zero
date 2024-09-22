@@ -5,6 +5,7 @@ import 'package:nz_drift/src/converters/date_converter.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 @UseRowClass(Task, generateInsertable: true)
+@TableIndex(name: 'tasks_for_date_idx', columns: {#forDate})
 class TasksTable extends Table {
   TextColumn get id => text()();
   TextColumn get title => text()();

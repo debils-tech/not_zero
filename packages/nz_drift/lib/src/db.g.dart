@@ -751,12 +751,14 @@ abstract class _$NotZeroDatabase extends GeneratedDatabase {
   late final $TagsTableTable tagsTable = $TagsTableTable(this);
   late final $TasksTagEntriesTable tasksTagEntries =
       $TasksTagEntriesTable(this);
+  late final Index tasksForDateIdx = Index('tasks_for_date_idx',
+      'CREATE INDEX tasks_for_date_idx ON tasks_table (for_date)');
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [tasksTable, tagsTable, tasksTagEntries];
+      [tasksTable, tagsTable, tasksTagEntries, tasksForDateIdx];
 }
 
 typedef $$TasksTableTableCreateCompanionBuilder = TasksTableCompanion Function({

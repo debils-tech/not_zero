@@ -19,6 +19,8 @@ dependencies:
     path: ../features/nz_tags_models
   nz_tasks_models:
     path: ../features/nz_tasks_models
+  nz_score_models:
+    path: ../features/nz_score_models
   path: ^1.9.0
   path_provider: ^2.1.4
 

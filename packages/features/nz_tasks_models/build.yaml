@@ -3,6 +3,11 @@ targets:
     builders:
       freezed:
         options:
+          union_key: type
+          union_value_case: snake
           format: false
           map: false
           when: false
+      json_serializable:
+        options:
+          field_rename: snake

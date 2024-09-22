@@ -10,15 +10,15 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       id: json['id'] as String,
       title: json['title'] as String,
       importance: $enumDecode(_$TaskImportanceEnumMap, json['importance']),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      forDate: DateTime.parse(json['forDate'] as String),
+      createdAt: DateTime.parse(json['created_at'] as String),
+      forDate: DateTime.parse(json['for_date'] as String),
       description: json['description'] as String? ?? '',
-      modifiedAt: json['modifiedAt'] == null
+      modifiedAt: json['modified_at'] == null
           ? null
-          : DateTime.parse(json['modifiedAt'] as String),
-      completedAt: json['completedAt'] == null
+          : DateTime.parse(json['modified_at'] as String),
+      completedAt: json['completed_at'] == null
           ? null
-          : DateTime.parse(json['completedAt'] as String),
+          : DateTime.parse(json['completed_at'] as String),
       persistent: json['persistent'] as bool? ?? true,
     );
 
@@ -27,11 +27,11 @@ Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
       'id': instance.id,
       'title': instance.title,
       'importance': _$TaskImportanceEnumMap[instance.importance]!,
-      'createdAt': instance.createdAt.toIso8601String(),
-      'forDate': instance.forDate.toIso8601String(),
+      'created_at': instance.createdAt.toIso8601String(),
+      'for_date': instance.forDate.toIso8601String(),
       'description': instance.description,
-      'modifiedAt': instance.modifiedAt?.toIso8601String(),
-      'completedAt': instance.completedAt?.toIso8601String(),
+      'modified_at': instance.modifiedAt?.toIso8601String(),
+      'completed_at': instance.completedAt?.toIso8601String(),
       'persistent': instance.persistent,
       'tags': Task._tagsToJson(instance.tags),
     };
