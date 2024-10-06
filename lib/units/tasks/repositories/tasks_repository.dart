@@ -1,16 +1,25 @@
 import 'package:not_zero/units/stats/repositories/stats_repository.dart';
 import 'package:not_zero/units/tasks/models/tasks_filters.dart';
 import 'package:not_zero/units/tasks/services/tasks_local_service.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 import 'package:rxdart/rxdart.dart';
 
-class TasksRepository {
+class TasksRepository implements AsyncObject {
   TasksRepository(this._localService, this._statsRepository);
 
   final TasksLocalService _localService;
   final StatsRepository _statsRepository;
 
   final _tasksStreamController = BehaviorSubject<List<Task>>.seeded([]);
+
+  @override
+  void init() {}
+
+  @override
+  void dispose() {
+    _tasksStreamController.close();
+  }
 
   Stream<List<Task>> getTasks() => _tasksStreamController;
 

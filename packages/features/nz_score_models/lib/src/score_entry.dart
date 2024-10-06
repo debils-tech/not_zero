@@ -20,6 +20,9 @@ class ScoreEntry with _$ScoreEntry {
 enum ScoreEntryType {
   @JsonValue('task')
   task,
+
+  @JsonValue('login')
+  login,
 }
 
 @freezed

@@ -1,0 +1,17 @@
+name: nz_actions
+description: A Very Good Project created by Very Good CLI.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  meta: ^1.15.0
+  nz_common:
+    path: ../nz_common
+  rxdart: ^0.28.0
+
+
+dev_dependencies:
+  very_good_analysis: ^6.0.0

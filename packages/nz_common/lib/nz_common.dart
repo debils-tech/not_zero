@@ -1,5 +1,6 @@
 library;
 
+export 'src/async_object.dart';
 export 'src/date_time_checks_ext.dart';
 export 'src/date_transformations_ext.dart';
 export 'src/insert_separators.dart';

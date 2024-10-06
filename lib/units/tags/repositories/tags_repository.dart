@@ -1,13 +1,22 @@
 import 'package:not_zero/units/tags/services/tags_local_service.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 import 'package:rxdart/rxdart.dart';
 
-class TagsRepository {
+class TagsRepository implements AsyncObject {
   TagsRepository(this._localService);
 
   final TagsLocalService _localService;
 
   final _tagsStreamController = BehaviorSubject<List<ItemTag>>();
+
+  @override
+  void init() {}
+
+  @override
+  void dispose() {
+    _tagsStreamController.close();
+  }
 
   Stream<List<ItemTag>> getTags() => _tagsStreamController;
 

@@ -744,6 +744,234 @@ class TasksTagEntriesCompanion extends UpdateCompanion<TasksTagEntry> {
   }
 }
 
+class $ScoreEntryTableTable extends ScoreEntryTable
+    with TableInfo<$ScoreEntryTableTable, ScoreEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ScoreEntryTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _scoreMeta = const VerificationMeta('score');
+  @override
+  late final GeneratedColumn<int> score = GeneratedColumn<int>(
+      'score', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _scoreTypeMeta =
+      const VerificationMeta('scoreType');
+  @override
+  late final GeneratedColumnWithTypeConverter<Enum, String> scoreType =
+      GeneratedColumn<String>('score_type', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<Enum>($ScoreEntryTableTable.$converterscoreType);
+  static const VerificationMeta _metadataMeta =
+      const VerificationMeta('metadata');
+  @override
+  late final GeneratedColumnWithTypeConverter<ScoreEntryMetadata, String>
+      metadata = GeneratedColumn<String>('metadata', aliasedName, false,
+              type: DriftSqlType.string,
+              requiredDuringInsert: false,
+              defaultValue: const Constant('{}'))
+          .withConverter<ScoreEntryMetadata>(
+              $ScoreEntryTableTable.$convertermetadata);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, createdAt, score, scoreType, metadata];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'score_entry_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<ScoreEntry> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('score')) {
+      context.handle(
+          _scoreMeta, score.isAcceptableOrUnknown(data['score']!, _scoreMeta));
+    } else if (isInserting) {
+      context.missing(_scoreMeta);
+    }
+    context.handle(_scoreTypeMeta, const VerificationResult.success());
+    context.handle(_metadataMeta, const VerificationResult.success());
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ScoreEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ScoreEntry(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      score: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}score'])!,
+      scoreType: $ScoreEntryTableTable.$converterscoreType.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}score_type'])!),
+      metadata: $ScoreEntryTableTable.$convertermetadata.fromSql(
+          attachedDatabase.typeMapping
+              .read(DriftSqlType.string, data['${effectivePrefix}metadata'])!),
+    );
+  }
+
+  @override
+  $ScoreEntryTableTable createAlias(String alias) {
+    return $ScoreEntryTableTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<Enum, String, String> $converterscoreType =
+      const EnumNameConverter<Enum>(Enum.values);
+  static TypeConverter<ScoreEntryMetadata, String> $convertermetadata =
+      const ScoreEntryMetadataConverter();
+}
+
+class ScoreEntryTableCompanion extends UpdateCompanion<ScoreEntry> {
+  final Value<String> id;
+  final Value<DateTime> createdAt;
+  final Value<int> score;
+  final Value<Enum> scoreType;
+  final Value<ScoreEntryMetadata> metadata;
+  final Value<int> rowid;
+  const ScoreEntryTableCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.score = const Value.absent(),
+    this.scoreType = const Value.absent(),
+    this.metadata = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ScoreEntryTableCompanion.insert({
+    required String id,
+    required DateTime createdAt,
+    required int score,
+    required Enum scoreType,
+    this.metadata = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        createdAt = Value(createdAt),
+        score = Value(score),
+        scoreType = Value(scoreType);
+  static Insertable<ScoreEntry> custom({
+    Expression<String>? id,
+    Expression<DateTime>? createdAt,
+    Expression<int>? score,
+    Expression<String>? scoreType,
+    Expression<String>? metadata,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (score != null) 'score': score,
+      if (scoreType != null) 'score_type': scoreType,
+      if (metadata != null) 'metadata': metadata,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ScoreEntryTableCompanion copyWith(
+      {Value<String>? id,
+      Value<DateTime>? createdAt,
+      Value<int>? score,
+      Value<Enum>? scoreType,
+      Value<ScoreEntryMetadata>? metadata,
+      Value<int>? rowid}) {
+    return ScoreEntryTableCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      score: score ?? this.score,
+      scoreType: scoreType ?? this.scoreType,
+      metadata: metadata ?? this.metadata,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (score.present) {
+      map['score'] = Variable<int>(score.value);
+    }
+    if (scoreType.present) {
+      map['score_type'] = Variable<String>(
+          $ScoreEntryTableTable.$converterscoreType.toSql(scoreType.value));
+    }
+    if (metadata.present) {
+      map['metadata'] = Variable<String>(
+          $ScoreEntryTableTable.$convertermetadata.toSql(metadata.value));
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ScoreEntryTableCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('score: $score, ')
+          ..write('scoreType: $scoreType, ')
+          ..write('metadata: $metadata, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class _$ScoreEntryInsertable implements Insertable<ScoreEntry> {
+  ScoreEntry _object;
+  _$ScoreEntryInsertable(this._object);
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    return ScoreEntryTableCompanion(
+      id: Value(_object.id),
+      createdAt: Value(_object.createdAt),
+      score: Value(_object.score),
+      scoreType: Value(_object.scoreType),
+      metadata: Value(_object.metadata),
+    ).toColumns(false);
+  }
+}
+
+extension ScoreEntryToInsertable on ScoreEntry {
+  _$ScoreEntryInsertable toInsertable() {
+    return _$ScoreEntryInsertable(this);
+  }
+}
+
 abstract class _$NotZeroDatabase extends GeneratedDatabase {
   _$NotZeroDatabase(QueryExecutor e) : super(e);
   $NotZeroDatabaseManager get managers => $NotZeroDatabaseManager(this);
@@ -751,14 +979,14 @@ abstract class _$NotZeroDatabase extends GeneratedDatabase {
   late final $TagsTableTable tagsTable = $TagsTableTable(this);
   late final $TasksTagEntriesTable tasksTagEntries =
       $TasksTagEntriesTable(this);
-  late final Index tasksForDateIdx = Index('tasks_for_date_idx',
-      'CREATE INDEX tasks_for_date_idx ON tasks_table (for_date)');
+  late final $ScoreEntryTableTable scoreEntryTable =
+      $ScoreEntryTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [tasksTable, tagsTable, tasksTagEntries, tasksForDateIdx];
+      [tasksTable, tagsTable, tasksTagEntries, scoreEntryTable];
 }
 
 typedef $$TasksTableTableCreateCompanionBuilder = TasksTableCompanion Function({
@@ -1434,6 +1662,163 @@ typedef $$TasksTagEntriesTableProcessedTableManager = ProcessedTableManager<
     (TasksTagEntry, $$TasksTagEntriesTableReferences),
     TasksTagEntry,
     PrefetchHooks Function({bool task, bool tag})>;
+typedef $$ScoreEntryTableTableCreateCompanionBuilder = ScoreEntryTableCompanion
+    Function({
+  required String id,
+  required DateTime createdAt,
+  required int score,
+  required Enum scoreType,
+  Value<ScoreEntryMetadata> metadata,
+  Value<int> rowid,
+});
+typedef $$ScoreEntryTableTableUpdateCompanionBuilder = ScoreEntryTableCompanion
+    Function({
+  Value<String> id,
+  Value<DateTime> createdAt,
+  Value<int> score,
+  Value<Enum> scoreType,
+  Value<ScoreEntryMetadata> metadata,
+  Value<int> rowid,
+});
+
+class $$ScoreEntryTableTableFilterComposer
+    extends FilterComposer<_$NotZeroDatabase, $ScoreEntryTableTable> {
+  $$ScoreEntryTableTableFilterComposer(super.$state);
+  ColumnFilters<String> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get createdAt => $state.composableBuilder(
+      column: $state.table.createdAt,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get score => $state.composableBuilder(
+      column: $state.table.score,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<Enum, Enum, String> get scoreType =>
+      $state.composableBuilder(
+          column: $state.table.scoreType,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<ScoreEntryMetadata, ScoreEntryMetadata, String>
+      get metadata => $state.composableBuilder(
+          column: $state.table.metadata,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+}
+
+class $$ScoreEntryTableTableOrderingComposer
+    extends OrderingComposer<_$NotZeroDatabase, $ScoreEntryTableTable> {
+  $$ScoreEntryTableTableOrderingComposer(super.$state);
+  ColumnOrderings<String> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get createdAt => $state.composableBuilder(
+      column: $state.table.createdAt,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get score => $state.composableBuilder(
+      column: $state.table.score,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get scoreType => $state.composableBuilder(
+      column: $state.table.scoreType,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get metadata => $state.composableBuilder(
+      column: $state.table.metadata,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+class $$ScoreEntryTableTableTableManager extends RootTableManager<
+    _$NotZeroDatabase,
+    $ScoreEntryTableTable,
+    ScoreEntry,
+    $$ScoreEntryTableTableFilterComposer,
+    $$ScoreEntryTableTableOrderingComposer,
+    $$ScoreEntryTableTableCreateCompanionBuilder,
+    $$ScoreEntryTableTableUpdateCompanionBuilder,
+    (
+      ScoreEntry,
+      BaseReferences<_$NotZeroDatabase, $ScoreEntryTableTable, ScoreEntry>
+    ),
+    ScoreEntry,
+    PrefetchHooks Function()> {
+  $$ScoreEntryTableTableTableManager(
+      _$NotZeroDatabase db, $ScoreEntryTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$ScoreEntryTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$ScoreEntryTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<int> score = const Value.absent(),
+            Value<Enum> scoreType = const Value.absent(),
+            Value<ScoreEntryMetadata> metadata = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ScoreEntryTableCompanion(
+            id: id,
+            createdAt: createdAt,
+            score: score,
+            scoreType: scoreType,
+            metadata: metadata,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required DateTime createdAt,
+            required int score,
+            required Enum scoreType,
+            Value<ScoreEntryMetadata> metadata = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ScoreEntryTableCompanion.insert(
+            id: id,
+            createdAt: createdAt,
+            score: score,
+            scoreType: scoreType,
+            metadata: metadata,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ScoreEntryTableTableProcessedTableManager = ProcessedTableManager<
+    _$NotZeroDatabase,
+    $ScoreEntryTableTable,
+    ScoreEntry,
+    $$ScoreEntryTableTableFilterComposer,
+    $$ScoreEntryTableTableOrderingComposer,
+    $$ScoreEntryTableTableCreateCompanionBuilder,
+    $$ScoreEntryTableTableUpdateCompanionBuilder,
+    (
+      ScoreEntry,
+      BaseReferences<_$NotZeroDatabase, $ScoreEntryTableTable, ScoreEntry>
+    ),
+    ScoreEntry,
+    PrefetchHooks Function()>;
 
 class $NotZeroDatabaseManager {
   final _$NotZeroDatabase _db;
@@ -1444,4 +1829,6 @@ class $NotZeroDatabaseManager {
       $$TagsTableTableTableManager(_db, _db.tagsTable);
   $$TasksTagEntriesTableTableManager get tasksTagEntries =>
       $$TasksTagEntriesTableTableManager(_db, _db.tasksTagEntries);
+  $$ScoreEntryTableTableTableManager get scoreEntryTable =>
+      $$ScoreEntryTableTableTableManager(_db, _db.scoreEntryTable);
 }

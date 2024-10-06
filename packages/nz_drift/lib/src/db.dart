@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
+import 'package:nz_drift/src/tables/tables.dart';
 import 'package:nz_io/nz_io.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
@@ -7,19 +8,24 @@ import 'package:nz_tasks_models/nz_tasks_models.dart';
 import 'converters/date_converter.dart';
 import 'database/open_database.dart';
 import 'migrations/migrations.dart';
-import 'tables/tags_table.dart';
-import 'tables/tasks_table.dart';
 
 part 'db.g.dart';
 
-@DriftDatabase(tables: [TasksTable, TagsTable, TasksTagEntries])
+@DriftDatabase(
+  tables: [
+    TasksTable,
+    TagsTable,
+    TasksTagEntries,
+    ScoreEntryTable,
+  ],
+)
 class NotZeroDatabase extends _$NotZeroDatabase {
   NotZeroDatabase() : super(openDriftDatabase());
 
   NotZeroDatabase.memory() : super(openDriftDatabase(permanent: false));
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration {

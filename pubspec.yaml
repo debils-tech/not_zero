@@ -20,12 +20,12 @@ dependencies:
   intl: ^0.19.0
   json_annotation: ^4.9.0
   logging: ^1.2.0
+  nz_actions: ^0.1.0
   nz_boxes: ^1.0.0
   nz_common: ^1.0.0
   nz_drift: ^1.0.0
   nz_flutter_core: ^1.0.0
-  nz_io:
-    path: packages/nz_io
+  nz_io: ^1.0.0
   nz_logger: ^1.0.0
   nz_tags_models: ^1.0.0
   nz_tasks_models: ^1.0.0

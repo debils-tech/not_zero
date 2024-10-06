@@ -29,6 +29,7 @@ Map<String, dynamic> _$$ScoreEntryImplToJson(_$ScoreEntryImpl instance) =>
 
 const _$ScoreEntryTypeEnumMap = {
   ScoreEntryType.task: 'task',
+  ScoreEntryType.login: 'login',
 };
 
 _$ScoreEntryMetadataNoneImpl _$$ScoreEntryMetadataNoneImplFromJson(

@@ -1,4 +1,4 @@
-import 'package:nz_drift/nz_drift.dart';
+import 'package:nz_drift/nz_drift.dart' hide ScoreEntryToInsertable;
 import 'package:nz_tags_models/nz_tags_models.dart';
 
 class TagsLocalService {
