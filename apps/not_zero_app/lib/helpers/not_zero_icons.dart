@@ -33,10 +33,19 @@ class NotZeroIcons {
   static const _kFontFam = 'NotZero';
   static const String? _kFontPkg = null;
 
-  static const IconData zero =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData github_circled =
-      IconData(0xf09b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData telegram_plane =
-      IconData(0xf3fe, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData zero = IconData(
+    0xe800,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData github_circled = IconData(
+    0xf09b,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData telegram_plane = IconData(
+    0xf3fe,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 }

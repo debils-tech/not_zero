@@ -12,7 +12,8 @@ part of 'tasks_filters.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$TasksFilters {
@@ -29,8 +30,9 @@ mixin _$TasksFilters {
 /// @nodoc
 abstract class $TasksFiltersCopyWith<$Res> {
   factory $TasksFiltersCopyWith(
-          TasksFilters value, $Res Function(TasksFilters) then) =
-      _$TasksFiltersCopyWithImpl<$Res, TasksFilters>;
+    TasksFilters value,
+    $Res Function(TasksFilters) then,
+  ) = _$TasksFiltersCopyWithImpl<$Res, TasksFilters>;
   @useResult
   $Res call({Set<String> searchTags, DateTime? forDate});
 }
@@ -53,16 +55,19 @@ class _$TasksFiltersCopyWithImpl<$Res, $Val extends TasksFilters>
     Object? searchTags = null,
     Object? forDate = freezed,
   }) {
-    return _then(_value.copyWith(
-      searchTags: null == searchTags
-          ? _value.searchTags
-          : searchTags // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      forDate: freezed == forDate
-          ? _value.forDate
-          : forDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            searchTags: null == searchTags
+                ? _value.searchTags
+                : searchTags // ignore: cast_nullable_to_non_nullable
+                      as Set<String>,
+            forDate: freezed == forDate
+                ? _value.forDate
+                : forDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -70,8 +75,9 @@ class _$TasksFiltersCopyWithImpl<$Res, $Val extends TasksFilters>
 abstract class _$$TasksFiltersImplCopyWith<$Res>
     implements $TasksFiltersCopyWith<$Res> {
   factory _$$TasksFiltersImplCopyWith(
-          _$TasksFiltersImpl value, $Res Function(_$TasksFiltersImpl) then) =
-      __$$TasksFiltersImplCopyWithImpl<$Res>;
+    _$TasksFiltersImpl value,
+    $Res Function(_$TasksFiltersImpl) then,
+  ) = __$$TasksFiltersImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Set<String> searchTags, DateTime? forDate});
@@ -82,8 +88,9 @@ class __$$TasksFiltersImplCopyWithImpl<$Res>
     extends _$TasksFiltersCopyWithImpl<$Res, _$TasksFiltersImpl>
     implements _$$TasksFiltersImplCopyWith<$Res> {
   __$$TasksFiltersImplCopyWithImpl(
-      _$TasksFiltersImpl _value, $Res Function(_$TasksFiltersImpl) _then)
-      : super(_value, _then);
+    _$TasksFiltersImpl _value,
+    $Res Function(_$TasksFiltersImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TasksFilters
   /// with the given fields replaced by the non-null parameter values.
@@ -93,25 +100,28 @@ class __$$TasksFiltersImplCopyWithImpl<$Res>
     Object? searchTags = null,
     Object? forDate = freezed,
   }) {
-    return _then(_$TasksFiltersImpl(
-      searchTags: null == searchTags
-          ? _value._searchTags
-          : searchTags // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      forDate: freezed == forDate
-          ? _value.forDate
-          : forDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ));
+    return _then(
+      _$TasksFiltersImpl(
+        searchTags: null == searchTags
+            ? _value._searchTags
+            : searchTags // ignore: cast_nullable_to_non_nullable
+                  as Set<String>,
+        forDate: freezed == forDate
+            ? _value.forDate
+            : forDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$TasksFiltersImpl implements _TasksFilters {
-  const _$TasksFiltersImpl(
-      {final Set<String> searchTags = const <String>{}, this.forDate})
-      : _searchTags = searchTags;
+  const _$TasksFiltersImpl({
+    final Set<String> searchTags = const <String>{},
+    this.forDate,
+  }) : _searchTags = searchTags;
 
   final Set<String> _searchTags;
   @override
@@ -135,14 +145,19 @@ class _$TasksFiltersImpl implements _TasksFilters {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TasksFiltersImpl &&
-            const DeepCollectionEquality()
-                .equals(other._searchTags, _searchTags) &&
+            const DeepCollectionEquality().equals(
+              other._searchTags,
+              _searchTags,
+            ) &&
             (identical(other.forDate, forDate) || other.forDate == forDate));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_searchTags), forDate);
+    runtimeType,
+    const DeepCollectionEquality().hash(_searchTags),
+    forDate,
+  );
 
   /// Create a copy of TasksFilters
   /// with the given fields replaced by the non-null parameter values.
@@ -154,9 +169,10 @@ class _$TasksFiltersImpl implements _TasksFilters {
 }
 
 abstract class _TasksFilters implements TasksFilters {
-  const factory _TasksFilters(
-      {final Set<String> searchTags,
-      final DateTime? forDate}) = _$TasksFiltersImpl;
+  const factory _TasksFilters({
+    final Set<String> searchTags,
+    final DateTime? forDate,
+  }) = _$TasksFiltersImpl;
 
   @override
   Set<String> get searchTags;

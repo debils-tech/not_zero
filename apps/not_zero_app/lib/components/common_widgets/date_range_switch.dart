@@ -27,14 +27,14 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
   late DateTime _currentDate;
 
   DateTime get _rangeStart => switch (widget.rangeType) {
-        DateRangeType.day => _currentDate.startOfDay,
-        DateRangeType.week => _currentDate.startOfWeek,
-      };
+    DateRangeType.day => _currentDate.startOfDay,
+    DateRangeType.week => _currentDate.startOfWeek,
+  };
 
   DateTime get _rangeEnd => switch (widget.rangeType) {
-        DateRangeType.day => _currentDate.endOfDay,
-        DateRangeType.week => _currentDate.endOfWeek,
-      };
+    DateRangeType.day => _currentDate.endOfDay,
+    DateRangeType.week => _currentDate.endOfWeek,
+  };
 
   @override
   void initState() {

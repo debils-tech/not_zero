@@ -12,8 +12,8 @@ class WeeklyStatsChart extends StatelessWidget {
     DateTime? start,
     DateTime? end,
     super.key,
-  })  : rangeStart = start ?? DateTime.now().startOfWeek,
-        rangeEnd = end ?? DateTime.now().endOfWeek;
+  }) : rangeStart = start ?? DateTime.now().startOfWeek,
+       rangeEnd = end ?? DateTime.now().endOfWeek;
 
   final List<int> stats;
   final int? selectedIndex;

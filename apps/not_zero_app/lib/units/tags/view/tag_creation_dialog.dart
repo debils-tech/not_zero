@@ -7,8 +7,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero_app/components/confirmation_dialog.dart';
 import 'package:not_zero_app/units/tags/di.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class TagCreationDialog extends StatefulWidget {
   const TagCreationDialog({super.key, this.tagToEdit});
@@ -147,7 +147,7 @@ class _TagColorField extends StatelessWidget {
                 ),
               );
             },
-            separatorBuilder: (_, __) {
+            separatorBuilder: (_, _) {
               return const SizedBox(width: 2);
             },
             itemCount: colors.length,
@@ -213,7 +213,7 @@ class _SubmitButton extends ConsumerWidget {
             tag = tagToEdit!.edit(name: name, colorIndex: color);
           }
 
-          ref.read(tagsRepositoryProvider).addTag(tag);
+          unawaited(ref.read(tagsRepositoryProvider).addTag(tag));
           context.pop();
         }
       },

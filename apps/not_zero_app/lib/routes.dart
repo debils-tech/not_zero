@@ -18,15 +18,15 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (_, __) => const HomeScreen(),
+      builder: (_, _) => const HomeScreen(),
       routes: [
         GoRoute(
           path: 'tasks',
-          builder: (_, __) => const TasksListScreen(),
+          builder: (_, _) => const TasksListScreen(),
           routes: [
             GoRoute(
               path: 'new',
-              builder: (_, __) => const TaskEditScreen(),
+              builder: (_, _) => const TaskEditScreen(),
             ),
             GoRoute(
               path: 'view/:id',
@@ -52,27 +52,27 @@ final appRouter = GoRouter(
         ),
         GoRoute(
           path: 'stats',
-          builder: (_, __) => const QuickStatisticsScreen(),
+          builder: (_, _) => const QuickStatisticsScreen(),
         ),
         GoRoute(
           path: 'settings',
-          builder: (_, __) => const SettingsScreen(),
+          builder: (_, _) => const SettingsScreen(),
           routes: [
             GoRoute(
               path: 'theme',
-              builder: (_, __) => const ThemeSettingsScreen(),
+              builder: (_, _) => const ThemeSettingsScreen(),
             ),
             GoRoute(
               path: 'storage',
-              builder: (_, __) => const StorageSettingsScreen(),
+              builder: (_, _) => const StorageSettingsScreen(),
             ),
             GoRoute(
               path: 'about',
-              builder: (_, __) => const AboutScreen(),
+              builder: (_, _) => const AboutScreen(),
               routes: [
                 GoRoute(
                   path: 'licenses',
-                  builder: (_, __) => const LicensesScreen(),
+                  builder: (_, _) => const LicensesScreen(),
                 ),
               ],
             ),

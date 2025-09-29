@@ -17,6 +17,7 @@ import 'package:nz_logger/nz_logger.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // kDebugMode can be true, but analyzer doesn't know that
   // ignore: avoid_redundant_argument_values
   configLogger(production: !kDebugMode);
   addAppLicenses();

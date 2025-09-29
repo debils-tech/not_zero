@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:nz_drift/nz_drift.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_drift/nz_drift.dart';
 
 class StatsLocalService {
   StatsLocalService(this._db);

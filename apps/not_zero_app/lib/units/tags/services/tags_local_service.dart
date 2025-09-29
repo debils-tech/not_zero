@@ -1,5 +1,5 @@
-import 'package:nz_drift/nz_drift.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_drift/nz_drift.dart';
 
 class TagsLocalService {
   TagsLocalService(this._db);

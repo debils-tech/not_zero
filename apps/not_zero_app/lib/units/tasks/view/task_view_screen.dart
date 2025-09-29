@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero_app/units/tags/view/tag_list_indicator.dart';
 import 'package:not_zero_app/units/tasks/di.dart';
 import 'package:not_zero_app/units/tasks/view/components/task_editing_info.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class TaskViewScreen extends ConsumerWidget {
   const TaskViewScreen({required this.taskToView, super.key});

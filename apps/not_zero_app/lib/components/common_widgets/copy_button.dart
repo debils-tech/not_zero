@@ -33,7 +33,7 @@ class _ElevatedCopyButtonState extends State<ElevatedCopyButton> {
       width: 150,
       child: ElevatedButton(
         onPressed: () {
-          Clipboard.setData(ClipboardData(text: widget.content));
+          unawaited(Clipboard.setData(ClipboardData(text: widget.content)));
 
           setState(() => _isCopied = true);
 

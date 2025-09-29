@@ -12,7 +12,8 @@ part of 'quick_statistics_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$QuickStatisticsState {
@@ -30,20 +31,24 @@ mixin _$QuickStatisticsState {
 
 /// @nodoc
 abstract class $QuickStatisticsStateCopyWith<$Res> {
-  factory $QuickStatisticsStateCopyWith(QuickStatisticsState value,
-          $Res Function(QuickStatisticsState) then) =
-      _$QuickStatisticsStateCopyWithImpl<$Res, QuickStatisticsState>;
+  factory $QuickStatisticsStateCopyWith(
+    QuickStatisticsState value,
+    $Res Function(QuickStatisticsState) then,
+  ) = _$QuickStatisticsStateCopyWithImpl<$Res, QuickStatisticsState>;
   @useResult
-  $Res call(
-      {List<int>? chartStats,
-      DateTime? chartRangeStart,
-      DateTime? chartRangeEnd,
-      int? selectedDayIndex});
+  $Res call({
+    List<int>? chartStats,
+    DateTime? chartRangeStart,
+    DateTime? chartRangeEnd,
+    int? selectedDayIndex,
+  });
 }
 
 /// @nodoc
-class _$QuickStatisticsStateCopyWithImpl<$Res,
-        $Val extends QuickStatisticsState>
+class _$QuickStatisticsStateCopyWithImpl<
+  $Res,
+  $Val extends QuickStatisticsState
+>
     implements $QuickStatisticsStateCopyWith<$Res> {
   _$QuickStatisticsStateCopyWithImpl(this._value, this._then);
 
@@ -62,49 +67,55 @@ class _$QuickStatisticsStateCopyWithImpl<$Res,
     Object? chartRangeEnd = freezed,
     Object? selectedDayIndex = freezed,
   }) {
-    return _then(_value.copyWith(
-      chartStats: freezed == chartStats
-          ? _value.chartStats
-          : chartStats // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
-      chartRangeStart: freezed == chartRangeStart
-          ? _value.chartRangeStart
-          : chartRangeStart // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      chartRangeEnd: freezed == chartRangeEnd
-          ? _value.chartRangeEnd
-          : chartRangeEnd // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      selectedDayIndex: freezed == selectedDayIndex
-          ? _value.selectedDayIndex
-          : selectedDayIndex // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            chartStats: freezed == chartStats
+                ? _value.chartStats
+                : chartStats // ignore: cast_nullable_to_non_nullable
+                      as List<int>?,
+            chartRangeStart: freezed == chartRangeStart
+                ? _value.chartRangeStart
+                : chartRangeStart // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            chartRangeEnd: freezed == chartRangeEnd
+                ? _value.chartRangeEnd
+                : chartRangeEnd // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            selectedDayIndex: freezed == selectedDayIndex
+                ? _value.selectedDayIndex
+                : selectedDayIndex // ignore: cast_nullable_to_non_nullable
+                      as int?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$QuickStatisticsStateImplCopyWith<$Res>
     implements $QuickStatisticsStateCopyWith<$Res> {
-  factory _$$QuickStatisticsStateImplCopyWith(_$QuickStatisticsStateImpl value,
-          $Res Function(_$QuickStatisticsStateImpl) then) =
-      __$$QuickStatisticsStateImplCopyWithImpl<$Res>;
+  factory _$$QuickStatisticsStateImplCopyWith(
+    _$QuickStatisticsStateImpl value,
+    $Res Function(_$QuickStatisticsStateImpl) then,
+  ) = __$$QuickStatisticsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {List<int>? chartStats,
-      DateTime? chartRangeStart,
-      DateTime? chartRangeEnd,
-      int? selectedDayIndex});
+  $Res call({
+    List<int>? chartStats,
+    DateTime? chartRangeStart,
+    DateTime? chartRangeEnd,
+    int? selectedDayIndex,
+  });
 }
 
 /// @nodoc
 class __$$QuickStatisticsStateImplCopyWithImpl<$Res>
     extends _$QuickStatisticsStateCopyWithImpl<$Res, _$QuickStatisticsStateImpl>
     implements _$$QuickStatisticsStateImplCopyWith<$Res> {
-  __$$QuickStatisticsStateImplCopyWithImpl(_$QuickStatisticsStateImpl _value,
-      $Res Function(_$QuickStatisticsStateImpl) _then)
-      : super(_value, _then);
+  __$$QuickStatisticsStateImplCopyWithImpl(
+    _$QuickStatisticsStateImpl _value,
+    $Res Function(_$QuickStatisticsStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of QuickStatisticsState
   /// with the given fields replaced by the non-null parameter values.
@@ -116,37 +127,39 @@ class __$$QuickStatisticsStateImplCopyWithImpl<$Res>
     Object? chartRangeEnd = freezed,
     Object? selectedDayIndex = freezed,
   }) {
-    return _then(_$QuickStatisticsStateImpl(
-      chartStats: freezed == chartStats
-          ? _value._chartStats
-          : chartStats // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
-      chartRangeStart: freezed == chartRangeStart
-          ? _value.chartRangeStart
-          : chartRangeStart // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      chartRangeEnd: freezed == chartRangeEnd
-          ? _value.chartRangeEnd
-          : chartRangeEnd // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      selectedDayIndex: freezed == selectedDayIndex
-          ? _value.selectedDayIndex
-          : selectedDayIndex // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ));
+    return _then(
+      _$QuickStatisticsStateImpl(
+        chartStats: freezed == chartStats
+            ? _value._chartStats
+            : chartStats // ignore: cast_nullable_to_non_nullable
+                  as List<int>?,
+        chartRangeStart: freezed == chartRangeStart
+            ? _value.chartRangeStart
+            : chartRangeStart // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        chartRangeEnd: freezed == chartRangeEnd
+            ? _value.chartRangeEnd
+            : chartRangeEnd // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        selectedDayIndex: freezed == selectedDayIndex
+            ? _value.selectedDayIndex
+            : selectedDayIndex // ignore: cast_nullable_to_non_nullable
+                  as int?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$QuickStatisticsStateImpl extends _QuickStatisticsState {
-  const _$QuickStatisticsStateImpl(
-      {final List<int>? chartStats,
-      this.chartRangeStart,
-      this.chartRangeEnd,
-      this.selectedDayIndex})
-      : _chartStats = chartStats,
-        super._();
+  const _$QuickStatisticsStateImpl({
+    final List<int>? chartStats,
+    this.chartRangeStart,
+    this.chartRangeEnd,
+    this.selectedDayIndex,
+  }) : _chartStats = chartStats,
+       super._();
 
   final List<int>? _chartStats;
   @override
@@ -175,8 +188,10 @@ class _$QuickStatisticsStateImpl extends _QuickStatisticsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$QuickStatisticsStateImpl &&
-            const DeepCollectionEquality()
-                .equals(other._chartStats, _chartStats) &&
+            const DeepCollectionEquality().equals(
+              other._chartStats,
+              _chartStats,
+            ) &&
             (identical(other.chartRangeStart, chartRangeStart) ||
                 other.chartRangeStart == chartRangeStart) &&
             (identical(other.chartRangeEnd, chartRangeEnd) ||
@@ -187,11 +202,12 @@ class _$QuickStatisticsStateImpl extends _QuickStatisticsState {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_chartStats),
-      chartRangeStart,
-      chartRangeEnd,
-      selectedDayIndex);
+    runtimeType,
+    const DeepCollectionEquality().hash(_chartStats),
+    chartRangeStart,
+    chartRangeEnd,
+    selectedDayIndex,
+  );
 
   /// Create a copy of QuickStatisticsState
   /// with the given fields replaced by the non-null parameter values.
@@ -199,17 +215,20 @@ class _$QuickStatisticsStateImpl extends _QuickStatisticsState {
   @override
   @pragma('vm:prefer-inline')
   _$$QuickStatisticsStateImplCopyWith<_$QuickStatisticsStateImpl>
-      get copyWith =>
-          __$$QuickStatisticsStateImplCopyWithImpl<_$QuickStatisticsStateImpl>(
-              this, _$identity);
+  get copyWith =>
+      __$$QuickStatisticsStateImplCopyWithImpl<_$QuickStatisticsStateImpl>(
+        this,
+        _$identity,
+      );
 }
 
 abstract class _QuickStatisticsState extends QuickStatisticsState {
-  const factory _QuickStatisticsState(
-      {final List<int>? chartStats,
-      final DateTime? chartRangeStart,
-      final DateTime? chartRangeEnd,
-      final int? selectedDayIndex}) = _$QuickStatisticsStateImpl;
+  const factory _QuickStatisticsState({
+    final List<int>? chartStats,
+    final DateTime? chartRangeStart,
+    final DateTime? chartRangeEnd,
+    final int? selectedDayIndex,
+  }) = _$QuickStatisticsStateImpl;
   const _QuickStatisticsState._() : super._();
 
   @override
@@ -226,5 +245,5 @@ abstract class _QuickStatisticsState extends QuickStatisticsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QuickStatisticsStateImplCopyWith<_$QuickStatisticsStateImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

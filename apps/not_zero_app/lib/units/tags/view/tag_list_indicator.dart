@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class TagListIndicator extends StatelessWidget {
   const TagListIndicator({

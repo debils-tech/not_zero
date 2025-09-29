@@ -7,12 +7,12 @@ class StarsRateWidget extends StatefulWidget {
     this.initialValue = 0,
     this.colorsByIndex,
     super.key,
-  })  : assert(count > 0, "Count can't be less than 1"),
-        assert(
-          colorsByIndex?.length == count,
-          'Count of colors must be equal to count of stars',
-        ),
-        assert(initialValue < count, 'Initial value must be less than count');
+  }) : assert(count > 0, "Count can't be less than 1"),
+       assert(
+         colorsByIndex?.length == count,
+         'Count of colors must be equal to count of stars',
+       ),
+       assert(initialValue < count, 'Initial value must be less than count');
 
   final int count;
   final int initialValue;

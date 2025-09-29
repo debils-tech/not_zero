@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/units/stats/di.dart';
 import 'package:not_zero_app/units/stats/models/quick_statistics_state.dart';
@@ -6,7 +8,7 @@ import 'package:nz_common/nz_common.dart';
 class QuickStatisticsNotifier extends Notifier<QuickStatisticsState> {
   @override
   QuickStatisticsState build() {
-    loadDays();
+    unawaited(loadDays());
 
     return const QuickStatisticsState();
   }

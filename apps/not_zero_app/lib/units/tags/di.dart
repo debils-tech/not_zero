@@ -16,11 +16,12 @@ final tagsRepositoryProvider = Provider<TagsRepository>((ref) {
   );
 });
 
-final tagsListStreamProvider = StreamProvider.autoDispose<List<ItemTag>>((
-  ref,
-) async* {
-  final repository = ref.watch(tagsRepositoryProvider);
+final StreamProvider<List<ItemTag>> tagsListStreamProvider =
+    StreamProvider.autoDispose<List<ItemTag>>((
+      ref,
+    ) async* {
+      final repository = ref.watch(tagsRepositoryProvider);
 
-  await repository.syncTags();
-  yield* repository.getTags();
-});
+      await repository.syncTags();
+      yield* repository.getTags();
+    });

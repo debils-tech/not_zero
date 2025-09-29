@@ -7,11 +7,12 @@ class ChartCard extends StatelessWidget {
     required this.innerHeight,
     super.key,
     EdgeInsets? padding,
-  }) : padding = padding ??
-            const EdgeInsets.symmetric(
-              horizontal: 30,
-              vertical: 15,
-            );
+  }) : padding =
+           padding ??
+           const EdgeInsets.symmetric(
+             horizontal: 30,
+             vertical: 15,
+           );
 
   final Widget child;
   final double innerHeight;

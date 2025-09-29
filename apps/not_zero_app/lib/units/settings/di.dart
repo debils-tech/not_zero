@@ -18,7 +18,8 @@ final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   );
 });
 
-final themeStateNotifierProvider =
+final NotifierProvider<ThemeStateNotifier, ThemeState>
+themeStateNotifierProvider =
     NotifierProvider.autoDispose<ThemeStateNotifier, ThemeState>(
       ThemeStateNotifier.new,
     );

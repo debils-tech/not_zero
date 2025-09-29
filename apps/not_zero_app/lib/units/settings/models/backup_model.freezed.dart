@@ -12,7 +12,8 @@ part of 'backup_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 BackupModel _$BackupModelFromJson(Map<String, dynamic> json) {
   return _BackupModel.fromJson(json);
@@ -38,13 +39,15 @@ mixin _$BackupModel {
 /// @nodoc
 abstract class $BackupModelCopyWith<$Res> {
   factory $BackupModelCopyWith(
-          BackupModel value, $Res Function(BackupModel) then) =
-      _$BackupModelCopyWithImpl<$Res, BackupModel>;
+    BackupModel value,
+    $Res Function(BackupModel) then,
+  ) = _$BackupModelCopyWithImpl<$Res, BackupModel>;
   @useResult
-  $Res call(
-      {Map<String, dynamic> data,
-      int version,
-      @JsonKey(name: 'app_info') AppInfo? appInfo});
+  $Res call({
+    Map<String, dynamic> data,
+    int version,
+    @JsonKey(name: 'app_info') AppInfo? appInfo,
+  });
 
   $AppInfoCopyWith<$Res>? get appInfo;
 }
@@ -68,20 +71,23 @@ class _$BackupModelCopyWithImpl<$Res, $Val extends BackupModel>
     Object? version = null,
     Object? appInfo = freezed,
   }) {
-    return _then(_value.copyWith(
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      version: null == version
-          ? _value.version
-          : version // ignore: cast_nullable_to_non_nullable
-              as int,
-      appInfo: freezed == appInfo
-          ? _value.appInfo
-          : appInfo // ignore: cast_nullable_to_non_nullable
-              as AppInfo?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            data: null == data
+                ? _value.data
+                : data // ignore: cast_nullable_to_non_nullable
+                      as Map<String, dynamic>,
+            version: null == version
+                ? _value.version
+                : version // ignore: cast_nullable_to_non_nullable
+                      as int,
+            appInfo: freezed == appInfo
+                ? _value.appInfo
+                : appInfo // ignore: cast_nullable_to_non_nullable
+                      as AppInfo?,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of BackupModel
@@ -103,14 +109,16 @@ class _$BackupModelCopyWithImpl<$Res, $Val extends BackupModel>
 abstract class _$$BackupModelImplCopyWith<$Res>
     implements $BackupModelCopyWith<$Res> {
   factory _$$BackupModelImplCopyWith(
-          _$BackupModelImpl value, $Res Function(_$BackupModelImpl) then) =
-      __$$BackupModelImplCopyWithImpl<$Res>;
+    _$BackupModelImpl value,
+    $Res Function(_$BackupModelImpl) then,
+  ) = __$$BackupModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Map<String, dynamic> data,
-      int version,
-      @JsonKey(name: 'app_info') AppInfo? appInfo});
+  $Res call({
+    Map<String, dynamic> data,
+    int version,
+    @JsonKey(name: 'app_info') AppInfo? appInfo,
+  });
 
   @override
   $AppInfoCopyWith<$Res>? get appInfo;
@@ -121,8 +129,9 @@ class __$$BackupModelImplCopyWithImpl<$Res>
     extends _$BackupModelCopyWithImpl<$Res, _$BackupModelImpl>
     implements _$$BackupModelImplCopyWith<$Res> {
   __$$BackupModelImplCopyWithImpl(
-      _$BackupModelImpl _value, $Res Function(_$BackupModelImpl) _then)
-      : super(_value, _then);
+    _$BackupModelImpl _value,
+    $Res Function(_$BackupModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BackupModel
   /// with the given fields replaced by the non-null parameter values.
@@ -133,20 +142,22 @@ class __$$BackupModelImplCopyWithImpl<$Res>
     Object? version = null,
     Object? appInfo = freezed,
   }) {
-    return _then(_$BackupModelImpl(
-      data: null == data
-          ? _value._data
-          : data // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      version: null == version
-          ? _value.version
-          : version // ignore: cast_nullable_to_non_nullable
-              as int,
-      appInfo: freezed == appInfo
-          ? _value.appInfo
-          : appInfo // ignore: cast_nullable_to_non_nullable
-              as AppInfo?,
-    ));
+    return _then(
+      _$BackupModelImpl(
+        data: null == data
+            ? _value._data
+            : data // ignore: cast_nullable_to_non_nullable
+                  as Map<String, dynamic>,
+        version: null == version
+            ? _value.version
+            : version // ignore: cast_nullable_to_non_nullable
+                  as int,
+        appInfo: freezed == appInfo
+            ? _value.appInfo
+            : appInfo // ignore: cast_nullable_to_non_nullable
+                  as AppInfo?,
+      ),
+    );
   }
 }
 
@@ -154,11 +165,11 @@ class __$$BackupModelImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$BackupModelImpl implements _BackupModel {
-  _$BackupModelImpl(
-      {required final Map<String, dynamic> data,
-      this.version = 1,
-      @JsonKey(name: 'app_info') this.appInfo})
-      : _data = data;
+  _$BackupModelImpl({
+    required final Map<String, dynamic> data,
+    this.version = 1,
+    @JsonKey(name: 'app_info') this.appInfo,
+  }) : _data = data;
 
   factory _$BackupModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BackupModelImplFromJson(json);
@@ -195,8 +206,12 @@ class _$BackupModelImpl implements _BackupModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_data), version, appInfo);
+  int get hashCode => Object.hash(
+    runtimeType,
+    const DeepCollectionEquality().hash(_data),
+    version,
+    appInfo,
+  );
 
   /// Create a copy of BackupModel
   /// with the given fields replaced by the non-null parameter values.
@@ -215,10 +230,11 @@ class _$BackupModelImpl implements _BackupModel {
 }
 
 abstract class _BackupModel implements BackupModel {
-  factory _BackupModel(
-      {required final Map<String, dynamic> data,
-      final int version,
-      @JsonKey(name: 'app_info') final AppInfo? appInfo}) = _$BackupModelImpl;
+  factory _BackupModel({
+    required final Map<String, dynamic> data,
+    final int version,
+    @JsonKey(name: 'app_info') final AppInfo? appInfo,
+  }) = _$BackupModelImpl;
 
   factory _BackupModel.fromJson(Map<String, dynamic> json) =
       _$BackupModelImpl.fromJson;

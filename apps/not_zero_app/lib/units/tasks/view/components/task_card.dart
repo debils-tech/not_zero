@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero_app/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero_app/units/tags/view/tag_list_indicator.dart';
 import 'package:not_zero_app/units/tasks/di.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard(this.task, {super.key});
@@ -114,7 +114,9 @@ class _TaskTimeText extends StatelessWidget {
     final textStyle = Theme.of(context).textTheme.labelMedium;
     return Text(
       finalTextTime,
-      style: textStyle?.copyWith(color: textStyle.color?.withOpacity(0.6)),
+      style: textStyle?.copyWith(
+        color: textStyle.color?.withValues(alpha: 0.6),
+      ),
     );
   }
 }

@@ -48,7 +48,7 @@ class SelectableCard extends ConsumerWidget {
           border: isSelected
               ? Border.all(
                   width: 3.5,
-                  color: theme.colorScheme.primary.withOpacity(0.7),
+                  color: theme.colorScheme.primary.withValues(alpha: 0.7),
                 )
               : null,
           borderRadius: const BorderRadius.all(Radius.circular(15)),

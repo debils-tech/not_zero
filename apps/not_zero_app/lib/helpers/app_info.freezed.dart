@@ -12,7 +12,8 @@ part of 'app_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 AppInfo _$AppInfoFromJson(Map<String, dynamic> json) {
   return _AppInfo.fromJson(json);
@@ -40,11 +41,12 @@ abstract class $AppInfoCopyWith<$Res> {
   factory $AppInfoCopyWith(AppInfo value, $Res Function(AppInfo) then) =
       _$AppInfoCopyWithImpl<$Res, AppInfo>;
   @useResult
-  $Res call(
-      {String name,
-      String platform,
-      String version,
-      @JsonKey(name: 'build') int buildNumber});
+  $Res call({
+    String name,
+    String platform,
+    String version,
+    @JsonKey(name: 'build') int buildNumber,
+  });
 }
 
 /// @nodoc
@@ -67,39 +69,44 @@ class _$AppInfoCopyWithImpl<$Res, $Val extends AppInfo>
     Object? version = null,
     Object? buildNumber = null,
   }) {
-    return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      platform: null == platform
-          ? _value.platform
-          : platform // ignore: cast_nullable_to_non_nullable
-              as String,
-      version: null == version
-          ? _value.version
-          : version // ignore: cast_nullable_to_non_nullable
-              as String,
-      buildNumber: null == buildNumber
-          ? _value.buildNumber
-          : buildNumber // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            platform: null == platform
+                ? _value.platform
+                : platform // ignore: cast_nullable_to_non_nullable
+                      as String,
+            version: null == version
+                ? _value.version
+                : version // ignore: cast_nullable_to_non_nullable
+                      as String,
+            buildNumber: null == buildNumber
+                ? _value.buildNumber
+                : buildNumber // ignore: cast_nullable_to_non_nullable
+                      as int,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$AppInfoImplCopyWith<$Res> implements $AppInfoCopyWith<$Res> {
   factory _$$AppInfoImplCopyWith(
-          _$AppInfoImpl value, $Res Function(_$AppInfoImpl) then) =
-      __$$AppInfoImplCopyWithImpl<$Res>;
+    _$AppInfoImpl value,
+    $Res Function(_$AppInfoImpl) then,
+  ) = __$$AppInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String name,
-      String platform,
-      String version,
-      @JsonKey(name: 'build') int buildNumber});
+  $Res call({
+    String name,
+    String platform,
+    String version,
+    @JsonKey(name: 'build') int buildNumber,
+  });
 }
 
 /// @nodoc
@@ -107,8 +114,9 @@ class __$$AppInfoImplCopyWithImpl<$Res>
     extends _$AppInfoCopyWithImpl<$Res, _$AppInfoImpl>
     implements _$$AppInfoImplCopyWith<$Res> {
   __$$AppInfoImplCopyWithImpl(
-      _$AppInfoImpl _value, $Res Function(_$AppInfoImpl) _then)
-      : super(_value, _then);
+    _$AppInfoImpl _value,
+    $Res Function(_$AppInfoImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AppInfo
   /// with the given fields replaced by the non-null parameter values.
@@ -120,35 +128,38 @@ class __$$AppInfoImplCopyWithImpl<$Res>
     Object? version = null,
     Object? buildNumber = null,
   }) {
-    return _then(_$AppInfoImpl(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      platform: null == platform
-          ? _value.platform
-          : platform // ignore: cast_nullable_to_non_nullable
-              as String,
-      version: null == version
-          ? _value.version
-          : version // ignore: cast_nullable_to_non_nullable
-              as String,
-      buildNumber: null == buildNumber
-          ? _value.buildNumber
-          : buildNumber // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    return _then(
+      _$AppInfoImpl(
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        platform: null == platform
+            ? _value.platform
+            : platform // ignore: cast_nullable_to_non_nullable
+                  as String,
+        version: null == version
+            ? _value.version
+            : version // ignore: cast_nullable_to_non_nullable
+                  as String,
+        buildNumber: null == buildNumber
+            ? _value.buildNumber
+            : buildNumber // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$AppInfoImpl implements _AppInfo {
-  const _$AppInfoImpl(
-      {required this.name,
-      required this.platform,
-      required this.version,
-      @JsonKey(name: 'build') required this.buildNumber});
+  const _$AppInfoImpl({
+    required this.name,
+    required this.platform,
+    required this.version,
+    @JsonKey(name: 'build') required this.buildNumber,
+  });
 
   factory _$AppInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$AppInfoImplFromJson(json);
@@ -203,11 +214,12 @@ class _$AppInfoImpl implements _AppInfo {
 }
 
 abstract class _AppInfo implements AppInfo {
-  const factory _AppInfo(
-      {required final String name,
-      required final String platform,
-      required final String version,
-      @JsonKey(name: 'build') required final int buildNumber}) = _$AppInfoImpl;
+  const factory _AppInfo({
+    required final String name,
+    required final String platform,
+    required final String version,
+    @JsonKey(name: 'build') required final int buildNumber,
+  }) = _$AppInfoImpl;
 
   factory _AppInfo.fromJson(Map<String, dynamic> json) = _$AppInfoImpl.fromJson;
 

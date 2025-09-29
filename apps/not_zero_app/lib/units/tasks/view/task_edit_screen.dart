@@ -109,7 +109,7 @@ class _TaskEditScreenBody extends ConsumerWidget {
         ref.read(_isTaskChangedProvider.notifier).state = isValid;
       },
       canPop: false,
-      onPopInvokedWithResult: (didPop, __) async {
+      onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
 
         final router = GoRouter.of(context);
@@ -210,25 +210,29 @@ class _FloatingSubmitButton extends ConsumerWidget {
       final prevTask = taskToEdit;
       final repository = ref.read(tasksRepositoryProvider);
       if (prevTask == null) {
-        repository.addTask(
-          Task.create(
-            title: title,
-            importance: importance,
-            description: description,
-            tags: tags,
-            forDate: forDate,
-            persistent: persistent,
+        unawaited(
+          repository.addTask(
+            Task.create(
+              title: title,
+              importance: importance,
+              description: description,
+              tags: tags,
+              forDate: forDate,
+              persistent: persistent,
+            ),
           ),
         );
       } else {
-        repository.updateTask(
-          prevTask.edit(
-            title: title,
-            importance: importance,
-            description: description,
-            tags: tags,
-            forDate: forDate,
-            persistent: persistent,
+        unawaited(
+          repository.updateTask(
+            prevTask.edit(
+              title: title,
+              importance: importance,
+              description: description,
+              tags: tags,
+              forDate: forDate,
+              persistent: persistent,
+            ),
           ),
         );
       }
