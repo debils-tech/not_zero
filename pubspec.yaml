@@ -11,8 +11,7 @@ workspace:
   - packages/nz_drift
   - packages/nz_flutter_core
   - packages/nz_logger
-  - packages/features/nz_tags_models
-  - packages/features/nz_tasks_models
+  - packages/features/nz_base_models
 
 melos:
   scripts:

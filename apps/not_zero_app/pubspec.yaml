@@ -25,10 +25,8 @@ dependencies:
   nz_common: ^1.0.0
   nz_drift: ^1.0.0
   nz_flutter_core: ^1.0.0
-  nz_io: ^1.0.0
   nz_logger: ^1.0.0
-  nz_tags_models: ^1.0.0
-  nz_tasks_models: ^1.0.0
+  nz_base_models: ^1.0.0
   package_info_plus: ^9.0.0
   path: ^1.9.0
   path_provider: ^2.1.4

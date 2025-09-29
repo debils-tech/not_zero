@@ -1,5 +1,5 @@
 import 'package:not_zero_app/units/tags/services/tags_local_service.dart';
-import 'package:nz_tags_models/nz_tags_models.dart';
+import 'package:nz_base_models/nz_base_models.dart';
 import 'package:rxdart/rxdart.dart';
 
 class TagsRepository {

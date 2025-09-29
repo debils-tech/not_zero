@@ -1,8 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:not_zero_app/units/tasks/models/tasks_filters.dart';
+import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_drift/nz_drift.dart';
-import 'package:nz_tags_models/nz_tags_models.dart';
-import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 class TasksLocalService {
   TasksLocalService(this._db);

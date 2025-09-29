@@ -6,7 +6,7 @@ import 'package:not_zero_app/units/tasks/models/tasks_filters.dart';
 import 'package:not_zero_app/units/tasks/notifiers/tasks_filters_notifier.dart';
 import 'package:not_zero_app/units/tasks/repositories/tasks_repository.dart';
 import 'package:not_zero_app/units/tasks/services/tasks_local_service.dart';
-import 'package:nz_tasks_models/nz_tasks_models.dart';
+import 'package:nz_base_models/nz_base_models.dart';
 
 final tasksLocalServiceProvider = Provider<TasksLocalService>((ref) {
   return TasksLocalService(

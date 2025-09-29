@@ -10,7 +10,7 @@ import 'package:not_zero_app/units/stats/view/quick_statistics_screen.dart';
 import 'package:not_zero_app/units/tasks/view/task_edit_screen.dart';
 import 'package:not_zero_app/units/tasks/view/task_view_screen.dart';
 import 'package:not_zero_app/units/tasks/view/tasks_list_screen.dart';
-import 'package:nz_tasks_models/nz_tasks_models.dart';
+import 'package:nz_base_models/nz_base_models.dart';
 
 final appRouter = GoRouter(
   navigatorKey: GlobalNavigation.key,

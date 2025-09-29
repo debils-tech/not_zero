@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
-import 'package:nz_tags_models/nz_tags_models.dart';
+import 'package:nz_base_models/nz_base_models.dart';
 
 class TagListIndicator extends StatelessWidget {
   const TagListIndicator({
@@ -29,7 +29,8 @@ class TagListIndicator extends StatelessWidget {
       children: tags
           .map(
             (tag) => Container(
-              padding: padding ??
+              padding:
+                  padding ??
                   const EdgeInsets.symmetric(
                     horizontal: 6,
                     vertical: 4,

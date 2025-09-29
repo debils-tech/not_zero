@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nz_common/nz_common.dart';
-import 'package:nz_tags_models/nz_tags_models.dart';
-import 'package:nz_tasks_models/src/task_importance.dart';
 import 'package:uuid/uuid.dart';
 
-part 'task.freezed.dart';
+import 'tag.dart';
+import 'task_importance.dart';
 
+part 'task.freezed.dart';
 part 'task.g.dart';
 
 @freezed

@@ -10,9 +10,8 @@ import 'package:not_zero_app/units/tags/di.dart';
 import 'package:not_zero_app/units/tasks/di.dart';
 import 'package:not_zero_app/units/tasks/view/components/task_edit_fields.dart';
 import 'package:not_zero_app/units/tasks/view/components/task_editing_info.dart';
+import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
-import 'package:nz_tags_models/nz_tags_models.dart';
-import 'package:nz_tasks_models/nz_tasks_models.dart';
 
 class TaskEditScreen extends ConsumerWidget {
   const TaskEditScreen({this.taskToEdit, super.key});

@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:not_zero_app/components/confirmation_dialog.dart';
 import 'package:not_zero_app/units/tags/di.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
-import 'package:nz_tags_models/nz_tags_models.dart';
+import 'package:nz_base_models/nz_base_models.dart';
 
 class TagCreationDialog extends StatefulWidget {
   const TagCreationDialog({super.key, this.tagToEdit});

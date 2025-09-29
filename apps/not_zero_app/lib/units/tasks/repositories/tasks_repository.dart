@@ -1,7 +1,7 @@
 import 'package:not_zero_app/units/stats/repositories/stats_repository.dart';
 import 'package:not_zero_app/units/tasks/models/tasks_filters.dart';
 import 'package:not_zero_app/units/tasks/services/tasks_local_service.dart';
-import 'package:nz_tasks_models/nz_tasks_models.dart';
+import 'package:nz_base_models/nz_base_models.dart';
 import 'package:rxdart/rxdart.dart';
 
 class TasksRepository {
