@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero/components/confirmation_dialog.dart';
 import 'package:not_zero/units/tags/di.dart';
@@ -25,8 +26,9 @@ class TaskEditScreen extends ConsumerWidget {
     final screenTitle = taskToEdit == null
         ? t.tasks.edit.title.create
         : t.tasks.edit.title.existing;
-    final taskActions =
-        taskToEdit != null ? [_DeleteTaskButton(taskToEdit!)] : null;
+    final taskActions = taskToEdit != null
+        ? [_DeleteTaskButton(taskToEdit!)]
+        : null;
 
     final isChanged = ref.watch(_isTaskChangedProvider);
 
@@ -88,8 +90,9 @@ class _TaskEditScreenBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final filters = ref.read(tasksFiltersNotifier);
     final tags = ref.read(tagsListStreamProvider).value;
-    final selectedTags =
-        tags?.where((e) => filters.searchTags.contains(e.id)).toList();
+    final selectedTags = tags
+        ?.where((e) => filters.searchTags.contains(e.id))
+        .toList();
 
     return FormBuilder(
       key: formKey,
@@ -237,11 +240,12 @@ class _FloatingSubmitButton extends ConsumerWidget {
   }
 }
 
-final _formKeyProvider =
+final StateProvider<GlobalKey<FormBuilderState>> _formKeyProvider =
     StateProvider.autoDispose<GlobalKey<FormBuilderState>>((ref) {
-  return GlobalKey<FormBuilderState>();
-});
+      return GlobalKey<FormBuilderState>();
+    });
 
-final _isTaskChangedProvider = StateProvider.autoDispose<bool>((ref) {
-  return false;
-});
+final StateProvider<bool> _isTaskChangedProvider =
+    StateProvider.autoDispose<bool>((ref) {
+      return false;
+    });

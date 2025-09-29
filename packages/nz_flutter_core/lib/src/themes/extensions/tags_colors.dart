@@ -59,15 +59,15 @@ class TagsColorScheme extends ThemeExtension<TagsColorScheme>
   }
 
   List<Color> allColors() => [
-        gray,
-        red,
-        orange,
-        yellow,
-        green,
-        teal,
-        blue,
-        indigo,
-        purple,
-        pink,
-      ];
+    gray,
+    red,
+    orange,
+    yellow,
+    green,
+    teal,
+    blue,
+    indigo,
+    purple,
+    pink,
+  ];
 }

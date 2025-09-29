@@ -1,6 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint, unused_element, unnecessary_cast
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'charts_colors.dart';
 
@@ -39,18 +40,27 @@ mixin _$ChartsColorSchemeTailorMixin on ThemeExtension<ChartsColorScheme> {
 
   @override
   ChartsColorScheme lerp(
-      covariant ThemeExtension<ChartsColorScheme>? other, double t) {
+    covariant ThemeExtension<ChartsColorScheme>? other,
+    double t,
+  ) {
     if (other is! ChartsColorScheme) return this as ChartsColorScheme;
     return ChartsColorScheme(
-      chartBackgroundColor:
-          Color.lerp(chartBackgroundColor, other.chartBackgroundColor, t)!,
+      chartBackgroundColor: Color.lerp(
+        chartBackgroundColor,
+        other.chartBackgroundColor,
+        t,
+      )!,
       gridColor: Color.lerp(gridColor, other.gridColor, t)!,
       borderColor: Color.lerp(borderColor, other.borderColor, t)!,
-      tooltipBackgroundColor:
-          Color.lerp(tooltipBackgroundColor, other.tooltipBackgroundColor, t)!,
+      tooltipBackgroundColor: Color.lerp(
+        tooltipBackgroundColor,
+        other.tooltipBackgroundColor,
+        t,
+      )!,
       weeklyStatsLine: Color.lerp(weeklyStatsLine, other.weeklyStatsLine, t)!,
-      weeklyStatsBelowGradient:
-          t < 0.5 ? weeklyStatsBelowGradient : other.weeklyStatsBelowGradient,
+      weeklyStatsBelowGradient: t < 0.5
+          ? weeklyStatsBelowGradient
+          : other.weeklyStatsBelowGradient,
     );
   }
 
@@ -59,17 +69,27 @@ mixin _$ChartsColorSchemeTailorMixin on ThemeExtension<ChartsColorScheme> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ChartsColorScheme &&
-            const DeepCollectionEquality()
-                .equals(chartBackgroundColor, other.chartBackgroundColor) &&
-            const DeepCollectionEquality().equals(gridColor, other.gridColor) &&
-            const DeepCollectionEquality()
-                .equals(borderColor, other.borderColor) &&
-            const DeepCollectionEquality()
-                .equals(tooltipBackgroundColor, other.tooltipBackgroundColor) &&
-            const DeepCollectionEquality()
-                .equals(weeklyStatsLine, other.weeklyStatsLine) &&
             const DeepCollectionEquality().equals(
-                weeklyStatsBelowGradient, other.weeklyStatsBelowGradient));
+              chartBackgroundColor,
+              other.chartBackgroundColor,
+            ) &&
+            const DeepCollectionEquality().equals(gridColor, other.gridColor) &&
+            const DeepCollectionEquality().equals(
+              borderColor,
+              other.borderColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              tooltipBackgroundColor,
+              other.tooltipBackgroundColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              weeklyStatsLine,
+              other.weeklyStatsLine,
+            ) &&
+            const DeepCollectionEquality().equals(
+              weeklyStatsBelowGradient,
+              other.weeklyStatsBelowGradient,
+            ));
   }
 
   @override

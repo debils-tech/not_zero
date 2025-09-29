@@ -29,7 +29,7 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
         actions: [
           IconButton(
             onPressed: () {
-              final taskList = ref.read(tasksListStreamProvider).valueOrNull;
+              final taskList = ref.read(tasksListStreamProvider).value;
               selectionNotifier
                   .addAll(taskList?.map((e) => e.id).toSet() ?? const {});
             },

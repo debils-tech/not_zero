@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ItemSelectionNotifier extends AutoDisposeNotifier<Set<String>> {
+class ItemSelectionNotifier extends Notifier<Set<String>> {
   @override
   Set<String> build() {
     return const {};

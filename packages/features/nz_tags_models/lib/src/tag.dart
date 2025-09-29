@@ -6,7 +6,7 @@ part 'tag.freezed.dart';
 part 'tag.g.dart';
 
 @freezed
-class ItemTag with _$ItemTag, ObjectIdMixin {
+abstract class ItemTag with _$ItemTag, ObjectIdMixin {
   factory ItemTag({
     required String id,
     required String name,
@@ -20,14 +20,14 @@ class ItemTag with _$ItemTag, ObjectIdMixin {
       _$ItemTagFromJson(json);
 
   factory ItemTag.create({required String name, int? colorIndex}) => ItemTag(
-        id: const Uuid().v4(),
-        name: name,
-        colorIndex: colorIndex ?? 0,
-        createdAt: DateTime.now(),
-      );
+    id: const Uuid().v4(),
+    name: name,
+    colorIndex: colorIndex ?? 0,
+    createdAt: DateTime.now(),
+  );
 
   ItemTag edit({String? name, int? colorIndex}) => copyWith(
-        name: name ?? this.name,
-        colorIndex: colorIndex ?? this.colorIndex,
-      );
+    name: name ?? this.name,
+    colorIndex: colorIndex ?? this.colorIndex,
+  );
 }

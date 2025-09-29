@@ -7,7 +7,8 @@ void configLogger({bool production = false}) {
 }
 
 void _printConsoleWrapped(LogRecord record) {
-  var resultingText = '${record.time} [${record.level.name.toUpperCase()}] '
+  var resultingText =
+      '${record.time} [${record.level.name.toUpperCase()}] '
       '${record.loggerName}: ';
 
   final logError = record.error;
@@ -16,8 +17,9 @@ void _printConsoleWrapped(LogRecord record) {
   }
 
   final patternForSplit = RegExp('.{1,800}');
-  final splitMessage =
-      patternForSplit.allMatches(record.message).map((e) => e.group(0));
+  final splitMessage = patternForSplit
+      .allMatches(record.message)
+      .map((e) => e.group(0));
   final iter = splitMessage.iterator..moveNext();
   resultingText += '${iter.current}';
 

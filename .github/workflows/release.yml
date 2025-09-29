@@ -3,7 +3,7 @@ name: App release
 on:
   push:
     branches:
-      - 'release/**'
+      - "release/**"
 
 jobs:
   check:
@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.2'
+          flutter-version: "3.35.4"
           channel: stable
           cache: true
       - uses: actions/cache@v3
@@ -95,13 +95,13 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.2'
+          flutter-version: "3.35.4"
           channel: stable
           cache: true
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
-          java-version: '17'
+          java-version: "17"
       - name: Check flutter and Java installation installation
         run: |
           flutter --version
@@ -115,9 +115,9 @@ jobs:
       - name: Save key.properties
         run: |
           touch android/key.properties
-          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties 
-          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties 
-          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties 
+          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
           echo "storeFile=$HOME/keystore.jks" >> android/key.properties
       # Build and upload
       - name: Build APK
@@ -154,6 +154,6 @@ jobs:
           tag: ${{ needs.version_update.outputs.tag_name }}
           name: v${{ needs.version_update.outputs.app_version }}
           bodyFile: release_notes/${{ needs.version_update.outputs.app_version }}/github/RELEASE_NOTES.md
-          artifacts: 'artifacts/*'
+          artifacts: "artifacts/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: true

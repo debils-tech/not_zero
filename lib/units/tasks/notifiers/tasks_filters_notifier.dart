@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/units/tasks/models/tasks_filters.dart';
 import 'package:nz_tags_models/nz_tags_models.dart';
 
-class TasksFiltersNotifier extends AutoDisposeNotifier<TasksFilters> {
+class TasksFiltersNotifier extends Notifier<TasksFilters> {
   @override
   TasksFilters build() {
     return TasksFilters(forDate: DateTime.now());
