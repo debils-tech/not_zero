@@ -10,7 +10,6 @@ workspace:
   - packages/nz_common
   - packages/nz_drift
   - packages/nz_flutter_core
-  - packages/nz_io
   - packages/nz_logger
   - packages/features/nz_tags_models
   - packages/features/nz_tasks_models

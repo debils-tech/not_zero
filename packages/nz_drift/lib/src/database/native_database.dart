@@ -1,8 +1,9 @@
 // coverage:ignore-file
+import 'dart:io';
+
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:nz_common/nz_common.dart';
-import 'package:nz_io/nz_io.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 

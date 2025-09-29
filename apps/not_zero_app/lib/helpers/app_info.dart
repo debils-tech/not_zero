@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nz_io/nz_io.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 part 'app_info.freezed.dart';
