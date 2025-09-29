@@ -25,10 +25,7 @@ final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
       weeklyStatsBelowGradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [
-          Color(0x80BB86FC),
-          Color(0x60BB86FC),
-        ],
+        colors: [Color(0x80BB86FC), Color(0x60BB86FC)],
       ),
     ),
     TagsColorScheme(
@@ -71,10 +68,7 @@ final _darkThemeBase = ThemeData.dark(useMaterial3: true).copyWith(
       weeklyStatsBelowGradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [
-          Color(0x806200EE),
-          Color(0x40BB86FC),
-        ],
+        colors: [Color(0x806200EE), Color(0x40BB86FC)],
       ),
     ),
     TagsColorScheme(

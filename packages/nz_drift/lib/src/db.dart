@@ -35,8 +35,9 @@ class NotZeroDatabase extends _$NotZeroDatabase {
 
         if (kDebugMode) {
           // Fail if the migration broke foreign keys
-          final wrongForeignKeys =
-              await customSelect('PRAGMA foreign_key_check').get();
+          final wrongForeignKeys = await customSelect(
+            'PRAGMA foreign_key_check',
+          ).get();
           assert(
             wrongForeignKeys.isEmpty,
             'Wrong foreign keys: ${wrongForeignKeys.map((e) => e.data)}',

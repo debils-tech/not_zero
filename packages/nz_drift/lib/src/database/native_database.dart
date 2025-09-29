@@ -21,10 +21,7 @@ QueryExecutor openDriftDatabase({bool permanent = true}) {
 Future<String?> getDatabasePath() async {
   final String dbFolder;
   if (Platform.isLinux && !isPlatformTest) {
-    dbFolder = p.join(
-      Platform.environment['HOME'] ?? '~',
-      '.config/not_zero',
-    );
+    dbFolder = p.join(Platform.environment['HOME'] ?? '~', '.config/not_zero');
   } else {
     dbFolder = (await getApplicationDocumentsDirectory()).path;
   }
