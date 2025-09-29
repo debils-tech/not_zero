@@ -4,7 +4,7 @@ import 'package:not_zero/units/stats/models/quick_statistics_state.dart';
 import 'package:nz_common/nz_common.dart';
 
 class QuickStatisticsNotifier
-    extends AutoDisposeNotifier<QuickStatisticsState> {
+    extends Notifier<QuickStatisticsState> {
   @override
   QuickStatisticsState build() {
     loadDays();

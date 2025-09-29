@@ -73,7 +73,7 @@ class WeeklyStatsChart extends StatelessWidget {
           // },
           touchTooltipData: LineTouchTooltipData(
             getTooltipColor: (_) => chartsColors.tooltipBackgroundColor,
-            tooltipRoundedRadius: 8,
+            tooltipBorderRadius: const BorderRadius.all(Radius.circular(8)),
             getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
               return lineBarsSpot.map((lineBarSpot) {
                 return LineTooltipItem(

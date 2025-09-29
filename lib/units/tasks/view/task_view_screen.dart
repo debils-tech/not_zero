@@ -67,7 +67,7 @@ class _TaskViewScreenBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final task =
-        ref.watch(specificTaskStreamProvider(taskToView.id)).valueOrNull ??
+        ref.watch(specificTaskStreamProvider(taskToView.id)).value ??
             taskToView;
 
     return ListView(
