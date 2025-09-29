@@ -65,21 +65,17 @@ First of all app is built using Flutter SDK.
 To install it follow [**the official guide**](https://docs.flutter.dev/get-started/install).
 
 ```bash
-# For installing basic dependencies, configuring flutter version, generating necessary code
-# Make sure you added "$HOME/.pub-cache/bin" to your PATH because it is necessary for FVM
-make gen
+# First, get all the dependencies
+dart run melos bootstrap
 
-# Run flutter app to any available device using already configured flutter version
-make run
-
-# Run app tests
-make test
+# Go to the flutter app directory
+cd apps/not_zero_app
+# Run the app
+flutter run
 ```
 
 SQLite3 is required for this app to function.
 On Android and iOS platforms it works out of the box: sqlite lib already included in the package.
-For web you have to include `sql-wasm` library.
-It can be done by simply run `make web/sql-wasm.js` command.
 For Linux `libsqlite3`, `libgtk-3-0`, `libblkid1`, `liblzma5` packages are required.
 On Debian-based distributions can be installed using a single command:
 

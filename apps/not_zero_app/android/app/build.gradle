@@ -36,6 +36,8 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+    namespace "tech.debils.not_zero"
+
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 

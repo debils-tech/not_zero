@@ -1,8 +1,8 @@
 #!/bin/bash
 
-APK_DIR="build/app/outputs/flutter-apk"
-AAB_DIR="build/app/outputs/bundle/release"
-RELEASE_DIR="build/releases/android"
+APK_DIR="apps/not_zero_app/build/app/outputs/flutter-apk"
+AAB_DIR="apps/not_zero_app/build/app/outputs/bundle/release"
+RELEASE_DIR="apps/not_zero_app/build/releases/android"
 APP_NAME="not_zero-android"
 
 : "${TAG:=release}"

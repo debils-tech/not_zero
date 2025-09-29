@@ -13,6 +13,9 @@ workspace:
   - packages/nz_logger
   - packages/features/nz_base_models
 
+dev_dependencies:
+  melos: ^7.1.1
+
 melos:
   scripts:
     generate:
@@ -31,5 +34,3 @@ melos:
     upgrade:
       exec: dart pub upgrade --major-versions
       orderDependents: true
-dev_dependencies:
-  melos: ^7.1.1

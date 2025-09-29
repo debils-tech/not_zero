@@ -1,7 +1,7 @@
 #!/bin/bash
 
-LINUX_DIR="build/linux/x64/release"
-RELEASE_DIR="build/releases/linux"
+LINUX_DIR="apps/not_zero_app/build/linux/x64/release"
+RELEASE_DIR="apps/not_zero_app/build/releases/linux"
 APP_NAME="not_zero-linux"
 
 : "${TAG:=release}"
