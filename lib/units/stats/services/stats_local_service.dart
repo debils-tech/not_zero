@@ -7,39 +7,37 @@ class StatsLocalService {
 
   final NotZeroDatabase _db;
 
-  Future<List<TaskImportance>> getCompletedTasksImportance({
+  Future<int> getScoreSum({
     DateTime? startPeriod,
     DateTime? endPeriod,
   }) async {
-    final query = _db.select(_db.tasksTable)
-      ..where((taskTable) {
-        final completed = taskTable.completedAt.isNotNull();
-        if (startPeriod == null && endPeriod == null) {
-          // in range (-inf, +inf)
-          return completed;
-        }
+    final filters =
+        _createFilter(startPeriod: startPeriod, endPeriod: endPeriod);
+    final scoreSum = _db.scoreEntryTable.score.sum();
+    final query = _db.selectOnly(_db.scoreEntryTable)
+      ..where(filters)
+      ..addColumns([scoreSum]);
+    final value = await query.map((row) => row.read(scoreSum)).getSingle();
 
-        if (startPeriod == null && endPeriod != null) {
-          // in range (-inf, end]
-          return completed &
-              taskTable.completedAt.isSmallerOrEqualValue(endPeriod);
-        }
+    return value ?? 0;
+  }
 
-        if (startPeriod != null && endPeriod == null) {
-          // in range [start, +inf)
-          return completed &
-              taskTable.completedAt.isBiggerOrEqualValue(startPeriod);
-        }
+  Expression<bool> _createFilter({
+    DateTime? startPeriod,
+    DateTime? endPeriod,
+  }) {
+    final scoreTable = _db.scoreEntryTable;
+    final dbFilters = <Expression<bool>>[];
 
-        // in range [start, end]
-        return completed &
-            taskTable.completedAt.isSmallerOrEqualValue(endPeriod!) &
-            taskTable.completedAt.isBiggerOrEqualValue(startPeriod!);
-        // taskTable.completedAt.isBetweenValues(startPeriod!, endPeriod!);
-      });
-
-    final completedTasks = await query.map((e) => e.importance).get();
-
-    return completedTasks;
+    if (startPeriod != null) {
+      dbFilters.add(scoreTable.createdAt.isBiggerOrEqualValue(startPeriod));
+    }
+    if (endPeriod != null) {
+      dbFilters.add(scoreTable.createdAt.isSmallerOrEqualValue(endPeriod));
+    }
+    if (dbFilters.isEmpty) {
+      return const Constant(true);
+    }
+    return Expression.and(dbFilters);
   }
 }

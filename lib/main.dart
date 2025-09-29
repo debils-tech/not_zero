@@ -9,6 +9,7 @@ import 'package:not_zero/helpers/licenses.dart';
 import 'package:not_zero/routes.dart';
 import 'package:not_zero/units/settings/di.dart';
 import 'package:not_zero/units/settings/models/theme_state.dart';
+import 'package:not_zero/units/stats/di.dart';
 import 'package:not_zero/units/storage/di.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
@@ -25,6 +26,8 @@ void main() async {
 
   final settings = container.read(settingsBoxProvider);
   await settings.init();
+
+  container.read(globalStatsActionsObserver);
 
   runApp(
     UncontrolledProviderScope(

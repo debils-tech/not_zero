@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero/helpers/async_object_wrapper.dart';
 import 'package:not_zero/helpers/ref_effect_extension.dart';
-import 'package:not_zero/units/stats/di.dart';
 import 'package:not_zero/units/storage/di.dart';
 import 'package:not_zero/units/tasks/models/tasks_filters.dart';
 import 'package:not_zero/units/tasks/notifiers/tasks_filters_notifier.dart';
@@ -20,7 +19,6 @@ final tasksRepositoryProvider = Provider<TasksRepository>((ref) {
     ref,
     TasksRepository(
       ref.watch(tasksLocalServiceProvider),
-      ref.watch(statsRepositoryProvider),
     ),
   );
 });

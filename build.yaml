@@ -1,6 +1,12 @@
 targets:
   $default:
     builders:
+      freezed:
+        options:
+          union_key: type
+          union_value_case: snake
+          map: false
+          when: false
       drift_dev:
         options:
           store_date_time_values_as_text: false

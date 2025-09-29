@@ -1,15 +1,15 @@
-import 'package:not_zero/units/stats/repositories/stats_repository.dart';
+import 'package:not_zero/units/stats/models/global_stats_action.dart';
 import 'package:not_zero/units/tasks/models/tasks_filters.dart';
 import 'package:not_zero/units/tasks/services/tasks_local_service.dart';
-import 'package:nz_common/nz_common.dart';
+import 'package:nz_actions/nz_actions.dart';
 import 'package:nz_tasks_models/nz_tasks_models.dart';
 import 'package:rxdart/rxdart.dart';
 
-class TasksRepository implements AsyncObject {
-  TasksRepository(this._localService, this._statsRepository);
+class TasksRepository
+    extends ActionsEmitter<GlobalStatsAction, GlobalStatsActionType> {
+  TasksRepository(this._localService);
 
   final TasksLocalService _localService;
-  final StatsRepository _statsRepository;
 
   final _tasksStreamController = BehaviorSubject<List<Task>>.seeded([]);
 
@@ -18,6 +18,7 @@ class TasksRepository implements AsyncObject {
 
   @override
   void dispose() {
+    super.dispose();
     _tasksStreamController.close();
   }
 
@@ -51,21 +52,6 @@ class TasksRepository implements AsyncObject {
       final newList = [...currentList];
       newList[indexOfSavedTask] = task;
 
-      // Tracking if there is need to update total score or sort a list.
-      final oldTask = currentList[indexOfSavedTask];
-
-      if (oldTask.isCompleted != task.isCompleted) {
-        if (task.isCompleted) {
-          _statsRepository.includeCompletedTask(task.importance);
-        } else {
-          _statsRepository.excludeCompletedTask(task.importance);
-        }
-      } else if (oldTask.importance != task.importance && task.isCompleted) {
-        _statsRepository
-          ..excludeCompletedTask(oldTask.importance)
-          ..includeCompletedTask(task.importance);
-      }
-
       _tasksStreamController.add(newList);
     }
 
@@ -73,15 +59,8 @@ class TasksRepository implements AsyncObject {
   }
 
   Future<void> deleteTask(String task) {
-    final newList = [..._tasksStreamController.value]..removeWhere((element) {
-        if (element.id == task) {
-          if (element.isCompleted) {
-            _statsRepository.excludeCompletedTask(element.importance);
-          }
-          return true;
-        }
-        return false;
-      });
+    final newList = [..._tasksStreamController.value]
+      ..removeWhere((element) => element.id == task);
 
     _tasksStreamController.add(newList);
 
@@ -89,15 +68,8 @@ class TasksRepository implements AsyncObject {
   }
 
   Future<void> deleteMultipleTasks(Set<String> tasks) {
-    final newList = [..._tasksStreamController.value]..removeWhere((element) {
-        if (tasks.contains(element.id)) {
-          if (element.isCompleted) {
-            _statsRepository.excludeCompletedTask(element.importance);
-          }
-          return true;
-        }
-        return false;
-      });
+    final newList = [..._tasksStreamController.value]
+      ..removeWhere((element) => tasks.contains(element.id));
     _tasksStreamController.add(newList);
 
     return _localService.deleteTasks(tasks);
