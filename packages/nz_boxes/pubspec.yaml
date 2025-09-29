@@ -2,9 +2,10 @@ name: nz_boxes
 description: "A new Flutter package project."
 version: 1.0.0
 publish_to: none
+resolution: workspace
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.9.2
   flutter: ">=1.17.0"
 
 dependencies:
@@ -15,5 +16,5 @@ dependencies:
   shared_preferences: ^2.3.2
 
 dev_dependencies:
-  flutter_lints: ^4.0.0
+  flutter_lints: ^6.0.0
 

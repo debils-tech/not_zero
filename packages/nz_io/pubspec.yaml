@@ -2,9 +2,10 @@ name: nz_io
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
 publish_to: none
+resolution: workspace
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.9.2
 
 dev_dependencies:
-  lints: ^4.0.0
+  lints: ^6.0.0
