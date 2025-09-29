@@ -1,6 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint, unused_element, unnecessary_cast
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'tasks_colors.dart';
 
@@ -28,11 +29,16 @@ mixin _$TasksColorSchemeTailorMixin on ThemeExtension<TasksColorScheme> {
 
   @override
   TasksColorScheme lerp(
-      covariant ThemeExtension<TasksColorScheme>? other, double t) {
+    covariant ThemeExtension<TasksColorScheme>? other,
+    double t,
+  ) {
     if (other is! TasksColorScheme) return this as TasksColorScheme;
     return TasksColorScheme(
-      notImportantColor:
-          Color.lerp(notImportantColor, other.notImportantColor, t)!,
+      notImportantColor: Color.lerp(
+        notImportantColor,
+        other.notImportantColor,
+        t,
+      )!,
       normalColor: Color.lerp(normalColor, other.normalColor, t)!,
       importantColor: Color.lerp(importantColor, other.importantColor, t)!,
     );
@@ -43,12 +49,18 @@ mixin _$TasksColorSchemeTailorMixin on ThemeExtension<TasksColorScheme> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is TasksColorScheme &&
-            const DeepCollectionEquality()
-                .equals(notImportantColor, other.notImportantColor) &&
-            const DeepCollectionEquality()
-                .equals(normalColor, other.normalColor) &&
-            const DeepCollectionEquality()
-                .equals(importantColor, other.importantColor));
+            const DeepCollectionEquality().equals(
+              notImportantColor,
+              other.notImportantColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              normalColor,
+              other.normalColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              importantColor,
+              other.importantColor,
+            ));
   }
 
   @override

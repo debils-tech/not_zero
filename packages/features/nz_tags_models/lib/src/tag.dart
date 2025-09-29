@@ -6,7 +6,7 @@ part 'tag.freezed.dart';
 part 'tag.g.dart';
 
 @freezed
-class ItemTag with _$ItemTag, ObjectIdMixin {
+abstract class ItemTag with _$ItemTag, ObjectIdMixin {
   factory ItemTag({
     required String id,
     required String name,

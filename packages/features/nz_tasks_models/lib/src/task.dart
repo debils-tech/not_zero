@@ -9,7 +9,7 @@ part 'task.freezed.dart';
 part 'task.g.dart';
 
 @freezed
-class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
+abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   factory Task({
     required String id,
     required String title,
@@ -20,13 +20,7 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     DateTime? modifiedAt,
     DateTime? completedAt,
     @Default(true) bool persistent,
-    @JsonKey(
-      toJson: Task._tagsToJson,
-      includeToJson: true,
-      includeFromJson: false,
-    )
-    @Default([])
-    List<ItemTag> tags,
+    @JsonKey(toJson: Task._tagsToJson) @Default([]) List<ItemTag> tags,
   }) = _Task;
 
   const Task._();
@@ -40,17 +34,16 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     String? description,
     List<ItemTag>? tags,
     bool? persistent,
-  }) =>
-      Task(
-        id: const Uuid().v4(),
-        title: title,
-        description: description ?? '',
-        createdAt: DateTime.now(),
-        forDate: forDate,
-        importance: importance,
-        tags: tags ?? [],
-        persistent: persistent ?? true,
-      );
+  }) => Task(
+    id: const Uuid().v4(),
+    title: title,
+    description: description ?? '',
+    createdAt: DateTime.now(),
+    forDate: forDate,
+    importance: importance,
+    tags: tags ?? [],
+    persistent: persistent ?? true,
+  );
 
   Task edit({
     String? title,
@@ -59,20 +52,18 @@ class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     List<ItemTag>? tags,
     DateTime? forDate,
     bool? persistent,
-  }) =>
-      copyWith(
-        title: title ?? this.title,
-        description: description ?? this.description,
-        importance: importance ?? this.importance,
-        modifiedAt: DateTime.now(),
-        forDate: forDate ?? this.forDate,
-        tags: tags ?? this.tags,
-        persistent: persistent ?? this.persistent,
-      );
+  }) => copyWith(
+    title: title ?? this.title,
+    description: description ?? this.description,
+    importance: importance ?? this.importance,
+    modifiedAt: DateTime.now(),
+    forDate: forDate ?? this.forDate,
+    tags: tags ?? this.tags,
+    persistent: persistent ?? this.persistent,
+  );
 
-  Task complete({required bool completed}) => copyWith(
-        completedAt: completed ? DateTime.now() : null,
-      );
+  Task complete({required bool completed}) =>
+      copyWith(completedAt: completed ? DateTime.now() : null);
 
   bool get isCompleted => completedAt != null;
 

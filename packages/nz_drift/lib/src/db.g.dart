@@ -12,80 +12,119 @@ class $TasksTableTable extends TasksTable
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
-      'title', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
   @override
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
-      'description', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _createdAtMeta =
-      const VerificationMeta('createdAt');
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
   @override
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-      'created_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _forDateMeta =
-      const VerificationMeta('forDate');
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
   @override
   late final GeneratedColumnWithTypeConverter<DateTime, String> forDate =
-      GeneratedColumn<String>('for_date', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<DateTime>($TasksTableTable.$converterforDate);
-  static const VerificationMeta _persistentMeta =
-      const VerificationMeta('persistent');
+      GeneratedColumn<String>(
+        'for_date',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<DateTime>($TasksTableTable.$converterforDate);
+  static const VerificationMeta _persistentMeta = const VerificationMeta(
+    'persistent',
+  );
   @override
   late final GeneratedColumn<bool> persistent = GeneratedColumn<bool>(
-      'persistent', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("persistent" IN (0, 1))'));
-  static const VerificationMeta _modifiedAtMeta =
-      const VerificationMeta('modifiedAt');
+    'persistent',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("persistent" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _modifiedAtMeta = const VerificationMeta(
+    'modifiedAt',
+  );
   @override
   late final GeneratedColumn<DateTime> modifiedAt = GeneratedColumn<DateTime>(
-      'modified_at', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  static const VerificationMeta _completedAtMeta =
-      const VerificationMeta('completedAt');
+    'modified_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _completedAtMeta = const VerificationMeta(
+    'completedAt',
+  );
   @override
   late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
-      'completed_at', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  static const VerificationMeta _importanceMeta =
-      const VerificationMeta('importance');
+    'completed_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
   @override
   late final GeneratedColumnWithTypeConverter<TaskImportance, int> importance =
-      GeneratedColumn<int>('importance', aliasedName, false,
-              type: DriftSqlType.int, requiredDuringInsert: true)
-          .withConverter<TaskImportance>($TasksTableTable.$converterimportance);
+      GeneratedColumn<int>(
+        'importance',
+        aliasedName,
+        false,
+        type: DriftSqlType.int,
+        requiredDuringInsert: true,
+      ).withConverter<TaskImportance>($TasksTableTable.$converterimportance);
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        title,
-        description,
-        createdAt,
-        forDate,
-        persistent,
-        modifiedAt,
-        completedAt,
-        importance
-      ];
+    id,
+    title,
+    description,
+    createdAt,
+    forDate,
+    persistent,
+    modifiedAt,
+    completedAt,
+    importance,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
   static const String $name = 'tasks_table';
   @override
-  VerificationContext validateIntegrity(Insertable<Task> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<Task> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -95,46 +134,54 @@ class $TasksTableTable extends TasksTable
     }
     if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
     if (data.containsKey('description')) {
       context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
           _descriptionMeta,
-          description.isAcceptableOrUnknown(
-              data['description']!, _descriptionMeta));
+        ),
+      );
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
     if (data.containsKey('created_at')) {
-      context.handle(_createdAtMeta,
-          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
-    context.handle(_forDateMeta, const VerificationResult.success());
     if (data.containsKey('persistent')) {
       context.handle(
-          _persistentMeta,
-          persistent.isAcceptableOrUnknown(
-              data['persistent']!, _persistentMeta));
+        _persistentMeta,
+        persistent.isAcceptableOrUnknown(data['persistent']!, _persistentMeta),
+      );
     } else if (isInserting) {
       context.missing(_persistentMeta);
     }
     if (data.containsKey('modified_at')) {
       context.handle(
-          _modifiedAtMeta,
-          modifiedAt.isAcceptableOrUnknown(
-              data['modified_at']!, _modifiedAtMeta));
+        _modifiedAtMeta,
+        modifiedAt.isAcceptableOrUnknown(data['modified_at']!, _modifiedAtMeta),
+      );
     }
     if (data.containsKey('completed_at')) {
       context.handle(
+        _completedAtMeta,
+        completedAt.isAcceptableOrUnknown(
+          data['completed_at']!,
           _completedAtMeta,
-          completedAt.isAcceptableOrUnknown(
-              data['completed_at']!, _completedAtMeta));
+        ),
+      );
     }
-    context.handle(_importanceMeta, const VerificationResult.success());
     return context;
   }
 
@@ -144,26 +191,46 @@ class $TasksTableTable extends TasksTable
   Task map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Task(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      title: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      importance: $TasksTableTable.$converterimportance.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}importance'])!),
-      createdAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
-      forDate: $TasksTableTable.$converterforDate.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}for_date'])!),
-      description: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
-      modifiedAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified_at']),
-      completedAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}completed_at']),
-      persistent: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}persistent'])!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      importance: $TasksTableTable.$converterimportance.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}importance'],
+        )!,
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      forDate: $TasksTableTable.$converterforDate.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}for_date'],
+        )!,
+      ),
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      modifiedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}modified_at'],
+      ),
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}completed_at'],
+      ),
+      persistent: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}persistent'],
+      )!,
     );
   }
 
@@ -212,13 +279,13 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     this.completedAt = const Value.absent(),
     required TaskImportance importance,
     this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        title = Value(title),
-        description = Value(description),
-        createdAt = Value(createdAt),
-        forDate = Value(forDate),
-        persistent = Value(persistent),
-        importance = Value(importance);
+  }) : id = Value(id),
+       title = Value(title),
+       description = Value(description),
+       createdAt = Value(createdAt),
+       forDate = Value(forDate),
+       persistent = Value(persistent),
+       importance = Value(importance);
   static Insertable<Task> custom({
     Expression<String>? id,
     Expression<String>? title,
@@ -245,17 +312,18 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     });
   }
 
-  TasksTableCompanion copyWith(
-      {Value<String>? id,
-      Value<String>? title,
-      Value<String>? description,
-      Value<DateTime>? createdAt,
-      Value<DateTime>? forDate,
-      Value<bool>? persistent,
-      Value<DateTime?>? modifiedAt,
-      Value<DateTime?>? completedAt,
-      Value<TaskImportance>? importance,
-      Value<int>? rowid}) {
+  TasksTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? title,
+    Value<String>? description,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? forDate,
+    Value<bool>? persistent,
+    Value<DateTime?>? modifiedAt,
+    Value<DateTime?>? completedAt,
+    Value<TaskImportance>? importance,
+    Value<int>? rowid,
+  }) {
     return TasksTableCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -287,7 +355,8 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     }
     if (forDate.present) {
       map['for_date'] = Variable<String>(
-          $TasksTableTable.$converterforDate.toSql(forDate.value));
+        $TasksTableTable.$converterforDate.toSql(forDate.value),
+      );
     }
     if (persistent.present) {
       map['persistent'] = Variable<bool>(persistent.value);
@@ -300,7 +369,8 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     }
     if (importance.present) {
       map['importance'] = Variable<int>(
-          $TasksTableTable.$converterimportance.toSql(importance.value));
+        $TasksTableTable.$converterimportance.toSql(importance.value),
+      );
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -334,13 +404,13 @@ class _$TaskInsertable implements Insertable<Task> {
     return TasksTableCompanion(
       id: Value(_object.id),
       title: Value(_object.title),
-      importance: Value(_object.importance),
+      description: Value(_object.description),
       createdAt: Value(_object.createdAt),
       forDate: Value(_object.forDate),
-      description: Value(_object.description),
+      persistent: Value(_object.persistent),
       modifiedAt: Value(_object.modifiedAt),
       completedAt: Value(_object.completedAt),
-      persistent: Value(_object.persistent),
+      importance: Value(_object.importance),
     ).toColumns(false);
   }
 }
@@ -360,25 +430,43 @@ class $TagsTableTable extends TagsTable
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _colorIndexMeta =
-      const VerificationMeta('colorIndex');
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _colorIndexMeta = const VerificationMeta(
+    'colorIndex',
+  );
   @override
   late final GeneratedColumn<int> colorIndex = GeneratedColumn<int>(
-      'color', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _createdAtMeta =
-      const VerificationMeta('createdAt');
+    'color',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
   @override
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-      'created_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
   @override
   List<GeneratedColumn> get $columns => [id, name, colorIndex, createdAt];
   @override
@@ -387,8 +475,10 @@ class $TagsTableTable extends TagsTable
   String get actualTableName => $name;
   static const String $name = 'tags_table';
   @override
-  VerificationContext validateIntegrity(Insertable<ItemTag> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<ItemTag> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -398,19 +488,25 @@ class $TagsTableTable extends TagsTable
     }
     if (data.containsKey('name')) {
       context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
     if (data.containsKey('color')) {
-      context.handle(_colorIndexMeta,
-          colorIndex.isAcceptableOrUnknown(data['color']!, _colorIndexMeta));
+      context.handle(
+        _colorIndexMeta,
+        colorIndex.isAcceptableOrUnknown(data['color']!, _colorIndexMeta),
+      );
     } else if (isInserting) {
       context.missing(_colorIndexMeta);
     }
     if (data.containsKey('created_at')) {
-      context.handle(_createdAtMeta,
-          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
@@ -423,14 +519,22 @@ class $TagsTableTable extends TagsTable
   ItemTag map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ItemTag(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      createdAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
-      colorIndex: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}color'])!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      colorIndex: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}color'],
+      )!,
     );
   }
 
@@ -459,10 +563,10 @@ class TagsTableCompanion extends UpdateCompanion<ItemTag> {
     required int colorIndex,
     required DateTime createdAt,
     this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        name = Value(name),
-        colorIndex = Value(colorIndex),
-        createdAt = Value(createdAt);
+  }) : id = Value(id),
+       name = Value(name),
+       colorIndex = Value(colorIndex),
+       createdAt = Value(createdAt);
   static Insertable<ItemTag> custom({
     Expression<String>? id,
     Expression<String>? name,
@@ -479,12 +583,13 @@ class TagsTableCompanion extends UpdateCompanion<ItemTag> {
     });
   }
 
-  TagsTableCompanion copyWith(
-      {Value<String>? id,
-      Value<String>? name,
-      Value<int>? colorIndex,
-      Value<DateTime>? createdAt,
-      Value<int>? rowid}) {
+  TagsTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<int>? colorIndex,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
     return TagsTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -536,8 +641,8 @@ class _$ItemTagInsertable implements Insertable<ItemTag> {
     return TagsTableCompanion(
       id: Value(_object.id),
       name: Value(_object.name),
-      createdAt: Value(_object.createdAt),
       colorIndex: Value(_object.colorIndex),
+      createdAt: Value(_object.createdAt),
     ).toColumns(false);
   }
 }
@@ -557,19 +662,27 @@ class $TasksTagEntriesTable extends TasksTagEntries
   static const VerificationMeta _taskMeta = const VerificationMeta('task');
   @override
   late final GeneratedColumn<String> task = GeneratedColumn<String>(
-      'task', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES tasks_table (id)'));
+    'task',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tasks_table (id)',
+    ),
+  );
   static const VerificationMeta _tagMeta = const VerificationMeta('tag');
   @override
   late final GeneratedColumn<String> tag = GeneratedColumn<String>(
-      'tag', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES tags_table (id)'));
+    'tag',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tags_table (id)',
+    ),
+  );
   @override
   List<GeneratedColumn> get $columns => [task, tag];
   @override
@@ -578,19 +691,25 @@ class $TasksTagEntriesTable extends TasksTagEntries
   String get actualTableName => $name;
   static const String $name = 'tasks_tag_entries';
   @override
-  VerificationContext validateIntegrity(Insertable<TasksTagEntry> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<TasksTagEntry> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('task')) {
       context.handle(
-          _taskMeta, task.isAcceptableOrUnknown(data['task']!, _taskMeta));
+        _taskMeta,
+        task.isAcceptableOrUnknown(data['task']!, _taskMeta),
+      );
     } else if (isInserting) {
       context.missing(_taskMeta);
     }
     if (data.containsKey('tag')) {
       context.handle(
-          _tagMeta, tag.isAcceptableOrUnknown(data['tag']!, _tagMeta));
+        _tagMeta,
+        tag.isAcceptableOrUnknown(data['tag']!, _tagMeta),
+      );
     } else if (isInserting) {
       context.missing(_tagMeta);
     }
@@ -603,10 +722,14 @@ class $TasksTagEntriesTable extends TasksTagEntries
   TasksTagEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return TasksTagEntry(
-      task: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}task'])!,
-      tag: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}tag'])!,
+      task: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}task'],
+      )!,
+      tag: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag'],
+      )!,
     );
   }
 
@@ -629,14 +752,13 @@ class TasksTagEntry extends DataClass implements Insertable<TasksTagEntry> {
   }
 
   TasksTagEntriesCompanion toCompanion(bool nullToAbsent) {
-    return TasksTagEntriesCompanion(
-      task: Value(task),
-      tag: Value(tag),
-    );
+    return TasksTagEntriesCompanion(task: Value(task), tag: Value(tag));
   }
 
-  factory TasksTagEntry.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory TasksTagEntry.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TasksTagEntry(
       task: serializer.fromJson<String>(json['task']),
@@ -652,10 +774,8 @@ class TasksTagEntry extends DataClass implements Insertable<TasksTagEntry> {
     };
   }
 
-  TasksTagEntry copyWith({String? task, String? tag}) => TasksTagEntry(
-        task: task ?? this.task,
-        tag: tag ?? this.tag,
-      );
+  TasksTagEntry copyWith({String? task, String? tag}) =>
+      TasksTagEntry(task: task ?? this.task, tag: tag ?? this.tag);
   TasksTagEntry copyWithCompanion(TasksTagEntriesCompanion data) {
     return TasksTagEntry(
       task: data.task.present ? data.task.value : this.task,
@@ -695,8 +815,8 @@ class TasksTagEntriesCompanion extends UpdateCompanion<TasksTagEntry> {
     required String task,
     required String tag,
     this.rowid = const Value.absent(),
-  })  : task = Value(task),
-        tag = Value(tag);
+  }) : task = Value(task),
+       tag = Value(tag);
   static Insertable<TasksTagEntry> custom({
     Expression<String>? task,
     Expression<String>? tag,
@@ -709,8 +829,11 @@ class TasksTagEntriesCompanion extends UpdateCompanion<TasksTagEntry> {
     });
   }
 
-  TasksTagEntriesCompanion copyWith(
-      {Value<String>? task, Value<String>? tag, Value<int>? rowid}) {
+  TasksTagEntriesCompanion copyWith({
+    Value<String>? task,
+    Value<String>? tag,
+    Value<int>? rowid,
+  }) {
     return TasksTagEntriesCompanion(
       task: task ?? this.task,
       tag: tag ?? this.tag,
@@ -749,637 +872,1003 @@ abstract class _$NotZeroDatabase extends GeneratedDatabase {
   $NotZeroDatabaseManager get managers => $NotZeroDatabaseManager(this);
   late final $TasksTableTable tasksTable = $TasksTableTable(this);
   late final $TagsTableTable tagsTable = $TagsTableTable(this);
-  late final $TasksTagEntriesTable tasksTagEntries =
-      $TasksTagEntriesTable(this);
+  late final $TasksTagEntriesTable tasksTagEntries = $TasksTagEntriesTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [tasksTable, tagsTable, tasksTagEntries];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    tasksTable,
+    tagsTable,
+    tasksTagEntries,
+  ];
 }
 
-typedef $$TasksTableTableCreateCompanionBuilder = TasksTableCompanion Function({
-  required String id,
-  required String title,
-  required String description,
-  required DateTime createdAt,
-  required DateTime forDate,
-  required bool persistent,
-  Value<DateTime?> modifiedAt,
-  Value<DateTime?> completedAt,
-  required TaskImportance importance,
-  Value<int> rowid,
-});
-typedef $$TasksTableTableUpdateCompanionBuilder = TasksTableCompanion Function({
-  Value<String> id,
-  Value<String> title,
-  Value<String> description,
-  Value<DateTime> createdAt,
-  Value<DateTime> forDate,
-  Value<bool> persistent,
-  Value<DateTime?> modifiedAt,
-  Value<DateTime?> completedAt,
-  Value<TaskImportance> importance,
-  Value<int> rowid,
-});
+typedef $$TasksTableTableCreateCompanionBuilder =
+    TasksTableCompanion Function({
+      required String id,
+      required String title,
+      required String description,
+      required DateTime createdAt,
+      required DateTime forDate,
+      required bool persistent,
+      Value<DateTime?> modifiedAt,
+      Value<DateTime?> completedAt,
+      required TaskImportance importance,
+      Value<int> rowid,
+    });
+typedef $$TasksTableTableUpdateCompanionBuilder =
+    TasksTableCompanion Function({
+      Value<String> id,
+      Value<String> title,
+      Value<String> description,
+      Value<DateTime> createdAt,
+      Value<DateTime> forDate,
+      Value<bool> persistent,
+      Value<DateTime?> modifiedAt,
+      Value<DateTime?> completedAt,
+      Value<TaskImportance> importance,
+      Value<int> rowid,
+    });
 
 final class $$TasksTableTableReferences
     extends BaseReferences<_$NotZeroDatabase, $TasksTableTable, Task> {
   $$TasksTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$TasksTagEntriesTable, List<TasksTagEntry>>
-      _tasksTagEntriesRefsTable(_$NotZeroDatabase db) =>
-          MultiTypedResultKey.fromTable(db.tasksTagEntries,
-              aliasName: $_aliasNameGenerator(
-                  db.tasksTable.id, db.tasksTagEntries.task));
+  _tasksTagEntriesRefsTable(_$NotZeroDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.tasksTagEntries,
+        aliasName: $_aliasNameGenerator(
+          db.tasksTable.id,
+          db.tasksTagEntries.task,
+        ),
+      );
 
   $$TasksTagEntriesTableProcessedTableManager get tasksTagEntriesRefs {
-    final manager =
-        $$TasksTagEntriesTableTableManager($_db, $_db.tasksTagEntries)
-            .filter((f) => f.task.id($_item.id));
+    final manager = $$TasksTagEntriesTableTableManager(
+      $_db,
+      $_db.tasksTagEntries,
+    ).filter((f) => f.task.id.sqlEquals($_itemColumn<String>('id')!));
 
-    final cache =
-        $_typedResult.readTableOrNull(_tasksTagEntriesRefsTable($_db));
+    final cache = $_typedResult.readTableOrNull(
+      _tasksTagEntriesRefsTable($_db),
+    );
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
+      manager.$state.copyWith(prefetchedData: cache),
+    );
   }
 }
 
 class $$TasksTableTableFilterComposer
-    extends FilterComposer<_$NotZeroDatabase, $TasksTableTable> {
-  $$TasksTableTableFilterComposer(super.$state);
-  ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$NotZeroDatabase, $TasksTableTable> {
+  $$TasksTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<String> get title => $state.composableBuilder(
-      column: $state.table.title,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<String> get description => $state.composableBuilder(
-      column: $state.table.description,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<DateTime> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnWithTypeConverterFilters<DateTime, DateTime, String> get forDate =>
-      $state.composableBuilder(
-          column: $state.table.forDate,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
+      $composableBuilder(
+        column: $table.forDate,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
 
-  ColumnFilters<bool> get persistent => $state.composableBuilder(
-      column: $state.table.persistent,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<bool> get persistent => $composableBuilder(
+    column: $table.persistent,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<DateTime> get modifiedAt => $state.composableBuilder(
-      column: $state.table.modifiedAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<DateTime> get modifiedAt => $composableBuilder(
+    column: $table.modifiedAt,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<DateTime> get completedAt => $state.composableBuilder(
-      column: $state.table.completedAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnWithTypeConverterFilters<TaskImportance, TaskImportance, int>
-      get importance => $state.composableBuilder(
-          column: $state.table.importance,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
+  get importance => $composableBuilder(
+    column: $table.importance,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
 
-  ComposableFilter tasksTagEntriesRefs(
-      ComposableFilter Function($$TasksTagEntriesTableFilterComposer f) f) {
-    final $$TasksTagEntriesTableFilterComposer composer =
-        $state.composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $state.db.tasksTagEntries,
-            getReferencedColumn: (t) => t.task,
-            builder: (joinBuilder, parentComposers) =>
-                $$TasksTagEntriesTableFilterComposer(ComposerState($state.db,
-                    $state.db.tasksTagEntries, joinBuilder, parentComposers)));
+  Expression<bool> tasksTagEntriesRefs(
+    Expression<bool> Function($$TasksTagEntriesTableFilterComposer f) f,
+  ) {
+    final $$TasksTagEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tasksTagEntries,
+      getReferencedColumn: (t) => t.task,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTagEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.tasksTagEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
 
 class $$TasksTableTableOrderingComposer
-    extends OrderingComposer<_$NotZeroDatabase, $TasksTableTable> {
-  $$TasksTableTableOrderingComposer(super.$state);
-  ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$NotZeroDatabase, $TasksTableTable> {
+  $$TasksTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<String> get title => $state.composableBuilder(
-      column: $state.table.title,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<String> get description => $state.composableBuilder(
-      column: $state.table.description,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<DateTime> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<String> get forDate => $state.composableBuilder(
-      column: $state.table.forDate,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get forDate => $composableBuilder(
+    column: $table.forDate,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<bool> get persistent => $state.composableBuilder(
-      column: $state.table.persistent,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<bool> get persistent => $composableBuilder(
+    column: $table.persistent,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<DateTime> get modifiedAt => $state.composableBuilder(
-      column: $state.table.modifiedAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<DateTime> get modifiedAt => $composableBuilder(
+    column: $table.modifiedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<DateTime> get completedAt => $state.composableBuilder(
-      column: $state.table.completedAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<int> get importance => $state.composableBuilder(
-      column: $state.table.importance,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get importance => $composableBuilder(
+    column: $table.importance,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
-class $$TasksTableTableTableManager extends RootTableManager<
-    _$NotZeroDatabase,
-    $TasksTableTable,
-    Task,
-    $$TasksTableTableFilterComposer,
-    $$TasksTableTableOrderingComposer,
-    $$TasksTableTableCreateCompanionBuilder,
-    $$TasksTableTableUpdateCompanionBuilder,
-    (Task, $$TasksTableTableReferences),
-    Task,
-    PrefetchHooks Function({bool tasksTagEntriesRefs})> {
+class $$TasksTableTableAnnotationComposer
+    extends Composer<_$NotZeroDatabase, $TasksTableTable> {
+  $$TasksTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<DateTime, String> get forDate =>
+      $composableBuilder(column: $table.forDate, builder: (column) => column);
+
+  GeneratedColumn<bool> get persistent => $composableBuilder(
+    column: $table.persistent,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get modifiedAt => $composableBuilder(
+    column: $table.modifiedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<TaskImportance, int> get importance =>
+      $composableBuilder(
+        column: $table.importance,
+        builder: (column) => column,
+      );
+
+  Expression<T> tasksTagEntriesRefs<T extends Object>(
+    Expression<T> Function($$TasksTagEntriesTableAnnotationComposer a) f,
+  ) {
+    final $$TasksTagEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tasksTagEntries,
+      getReferencedColumn: (t) => t.task,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTagEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tasksTagEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TasksTableTableTableManager
+    extends
+        RootTableManager<
+          _$NotZeroDatabase,
+          $TasksTableTable,
+          Task,
+          $$TasksTableTableFilterComposer,
+          $$TasksTableTableOrderingComposer,
+          $$TasksTableTableAnnotationComposer,
+          $$TasksTableTableCreateCompanionBuilder,
+          $$TasksTableTableUpdateCompanionBuilder,
+          (Task, $$TasksTableTableReferences),
+          Task,
+          PrefetchHooks Function({bool tasksTagEntriesRefs})
+        > {
   $$TasksTableTableTableManager(_$NotZeroDatabase db, $TasksTableTable table)
-      : super(TableManagerState(
+    : super(
+        TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$TasksTableTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$TasksTableTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> title = const Value.absent(),
-            Value<String> description = const Value.absent(),
-            Value<DateTime> createdAt = const Value.absent(),
-            Value<DateTime> forDate = const Value.absent(),
-            Value<bool> persistent = const Value.absent(),
-            Value<DateTime?> modifiedAt = const Value.absent(),
-            Value<DateTime?> completedAt = const Value.absent(),
-            Value<TaskImportance> importance = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TasksTableCompanion(
-            id: id,
-            title: title,
-            description: description,
-            createdAt: createdAt,
-            forDate: forDate,
-            persistent: persistent,
-            modifiedAt: modifiedAt,
-            completedAt: completedAt,
-            importance: importance,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String title,
-            required String description,
-            required DateTime createdAt,
-            required DateTime forDate,
-            required bool persistent,
-            Value<DateTime?> modifiedAt = const Value.absent(),
-            Value<DateTime?> completedAt = const Value.absent(),
-            required TaskImportance importance,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TasksTableCompanion.insert(
-            id: id,
-            title: title,
-            description: description,
-            createdAt: createdAt,
-            forDate: forDate,
-            persistent: persistent,
-            modifiedAt: modifiedAt,
-            completedAt: completedAt,
-            importance: importance,
-            rowid: rowid,
-          ),
+          createFilteringComposer: () =>
+              $$TasksTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TasksTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TasksTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> forDate = const Value.absent(),
+                Value<bool> persistent = const Value.absent(),
+                Value<DateTime?> modifiedAt = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<TaskImportance> importance = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TasksTableCompanion(
+                id: id,
+                title: title,
+                description: description,
+                createdAt: createdAt,
+                forDate: forDate,
+                persistent: persistent,
+                modifiedAt: modifiedAt,
+                completedAt: completedAt,
+                importance: importance,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String title,
+                required String description,
+                required DateTime createdAt,
+                required DateTime forDate,
+                required bool persistent,
+                Value<DateTime?> modifiedAt = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                required TaskImportance importance,
+                Value<int> rowid = const Value.absent(),
+              }) => TasksTableCompanion.insert(
+                id: id,
+                title: title,
+                description: description,
+                createdAt: createdAt,
+                forDate: forDate,
+                persistent: persistent,
+                modifiedAt: modifiedAt,
+                completedAt: completedAt,
+                importance: importance,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$TasksTableTableReferences(db, table, e)
-                  ))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TasksTableTableReferences(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: ({tasksTagEntriesRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
-                if (tasksTagEntriesRefs) db.tasksTagEntries
+                if (tasksTagEntriesRefs) db.tasksTagEntries,
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (tasksTagEntriesRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable: $$TasksTableTableReferences
-                            ._tasksTagEntriesRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$TasksTableTableReferences(db, table, p0)
-                                .tasksTagEntriesRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.task == item.id),
-                        typedResults: items)
+                    await $_getPrefetchedData<
+                      Task,
+                      $TasksTableTable,
+                      TasksTagEntry
+                    >(
+                      currentTable: table,
+                      referencedTable: $$TasksTableTableReferences
+                          ._tasksTagEntriesRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$TasksTableTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).tasksTagEntriesRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.task == item.id),
+                      typedResults: items,
+                    ),
                 ];
               },
             );
           },
-        ));
+        ),
+      );
 }
 
-typedef $$TasksTableTableProcessedTableManager = ProcessedTableManager<
-    _$NotZeroDatabase,
-    $TasksTableTable,
-    Task,
-    $$TasksTableTableFilterComposer,
-    $$TasksTableTableOrderingComposer,
-    $$TasksTableTableCreateCompanionBuilder,
-    $$TasksTableTableUpdateCompanionBuilder,
-    (Task, $$TasksTableTableReferences),
-    Task,
-    PrefetchHooks Function({bool tasksTagEntriesRefs})>;
-typedef $$TagsTableTableCreateCompanionBuilder = TagsTableCompanion Function({
-  required String id,
-  required String name,
-  required int colorIndex,
-  required DateTime createdAt,
-  Value<int> rowid,
-});
-typedef $$TagsTableTableUpdateCompanionBuilder = TagsTableCompanion Function({
-  Value<String> id,
-  Value<String> name,
-  Value<int> colorIndex,
-  Value<DateTime> createdAt,
-  Value<int> rowid,
-});
+typedef $$TasksTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NotZeroDatabase,
+      $TasksTableTable,
+      Task,
+      $$TasksTableTableFilterComposer,
+      $$TasksTableTableOrderingComposer,
+      $$TasksTableTableAnnotationComposer,
+      $$TasksTableTableCreateCompanionBuilder,
+      $$TasksTableTableUpdateCompanionBuilder,
+      (Task, $$TasksTableTableReferences),
+      Task,
+      PrefetchHooks Function({bool tasksTagEntriesRefs})
+    >;
+typedef $$TagsTableTableCreateCompanionBuilder =
+    TagsTableCompanion Function({
+      required String id,
+      required String name,
+      required int colorIndex,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$TagsTableTableUpdateCompanionBuilder =
+    TagsTableCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<int> colorIndex,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
 
 final class $$TagsTableTableReferences
     extends BaseReferences<_$NotZeroDatabase, $TagsTableTable, ItemTag> {
   $$TagsTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$TasksTagEntriesTable, List<TasksTagEntry>>
-      _tasksTagEntriesRefsTable(_$NotZeroDatabase db) =>
-          MultiTypedResultKey.fromTable(db.tasksTagEntries,
-              aliasName: $_aliasNameGenerator(
-                  db.tagsTable.id, db.tasksTagEntries.tag));
+  _tasksTagEntriesRefsTable(_$NotZeroDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.tasksTagEntries,
+        aliasName: $_aliasNameGenerator(
+          db.tagsTable.id,
+          db.tasksTagEntries.tag,
+        ),
+      );
 
   $$TasksTagEntriesTableProcessedTableManager get tasksTagEntriesRefs {
-    final manager =
-        $$TasksTagEntriesTableTableManager($_db, $_db.tasksTagEntries)
-            .filter((f) => f.tag.id($_item.id));
+    final manager = $$TasksTagEntriesTableTableManager(
+      $_db,
+      $_db.tasksTagEntries,
+    ).filter((f) => f.tag.id.sqlEquals($_itemColumn<String>('id')!));
 
-    final cache =
-        $_typedResult.readTableOrNull(_tasksTagEntriesRefsTable($_db));
+    final cache = $_typedResult.readTableOrNull(
+      _tasksTagEntriesRefsTable($_db),
+    );
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
+      manager.$state.copyWith(prefetchedData: cache),
+    );
   }
 }
 
 class $$TagsTableTableFilterComposer
-    extends FilterComposer<_$NotZeroDatabase, $TagsTableTable> {
-  $$TagsTableTableFilterComposer(super.$state);
-  ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$NotZeroDatabase, $TagsTableTable> {
+  $$TagsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<int> get colorIndex => $state.composableBuilder(
-      column: $state.table.colorIndex,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get colorIndex => $composableBuilder(
+    column: $table.colorIndex,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<DateTime> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ComposableFilter tasksTagEntriesRefs(
-      ComposableFilter Function($$TasksTagEntriesTableFilterComposer f) f) {
-    final $$TasksTagEntriesTableFilterComposer composer =
-        $state.composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $state.db.tasksTagEntries,
-            getReferencedColumn: (t) => t.tag,
-            builder: (joinBuilder, parentComposers) =>
-                $$TasksTagEntriesTableFilterComposer(ComposerState($state.db,
-                    $state.db.tasksTagEntries, joinBuilder, parentComposers)));
+  Expression<bool> tasksTagEntriesRefs(
+    Expression<bool> Function($$TasksTagEntriesTableFilterComposer f) f,
+  ) {
+    final $$TasksTagEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tasksTagEntries,
+      getReferencedColumn: (t) => t.tag,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTagEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.tasksTagEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
 
 class $$TagsTableTableOrderingComposer
-    extends OrderingComposer<_$NotZeroDatabase, $TagsTableTable> {
-  $$TagsTableTableOrderingComposer(super.$state);
-  ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$NotZeroDatabase, $TagsTableTable> {
+  $$TagsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<int> get colorIndex => $state.composableBuilder(
-      column: $state.table.colorIndex,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get colorIndex => $composableBuilder(
+    column: $table.colorIndex,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<DateTime> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
-class $$TagsTableTableTableManager extends RootTableManager<
-    _$NotZeroDatabase,
-    $TagsTableTable,
-    ItemTag,
-    $$TagsTableTableFilterComposer,
-    $$TagsTableTableOrderingComposer,
-    $$TagsTableTableCreateCompanionBuilder,
-    $$TagsTableTableUpdateCompanionBuilder,
-    (ItemTag, $$TagsTableTableReferences),
-    ItemTag,
-    PrefetchHooks Function({bool tasksTagEntriesRefs})> {
+class $$TagsTableTableAnnotationComposer
+    extends Composer<_$NotZeroDatabase, $TagsTableTable> {
+  $$TagsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<int> get colorIndex => $composableBuilder(
+    column: $table.colorIndex,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  Expression<T> tasksTagEntriesRefs<T extends Object>(
+    Expression<T> Function($$TasksTagEntriesTableAnnotationComposer a) f,
+  ) {
+    final $$TasksTagEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tasksTagEntries,
+      getReferencedColumn: (t) => t.tag,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTagEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tasksTagEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TagsTableTableTableManager
+    extends
+        RootTableManager<
+          _$NotZeroDatabase,
+          $TagsTableTable,
+          ItemTag,
+          $$TagsTableTableFilterComposer,
+          $$TagsTableTableOrderingComposer,
+          $$TagsTableTableAnnotationComposer,
+          $$TagsTableTableCreateCompanionBuilder,
+          $$TagsTableTableUpdateCompanionBuilder,
+          (ItemTag, $$TagsTableTableReferences),
+          ItemTag,
+          PrefetchHooks Function({bool tasksTagEntriesRefs})
+        > {
   $$TagsTableTableTableManager(_$NotZeroDatabase db, $TagsTableTable table)
-      : super(TableManagerState(
+    : super(
+        TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$TagsTableTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$TagsTableTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<int> colorIndex = const Value.absent(),
-            Value<DateTime> createdAt = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TagsTableCompanion(
-            id: id,
-            name: name,
-            colorIndex: colorIndex,
-            createdAt: createdAt,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String name,
-            required int colorIndex,
-            required DateTime createdAt,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TagsTableCompanion.insert(
-            id: id,
-            name: name,
-            colorIndex: colorIndex,
-            createdAt: createdAt,
-            rowid: rowid,
-          ),
+          createFilteringComposer: () =>
+              $$TagsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TagsTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TagsTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<int> colorIndex = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TagsTableCompanion(
+                id: id,
+                name: name,
+                colorIndex: colorIndex,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                required int colorIndex,
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => TagsTableCompanion.insert(
+                id: id,
+                name: name,
+                colorIndex: colorIndex,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$TagsTableTableReferences(db, table, e)
-                  ))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TagsTableTableReferences(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: ({tasksTagEntriesRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
-                if (tasksTagEntriesRefs) db.tasksTagEntries
+                if (tasksTagEntriesRefs) db.tasksTagEntries,
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (tasksTagEntriesRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable: $$TagsTableTableReferences
-                            ._tasksTagEntriesRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$TagsTableTableReferences(db, table, p0)
-                                .tasksTagEntriesRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.tag == item.id),
-                        typedResults: items)
+                    await $_getPrefetchedData<
+                      ItemTag,
+                      $TagsTableTable,
+                      TasksTagEntry
+                    >(
+                      currentTable: table,
+                      referencedTable: $$TagsTableTableReferences
+                          ._tasksTagEntriesRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$TagsTableTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).tasksTagEntriesRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.tag == item.id),
+                      typedResults: items,
+                    ),
                 ];
               },
             );
           },
-        ));
+        ),
+      );
 }
 
-typedef $$TagsTableTableProcessedTableManager = ProcessedTableManager<
-    _$NotZeroDatabase,
-    $TagsTableTable,
-    ItemTag,
-    $$TagsTableTableFilterComposer,
-    $$TagsTableTableOrderingComposer,
-    $$TagsTableTableCreateCompanionBuilder,
-    $$TagsTableTableUpdateCompanionBuilder,
-    (ItemTag, $$TagsTableTableReferences),
-    ItemTag,
-    PrefetchHooks Function({bool tasksTagEntriesRefs})>;
-typedef $$TasksTagEntriesTableCreateCompanionBuilder = TasksTagEntriesCompanion
-    Function({
-  required String task,
-  required String tag,
-  Value<int> rowid,
-});
-typedef $$TasksTagEntriesTableUpdateCompanionBuilder = TasksTagEntriesCompanion
-    Function({
-  Value<String> task,
-  Value<String> tag,
-  Value<int> rowid,
-});
+typedef $$TagsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NotZeroDatabase,
+      $TagsTableTable,
+      ItemTag,
+      $$TagsTableTableFilterComposer,
+      $$TagsTableTableOrderingComposer,
+      $$TagsTableTableAnnotationComposer,
+      $$TagsTableTableCreateCompanionBuilder,
+      $$TagsTableTableUpdateCompanionBuilder,
+      (ItemTag, $$TagsTableTableReferences),
+      ItemTag,
+      PrefetchHooks Function({bool tasksTagEntriesRefs})
+    >;
+typedef $$TasksTagEntriesTableCreateCompanionBuilder =
+    TasksTagEntriesCompanion Function({
+      required String task,
+      required String tag,
+      Value<int> rowid,
+    });
+typedef $$TasksTagEntriesTableUpdateCompanionBuilder =
+    TasksTagEntriesCompanion Function({
+      Value<String> task,
+      Value<String> tag,
+      Value<int> rowid,
+    });
 
-final class $$TasksTagEntriesTableReferences extends BaseReferences<
-    _$NotZeroDatabase, $TasksTagEntriesTable, TasksTagEntry> {
+final class $$TasksTagEntriesTableReferences
+    extends
+        BaseReferences<
+          _$NotZeroDatabase,
+          $TasksTagEntriesTable,
+          TasksTagEntry
+        > {
   $$TasksTagEntriesTableReferences(
-      super.$_db, super.$_table, super.$_typedResult);
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
 
   static $TasksTableTable _taskTable(_$NotZeroDatabase db) =>
       db.tasksTable.createAlias(
-          $_aliasNameGenerator(db.tasksTagEntries.task, db.tasksTable.id));
+        $_aliasNameGenerator(db.tasksTagEntries.task, db.tasksTable.id),
+      );
 
-  $$TasksTableTableProcessedTableManager? get task {
-    if ($_item.task == null) return null;
-    final manager = $$TasksTableTableTableManager($_db, $_db.tasksTable)
-        .filter((f) => f.id($_item.task!));
+  $$TasksTableTableProcessedTableManager get task {
+    final $_column = $_itemColumn<String>('task')!;
+
+    final manager = $$TasksTableTableTableManager(
+      $_db,
+      $_db.tasksTable,
+    ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_taskTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
   }
 
   static $TagsTableTable _tagTable(_$NotZeroDatabase db) =>
       db.tagsTable.createAlias(
-          $_aliasNameGenerator(db.tasksTagEntries.tag, db.tagsTable.id));
+        $_aliasNameGenerator(db.tasksTagEntries.tag, db.tagsTable.id),
+      );
 
-  $$TagsTableTableProcessedTableManager? get tag {
-    if ($_item.tag == null) return null;
-    final manager = $$TagsTableTableTableManager($_db, $_db.tagsTable)
-        .filter((f) => f.id($_item.tag!));
+  $$TagsTableTableProcessedTableManager get tag {
+    final $_column = $_itemColumn<String>('tag')!;
+
+    final manager = $$TagsTableTableTableManager(
+      $_db,
+      $_db.tagsTable,
+    ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_tagTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
   }
 }
 
 class $$TasksTagEntriesTableFilterComposer
-    extends FilterComposer<_$NotZeroDatabase, $TasksTagEntriesTable> {
-  $$TasksTagEntriesTableFilterComposer(super.$state);
+    extends Composer<_$NotZeroDatabase, $TasksTagEntriesTable> {
+  $$TasksTagEntriesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
   $$TasksTableTableFilterComposer get task {
-    final $$TasksTableTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.task,
-        referencedTable: $state.db.tasksTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$TasksTableTableFilterComposer(ComposerState($state.db,
-                $state.db.tasksTable, joinBuilder, parentComposers)));
+    final $$TasksTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.task,
+      referencedTable: $db.tasksTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableTableFilterComposer(
+            $db: $db,
+            $table: $db.tasksTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 
   $$TagsTableTableFilterComposer get tag {
-    final $$TagsTableTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.tag,
-        referencedTable: $state.db.tagsTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$TagsTableTableFilterComposer(ComposerState(
-                $state.db, $state.db.tagsTable, joinBuilder, parentComposers)));
+    final $$TagsTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tag,
+      referencedTable: $db.tagsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagsTableTableFilterComposer(
+            $db: $db,
+            $table: $db.tagsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
 
 class $$TasksTagEntriesTableOrderingComposer
-    extends OrderingComposer<_$NotZeroDatabase, $TasksTagEntriesTable> {
-  $$TasksTagEntriesTableOrderingComposer(super.$state);
+    extends Composer<_$NotZeroDatabase, $TasksTagEntriesTable> {
+  $$TasksTagEntriesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
   $$TasksTableTableOrderingComposer get task {
-    final $$TasksTableTableOrderingComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.task,
-        referencedTable: $state.db.tasksTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$TasksTableTableOrderingComposer(ComposerState($state.db,
-                $state.db.tasksTable, joinBuilder, parentComposers)));
+    final $$TasksTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.task,
+      referencedTable: $db.tasksTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.tasksTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 
   $$TagsTableTableOrderingComposer get tag {
-    final $$TagsTableTableOrderingComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.tag,
-        referencedTable: $state.db.tagsTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$TagsTableTableOrderingComposer(ComposerState(
-                $state.db, $state.db.tagsTable, joinBuilder, parentComposers)));
+    final $$TagsTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tag,
+      referencedTable: $db.tagsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagsTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.tagsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
 
-class $$TasksTagEntriesTableTableManager extends RootTableManager<
-    _$NotZeroDatabase,
-    $TasksTagEntriesTable,
-    TasksTagEntry,
-    $$TasksTagEntriesTableFilterComposer,
-    $$TasksTagEntriesTableOrderingComposer,
-    $$TasksTagEntriesTableCreateCompanionBuilder,
-    $$TasksTagEntriesTableUpdateCompanionBuilder,
-    (TasksTagEntry, $$TasksTagEntriesTableReferences),
-    TasksTagEntry,
-    PrefetchHooks Function({bool task, bool tag})> {
+class $$TasksTagEntriesTableAnnotationComposer
+    extends Composer<_$NotZeroDatabase, $TasksTagEntriesTable> {
+  $$TasksTagEntriesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$TasksTableTableAnnotationComposer get task {
+    final $$TasksTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.task,
+      referencedTable: $db.tasksTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tasksTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TagsTableTableAnnotationComposer get tag {
+    final $$TagsTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tag,
+      referencedTable: $db.tagsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagsTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tagsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TasksTagEntriesTableTableManager
+    extends
+        RootTableManager<
+          _$NotZeroDatabase,
+          $TasksTagEntriesTable,
+          TasksTagEntry,
+          $$TasksTagEntriesTableFilterComposer,
+          $$TasksTagEntriesTableOrderingComposer,
+          $$TasksTagEntriesTableAnnotationComposer,
+          $$TasksTagEntriesTableCreateCompanionBuilder,
+          $$TasksTagEntriesTableUpdateCompanionBuilder,
+          (TasksTagEntry, $$TasksTagEntriesTableReferences),
+          TasksTagEntry,
+          PrefetchHooks Function({bool task, bool tag})
+        > {
   $$TasksTagEntriesTableTableManager(
-      _$NotZeroDatabase db, $TasksTagEntriesTable table)
-      : super(TableManagerState(
+    _$NotZeroDatabase db,
+    $TasksTagEntriesTable table,
+  ) : super(
+        TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$TasksTagEntriesTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$TasksTagEntriesTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<String> task = const Value.absent(),
-            Value<String> tag = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TasksTagEntriesCompanion(
-            task: task,
-            tag: tag,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String task,
-            required String tag,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TasksTagEntriesCompanion.insert(
-            task: task,
-            tag: tag,
-            rowid: rowid,
-          ),
+          createFilteringComposer: () =>
+              $$TasksTagEntriesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TasksTagEntriesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TasksTagEntriesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> task = const Value.absent(),
+                Value<String> tag = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) =>
+                  TasksTagEntriesCompanion(task: task, tag: tag, rowid: rowid),
+          createCompanionCallback:
+              ({
+                required String task,
+                required String tag,
+                Value<int> rowid = const Value.absent(),
+              }) => TasksTagEntriesCompanion.insert(
+                task: task,
+                tag: tag,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$TasksTagEntriesTableReferences(db, table, e)
-                  ))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TasksTagEntriesTableReferences(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: ({task = false, tag = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
+              addJoins:
+                  <
+                    T extends TableManagerState<
                       dynamic,
                       dynamic,
                       dynamic,
@@ -1389,49 +1878,68 @@ class $$TasksTagEntriesTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic,
-                      dynamic>>(state) {
-                if (task) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.task,
-                    referencedTable:
-                        $$TasksTagEntriesTableReferences._taskTable(db),
-                    referencedColumn:
-                        $$TasksTagEntriesTableReferences._taskTable(db).id,
-                  ) as T;
-                }
-                if (tag) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.tag,
-                    referencedTable:
-                        $$TasksTagEntriesTableReferences._tagTable(db),
-                    referencedColumn:
-                        $$TasksTagEntriesTableReferences._tagTable(db).id,
-                  ) as T;
-                }
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (task) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.task,
+                                referencedTable:
+                                    $$TasksTagEntriesTableReferences._taskTable(
+                                      db,
+                                    ),
+                                referencedColumn:
+                                    $$TasksTagEntriesTableReferences
+                                        ._taskTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (tag) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.tag,
+                                referencedTable:
+                                    $$TasksTagEntriesTableReferences._tagTable(
+                                      db,
+                                    ),
+                                referencedColumn:
+                                    $$TasksTagEntriesTableReferences
+                                        ._tagTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
 
-                return state;
-              },
+                    return state;
+                  },
               getPrefetchedDataCallback: (items) async {
                 return [];
               },
             );
           },
-        ));
+        ),
+      );
 }
 
-typedef $$TasksTagEntriesTableProcessedTableManager = ProcessedTableManager<
-    _$NotZeroDatabase,
-    $TasksTagEntriesTable,
-    TasksTagEntry,
-    $$TasksTagEntriesTableFilterComposer,
-    $$TasksTagEntriesTableOrderingComposer,
-    $$TasksTagEntriesTableCreateCompanionBuilder,
-    $$TasksTagEntriesTableUpdateCompanionBuilder,
-    (TasksTagEntry, $$TasksTagEntriesTableReferences),
-    TasksTagEntry,
-    PrefetchHooks Function({bool task, bool tag})>;
+typedef $$TasksTagEntriesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NotZeroDatabase,
+      $TasksTagEntriesTable,
+      TasksTagEntry,
+      $$TasksTagEntriesTableFilterComposer,
+      $$TasksTagEntriesTableOrderingComposer,
+      $$TasksTagEntriesTableAnnotationComposer,
+      $$TasksTagEntriesTableCreateCompanionBuilder,
+      $$TasksTagEntriesTableUpdateCompanionBuilder,
+      (TasksTagEntry, $$TasksTagEntriesTableReferences),
+      TasksTagEntry,
+      PrefetchHooks Function({bool task, bool tag})
+    >;
 
 class $NotZeroDatabaseManager {
   final _$NotZeroDatabase _db;
