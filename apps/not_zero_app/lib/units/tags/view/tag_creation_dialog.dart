@@ -5,7 +5,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
-import 'package:not_zero_app/components/confirmation_dialog.dart';
 import 'package:not_zero_app/units/tags/di.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';

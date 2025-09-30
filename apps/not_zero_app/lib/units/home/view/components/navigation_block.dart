@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:not_zero_app/components/adaptive/list_limiter.dart';
-import 'package:not_zero_app/components/common_widgets/clickable_card.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class HomeNavigationBlock extends StatelessWidget {

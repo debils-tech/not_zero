@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero_app/components/adaptive/list_limiter.dart';
-import 'package:not_zero_app/components/common_widgets/date_range_switch.dart';
 import 'package:not_zero_app/units/stats/di.dart';
 import 'package:not_zero_app/units/stats/notifiers/quick_statistics_notifier.dart';
 import 'package:not_zero_app/units/stats/view/components/chart_card.dart';

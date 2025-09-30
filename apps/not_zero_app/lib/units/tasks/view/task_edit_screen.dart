@@ -5,7 +5,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
-import 'package:not_zero_app/components/confirmation_dialog.dart';
 import 'package:not_zero_app/units/tags/di.dart';
 import 'package:not_zero_app/units/tasks/di.dart';
 import 'package:not_zero_app/units/tasks/view/components/task_edit_fields.dart';
