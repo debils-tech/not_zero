@@ -7,11 +7,7 @@ class CommonLoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const PopScope(
       canPop: false,
-      child: Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
+      child: Scaffold(body: Center(child: CircularProgressIndicator())),
     );
   }
 }

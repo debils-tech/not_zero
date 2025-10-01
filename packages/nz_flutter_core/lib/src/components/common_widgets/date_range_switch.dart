@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
-enum DateRangeType {
-  day,
-  week,
-}
+enum DateRangeType { day, week }
 
 class DateRangeSwitch extends StatefulWidget {
   const DateRangeSwitch({
@@ -136,10 +133,7 @@ class _MiddleButton extends StatelessWidget {
       ),
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 17),
-        ),
+        child: Text(text, style: const TextStyle(fontSize: 17)),
       ),
     );
   }

@@ -27,13 +27,9 @@ class FancyDatePickerButton extends StatelessWidget {
         if (newValue == null) return;
         onChanged(newValue);
       },
-      style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.all(16),
-      ),
+      style: OutlinedButton.styleFrom(padding: const EdgeInsets.all(16)),
       icon: const Icon(Icons.calendar_month_rounded),
-      label: Text(
-        NzDateTimeFormat.relativeLocalFormat(value),
-      ),
+      label: Text(NzDateTimeFormat.relativeLocalFormat(value)),
     );
   }
 }
