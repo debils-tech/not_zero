@@ -10,10 +10,9 @@ Not Zero is a free cross-platform application developed with [flutter](https://f
 
 ## Project status and roadmap
 
-Project is now developing by the single person, so development is not very fast.
-It currently at very early stage, can contain breaking changes **(including a possibility of user data loss)**.
+The project is currently being developed by only one person and is at a very early stage of development. There may be many experimental and disruptive changes.
 
-Here is roadmap of project and what features are necessary to "complete" each stage:
+Development is divided into several stages, with specific features planned for each stage. Major progress and current goals can be viewed in [repository Milestones](https://github.com/debils-tech/not_zero/milestones). The current roadmap is as follows:
 
 <details>
 <summary> Alpha </summary>
@@ -26,38 +25,55 @@ Here is roadmap of project and what features are necessary to "complete" each st
 - [x] App branding (logo, icons, posters)
 - [x] Stable database version
 - [x] Automatic builds and basic packaging
-- [x] Export and import of app's data
+- [x] Export and import of app's data `(now broken 😢)`
 - [x] Basic stats
-- [ ] Tags & Sublists `(in progress)`
-- [ ] Guides
+- [x] Tags & Sublists
+- [ ] Make app ready for data synchronization
+- [ ] Tasks of the "do it someday" type
+- [ ] Habits
+- [ ] Better stats
+- [ ] "Start your day" and "end your day" features
+
 </details>
 
 <details>
 <summary> Beta </summary>
 
-- [ ] Release in Google Play
+*The future is blurry here...*
+
 - [ ] Release in F-Droid
+- [ ] Onboarding
+- [ ] Some backend for the app *(still local-only approach)*
+- [ ] Release in Google Play
+- [ ] Adaptation for iOS
+- [ ] Release in App Store
+- [ ] Data synchronization *(huge ⭐, more info later)*
+- [ ] Adaptation of app for desktop
+- [ ] Release on Linux
 - [ ] Advanced stats (weekly, monthly statistics)
-- [ ] Combos
-- [ ] Habits
-- [ ] Achievements
+- [ ] General gamification goal *(huge ⭐, more info later)*
+- [ ] Social features *(huge ⭐, more info later)*
+
 </details>
 
 <details>
-<summary> Stable release </summary>
+<summary> Sometime later... </summary>
+
+*The future is even more blurry here...*
 
 - [ ] Notes
-- [ ] Adaptation for iOS
-- [ ] Release in App Store
-- [ ] Adaptation of app for desktop
-- [ ] Release on Linux
+- [ ] Release on MacOS
 - [ ] Release on Windows
+
+*More plans will be here after alpha release...*
+
 </details>
 
 ## Screenshots
 
-<img src="assets/screenshots/Screenshot_main.png" width="250">
-<img src="assets/screenshots/Screenshot_tasks.png" width="250">
+<img src="screenshots/Screenshot_main.png" width="180">
+<img src="screenshots/Screenshot_tasks.png" width="180">
+<img src="screenshots/Screenshot_stats.png" width="180">
 
 ## Building and running
 
@@ -75,17 +91,7 @@ flutter run
 ```
 
 SQLite3 is required for this app to function.
-On Android and iOS platforms it works out of the box: sqlite lib already included in the package.
-For Linux `libsqlite3`, `libgtk-3-0`, `libblkid1`, `liblzma5` packages are required.
-On Debian-based distributions can be installed using a single command:
-
-```bash
-sudo apt-get install libgtk-3-0 libblkid1 liblzma5 libsqlite3
-```
+On Android, iOS, Linux platforms it works out of the box: sqlite lib already included in the package. Other platforms wasn't tested yet.
 
 For backup feature to work properly on Linux it is required to have dialog library be installed.
 It can be either `zenity` (for GTK), `qarma` (for Qt), `kdialog` (for KDE).
-
-<!--
-TODO Add any words about usage of sql.js from here: https://github.com/sql-js/sql.js
--->
