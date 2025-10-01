@@ -75,7 +75,7 @@ jobs:
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
           git push origin ${{ steps.find_branch.outputs.branch }}
 
-  build:
+  build_android:
     name: Build android
     needs: version_update
     runs-on: ubuntu-latest
@@ -113,6 +113,7 @@ jobs:
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > $HOME/keystore.jks
       - name: Save key.properties
+        working-directory: apps/not_zero_app
         run: |
           touch android/key.properties
           echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
@@ -122,20 +123,17 @@ jobs:
       # Build and upload
       - name: Build APK
         run: |
-          flutter build apk --flavor prod --split-per-abi
-          flutter build apk --flavor prod
-          TAG=foss tools/android/move-builds.sh
-          tools/android/check-cert.sh
+          make build-android
       - name: Upload FOSS APK Artifact
         uses: actions/upload-artifact@v3
         with:
           name: artifacts-apk-foss
-          path: build/releases/android
+          path: apps/not_zero_app/build/releases/android
 
   release:
     name: Release to GitHub actions
     needs:
-      - build
+      - build_android
       - version_update
     runs-on: ubuntu-latest
     steps:

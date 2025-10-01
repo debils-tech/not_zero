@@ -2,7 +2,7 @@
 
 import 'package:drift/drift.dart';
 import 'package:nz_drift/src/converters/date_converter.dart';
-import 'package:nz_tasks_models/nz_tasks_models.dart';
+import 'package:nz_base_models/nz_base_models.dart';
 
 @UseRowClass(Task, generateInsertable: true)
 class TasksTable extends Table {

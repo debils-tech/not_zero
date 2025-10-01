@@ -12,14 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   drift: ^2.19.1+1
-  nz_common:
-    path: ../nz_common
-  nz_io:
-    path: ../nz_io
-  nz_tags_models:
-    path: ../features/nz_tags_models
-  nz_tasks_models:
-    path: ../features/nz_tasks_models
+  nz_common: ^1.0.0
+  nz_base_models: ^1.0.0
   path: ^1.9.0
   path_provider: ^2.1.4
 

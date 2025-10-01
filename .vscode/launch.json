@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "not_zero_app dev",
+            "cwd": "apps/not_zero_app",
+            "request": "launch",
+            "args": ["--flavor", "dev"],
+            "type": "dart"
+        },
+        {
+            "name": "not_zero_app (profile mode)",
+            "cwd": "apps/not_zero_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "not_zero_app (release mode)",
+            "cwd": "apps/not_zero_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
