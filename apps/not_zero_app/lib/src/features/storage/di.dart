@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero_app/src/constants/database.dart';
+import 'package:not_zero_app/src/constants/box_names.dart';
 import 'package:nz_boxes/nz_boxes.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:nz_drift/nz_drift.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero_app/src/constants/links.dart';
+import 'package:not_zero_app/src/features/settings/constants/links.dart';
 import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/settings/view/components/list_elements.dart';
 import 'package:not_zero_app/src/helpers/not_zero_icons.dart';
