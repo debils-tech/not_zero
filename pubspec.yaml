@@ -34,3 +34,7 @@ melos:
     upgrade:
       exec: dart pub upgrade --major-versions
       orderDependents: true
+    test:
+      exec: flutter test
+      packageFilters:
+        dirExists: test

@@ -34,6 +34,6 @@ jobs:
       - name: Analyze code to find critical problems
         run: dart run melos exec flutter analyze --no-fatal-infos
 
-#      ### TESTS ###
-#      - name: Run tests
-#        run: make test
+      ### TESTS ###
+      - name: Run tests
+        run: dart run melos run test

@@ -34,6 +34,8 @@ jobs:
         run: dart run melos format --set-exit-if-changed --output none $(git ls-files | grep --colour=never -e ".*\.dart")
       - name: Analyze code to find critical problems
         run: dart run melos exec flutter analyze --no-fatal-infos
+      - name: Run tests
+        run: dart run melos run test
 
   version_update:
     name: Update pubspec version
