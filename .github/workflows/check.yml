@@ -36,4 +36,4 @@ jobs:
 
       ### TESTS ###
       - name: Run tests
-        run: dart run melos run test
+        run: dart run melos run --no-select test

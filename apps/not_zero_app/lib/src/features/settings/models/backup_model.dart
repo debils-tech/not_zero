@@ -5,7 +5,7 @@ part 'backup_model.freezed.dart';
 part 'backup_model.g.dart';
 
 @freezed
-class BackupModel with _$BackupModel {
+abstract class BackupModel with _$BackupModel {
   @JsonSerializable(explicitToJson: true)
   factory BackupModel({
     required Map<String, dynamic> data,
