@@ -18,4 +18,6 @@ class TasksTable extends Table {
 
   @override
   Set<Column<Object>>? get primaryKey => {id};
+
+  Expression<bool> get isCompleted => completedAt.isNotNull();
 }

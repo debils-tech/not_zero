@@ -1,24 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero_app/src/features/stats/models/quick_statistics_state.dart';
 import 'package:not_zero_app/src/features/stats/notifiers/quick_statistics_notifier.dart';
+import 'package:not_zero_app/src/features/stats/repositories/score_evaluation_repository.dart';
 import 'package:not_zero_app/src/features/stats/repositories/stats_repository.dart';
-import 'package:not_zero_app/src/features/stats/services/stats_local_service.dart';
+import 'package:not_zero_app/src/features/stats/services/tasks_stats_local_service.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
 
-final statsLocalServiceProvider = Provider<StatsLocalService>((ref) {
-  return StatsLocalService(
+final tasksStatsLocalServiceProvider = Provider<TasksStatsLocalService>((ref) {
+  return TasksStatsLocalService(
     ref.watch(databaseProvider),
   );
 });
 
 final statsRepositoryProvider = Provider<StatsRepository>((ref) {
   return StatsRepository(
-    ref.watch(statsLocalServiceProvider),
+    ref.watch(tasksStatsLocalServiceProvider),
+    ref.watch(scoreEvaluationRepositoryProvider),
   );
 });
 
-final NotifierProvider<QuickStatisticsNotifier, QuickStatisticsState>
-quickStatisticsNotifierProvider =
-    NotifierProvider.autoDispose<QuickStatisticsNotifier, QuickStatisticsState>(
-      QuickStatisticsNotifier.new,
-    );
+final scoreEvaluationRepositoryProvider = Provider<ScoreEvaluationRepository>((
+  ref,
+) {
+  return const ScoreEvaluationRepository();
+});
+
+final quickStatisticsNotifierProvider = NotifierProvider.autoDispose(
+  QuickStatisticsNotifier.new,
+);
