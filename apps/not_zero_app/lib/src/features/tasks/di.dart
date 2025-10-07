@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
-import 'package:not_zero_app/src/features/tasks/models/tasks_filters.dart';
 import 'package:not_zero_app/src/features/tasks/notifiers/tasks_filters_notifier.dart';
 import 'package:not_zero_app/src/features/tasks/repositories/tasks_repository.dart';
 import 'package:not_zero_app/src/features/tasks/services/tasks_local_service.dart';
@@ -45,8 +44,6 @@ final StreamProviderFamily<Task, String> specificTaskStreamProvider =
       );
     });
 
-final NotifierProvider<TasksFiltersNotifier, TasksFilters>
-tasksFiltersNotifier =
-    NotifierProvider.autoDispose<TasksFiltersNotifier, TasksFilters>(
-      TasksFiltersNotifier.new,
-    );
+final tasksFiltersNotifier = NotifierProvider.autoDispose(
+  TasksFiltersNotifier.new,
+);
