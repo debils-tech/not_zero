@@ -10,6 +10,6 @@ if [ -z "$CURRENT_BUILD_NUMBER" ]; then
 fi
 NEW_BUILD_NUMBER=$((CURRENT_BUILD_NUMBER + 1))
 
-sed -i "s/version: $CURRENT_VERSION/version: $TAG_VERSION+$NEW_BUILD_NUMBER/" pubspec.yaml
+sed -i "s/version: $CURRENT_VERSION/version: $TAG_VERSION+$NEW_BUILD_NUMBER/" apps/not_zero_app/pubspec.yaml
 
 echo -e "app_version=$TAG_VERSION\n""app_build_number=$NEW_BUILD_NUMBER"
