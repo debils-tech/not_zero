@@ -19,6 +19,9 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
     if (selectedItemsCount == 0) {
       return AppBar(
         title: Text(t.tasks.list.title),
+        actions: const [
+          _TasksPopupMenuButton(),
+        ],
       );
     } else {
       return AppBar(
@@ -39,10 +42,49 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
           IconButton(
             onPressed: selectionNotifier.removeAll,
             tooltip: t.tasks.list.tooltips.removeSelectionButton,
-            icon: const Icon(Icons.close_rounded),
+            icon: const Icon(Icons.deselect_rounded),
           ),
         ],
       );
     }
+  }
+}
+
+class _TasksPopupMenuButton extends ConsumerWidget {
+  const _TasksPopupMenuButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final showCanceled = ref.watch(
+      // null means show all
+      tasksFiltersNotifier.select((state) => state.canceled == null),
+    );
+
+    return PopupMenuButton(
+      itemBuilder: (context) => [
+        PopupMenuItem<void>(
+          onTap: () {
+            if (showCanceled) {
+              ref.read(tasksFiltersNotifier.notifier).hideCanceled();
+            } else {
+              ref.read(tasksFiltersNotifier.notifier).showCanceled();
+            }
+          },
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  t.tasks.list.appBarActions.popupMenu.showCanceledOption,
+                ),
+              ),
+              Visibility(
+                visible: showCanceled,
+                child: const Icon(Icons.check_rounded),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -96,6 +96,17 @@ class $TasksTableTable extends TasksTable
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _canceledAtMeta = const VerificationMeta(
+    'canceledAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> canceledAt = GeneratedColumn<DateTime>(
+    'canceled_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
   @override
   late final GeneratedColumnWithTypeConverter<TaskImportance, int> importance =
       GeneratedColumn<int>(
@@ -115,6 +126,7 @@ class $TasksTableTable extends TasksTable
     persistent,
     modifiedAt,
     completedAt,
+    canceledAt,
     importance,
   ];
   @override
@@ -180,6 +192,12 @@ class $TasksTableTable extends TasksTable
         ),
       );
     }
+    if (data.containsKey('canceled_at')) {
+      context.handle(
+        _canceledAtMeta,
+        canceledAt.isAcceptableOrUnknown(data['canceled_at']!, _canceledAtMeta),
+      );
+    }
     return context;
   }
 
@@ -219,6 +237,10 @@ class $TasksTableTable extends TasksTable
         DriftSqlType.dateTime,
         data['${effectivePrefix}completed_at'],
       ),
+      canceledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}canceled_at'],
+      ),
       forDate: $TasksTableTable.$converterforDaten.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
@@ -254,6 +276,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
   final Value<bool> persistent;
   final Value<DateTime?> modifiedAt;
   final Value<DateTime?> completedAt;
+  final Value<DateTime?> canceledAt;
   final Value<TaskImportance> importance;
   final Value<int> rowid;
   const TasksTableCompanion({
@@ -265,6 +288,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     this.persistent = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     this.completedAt = const Value.absent(),
+    this.canceledAt = const Value.absent(),
     this.importance = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -277,6 +301,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     this.persistent = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     this.completedAt = const Value.absent(),
+    this.canceledAt = const Value.absent(),
     required TaskImportance importance,
     this.rowid = const Value.absent(),
   }) : id = Value(id),
@@ -292,6 +317,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     Expression<bool>? persistent,
     Expression<DateTime>? modifiedAt,
     Expression<DateTime>? completedAt,
+    Expression<DateTime>? canceledAt,
     Expression<int>? importance,
     Expression<int>? rowid,
   }) {
@@ -304,6 +330,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
       if (persistent != null) 'persistent': persistent,
       if (modifiedAt != null) 'modified_at': modifiedAt,
       if (completedAt != null) 'completed_at': completedAt,
+      if (canceledAt != null) 'canceled_at': canceledAt,
       if (importance != null) 'importance': importance,
       if (rowid != null) 'rowid': rowid,
     });
@@ -318,6 +345,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     Value<bool>? persistent,
     Value<DateTime?>? modifiedAt,
     Value<DateTime?>? completedAt,
+    Value<DateTime?>? canceledAt,
     Value<TaskImportance>? importance,
     Value<int>? rowid,
   }) {
@@ -330,6 +358,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
       persistent: persistent ?? this.persistent,
       modifiedAt: modifiedAt ?? this.modifiedAt,
       completedAt: completedAt ?? this.completedAt,
+      canceledAt: canceledAt ?? this.canceledAt,
       importance: importance ?? this.importance,
       rowid: rowid ?? this.rowid,
     );
@@ -364,6 +393,9 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     if (completedAt.present) {
       map['completed_at'] = Variable<DateTime>(completedAt.value);
     }
+    if (canceledAt.present) {
+      map['canceled_at'] = Variable<DateTime>(canceledAt.value);
+    }
     if (importance.present) {
       map['importance'] = Variable<int>(
         $TasksTableTable.$converterimportance.toSql(importance.value),
@@ -386,6 +418,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
           ..write('persistent: $persistent, ')
           ..write('modifiedAt: $modifiedAt, ')
           ..write('completedAt: $completedAt, ')
+          ..write('canceledAt: $canceledAt, ')
           ..write('importance: $importance, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -407,6 +440,7 @@ class _$TaskInsertable implements Insertable<Task> {
       persistent: Value(_object.persistent),
       modifiedAt: Value(_object.modifiedAt),
       completedAt: Value(_object.completedAt),
+      canceledAt: Value(_object.canceledAt),
       importance: Value(_object.importance),
     ).toColumns(false);
   }
@@ -891,6 +925,7 @@ typedef $$TasksTableTableCreateCompanionBuilder =
       Value<bool> persistent,
       Value<DateTime?> modifiedAt,
       Value<DateTime?> completedAt,
+      Value<DateTime?> canceledAt,
       required TaskImportance importance,
       Value<int> rowid,
     });
@@ -904,6 +939,7 @@ typedef $$TasksTableTableUpdateCompanionBuilder =
       Value<bool> persistent,
       Value<DateTime?> modifiedAt,
       Value<DateTime?> completedAt,
+      Value<DateTime?> canceledAt,
       Value<TaskImportance> importance,
       Value<int> rowid,
     });
@@ -984,6 +1020,11 @@ class $$TasksTableTableFilterComposer
 
   ColumnFilters<DateTime> get completedAt => $composableBuilder(
     column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1068,6 +1109,11 @@ class $$TasksTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get importance => $composableBuilder(
     column: $table.importance,
     builder: (column) => ColumnOrderings(column),
@@ -1112,6 +1158,11 @@ class $$TasksTableTableAnnotationComposer
 
   GeneratedColumn<DateTime> get completedAt => $composableBuilder(
     column: $table.completedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
     builder: (column) => column,
   );
 
@@ -1183,6 +1234,7 @@ class $$TasksTableTableTableManager
                 Value<bool> persistent = const Value.absent(),
                 Value<DateTime?> modifiedAt = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
+                Value<DateTime?> canceledAt = const Value.absent(),
                 Value<TaskImportance> importance = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => TasksTableCompanion(
@@ -1194,6 +1246,7 @@ class $$TasksTableTableTableManager
                 persistent: persistent,
                 modifiedAt: modifiedAt,
                 completedAt: completedAt,
+                canceledAt: canceledAt,
                 importance: importance,
                 rowid: rowid,
               ),
@@ -1207,6 +1260,7 @@ class $$TasksTableTableTableManager
                 Value<bool> persistent = const Value.absent(),
                 Value<DateTime?> modifiedAt = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
+                Value<DateTime?> canceledAt = const Value.absent(),
                 required TaskImportance importance,
                 Value<int> rowid = const Value.absent(),
               }) => TasksTableCompanion.insert(
@@ -1218,6 +1272,7 @@ class $$TasksTableTableTableManager
                 persistent: persistent,
                 modifiedAt: modifiedAt,
                 completedAt: completedAt,
+                canceledAt: canceledAt,
                 importance: importance,
                 rowid: rowid,
               ),

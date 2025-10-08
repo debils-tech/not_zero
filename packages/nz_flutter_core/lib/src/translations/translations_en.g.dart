@@ -313,6 +313,13 @@ class TranslationsTasksListEn {
 
 	late final TranslationsTasksListDeleteDialogEn deleteDialog = TranslationsTasksListDeleteDialogEn._(_root);
 	late final TranslationsTasksListTooltipsEn tooltips = TranslationsTasksListTooltipsEn._(_root);
+	late final TranslationsTasksListAppBarActionsEn appBarActions = TranslationsTasksListAppBarActionsEn._(_root);
+
+	/// en: 'Cancel tasks'
+	String get cancelButton => 'Cancel tasks';
+
+	/// en: 'Canceled'
+	String get canceledTaskMark => 'Canceled';
 }
 
 // Path: tasks.view
@@ -563,6 +570,19 @@ class TranslationsTasksListTooltipsEn {
 
 	/// en: 'Add new task'
 	String get addNewButton => 'Add new task';
+
+	/// en: 'Reopen'
+	String get canceledMarkButton => 'Reopen';
+}
+
+// Path: tasks.list.appBarActions
+class TranslationsTasksListAppBarActionsEn {
+	TranslationsTasksListAppBarActionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final TranslationsTasksListAppBarActionsPopupMenuEn popupMenu = TranslationsTasksListAppBarActionsPopupMenuEn._(_root);
 }
 
 // Path: tasks.view.tooltips
@@ -606,6 +626,9 @@ class TranslationsTasksEditFieldsEn {
 	/// en: 'Description'
 	String get taskDescription => 'Description';
 
+	/// en: 'Someday'
+	String get taskForSomeday => 'Someday';
+
 	/// en: 'Keep this task until complete'
 	String get taskPersistence => 'Keep this task until complete';
 }
@@ -647,6 +670,18 @@ class TranslationsTasksEditTooltipsEn {
 
 	/// en: 'Delete'
 	String get deleteTaskButton => 'Delete';
+}
+
+// Path: tasks.list.appBarActions.popupMenu
+class TranslationsTasksListAppBarActionsPopupMenuEn {
+	TranslationsTasksListAppBarActionsPopupMenuEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Show canceled'
+	String get showCanceledOption => 'Show canceled';
 }
 
 /// Flat map(s) containing all translations.
@@ -724,12 +759,17 @@ extension on Translations {
 			case 'tasks.list.tooltips.selectAllButton': return 'Select all';
 			case 'tasks.list.tooltips.removeSelectionButton': return 'Remove selection';
 			case 'tasks.list.tooltips.addNewButton': return 'Add new task';
+			case 'tasks.list.tooltips.canceledMarkButton': return 'Reopen';
+			case 'tasks.list.appBarActions.popupMenu.showCanceledOption': return 'Show canceled';
+			case 'tasks.list.cancelButton': return 'Cancel tasks';
+			case 'tasks.list.canceledTaskMark': return 'Canceled';
 			case 'tasks.view.title': return 'Task view';
 			case 'tasks.view.tooltips.editTaskButton': return 'Edit';
 			case 'tasks.edit.title.create': return 'New task';
 			case 'tasks.edit.title.existing': return 'Edit task';
 			case 'tasks.edit.fields.taskTitle': return 'Title';
 			case 'tasks.edit.fields.taskDescription': return 'Description';
+			case 'tasks.edit.fields.taskForSomeday': return 'Someday';
 			case 'tasks.edit.fields.taskPersistence': return 'Keep this task until complete';
 			case 'tasks.edit.submit.create': return 'Create new task!';
 			case 'tasks.edit.submit.existing': return 'Save changes';

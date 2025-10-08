@@ -18,6 +18,7 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     @Default('') String description,
     DateTime? modifiedAt,
     DateTime? completedAt,
+    DateTime? canceledAt,
     DateTime? forDate,
     @Default(true) bool persistent,
     @JsonKey(toJson: Task._tagsToJson) @Default([]) List<ItemTag> tags,
@@ -62,10 +63,17 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     persistent: persistent ?? this.persistent,
   );
 
-  Task complete({required bool completed}) =>
-      copyWith(completedAt: completed ? DateTime.now() : null);
+  Task complete({required bool completed}) => copyWith(
+    completedAt: completed ? DateTime.now() : null,
+    canceledAt: null,
+  );
 
   bool get isCompleted => completedAt != null;
+
+  Task cancel({required bool canceled}) =>
+      copyWith(canceledAt: canceled ? DateTime.now() : null, completedAt: null);
+
+  bool get isCanceled => canceledAt != null;
 
   @override
   int compareTo(Task other) {

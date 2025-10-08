@@ -71,6 +71,13 @@ class TasksTable extends Table with TableInfo<TasksTable, TasksTableData> {
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  late final GeneratedColumn<DateTime> canceledAt = GeneratedColumn<DateTime>(
+    'canceled_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
   late final GeneratedColumn<int> importance = GeneratedColumn<int>(
     'importance',
     aliasedName,
@@ -88,6 +95,7 @@ class TasksTable extends Table with TableInfo<TasksTable, TasksTableData> {
     persistent,
     modifiedAt,
     completedAt,
+    canceledAt,
     importance,
   ];
   @override
@@ -133,6 +141,10 @@ class TasksTable extends Table with TableInfo<TasksTable, TasksTableData> {
         DriftSqlType.dateTime,
         data['${effectivePrefix}completed_at'],
       ),
+      canceledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}canceled_at'],
+      ),
       importance: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}importance'],
@@ -155,6 +167,7 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
   final bool persistent;
   final DateTime? modifiedAt;
   final DateTime? completedAt;
+  final DateTime? canceledAt;
   final int importance;
   const TasksTableData({
     required this.id,
@@ -165,6 +178,7 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
     required this.persistent,
     this.modifiedAt,
     this.completedAt,
+    this.canceledAt,
     required this.importance,
   });
   @override
@@ -183,6 +197,9 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
     }
     if (!nullToAbsent || completedAt != null) {
       map['completed_at'] = Variable<DateTime>(completedAt);
+    }
+    if (!nullToAbsent || canceledAt != null) {
+      map['canceled_at'] = Variable<DateTime>(canceledAt);
     }
     map['importance'] = Variable<int>(importance);
     return map;
@@ -204,6 +221,9 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
       completedAt: completedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(completedAt),
+      canceledAt: canceledAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(canceledAt),
       importance: Value(importance),
     );
   }
@@ -222,6 +242,7 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
       persistent: serializer.fromJson<bool>(json['persistent']),
       modifiedAt: serializer.fromJson<DateTime?>(json['modifiedAt']),
       completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
+      canceledAt: serializer.fromJson<DateTime?>(json['canceledAt']),
       importance: serializer.fromJson<int>(json['importance']),
     );
   }
@@ -237,6 +258,7 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
       'persistent': serializer.toJson<bool>(persistent),
       'modifiedAt': serializer.toJson<DateTime?>(modifiedAt),
       'completedAt': serializer.toJson<DateTime?>(completedAt),
+      'canceledAt': serializer.toJson<DateTime?>(canceledAt),
       'importance': serializer.toJson<int>(importance),
     };
   }
@@ -250,6 +272,7 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
     bool? persistent,
     Value<DateTime?> modifiedAt = const Value.absent(),
     Value<DateTime?> completedAt = const Value.absent(),
+    Value<DateTime?> canceledAt = const Value.absent(),
     int? importance,
   }) => TasksTableData(
     id: id ?? this.id,
@@ -260,6 +283,7 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
     persistent: persistent ?? this.persistent,
     modifiedAt: modifiedAt.present ? modifiedAt.value : this.modifiedAt,
     completedAt: completedAt.present ? completedAt.value : this.completedAt,
+    canceledAt: canceledAt.present ? canceledAt.value : this.canceledAt,
     importance: importance ?? this.importance,
   );
   TasksTableData copyWithCompanion(TasksTableCompanion data) {
@@ -280,6 +304,9 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
       completedAt: data.completedAt.present
           ? data.completedAt.value
           : this.completedAt,
+      canceledAt: data.canceledAt.present
+          ? data.canceledAt.value
+          : this.canceledAt,
       importance: data.importance.present
           ? data.importance.value
           : this.importance,
@@ -297,6 +324,7 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
           ..write('persistent: $persistent, ')
           ..write('modifiedAt: $modifiedAt, ')
           ..write('completedAt: $completedAt, ')
+          ..write('canceledAt: $canceledAt, ')
           ..write('importance: $importance')
           ..write(')'))
         .toString();
@@ -312,6 +340,7 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
     persistent,
     modifiedAt,
     completedAt,
+    canceledAt,
     importance,
   );
   @override
@@ -326,6 +355,7 @@ class TasksTableData extends DataClass implements Insertable<TasksTableData> {
           other.persistent == this.persistent &&
           other.modifiedAt == this.modifiedAt &&
           other.completedAt == this.completedAt &&
+          other.canceledAt == this.canceledAt &&
           other.importance == this.importance);
 }
 
@@ -338,6 +368,7 @@ class TasksTableCompanion extends UpdateCompanion<TasksTableData> {
   final Value<bool> persistent;
   final Value<DateTime?> modifiedAt;
   final Value<DateTime?> completedAt;
+  final Value<DateTime?> canceledAt;
   final Value<int> importance;
   final Value<int> rowid;
   const TasksTableCompanion({
@@ -349,6 +380,7 @@ class TasksTableCompanion extends UpdateCompanion<TasksTableData> {
     this.persistent = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     this.completedAt = const Value.absent(),
+    this.canceledAt = const Value.absent(),
     this.importance = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -361,6 +393,7 @@ class TasksTableCompanion extends UpdateCompanion<TasksTableData> {
     this.persistent = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     this.completedAt = const Value.absent(),
+    this.canceledAt = const Value.absent(),
     required int importance,
     this.rowid = const Value.absent(),
   }) : id = Value(id),
@@ -376,6 +409,7 @@ class TasksTableCompanion extends UpdateCompanion<TasksTableData> {
     Expression<bool>? persistent,
     Expression<DateTime>? modifiedAt,
     Expression<DateTime>? completedAt,
+    Expression<DateTime>? canceledAt,
     Expression<int>? importance,
     Expression<int>? rowid,
   }) {
@@ -388,6 +422,7 @@ class TasksTableCompanion extends UpdateCompanion<TasksTableData> {
       if (persistent != null) 'persistent': persistent,
       if (modifiedAt != null) 'modified_at': modifiedAt,
       if (completedAt != null) 'completed_at': completedAt,
+      if (canceledAt != null) 'canceled_at': canceledAt,
       if (importance != null) 'importance': importance,
       if (rowid != null) 'rowid': rowid,
     });
@@ -402,6 +437,7 @@ class TasksTableCompanion extends UpdateCompanion<TasksTableData> {
     Value<bool>? persistent,
     Value<DateTime?>? modifiedAt,
     Value<DateTime?>? completedAt,
+    Value<DateTime?>? canceledAt,
     Value<int>? importance,
     Value<int>? rowid,
   }) {
@@ -414,6 +450,7 @@ class TasksTableCompanion extends UpdateCompanion<TasksTableData> {
       persistent: persistent ?? this.persistent,
       modifiedAt: modifiedAt ?? this.modifiedAt,
       completedAt: completedAt ?? this.completedAt,
+      canceledAt: canceledAt ?? this.canceledAt,
       importance: importance ?? this.importance,
       rowid: rowid ?? this.rowid,
     );
@@ -446,6 +483,9 @@ class TasksTableCompanion extends UpdateCompanion<TasksTableData> {
     if (completedAt.present) {
       map['completed_at'] = Variable<DateTime>(completedAt.value);
     }
+    if (canceledAt.present) {
+      map['canceled_at'] = Variable<DateTime>(canceledAt.value);
+    }
     if (importance.present) {
       map['importance'] = Variable<int>(importance.value);
     }
@@ -466,6 +506,7 @@ class TasksTableCompanion extends UpdateCompanion<TasksTableData> {
           ..write('persistent: $persistent, ')
           ..write('modifiedAt: $modifiedAt, ')
           ..write('completedAt: $completedAt, ')
+          ..write('canceledAt: $canceledAt, ')
           ..write('importance: $importance, ')
           ..write('rowid: $rowid')
           ..write(')'))

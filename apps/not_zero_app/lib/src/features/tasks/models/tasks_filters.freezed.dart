@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TasksFilters {
 
- Set<String> get searchTags; DateTime? get forDate;
+ Set<String> get searchTags; DateTime? get forDate; bool get someday; bool? get completed; bool? get canceled;
 /// Create a copy of TasksFilters
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $TasksFiltersCopyWith<TasksFilters> get copyWith => _$TasksFiltersCopyWithImpl<T
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TasksFilters&&const DeepCollectionEquality().equals(other.searchTags, searchTags)&&(identical(other.forDate, forDate) || other.forDate == forDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TasksFilters&&const DeepCollectionEquality().equals(other.searchTags, searchTags)&&(identical(other.forDate, forDate) || other.forDate == forDate)&&(identical(other.someday, someday) || other.someday == someday)&&(identical(other.completed, completed) || other.completed == completed)&&(identical(other.canceled, canceled) || other.canceled == canceled));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(searchTags),forDate);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(searchTags),forDate,someday,completed,canceled);
 
 @override
 String toString() {
-  return 'TasksFilters(searchTags: $searchTags, forDate: $forDate)';
+  return 'TasksFilters(searchTags: $searchTags, forDate: $forDate, someday: $someday, completed: $completed, canceled: $canceled)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $TasksFiltersCopyWith<$Res>  {
   factory $TasksFiltersCopyWith(TasksFilters value, $Res Function(TasksFilters) _then) = _$TasksFiltersCopyWithImpl;
 @useResult
 $Res call({
- Set<String> searchTags, DateTime? forDate
+ Set<String> searchTags, DateTime? forDate, bool someday, bool? completed, bool? canceled
 });
 
 
@@ -62,11 +62,14 @@ class _$TasksFiltersCopyWithImpl<$Res>
 
 /// Create a copy of TasksFilters
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? searchTags = null,Object? forDate = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? searchTags = null,Object? forDate = freezed,Object? someday = null,Object? completed = freezed,Object? canceled = freezed,}) {
   return _then(_self.copyWith(
 searchTags: null == searchTags ? _self.searchTags : searchTags // ignore: cast_nullable_to_non_nullable
 as Set<String>,forDate: freezed == forDate ? _self.forDate : forDate // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,someday: null == someday ? _self.someday : someday // ignore: cast_nullable_to_non_nullable
+as bool,completed: freezed == completed ? _self.completed : completed // ignore: cast_nullable_to_non_nullable
+as bool?,canceled: freezed == canceled ? _self.canceled : canceled // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 
@@ -151,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Set<String> searchTags,  DateTime? forDate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Set<String> searchTags,  DateTime? forDate,  bool someday,  bool? completed,  bool? canceled)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TasksFilters() when $default != null:
-return $default(_that.searchTags,_that.forDate);case _:
+return $default(_that.searchTags,_that.forDate,_that.someday,_that.completed,_that.canceled);case _:
   return orElse();
 
 }
@@ -172,10 +175,10 @@ return $default(_that.searchTags,_that.forDate);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Set<String> searchTags,  DateTime? forDate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Set<String> searchTags,  DateTime? forDate,  bool someday,  bool? completed,  bool? canceled)  $default,) {final _that = this;
 switch (_that) {
 case _TasksFilters():
-return $default(_that.searchTags,_that.forDate);case _:
+return $default(_that.searchTags,_that.forDate,_that.someday,_that.completed,_that.canceled);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +195,10 @@ return $default(_that.searchTags,_that.forDate);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Set<String> searchTags,  DateTime? forDate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Set<String> searchTags,  DateTime? forDate,  bool someday,  bool? completed,  bool? canceled)?  $default,) {final _that = this;
 switch (_that) {
 case _TasksFilters() when $default != null:
-return $default(_that.searchTags,_that.forDate);case _:
+return $default(_that.searchTags,_that.forDate,_that.someday,_that.completed,_that.canceled);case _:
   return null;
 
 }
@@ -207,7 +210,7 @@ return $default(_that.searchTags,_that.forDate);case _:
 
 
 class _TasksFilters implements TasksFilters {
-  const _TasksFilters({final  Set<String> searchTags = const <String>{}, this.forDate}): _searchTags = searchTags;
+  const _TasksFilters({final  Set<String> searchTags = const <String>{}, this.forDate, this.someday = false, this.completed, this.canceled}): _searchTags = searchTags;
   
 
  final  Set<String> _searchTags;
@@ -218,6 +221,9 @@ class _TasksFilters implements TasksFilters {
 }
 
 @override final  DateTime? forDate;
+@override@JsonKey() final  bool someday;
+@override final  bool? completed;
+@override final  bool? canceled;
 
 /// Create a copy of TasksFilters
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +235,16 @@ _$TasksFiltersCopyWith<_TasksFilters> get copyWith => __$TasksFiltersCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TasksFilters&&const DeepCollectionEquality().equals(other._searchTags, _searchTags)&&(identical(other.forDate, forDate) || other.forDate == forDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TasksFilters&&const DeepCollectionEquality().equals(other._searchTags, _searchTags)&&(identical(other.forDate, forDate) || other.forDate == forDate)&&(identical(other.someday, someday) || other.someday == someday)&&(identical(other.completed, completed) || other.completed == completed)&&(identical(other.canceled, canceled) || other.canceled == canceled));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_searchTags),forDate);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_searchTags),forDate,someday,completed,canceled);
 
 @override
 String toString() {
-  return 'TasksFilters(searchTags: $searchTags, forDate: $forDate)';
+  return 'TasksFilters(searchTags: $searchTags, forDate: $forDate, someday: $someday, completed: $completed, canceled: $canceled)';
 }
 
 
@@ -249,7 +255,7 @@ abstract mixin class _$TasksFiltersCopyWith<$Res> implements $TasksFiltersCopyWi
   factory _$TasksFiltersCopyWith(_TasksFilters value, $Res Function(_TasksFilters) _then) = __$TasksFiltersCopyWithImpl;
 @override @useResult
 $Res call({
- Set<String> searchTags, DateTime? forDate
+ Set<String> searchTags, DateTime? forDate, bool someday, bool? completed, bool? canceled
 });
 
 
@@ -266,11 +272,14 @@ class __$TasksFiltersCopyWithImpl<$Res>
 
 /// Create a copy of TasksFilters
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? searchTags = null,Object? forDate = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? searchTags = null,Object? forDate = freezed,Object? someday = null,Object? completed = freezed,Object? canceled = freezed,}) {
   return _then(_TasksFilters(
 searchTags: null == searchTags ? _self._searchTags : searchTags // ignore: cast_nullable_to_non_nullable
 as Set<String>,forDate: freezed == forDate ? _self.forDate : forDate // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,someday: null == someday ? _self.someday : someday // ignore: cast_nullable_to_non_nullable
+as bool,completed: freezed == completed ? _self.completed : completed // ignore: cast_nullable_to_non_nullable
+as bool?,canceled: freezed == canceled ? _self.canceled : canceled // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 

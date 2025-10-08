@@ -12,6 +12,12 @@ list:
     selectAllButton: 'Select all'
     removeSelectionButton: 'Remove selection'
     addNewButton: 'Add new task'
+    canceledMarkButton: 'Reopen'
+  appBarActions:
+    popupMenu:
+      showCanceledOption: Show canceled
+  cancelButton: 'Cancel tasks'
+  canceledTaskMark: 'Canceled'
 
 view:
   title: 'Task view'
@@ -25,6 +31,7 @@ edit:
   fields:
     taskTitle: 'Title'
     taskDescription: 'Description'
+    taskForSomeday: 'Someday'
     taskPersistence: 'Keep this task until complete'
   submit:
     create: 'Create new task!'

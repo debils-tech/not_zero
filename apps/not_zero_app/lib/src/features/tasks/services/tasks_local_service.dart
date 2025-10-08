@@ -55,6 +55,40 @@ class TasksLocalService {
       );
     }
 
+    if (filters.someday) {
+      dbFilters.add(tasksTable.forDate.isNull());
+    }
+
+    assert(
+      filters.forDate == null || !filters.someday,
+      'Filtering by "forDate" and by "someday" at the same '
+      'will result in empty set of tasks '
+      'since "someday" is when "forDate" != null',
+    );
+
+    final canceled = filters.canceled;
+    if (canceled != null) {
+      dbFilters.add(
+        canceled ? tasksTable.isCanceled : tasksTable.isNotCanceled,
+      );
+    }
+
+    final completed = filters.completed;
+    if (completed != null) {
+      dbFilters.add(
+        completed ? tasksTable.isCompleted : tasksTable.isNotCompleted,
+      );
+    }
+
+    assert(
+      canceled == null ||
+          completed == null ||
+          canceled && !completed ||
+          !canceled && completed,
+      "Tasks can't be canceled and completed at the same time. "
+      'Some error in filters has occured',
+    );
+
     if (dbFilters.isEmpty) {
       return const Constant(true);
     }
@@ -103,6 +137,23 @@ class TasksLocalService {
         await _db
             .into(_db.tasksTagEntries)
             .insertOnConflictUpdate(TasksTagEntry(task: task.id, tag: tag.id));
+      }
+    });
+  }
+
+  // It neither update tags nor inserts new data, only updates fields for
+  // multiple rows in single transaction.
+  Future<void> updateTasks(Iterable<Task> tasks) {
+    return _db.transaction(() async {
+      for (final task in tasks) {
+        final affected = await _db
+            .update(_db.tasksTable)
+            .replace(task.toInsertable());
+
+        assert(
+          affected,
+          "Somehow tried to update task that wasn't presented in the db",
+        );
       }
     });
   }

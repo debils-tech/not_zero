@@ -84,6 +84,7 @@ class TasksRepository {
     final newList = [..._tasksStreamController.value]
       ..removeWhere((element) {
         if (tasks.contains(element.id)) {
+          // Should exclude deleted tasks from stats
           if (element.isCompleted) {
             _statsRepository.excludeCompletedTask(element.importance);
           }
@@ -94,5 +95,40 @@ class TasksRepository {
     _tasksStreamController.add(newList);
 
     return _localService.deleteTasks(tasks);
+  }
+
+  Future<void> cancelMultipleTasks(
+    Set<String> tasks, {
+    required bool showCanceled,
+  }) {
+    final oldList = _tasksStreamController.value;
+
+    final cancelList = oldList
+        .where((element) => tasks.contains(element.id))
+        .map((element) {
+          // Should exclude canceled tasks from stats
+          if (element.isCompleted) {
+            _statsRepository.excludeCompletedTask(element.importance);
+          }
+          return element.cancel(canceled: true);
+        });
+
+    final Iterable<Task> retainList;
+    if (!showCanceled) {
+      // Remove canceled tasks if we they are filtered out
+      retainList = oldList.where(
+        (element) => !tasks.contains(element.id),
+      );
+    } else {
+      // Just mark canceled tasks as canceled if we are showing them
+      retainList = oldList.map(
+        (element) => tasks.contains(element.id)
+            ? element.cancel(canceled: true)
+            : element,
+      );
+    }
+
+    _tasksStreamController.add(retainList.toList());
+    return _localService.updateTasks(cancelList);
   }
 }

@@ -7,5 +7,8 @@ abstract class TasksFilters with _$TasksFilters {
   const factory TasksFilters({
     @Default(<String>{}) Set<String> searchTags,
     DateTime? forDate,
+    @Default(false) bool someday,
+    bool? completed,
+    bool? canceled,
   }) = _TasksFilters;
 }

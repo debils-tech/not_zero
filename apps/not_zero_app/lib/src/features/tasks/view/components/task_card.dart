@@ -15,7 +15,7 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 200),
-      opacity: task.isCompleted ? 0.5 : 1,
+      opacity: task.isCompleted || task.isCanceled ? 0.5 : 1,
       child: SelectableCard(
         onTap: () => context.push('/tasks/view/${task.id}', extra: task),
         identifier: task.id,
@@ -66,6 +66,8 @@ class _TaskTextBlock extends StatelessWidget {
           maxLines: 3,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w600,
+            decoration: task.isCanceled ? TextDecoration.lineThrough : null,
+            decorationThickness: 2.5,
           ),
         ),
         const SizedBox(height: 4),
@@ -164,6 +166,36 @@ class _TaskCheckbox extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    assert(
+      !task.isCompleted || !task.isCanceled,
+      "Task can't be canceled and completed at the same time",
+    );
+
+    if (task.isCanceled) {
+      return Tooltip(
+        message: t.tasks.list.tooltips.canceledMarkButton,
+        child: InkWell(
+          onTap: () => ref
+              .read(tasksRepositoryProvider)
+              .updateTask(task.complete(completed: false)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.cancel_outlined,
+                  size: 20,
+                ),
+                const SizedBox(width: 4),
+                Text(t.tasks.list.canceledTaskMark),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return Transform.scale(
       scale: 1.3,
       child: Checkbox(

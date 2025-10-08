@@ -112,9 +112,23 @@ class TaskEditForDateField extends StatelessWidget {
     return FormBuilderField<DateTime>(
       name: name,
       builder: (field) {
-        return FancyDatePickerButton(
-          value: field.value ?? DateTime.now(),
-          onChanged: field.didChange,
+        return Row(
+          children: [
+            Expanded(
+              child: FancyDatePickerButton(
+                value: field.value,
+                onChanged: field.didChange,
+              ),
+            ),
+            if (field.value != null) ...[
+              const SizedBox(width: 8),
+              OutlinedButton.icon(
+                onPressed: () => field.didChange(null),
+                icon: const Icon(Icons.close_rounded),
+                label: Text(t.tasks.edit.fields.taskForSomeday),
+              ),
+            ],
+          ],
         );
       },
     );
