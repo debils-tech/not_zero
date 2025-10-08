@@ -10,7 +10,7 @@ class TagsTable extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();
   IntColumn get colorIndex => integer().named('color')();
-  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
   @override
   Set<Column<Object>>? get primaryKey => {id};

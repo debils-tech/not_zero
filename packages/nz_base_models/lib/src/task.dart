@@ -15,10 +15,10 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     required String title,
     required TaskImportance importance,
     required DateTime createdAt,
-    required DateTime forDate,
     @Default('') String description,
     DateTime? modifiedAt,
     DateTime? completedAt,
+    DateTime? forDate,
     @Default(true) bool persistent,
     @JsonKey(toJson: Task._tagsToJson) @Default([]) List<ItemTag> tags,
   }) = _Task;
@@ -30,18 +30,18 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   factory Task.create({
     required String title,
     required TaskImportance importance,
-    required DateTime forDate,
     String? description,
     List<ItemTag>? tags,
+    DateTime? forDate,
     bool? persistent,
   }) => Task(
     id: const Uuid().v4(),
     title: title,
     description: description ?? '',
     createdAt: DateTime.now(),
-    forDate: forDate,
     importance: importance,
     tags: tags ?? [],
+    forDate: forDate,
     persistent: persistent ?? true,
   );
 

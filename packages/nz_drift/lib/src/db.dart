@@ -18,7 +18,7 @@ class NotZeroDatabase extends _$NotZeroDatabase {
   NotZeroDatabase.memory() : super(openDriftDatabase(permanent: false));
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration {

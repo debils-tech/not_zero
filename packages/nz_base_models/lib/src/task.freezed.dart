@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Task {
 
- String get id; String get title; TaskImportance get importance; DateTime get createdAt; DateTime get forDate; String get description; DateTime? get modifiedAt; DateTime? get completedAt; bool get persistent;@JsonKey(toJson: Task._tagsToJson) List<ItemTag> get tags;
+ String get id; String get title; TaskImportance get importance; DateTime get createdAt; String get description; DateTime? get modifiedAt; DateTime? get completedAt; DateTime? get forDate; bool get persistent;@JsonKey(toJson: Task._tagsToJson) List<ItemTag> get tags;
 /// Create a copy of Task
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $TaskCopyWith<Task> get copyWith => _$TaskCopyWithImpl<Task>(this as Task, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Task&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.forDate, forDate) || other.forDate == forDate)&&(identical(other.description, description) || other.description == description)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.persistent, persistent) || other.persistent == persistent)&&const DeepCollectionEquality().equals(other.tags, tags));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Task&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.description, description) || other.description == description)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.forDate, forDate) || other.forDate == forDate)&&(identical(other.persistent, persistent) || other.persistent == persistent)&&const DeepCollectionEquality().equals(other.tags, tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,importance,createdAt,forDate,description,modifiedAt,completedAt,persistent,const DeepCollectionEquality().hash(tags));
+int get hashCode => Object.hash(runtimeType,id,title,importance,createdAt,description,modifiedAt,completedAt,forDate,persistent,const DeepCollectionEquality().hash(tags));
 
 @override
 String toString() {
-  return 'Task(id: $id, title: $title, importance: $importance, createdAt: $createdAt, forDate: $forDate, description: $description, modifiedAt: $modifiedAt, completedAt: $completedAt, persistent: $persistent, tags: $tags)';
+  return 'Task(id: $id, title: $title, importance: $importance, createdAt: $createdAt, description: $description, modifiedAt: $modifiedAt, completedAt: $completedAt, forDate: $forDate, persistent: $persistent, tags: $tags)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $TaskCopyWith<$Res>  {
   factory $TaskCopyWith(Task value, $Res Function(Task) _then) = _$TaskCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, TaskImportance importance, DateTime createdAt, DateTime forDate, String description, DateTime? modifiedAt, DateTime? completedAt, bool persistent,@JsonKey(toJson: Task._tagsToJson) List<ItemTag> tags
+ String id, String title, TaskImportance importance, DateTime createdAt, String description, DateTime? modifiedAt, DateTime? completedAt, DateTime? forDate, bool persistent,@JsonKey(toJson: Task._tagsToJson) List<ItemTag> tags
 });
 
 
@@ -65,16 +65,16 @@ class _$TaskCopyWithImpl<$Res>
 
 /// Create a copy of Task
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? importance = null,Object? createdAt = null,Object? forDate = null,Object? description = null,Object? modifiedAt = freezed,Object? completedAt = freezed,Object? persistent = null,Object? tags = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? importance = null,Object? createdAt = null,Object? description = null,Object? modifiedAt = freezed,Object? completedAt = freezed,Object? forDate = freezed,Object? persistent = null,Object? tags = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,importance: null == importance ? _self.importance : importance // ignore: cast_nullable_to_non_nullable
 as TaskImportance,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,forDate: null == forDate ? _self.forDate : forDate // ignore: cast_nullable_to_non_nullable
 as DateTime,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,modifiedAt: freezed == modifiedAt ? _self.modifiedAt : modifiedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,completedAt: freezed == completedAt ? _self.completedAt : completedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,forDate: freezed == forDate ? _self.forDate : forDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,persistent: null == persistent ? _self.persistent : persistent // ignore: cast_nullable_to_non_nullable
 as bool,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<ItemTag>,
@@ -162,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  DateTime forDate,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  bool persistent, @JsonKey(toJson: Task._tagsToJson)  List<ItemTag> tags)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  DateTime? forDate,  bool persistent, @JsonKey(toJson: Task._tagsToJson)  List<ItemTag> tags)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Task() when $default != null:
-return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.forDate,_that.description,_that.modifiedAt,_that.completedAt,_that.persistent,_that.tags);case _:
+return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.description,_that.modifiedAt,_that.completedAt,_that.forDate,_that.persistent,_that.tags);case _:
   return orElse();
 
 }
@@ -183,10 +183,10 @@ return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.forD
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  DateTime forDate,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  bool persistent, @JsonKey(toJson: Task._tagsToJson)  List<ItemTag> tags)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  DateTime? forDate,  bool persistent, @JsonKey(toJson: Task._tagsToJson)  List<ItemTag> tags)  $default,) {final _that = this;
 switch (_that) {
 case _Task():
-return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.forDate,_that.description,_that.modifiedAt,_that.completedAt,_that.persistent,_that.tags);case _:
+return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.description,_that.modifiedAt,_that.completedAt,_that.forDate,_that.persistent,_that.tags);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +203,10 @@ return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.forD
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  DateTime forDate,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  bool persistent, @JsonKey(toJson: Task._tagsToJson)  List<ItemTag> tags)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  DateTime? forDate,  bool persistent, @JsonKey(toJson: Task._tagsToJson)  List<ItemTag> tags)?  $default,) {final _that = this;
 switch (_that) {
 case _Task() when $default != null:
-return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.forDate,_that.description,_that.modifiedAt,_that.completedAt,_that.persistent,_that.tags);case _:
+return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.description,_that.modifiedAt,_that.completedAt,_that.forDate,_that.persistent,_that.tags);case _:
   return null;
 
 }
@@ -218,17 +218,17 @@ return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.forD
 @JsonSerializable()
 
 class _Task extends Task {
-   _Task({required this.id, required this.title, required this.importance, required this.createdAt, required this.forDate, this.description = '', this.modifiedAt, this.completedAt, this.persistent = true, @JsonKey(toJson: Task._tagsToJson) final  List<ItemTag> tags = const []}): _tags = tags,super._();
+   _Task({required this.id, required this.title, required this.importance, required this.createdAt, this.description = '', this.modifiedAt, this.completedAt, this.forDate, this.persistent = true, @JsonKey(toJson: Task._tagsToJson) final  List<ItemTag> tags = const []}): _tags = tags,super._();
   factory _Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 
 @override final  String id;
 @override final  String title;
 @override final  TaskImportance importance;
 @override final  DateTime createdAt;
-@override final  DateTime forDate;
 @override@JsonKey() final  String description;
 @override final  DateTime? modifiedAt;
 @override final  DateTime? completedAt;
+@override final  DateTime? forDate;
 @override@JsonKey() final  bool persistent;
  final  List<ItemTag> _tags;
 @override@JsonKey(toJson: Task._tagsToJson) List<ItemTag> get tags {
@@ -251,16 +251,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Task&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.forDate, forDate) || other.forDate == forDate)&&(identical(other.description, description) || other.description == description)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.persistent, persistent) || other.persistent == persistent)&&const DeepCollectionEquality().equals(other._tags, _tags));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Task&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.description, description) || other.description == description)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.forDate, forDate) || other.forDate == forDate)&&(identical(other.persistent, persistent) || other.persistent == persistent)&&const DeepCollectionEquality().equals(other._tags, _tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,importance,createdAt,forDate,description,modifiedAt,completedAt,persistent,const DeepCollectionEquality().hash(_tags));
+int get hashCode => Object.hash(runtimeType,id,title,importance,createdAt,description,modifiedAt,completedAt,forDate,persistent,const DeepCollectionEquality().hash(_tags));
 
 @override
 String toString() {
-  return 'Task(id: $id, title: $title, importance: $importance, createdAt: $createdAt, forDate: $forDate, description: $description, modifiedAt: $modifiedAt, completedAt: $completedAt, persistent: $persistent, tags: $tags)';
+  return 'Task(id: $id, title: $title, importance: $importance, createdAt: $createdAt, description: $description, modifiedAt: $modifiedAt, completedAt: $completedAt, forDate: $forDate, persistent: $persistent, tags: $tags)';
 }
 
 
@@ -271,7 +271,7 @@ abstract mixin class _$TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
   factory _$TaskCopyWith(_Task value, $Res Function(_Task) _then) = __$TaskCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, TaskImportance importance, DateTime createdAt, DateTime forDate, String description, DateTime? modifiedAt, DateTime? completedAt, bool persistent,@JsonKey(toJson: Task._tagsToJson) List<ItemTag> tags
+ String id, String title, TaskImportance importance, DateTime createdAt, String description, DateTime? modifiedAt, DateTime? completedAt, DateTime? forDate, bool persistent,@JsonKey(toJson: Task._tagsToJson) List<ItemTag> tags
 });
 
 
@@ -288,16 +288,16 @@ class __$TaskCopyWithImpl<$Res>
 
 /// Create a copy of Task
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? importance = null,Object? createdAt = null,Object? forDate = null,Object? description = null,Object? modifiedAt = freezed,Object? completedAt = freezed,Object? persistent = null,Object? tags = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? importance = null,Object? createdAt = null,Object? description = null,Object? modifiedAt = freezed,Object? completedAt = freezed,Object? forDate = freezed,Object? persistent = null,Object? tags = null,}) {
   return _then(_Task(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,importance: null == importance ? _self.importance : importance // ignore: cast_nullable_to_non_nullable
 as TaskImportance,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,forDate: null == forDate ? _self.forDate : forDate // ignore: cast_nullable_to_non_nullable
 as DateTime,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,modifiedAt: freezed == modifiedAt ? _self.modifiedAt : modifiedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,completedAt: freezed == completedAt ? _self.completedAt : completedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,forDate: freezed == forDate ? _self.forDate : forDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,persistent: null == persistent ? _self.persistent : persistent // ignore: cast_nullable_to_non_nullable
 as bool,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<ItemTag>,

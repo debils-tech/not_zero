@@ -9,9 +9,9 @@ class TasksTable extends Table {
   TextColumn get id => text()();
   TextColumn get title => text()();
   TextColumn get description => text()();
-  DateTimeColumn get createdAt => dateTime()();
-  TextColumn get forDate => text().map(const DateConverter())();
-  BoolColumn get persistent => boolean()();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  TextColumn get forDate => text().map(const DateConverter()).nullable()();
+  BoolColumn get persistent => boolean().withDefault(const Constant(true))();
   DateTimeColumn get modifiedAt => dateTime().nullable()();
   DateTimeColumn get completedAt => dateTime().nullable()();
   IntColumn get importance => intEnum<TaskImportance>()();
