@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:drift/drift.dart';
-import 'package:flutter/foundation.dart';
 import 'package:nz_drift/src/database/native_database.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 
@@ -14,7 +13,7 @@ part 'db.g.dart';
 
 @DriftDatabase(tables: [TasksTable, TagsTable, TasksTagEntries])
 class NotZeroDatabase extends _$NotZeroDatabase {
-  NotZeroDatabase() : super(openDriftDatabase());
+  NotZeroDatabase([QueryExecutor? e]) : super(e ?? openDriftDatabase());
 
   NotZeroDatabase.memory() : super(openDriftDatabase(permanent: false));
 
@@ -33,16 +32,11 @@ class NotZeroDatabase extends _$NotZeroDatabase {
           steps: notZeroMigrationSteps,
         );
 
-        if (kDebugMode) {
-          // Fail if the migration broke foreign keys
-          final wrongForeignKeys = await customSelect(
-            'PRAGMA foreign_key_check',
-          ).get();
-          assert(
-            wrongForeignKeys.isEmpty,
-            'Wrong foreign keys: ${wrongForeignKeys.map((e) => e.data)}',
-          );
-        }
+        // Fail if the migration broke foreign keys
+        assert(
+          (await customSelect('PRAGMA foreign_key_check').get()).isEmpty,
+          'Wrong foreign keys',
+        );
 
         await customStatement('PRAGMA foreign_keys = ON;');
       },
