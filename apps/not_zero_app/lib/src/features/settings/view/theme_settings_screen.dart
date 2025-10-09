@@ -1,62 +1,90 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/settings/models/theme_state.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
-class ThemeSettingsScreen extends StatelessWidget {
+class ThemeSettingsScreen extends ConsumerWidget {
   const ThemeSettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeSettings = ref.watch(themeSettingsNotifierProvider);
+    final themeStateController = ref.watch(
+      themeSettingsNotifierProvider.notifier,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(t.settings.theme.title),
       ),
-      body: ListView(
-        children: [
-          _ThemeSettingsOption(
-            name: t.settings.theme.values.light,
-            state: ThemeState.light,
-          ),
-          _ThemeSettingsOption(
-            name: t.settings.theme.values.dark,
-            state: ThemeState.dark,
-          ),
-          _ThemeSettingsOption(
-            name: t.settings.theme.values.system,
-            state: ThemeState.system,
-          ),
-        ],
+      body: RadioGroup<ThemeState>(
+        groupValue: themeSettings.themeState,
+        onChanged: (value) {
+          if (value != null && value != themeSettings.themeState) {
+            themeStateController.setTheme(value);
+          }
+        },
+        child: ListView(
+          children: [
+            RadioListTile<ThemeState>(
+              title: Text(t.settings.theme.values.light),
+              value: ThemeState.light,
+            ),
+            RadioListTile<ThemeState>(
+              title: Text(t.settings.theme.values.dark),
+              value: ThemeState.dark,
+            ),
+            RadioListTile<ThemeState>(
+              title: Text(t.settings.theme.values.system),
+              value: ThemeState.system,
+            ),
+            const Divider(),
+            _DynamicColorsCheckbox(
+              enabled: themeSettings.useDynamicColors,
+              onChanged: themeStateController.setUseDynamicColors,
+            ),
+            SwitchListTile(
+              value: themeSettings.harmonizeColors,
+              onChanged: themeStateController.setHarmonizeColors,
+              title: Text(t.settings.theme.harmonizeColors.title),
+              subtitle: Text(t.settings.theme.harmonizeColors.subtitle),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class _ThemeSettingsOption extends ConsumerWidget {
-  const _ThemeSettingsOption({required this.name, required this.state});
+class _DynamicColorsCheckbox extends StatelessWidget {
+  const _DynamicColorsCheckbox({
+    required this.enabled,
+    required this.onChanged,
+  });
 
-  final String name;
-  final ThemeState state;
+  final bool enabled;
+  final void Function(bool) onChanged;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final themeState = ref.watch(
-      themeSettingsNotifierProvider.select((settings) => settings.themeState),
-    );
-    final themeStateController = ref.watch(
-      themeSettingsNotifierProvider.notifier,
-    );
+  Widget build(BuildContext context) {
+    final isSupported =
+        Platform.isAndroid ||
+        Platform.isLinux ||
+        Platform.isMacOS ||
+        Platform.isWindows;
 
-    return RadioListTile<ThemeState>(
-      value: state,
-      groupValue: themeState,
-      title: Text(name),
-      onChanged: (value) {
-        if (value != null && value != themeState) {
-          themeStateController.setTheme(value);
-        }
-      },
+    return SwitchListTile(
+      value: enabled,
+      onChanged: isSupported ? onChanged : null,
+      title: Text(t.settings.theme.useDynamicColorsOption.title),
+      subtitle: Text(
+        isSupported
+            ? t.settings.theme.useDynamicColorsOption.subtitle
+            : t.settings.theme.useDynamicColorsOption.subttileUnavailable,
+      ),
     );
   }
 }

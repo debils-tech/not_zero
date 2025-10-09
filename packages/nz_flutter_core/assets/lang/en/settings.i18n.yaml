@@ -7,6 +7,13 @@ list:
 
 theme:
   title: 'Theme'
+  useDynamicColorsOption:
+    title: 'Use dynamic colors'
+    subtitle: App's theme would adapt on system accent colors
+    subttileUnavailable: Dynamic colors aren't available on this platform
+  harmonizeColors:
+    title: 'Harmonized colors'
+    subtitle: 'All the custom colors would be more integrated into app theme'
   values:
     light: 'Light theme'
     dark: 'Dark theme'
