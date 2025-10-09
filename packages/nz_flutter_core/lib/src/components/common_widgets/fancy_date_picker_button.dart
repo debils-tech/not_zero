@@ -37,9 +37,15 @@ class FancyDatePickerButton extends StatelessWidget {
 
   Future<void> _selectDay(BuildContext context) async {
     final today = DateTime.now();
+    final pickedDate = value;
+
+    // TODO(uSlashVlad): Maybe it would be better to place date picker in the navigation as a usual dialog page?
     final newValue = await showDatePicker(
       context: context,
-      initialDate: value,
+      // TODO(uSlashVlad): Couldn't pick date in the past, maybe some fix needed
+      initialDate: pickedDate != null && today.isAfter(pickedDate)
+          ? today
+          : pickedDate,
       currentDate: today,
       firstDate: today,
       lastDate: today.add(const Duration(days: 365)),
