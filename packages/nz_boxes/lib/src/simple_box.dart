@@ -18,16 +18,42 @@ class NotZeroSimpleBox implements NotZeroBox<String> {
   @override
   Future<void> dispose() async {}
 
-  @override
-  String? value(String key) => _get(key);
+  String? getString(String key, {String? defaultValue}) {
+    return _prefs.getString(key) ?? defaultValue;
+  }
 
+  int? getInt(String key, {int? defaultValue}) {
+    return _prefs.getInt(key) ?? defaultValue;
+  }
+
+  bool? getBool(String key, {bool? defaultValue}) {
+    return _prefs.getBool(key) ?? defaultValue;
+  }
+
+  @Deprecated('[value] method was deprecated, use [getString] instead')
   @override
-  Future<void> put(String key, String value) => _set(key, value);
+  String? value(String key) => getString(key);
+
+  Future<void> putString(String key, String value) {
+    return _prefs.setString(key, value);
+  }
+
+  Future<void> putInt(String key, int value) {
+    return _prefs.setInt(key, value);
+  }
+
+  Future<void> putBool(String key, bool value) {
+    return _prefs.setBool(key, value);
+  }
+
+  @Deprecated('Do not use this method, use [putString] instead')
+  @override
+  Future<void> put(String key, String value) => putString(key, value);
 
   @override
   Future<void> putAll(Map<String, String> values) async {
     for (final entry in values.entries) {
-      await _set(entry.key, entry.value);
+      await putString(entry.key, entry.value);
     }
   }
 
@@ -57,14 +83,6 @@ class NotZeroSimpleBox implements NotZeroBox<String> {
 
   @override
   Future<void> deleteBox() => clearAll();
-
-  String? _get(String key) {
-    return _prefs.getString(_key(key));
-  }
-
-  Future<void> _set(String key, String value) {
-    return _prefs.setString(_key(key), value);
-  }
 
   Future<void> _remove(String key) {
     return _prefs.remove(_key(key));
