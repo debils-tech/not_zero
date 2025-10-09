@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,41 +47,52 @@ class MyApp extends ConsumerWidget {
 
     final themeState = ref.watch(themeStateNotifierProvider);
 
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      shortcuts: {
-        if (isPlatformDesktop || kIsWeb)
-          const SingleActivator(LogicalKeyboardKey.escape): VoidCallbackIntent(
-            () => GlobalNavigation.navigator?.maybePop(),
-          ),
+    return DynamicColorBuilder(
+      builder: (lightColorScheme, darkColorScheme) {
+        final lightTheme = defaultLightTheme.applyDynamicColors(
+          lightColorScheme,
+        );
+        final darkTheme = defaultDarkTheme.applyDynamicColors(
+          darkColorScheme,
+        );
+
+        return MaterialApp.router(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          shortcuts: {
+            if (isPlatformDesktop || kIsWeb)
+              const SingleActivator(LogicalKeyboardKey.escape): VoidCallbackIntent(
+                () => GlobalNavigation.navigator?.maybePop(),
+              ),
+          },
+
+          //-- Themes --
+          themeMode: switch (themeState) {
+            ThemeState.light => ThemeMode.light,
+            ThemeState.dark => ThemeMode.dark,
+            ThemeState.system => ThemeMode.system,
+          },
+          theme: lightTheme,
+          darkTheme: darkTheme,
+
+          //-- Routing --
+          routeInformationProvider: appRouter.routeInformationProvider,
+          routeInformationParser: appRouter.routeInformationParser,
+          routerDelegate: appRouter.routerDelegate,
+
+          //-- Localization --
+          locale: locale,
+          supportedLocales: const [
+            Locale('en', 'US'),
+            Locale('ru', 'RU'),
+          ],
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            FormBuilderLocalizations.delegate,
+          ],
+        );
       },
-
-      //-- Themes --
-      themeMode: switch (themeState) {
-        ThemeState.light => ThemeMode.light,
-        ThemeState.dark => ThemeMode.dark,
-        ThemeState.system => ThemeMode.system,
-      },
-      theme: defaultLightTheme,
-      darkTheme: defaultDarkTheme,
-
-      //-- Routing --
-      routeInformationProvider: appRouter.routeInformationProvider,
-      routeInformationParser: appRouter.routeInformationParser,
-      routerDelegate: appRouter.routerDelegate,
-
-      //-- Localization --
-      locale: locale,
-      supportedLocales: const [
-        Locale('en', 'US'),
-        Locale('ru', 'RU'),
-      ],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        FormBuilderLocalizations.delegate,
-      ],
     );
   }
 }
