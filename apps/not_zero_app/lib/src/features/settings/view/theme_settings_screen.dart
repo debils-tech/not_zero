@@ -41,8 +41,12 @@ class _ThemeSettingsOption extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeState = ref.watch(themeStateNotifierProvider);
-    final themeStateController = ref.watch(themeStateNotifierProvider.notifier);
+    final themeState = ref.watch(
+      themeSettingsNotifierProvider.select((settings) => settings.themeState),
+    );
+    final themeStateController = ref.watch(
+      themeSettingsNotifierProvider.notifier,
+    );
 
     return RadioListTile<ThemeState>(
       value: state,

@@ -45,15 +45,18 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = TranslationProvider.of(context).flutterLocale;
 
-    final themeState = ref.watch(themeStateNotifierProvider);
+    final themeSettings = ref.watch(themeSettingsNotifierProvider);
 
-    return DynamicColorBuilder(
+    return _OptionalDynamicColorsBuilder(
+      useDynamicColors: themeSettings.useDynamicColors,
       builder: (lightColorScheme, darkColorScheme) {
         final lightTheme = defaultLightTheme.applyDynamicColors(
           lightColorScheme,
+          harmonize: themeSettings.harmonizeColors,
         );
         final darkTheme = defaultDarkTheme.applyDynamicColors(
           darkColorScheme,
+          harmonize: themeSettings.harmonizeColors,
         );
 
         return MaterialApp.router(
@@ -61,13 +64,15 @@ class MyApp extends ConsumerWidget {
           debugShowCheckedModeBanner: false,
           shortcuts: {
             if (isPlatformDesktop || kIsWeb)
-              const SingleActivator(LogicalKeyboardKey.escape): VoidCallbackIntent(
+              const SingleActivator(
+                LogicalKeyboardKey.escape,
+              ): VoidCallbackIntent(
                 () => GlobalNavigation.navigator?.maybePop(),
               ),
           },
 
           //-- Themes --
-          themeMode: switch (themeState) {
+          themeMode: switch (themeSettings.themeState) {
             ThemeState.light => ThemeMode.light,
             ThemeState.dark => ThemeMode.dark,
             ThemeState.system => ThemeMode.system,
@@ -94,5 +99,28 @@ class MyApp extends ConsumerWidget {
         );
       },
     );
+  }
+}
+
+class _OptionalDynamicColorsBuilder extends ConsumerWidget {
+  const _OptionalDynamicColorsBuilder({
+    required this.useDynamicColors,
+    required this.builder,
+  });
+
+  final bool useDynamicColors;
+  final Widget Function(
+    ColorScheme? lightColorScheme,
+    ColorScheme? darkColorScheme,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (!useDynamicColors) {
+      return builder(null, null);
+    }
+
+    return DynamicColorBuilder(builder: builder);
   }
 }

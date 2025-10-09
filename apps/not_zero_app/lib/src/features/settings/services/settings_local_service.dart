@@ -10,9 +10,11 @@ class SettingsLocalService {
   static final log = Logger('SettingsLocalService');
 
   static const _themeStateKey = 'themeState';
+  static const _useDynamicColorsKey = 'useDynamicColors';
+  static const _harmonizeColorsKey = 'harmonizeColors';
 
   ThemeState? getThemeState() {
-    final stringValue = _settingsBox.value(_themeStateKey);
+    final stringValue = _settingsBox.getString(_themeStateKey);
 
     if (stringValue != null) {
       return ThemeState.values.byName(stringValue);
@@ -21,6 +23,22 @@ class SettingsLocalService {
   }
 
   Future<void> setThemeState(ThemeState state) {
-    return _settingsBox.put(_themeStateKey, state.name);
+    return _settingsBox.putString(_themeStateKey, state.name);
+  }
+
+  bool? getUseDynamicColors() {
+    return _settingsBox.getBool(_useDynamicColorsKey);
+  }
+
+  Future<void> setUseDynamicColors(bool value) {
+    return _settingsBox.putBool(_useDynamicColorsKey, value);
+  }
+
+  bool? getHarmonizeColors() {
+    return _settingsBox.getBool(_harmonizeColorsKey);
+  }
+
+  Future<void> setHarmonizeColors(bool value) {
+    return _settingsBox.putBool(_harmonizeColorsKey, value);
   }
 }
