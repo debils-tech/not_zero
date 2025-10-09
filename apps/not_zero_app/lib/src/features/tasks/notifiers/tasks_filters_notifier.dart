@@ -27,4 +27,8 @@ class TasksFiltersNotifier extends Notifier<TasksFilters> {
   void hideCanceled() {
     state = state.copyWith(canceled: false);
   }
+
+  void resetFilters() {
+    state = build();
+  }
 }

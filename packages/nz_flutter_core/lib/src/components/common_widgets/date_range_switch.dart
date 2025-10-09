@@ -49,10 +49,15 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
           icon: const Icon(Icons.arrow_back_ios_rounded),
         ),
         const SizedBox(width: 4),
-        _MiddleButton(
-          onTap: _todayRange,
-          rangeStart: _rangeStart,
-          rangeEnd: _rangeEnd,
+        Expanded(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 230),
+            child: _MiddleButton(
+              onTap: _todayRange,
+              rangeStart: _rangeStart,
+              rangeEnd: _rangeEnd,
+            ),
+          ),
         ),
         const SizedBox(width: 4),
         IconButton(
@@ -126,7 +131,6 @@ class _MiddleButton extends StatelessWidget {
       onPressed: onTap,
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        minimumSize: const Size(230, 45),
         foregroundColor: _isTodayInRange
             ? theme.colorScheme.primary
             : theme.colorScheme.onSurface,

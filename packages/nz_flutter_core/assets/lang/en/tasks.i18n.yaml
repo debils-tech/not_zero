@@ -18,6 +18,12 @@ list:
       showCanceledOption: Show canceled
   cancelButton: 'Cancel tasks'
   canceledTaskMark: 'Canceled'
+  empty:
+    icon: '¯\\_(ツ)_/¯'
+    title: 'There is no tasks'
+    button: 'Create a new one'
+    titleFilters: 'There is no tasks with such filters'
+    buttonFilters: 'Reset filters'
 
 view:
   title: 'Task view'

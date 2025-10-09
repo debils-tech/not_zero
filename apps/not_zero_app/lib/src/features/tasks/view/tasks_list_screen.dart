@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/tags/view/tag_selector.dart';
 import 'package:not_zero_app/src/features/tasks/di.dart';
 import 'package:not_zero_app/src/features/tasks/view/components/task_card.dart';
+import 'package:not_zero_app/src/features/tasks/view/components/tasks_empty_list_placeholder.dart';
 import 'package:not_zero_app/src/features/tasks/view/components/tasks_list_app_bar.dart';
 import 'package:not_zero_app/src/features/tasks/view/components/tasks_list_floating_buttons.dart';
 import 'package:nz_base_models/nz_base_models.dart';
@@ -87,6 +88,7 @@ class _TasksListView extends StatelessWidget {
                 key: Key('Task ${t.id}'),
               ),
             ),
+          if (tasks.isEmpty) const TasksEmptyListPlaceholder(),
         ],
       ),
     );

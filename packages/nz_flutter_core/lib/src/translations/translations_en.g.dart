@@ -320,6 +320,8 @@ class TranslationsTasksListEn {
 
 	/// en: 'Canceled'
 	String get canceledTaskMark => 'Canceled';
+
+	late final TranslationsTasksListEmptyEn empty = TranslationsTasksListEmptyEn._(_root);
 }
 
 // Path: tasks.view
@@ -585,6 +587,30 @@ class TranslationsTasksListAppBarActionsEn {
 	late final TranslationsTasksListAppBarActionsPopupMenuEn popupMenu = TranslationsTasksListAppBarActionsPopupMenuEn._(_root);
 }
 
+// Path: tasks.list.empty
+class TranslationsTasksListEmptyEn {
+	TranslationsTasksListEmptyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: '¯\\_(ツ)_/¯'
+	String get icon => '¯\\_(ツ)_/¯';
+
+	/// en: 'There is no tasks'
+	String get title => 'There is no tasks';
+
+	/// en: 'Create a new one'
+	String get button => 'Create a new one';
+
+	/// en: 'There is no tasks with such filters'
+	String get titleFilters => 'There is no tasks with such filters';
+
+	/// en: 'Reset filters'
+	String get buttonFilters => 'Reset filters';
+}
+
 // Path: tasks.view.tooltips
 class TranslationsTasksViewTooltipsEn {
 	TranslationsTasksViewTooltipsEn._(this._root);
@@ -763,6 +789,11 @@ extension on Translations {
 			case 'tasks.list.appBarActions.popupMenu.showCanceledOption': return 'Show canceled';
 			case 'tasks.list.cancelButton': return 'Cancel tasks';
 			case 'tasks.list.canceledTaskMark': return 'Canceled';
+			case 'tasks.list.empty.icon': return '¯\\_(ツ)_/¯';
+			case 'tasks.list.empty.title': return 'There is no tasks';
+			case 'tasks.list.empty.button': return 'Create a new one';
+			case 'tasks.list.empty.titleFilters': return 'There is no tasks with such filters';
+			case 'tasks.list.empty.buttonFilters': return 'Reset filters';
 			case 'tasks.view.title': return 'Task view';
 			case 'tasks.view.tooltips.editTaskButton': return 'Edit';
 			case 'tasks.edit.title.create': return 'New task';
