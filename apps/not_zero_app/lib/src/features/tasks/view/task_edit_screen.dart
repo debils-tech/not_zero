@@ -64,7 +64,7 @@ class _DeleteTaskButton extends ConsumerWidget {
         );
         if (confirm ?? false) {
           final repository = ref.read(tasksRepositoryProvider);
-          unawaited(repository.deleteTask(task.id));
+          unawaited(repository.deleteTask(task));
           navigator.pop();
         }
       },

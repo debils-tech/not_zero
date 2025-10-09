@@ -49,7 +49,7 @@ class _CancelTasksButton extends ConsumerWidget {
         );
         unawaited(
           ref
-              .read(tasksRepositoryProvider)
+              .read(tasksMainListNotifier.notifier)
               .cancelMultipleTasks(selectionState, showCanceled: showCanceled),
         );
         selectionNotifier.removeAll();
@@ -89,7 +89,7 @@ class _DeleteTasksButton extends ConsumerWidget {
           );
           unawaited(
             ref
-                .read(tasksRepositoryProvider)
+                .read(tasksMainListNotifier.notifier)
                 .deleteMultipleTasks(selectionState),
           );
           selectionNotifier.removeAll();

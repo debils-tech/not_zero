@@ -33,7 +33,7 @@ class _TasksListScreenBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(tasksListStreamProvider);
+    final state = ref.watch(tasksMainListNotifier);
 
     final hasSelection = ref.watch(
       itemSelectionNotifierProvider.select((selection) => selection.isNotEmpty),
