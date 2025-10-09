@@ -67,9 +67,10 @@ class _TagButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return _RoundedButton(
       selected: selected,
-      color: Theme.of(context).tagsColorScheme.colorByIndex(tag.colorIndex),
+      color: theme.tagsColorScheme.colorByIndex(tag.colorIndex),
       onPressed: () => onPressed(!selected),
       onLongPress: () => TagCreationDialog.show(context, tag),
       child: Text(
@@ -115,8 +116,11 @@ class _RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 200),
+      switchInCurve: Curves.easeInOut,
+      switchOutCurve: Curves.easeInOut,
       child: OutlinedButton(
         key: ValueKey('Tag button: ${color.toARGB32()} | $selected'),
         onPressed: onPressed,
@@ -124,7 +128,7 @@ class _RoundedButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           foregroundColor: selected ? backgroundColor : color,
           backgroundColor: selected ? color : null,
-          side: BorderSide(color: color, width: 3),
+          side: BorderSide(color: color.withValues(alpha: 0.6), width: 1.5),
         ),
         child: child,
       ),
