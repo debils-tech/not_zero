@@ -16,7 +16,6 @@ class ItemTagSelector extends ConsumerWidget {
 
   final Set<String> selectedTags;
 
-  // ignore: avoid_positional_boolean_parameters
   final void Function(ItemTag tag, bool isSelected) onSelection;
   final bool showAddButton;
 
@@ -90,7 +89,7 @@ class _AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _RoundedButton(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.onSurface,
       selected: false,
       onPressed: () => TagCreationDialog.show(context),
       child: const Icon(Icons.add_rounded),
