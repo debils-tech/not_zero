@@ -9,6 +9,21 @@ export 'extensions/charts_colors.dart';
 export 'extensions/tags_colors.dart';
 export 'extensions/tasks_colors.dart';
 
+final defaultLightTheme = _lightThemeBase.copyWith(
+  splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
+  pageTransitionsTheme: PageTransitionsTheme(
+    builders: {
+      ..._lightThemeBase.pageTransitionsTheme.builders,
+      TargetPlatform.android: const PredictiveBackPageTransitionsBuilder(),
+    },
+  ),
+  inputDecorationTheme: _lightThemeBase.inputDecorationTheme.copyWith(
+    border: const OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+    ),
+  ),
+);
+
 final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
   extensions: const <ThemeExtension>[
     TasksColorScheme(
@@ -43,11 +58,17 @@ final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
   ],
 );
 
-final defaultLightTheme = _lightThemeBase.copyWith(
+final defaultDarkTheme = _darkThemeBase.copyWith(
   splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
+  pageTransitionsTheme: PageTransitionsTheme(
+    builders: {
+      ..._lightThemeBase.pageTransitionsTheme.builders,
+      TargetPlatform.android: const PredictiveBackPageTransitionsBuilder(),
+    },
+  ),
   inputDecorationTheme: _lightThemeBase.inputDecorationTheme.copyWith(
     border: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(8)),
+      borderRadius: BorderRadius.all(Radius.circular(12)),
     ),
   ),
 );
@@ -84,13 +105,4 @@ final _darkThemeBase = ThemeData.dark(useMaterial3: true).copyWith(
       pink: Color(0xFFFF2D55),
     ),
   ],
-);
-
-final defaultDarkTheme = _darkThemeBase.copyWith(
-  splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
-  inputDecorationTheme: _lightThemeBase.inputDecorationTheme.copyWith(
-    border: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(12)),
-    ),
-  ),
 );
