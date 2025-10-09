@@ -4,13 +4,19 @@ import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:rxdart/subjects.dart';
 
-class StatsRepository {
+class StatsRepository implements LivingObject {
   StatsRepository(this._localService, this._scoreEvaluationRepository);
 
   final TasksStatsLocalService _localService;
   final ScoreEvaluationRepository _scoreEvaluationRepository;
 
   final _totalPointsStreamController = BehaviorSubject<int>.seeded(-1);
+
+  @override
+  void init() {}
+
+  @override
+  void dispose() => _totalPointsStreamController.close();
 
   Stream<int> getTotalPoints() =>
       _totalPointsStreamController.asBroadcastStream();

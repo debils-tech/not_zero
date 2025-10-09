@@ -2,15 +2,22 @@ import 'package:not_zero_app/src/features/stats/repositories/stats_repository.da
 import 'package:not_zero_app/src/features/tasks/models/tasks_filters.dart';
 import 'package:not_zero_app/src/features/tasks/services/tasks_local_service.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:rxdart/rxdart.dart';
 
-class TasksRepository {
+class TasksRepository implements LivingObject {
   TasksRepository(this._localService, this._statsRepository);
 
   final TasksLocalService _localService;
   final StatsRepository _statsRepository;
 
   final _tasksStreamController = BehaviorSubject<List<Task>>.seeded([]);
+
+  @override
+  void init() {}
+
+  @override
+  void dispose() => _tasksStreamController.close();
 
   Stream<List<Task>> getTasks() => _tasksStreamController;
 

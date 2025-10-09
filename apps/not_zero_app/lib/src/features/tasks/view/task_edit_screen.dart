@@ -87,7 +87,7 @@ class _TaskEditScreenBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final filters = ref.read(tasksFiltersNotifier);
-    final tags = ref.read(tagsListStreamProvider).value;
+    final tags = ref.read(tagsListNotifierProvider).value;
     final selectedTags = tags
         ?.where((e) => filters.searchTags.contains(e.id))
         .toList();
