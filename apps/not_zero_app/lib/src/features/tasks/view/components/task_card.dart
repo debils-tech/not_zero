@@ -177,7 +177,10 @@ class _TaskCheckbox extends ConsumerWidget {
         child: InkWell(
           onTap: () => ref
               .read(tasksRepositoryProvider)
-              .updateTask(task.complete(completed: false)),
+              .updateTask(
+                oldTask: task,
+                newTask: task.complete(completed: false),
+              ),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           child: Padding(
             padding: const EdgeInsets.all(8),
@@ -204,7 +207,8 @@ class _TaskCheckbox extends ConsumerWidget {
         onChanged: (value) => ref
             .read(tasksRepositoryProvider)
             .updateTask(
-              task.complete(completed: value ?? false),
+              oldTask: task,
+              newTask: task.complete(completed: value ?? false),
             ),
       ),
     );

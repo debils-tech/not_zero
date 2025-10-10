@@ -1,42 +1,16 @@
 import 'package:not_zero_app/src/features/stats/repositories/score_evaluation_repository.dart';
 import 'package:not_zero_app/src/features/stats/services/tasks_stats_local_service.dart';
-import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
-import 'package:rxdart/subjects.dart';
 
-class StatsRepository implements LivingObject {
-  StatsRepository(this._localService, this._scoreEvaluationRepository);
+class StatsRepository {
+  const StatsRepository(this._localService, this._scoreEvaluationRepository);
 
   final TasksStatsLocalService _localService;
   final ScoreEvaluationRepository _scoreEvaluationRepository;
 
-  final _totalPointsStreamController = BehaviorSubject<int>.seeded(-1);
-
-  @override
-  void init() {}
-
-  @override
-  void dispose() => _totalPointsStreamController.close();
-
-  Stream<int> getTotalPoints() =>
-      _totalPointsStreamController.asBroadcastStream();
-
-  Future<void> countTotalPoints() async {
+  Future<int> countTotalPoints() async {
     final importances = await _localService.countTaskStats();
-
-    _totalPointsStreamController.add(
-      _scoreEvaluationRepository.evaluateTasksScore(importances),
-    );
-  }
-
-  void includeCompletedTask(TaskImportance importance) {
-    _totalPointsStreamController.value += _scoreEvaluationRepository
-        .evaluateTaskImportanceScore(importance);
-  }
-
-  void excludeCompletedTask(TaskImportance importance) {
-    _totalPointsStreamController.value -= _scoreEvaluationRepository
-        .evaluateTaskImportanceScore(importance);
+    return _scoreEvaluationRepository.evaluateTasksScore(importances);
   }
 
   Future<List<int>> getStatsByDays(DateTime start, DateTime end) async {

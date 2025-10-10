@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero_app/src/features/home/di.dart';
+import 'package:not_zero_app/src/features/stats/di.dart';
 import 'package:not_zero_app/src/helpers/not_zero_icons.dart';
 
 class HomeStatsHeader extends ConsumerWidget {
@@ -10,7 +10,7 @@ class HomeStatsHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
-    final state = ref.watch(homeScoreStreamProvider);
+    final state = ref.watch(totalScoreNotifierProvider);
     final totalScore = switch (state) {
       AsyncData(:final value) => value,
       _ => null,

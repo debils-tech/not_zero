@@ -224,7 +224,8 @@ class _FloatingSubmitButton extends ConsumerWidget {
       } else {
         unawaited(
           repository.updateTask(
-            prevTask.edit(
+            oldTask: prevTask,
+            newTask: prevTask.edit(
               title: title,
               importance: importance,
               description: description,

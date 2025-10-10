@@ -9,7 +9,7 @@ class TagsListNotifier extends AsyncNotifier<List<ItemTag>> {
   }
 
   Future<void> addTag(ItemTag tag) {
-    final newList = [...state.value ?? []];
+    final newList = <ItemTag>[...state.value ?? []];
 
     final tagIndex = newList.indexWhere((element) => element.id == tag.id);
     if (tagIndex == -1) {
@@ -23,7 +23,7 @@ class TagsListNotifier extends AsyncNotifier<List<ItemTag>> {
   }
 
   Future<void> deleteTag(String tagId) {
-    final newList = [...state.value ?? []];
+    final newList = <ItemTag>[...state.value ?? []];
     newList.removeWhere((element) => element.id == tagId);
     state = AsyncData(newList);
     return ref.watch(tagsRepositoryProvider).deleteTag(tagId);

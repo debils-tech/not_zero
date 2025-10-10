@@ -21,6 +21,7 @@ dependencies:
   intl: ^0.20.0
   json_annotation: ^4.9.0
   logging: ^1.2.0
+  nz_actions_bus: ^1.0.0
   nz_base_models: ^1.0.0
   nz_boxes: ^1.0.0
   nz_common: ^1.0.0

@@ -21,4 +21,6 @@ class ScoreEvaluationRepository {
         TaskImportance.normal => _taskCompletedNormalScore,
         TaskImportance.important => _taskCompletedImportantScore,
       };
+
+  int evaluateTaskCreatedScore() => _taskCreatedScore;
 }
