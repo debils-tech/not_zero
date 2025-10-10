@@ -50,9 +50,10 @@ class TasksRepository {
   }
 
   Future<void> cancelMultipleTasks(Iterable<Task> tasks) {
-    for (final task in tasks) {
-      _statsRepository.excludeCompletedTask(task.importance);
-    }
+    // Can't cancel completed tasks so no need for that now
+    // for (final task in tasks) {
+    //   _statsRepository.excludeCompletedTask(task.importance);
+    // }
 
     return _localService.updateTasks(tasks);
   }

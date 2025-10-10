@@ -37,7 +37,7 @@ class TasksMainListNotifier extends AsyncNotifier<List<Task>> {
   }
 
   Future<void> deleteMultipleTasks(Set<String> tasks) {
-    final (newList, takenList) = _takeWhere(tasks);
+    final (newList, takenList) = _takeWhere((e) => tasks.contains(e.id));
     state = AsyncData(newList);
     return ref.watch(tasksRepositoryProvider).deleteMultipleTasks(takenList);
   }
@@ -46,7 +46,10 @@ class TasksMainListNotifier extends AsyncNotifier<List<Task>> {
     Set<String> tasks, {
     required bool showCanceled,
   }) {
-    final (newList, takenList) = _takeWhere(tasks);
+    final (newList, takenList) = _takeWhere(
+      // TODO(uSlashVlad): Can't cancel completed tasks, skipping them for now
+      (e) => tasks.contains(e.id) && !e.isCanceled && !e.isCompleted,
+    );
     final editedList = takenList.map((e) => e.cancel(canceled: true));
     if (showCanceled) {
       state = AsyncData([...newList, ...editedList]);
@@ -56,10 +59,12 @@ class TasksMainListNotifier extends AsyncNotifier<List<Task>> {
     return ref.watch(tasksRepositoryProvider).cancelMultipleTasks(editedList);
   }
 
-  (List<Task> newList, List<Task> takenList) _takeWhere(Set<String> tasks) {
+  (List<Task> newList, List<Task> takenList) _takeWhere(
+    bool Function(Task e) filter,
+  ) {
     return (
-      state.value?.where((e) => !tasks.contains(e.id)).toList() ?? [],
-      state.value?.where((e) => tasks.contains(e.id)).toList() ?? [],
+      state.value?.where((e) => !filter(e)).toList() ?? [],
+      state.value?.where(filter).toList() ?? [],
     );
   }
 }
