@@ -6,6 +6,8 @@
 >
 > More information will be in the near future.
 
+[Some project documentation can be found here](docs/README.md)
+
 Not Zero is a free cross-platform application developed with [flutter](https://flutter.dev) that aims to motivate people to do everyday tasks using gamification.
 
 ## Project status and roadmap
