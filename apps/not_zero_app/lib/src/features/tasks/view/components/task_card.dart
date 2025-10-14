@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -172,30 +174,48 @@ class _TaskCheckbox extends ConsumerWidget {
     );
 
     if (task.isCanceled) {
-      return Tooltip(
-        message: t.tasks.list.tooltips.canceledMarkButton,
-        child: InkWell(
-          onTap: () => ref
-              .read(tasksRepositoryProvider)
-              .updateTask(
-                oldTask: task,
-                newTask: task.complete(completed: false),
-              ),
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.cancel_outlined,
-                  size: 20,
-                ),
-                const SizedBox(width: 4),
-                Text(t.tasks.list.canceledTaskMark),
-              ],
+      return TextButton.icon(
+        onPressed: () => ref
+            .read(tasksRepositoryProvider)
+            .updateTask(
+              oldTask: task,
+              newTask: task.complete(completed: false),
             ),
-          ),
+        icon: const Icon(
+          Icons.cancel_outlined,
+          size: 20,
         ),
+        label: Text(t.tasks.list.canceledTaskMark),
+      );
+    }
+
+    if (task.forDate == null) {
+      return IconButton.outlined(
+        onPressed: () async {
+          final tasksRepo = ref.read(tasksRepositoryProvider);
+
+          final firstDate = DateTime.now();
+          final lastDate = firstDate.add(const Duration(days: 365));
+          final newDate = await showDatePicker(
+            context: context,
+            initialDate: firstDate,
+            firstDate: firstDate,
+            lastDate: lastDate,
+          );
+          if (newDate == null) return;
+
+          unawaited(
+            tasksRepo.updateTask(
+              oldTask: task,
+              newTask: task.copyWith(forDate: newDate),
+            ),
+          );
+        },
+        icon: const Icon(
+          Icons.calendar_today_rounded,
+          size: 20,
+        ),
+        tooltip: t.tasks.list.tooltips.selectDateForSomedayTasksButton,
       );
     }
 

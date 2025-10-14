@@ -583,6 +583,9 @@ class TranslationsTasksListTooltipsEn {
 
 	/// en: 'Reopen'
 	String get canceledMarkButton => 'Reopen';
+
+	/// en: 'Select date for the task'
+	String get selectDateForSomedayTasksButton => 'Select date for the task';
 }
 
 // Path: tasks.list.appBarActions
@@ -806,6 +809,7 @@ extension on Translations {
 			case 'tasks.list.tooltips.removeSelectionButton': return 'Remove selection';
 			case 'tasks.list.tooltips.addNewButton': return 'Add new task';
 			case 'tasks.list.tooltips.canceledMarkButton': return 'Reopen';
+			case 'tasks.list.tooltips.selectDateForSomedayTasksButton': return 'Select date for the task';
 			case 'tasks.list.appBarActions.popupMenu.showCanceledOption': return 'Show canceled';
 			case 'tasks.list.cancelButton': return 'Cancel tasks';
 			case 'tasks.list.canceledTaskMark': return 'Canceled';

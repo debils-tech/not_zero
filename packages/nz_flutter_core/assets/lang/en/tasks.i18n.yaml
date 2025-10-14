@@ -13,6 +13,7 @@ list:
     removeSelectionButton: 'Remove selection'
     addNewButton: 'Add new task'
     canceledMarkButton: 'Reopen'
+    selectDateForSomedayTasksButton: 'Select date for the task'
   appBarActions:
     popupMenu:
       showCanceledOption: Show canceled

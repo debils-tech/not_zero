@@ -54,6 +54,9 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
             constraints: const BoxConstraints(maxWidth: 230),
             child: _MiddleButton(
               onTap: _todayRange,
+              onLongPress: widget.rangeType == DateRangeType.day
+                  ? _selectCalendarRange
+                  : null,
               rangeStart: _rangeStart,
               rangeEnd: _rangeEnd,
             ),
@@ -96,6 +99,26 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
     });
     widget.onChanged?.call(_rangeStart, _rangeEnd);
   }
+
+  Future<void> _selectCalendarRange() async {
+    final today = DateTime.now();
+    final firstDate = today.subtract(const Duration(days: 365));
+    final lastDate = today.add(const Duration(days: 365));
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: _currentDate.isBefore(firstDate)
+          ? firstDate
+          : (_currentDate.isAfter(lastDate) ? lastDate : _currentDate),
+      firstDate: firstDate,
+      lastDate: lastDate,
+    );
+    if (newDate == null) return;
+
+    setState(() {
+      _currentDate = newDate;
+    });
+    widget.onChanged?.call(_rangeStart, _rangeEnd);
+  }
 }
 
 class _MiddleButton extends StatelessWidget {
@@ -103,9 +126,11 @@ class _MiddleButton extends StatelessWidget {
     required this.onTap,
     required this.rangeStart,
     required this.rangeEnd,
+    this.onLongPress,
   });
 
   final void Function() onTap;
+  final void Function()? onLongPress;
 
   final DateTime rangeStart;
   final DateTime rangeEnd;
@@ -129,6 +154,7 @@ class _MiddleButton extends StatelessWidget {
 
     return OutlinedButton(
       onPressed: onTap,
+      onLongPress: onLongPress,
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         foregroundColor: _isTodayInRange
