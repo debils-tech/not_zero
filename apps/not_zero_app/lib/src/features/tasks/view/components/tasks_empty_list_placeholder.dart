@@ -14,7 +14,6 @@ class TasksEmptyListPlaceholder extends ConsumerWidget {
         (state) =>
             state.someday ||
             (state.canceled ?? false) ||
-            (state.completed ?? false) ||
             state.searchTags.isNotEmpty,
       ),
     );

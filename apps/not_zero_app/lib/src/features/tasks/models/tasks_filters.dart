@@ -8,7 +8,14 @@ abstract class TasksFilters with _$TasksFilters {
     @Default(<String>{}) Set<String> searchTags,
     DateTime? forDate,
     @Default(false) bool someday,
-    bool? completed,
+    // bool? completed,
     bool? canceled,
   }) = _TasksFilters;
+
+  const TasksFilters._();
+
+  TasksFilters toggleForDate(DateTime forDate) =>
+      copyWith(forDate: forDate, someday: false);
+
+  TasksFilters toggleSomeday() => copyWith(forDate: null, someday: true);
 }

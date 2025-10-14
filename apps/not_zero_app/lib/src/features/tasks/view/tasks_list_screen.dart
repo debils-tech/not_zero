@@ -107,20 +107,31 @@ class _TasksFilters extends ConsumerWidget {
     final selectedTags = ref.watch(
       tasksFiltersNotifier.select((state) => state.searchTags),
     );
+    final (allTasksCount, tasksLeftToComplete) = ref.watch(
+      tasksMainListNotifier.select(
+        (state) => (
+          state.value?.length,
+          state.value?.where((task) => !task.isCompleted).length,
+        ),
+      ),
+    );
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DateRangeSwitch(
-          rangeType: DateRangeType.day,
-          initialDate: selectedDay,
-          onChanged: (startDay, endDay) {
-            assert(startDay.isAtSameDay(endDay), 'Invalid date range');
-            if (selectedDay?.isAtSameDay(endDay) ?? false) return;
+        if (selectedDay != null) ...[
+          DateRangeSwitch(
+            rangeType: DateRangeType.day,
+            initialDate: selectedDay,
+            onChanged: (startDay, endDay) {
+              assert(startDay.isAtSameDay(endDay), 'Invalid date range');
+              if (selectedDay.isAtSameDay(endDay)) return;
 
-            filtersNotifier.selectDay(endDay);
-          },
-        ),
-        const SizedBox(height: 8),
+              filtersNotifier.selectDay(endDay);
+            },
+          ),
+          const SizedBox(height: 8),
+        ],
         ItemTagSelector(
           selectedTags: selectedTags,
           onSelection: (tag, isSelected) {
@@ -133,6 +144,15 @@ class _TasksFilters extends ConsumerWidget {
           showAddButton: false,
         ),
         const SizedBox(height: 10),
+        if (tasksLeftToComplete != null &&
+            allTasksCount != null &&
+            allTasksCount > 0) ...[
+          Text(
+            t.tasks.list.tasksLeftToComplete(n: tasksLeftToComplete),
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+          const SizedBox(height: 8),
+        ],
       ],
     );
   }

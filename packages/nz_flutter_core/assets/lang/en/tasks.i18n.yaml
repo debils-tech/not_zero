@@ -18,12 +18,18 @@ list:
       showCanceledOption: Show canceled
   cancelButton: 'Cancel tasks'
   canceledTaskMark: 'Canceled'
+  tasksLeftToComplete:
+    zero: 'No tasks left to complete'
+    one: '$n task left to complete'
+    other: '$n tasks left to complete'
   empty:
     icon: '¯\\_(ツ)_/¯'
     title: 'There is no tasks'
     button: 'Create a new one'
     titleFilters: 'There is no tasks with such filters'
     buttonFilters: 'Reset filters'
+  planning:
+    labelWhenEnabled: 'Tasks for someday'
 
 view:
   title: 'Task view'

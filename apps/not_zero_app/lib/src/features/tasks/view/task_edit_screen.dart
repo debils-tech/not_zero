@@ -203,7 +203,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
       final importance = values[TaskEditImportanceField.name] as TaskImportance;
       final description = values[TaskEditDescriptionField.name] as String?;
       final tags = values[TaskEditTagsSelectionField.name] as List<ItemTag>?;
-      final forDate = values[TaskEditForDateField.name] as DateTime;
+      final forDate = values[TaskEditForDateField.name] as DateTime?;
       final persistent = values[TaskEditPersistenceField.name] as bool;
 
       final prevTask = taskToEdit;

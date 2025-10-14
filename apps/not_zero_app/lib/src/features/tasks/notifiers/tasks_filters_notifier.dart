@@ -17,7 +17,11 @@ class TasksFiltersNotifier extends Notifier<TasksFilters> {
   }
 
   void selectDay(DateTime day) {
-    state = state.copyWith(forDate: day);
+    state = state.toggleForDate(day);
+  }
+
+  void toggleSomeday() {
+    state = state.toggleSomeday();
   }
 
   void showCanceled() {

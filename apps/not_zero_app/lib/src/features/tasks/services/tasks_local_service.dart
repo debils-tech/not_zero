@@ -73,22 +73,6 @@ class TasksLocalService {
       );
     }
 
-    final completed = filters.completed;
-    if (completed != null) {
-      dbFilters.add(
-        completed ? tasksTable.isCompleted : tasksTable.isNotCompleted,
-      );
-    }
-
-    assert(
-      canceled == null ||
-          completed == null ||
-          canceled && !completed ||
-          !canceled && completed,
-      "Tasks can't be canceled and completed at the same time. "
-      'Some error in filters has occured',
-    );
-
     if (dbFilters.isEmpty) {
       return const Constant(true);
     }

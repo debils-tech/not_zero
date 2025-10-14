@@ -321,7 +321,15 @@ class TranslationsTasksListEn {
 	/// en: 'Canceled'
 	String get canceledTaskMark => 'Canceled';
 
+	/// en: '(zero) {No tasks left to complete} (one) {$n task left to complete} (other) {$n tasks left to complete}'
+	String tasksLeftToComplete({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'No tasks left to complete',
+		one: '${n} task left to complete',
+		other: '${n} tasks left to complete',
+	);
+
 	late final TranslationsTasksListEmptyEn empty = TranslationsTasksListEmptyEn._(_root);
+	late final TranslationsTasksListPlanningEn planning = TranslationsTasksListPlanningEn._(_root);
 }
 
 // Path: tasks.view
@@ -611,6 +619,18 @@ class TranslationsTasksListEmptyEn {
 	String get buttonFilters => 'Reset filters';
 }
 
+// Path: tasks.list.planning
+class TranslationsTasksListPlanningEn {
+	TranslationsTasksListPlanningEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Tasks for someday'
+	String get labelWhenEnabled => 'Tasks for someday';
+}
+
 // Path: tasks.view.tooltips
 class TranslationsTasksViewTooltipsEn {
 	TranslationsTasksViewTooltipsEn._(this._root);
@@ -789,11 +809,17 @@ extension on Translations {
 			case 'tasks.list.appBarActions.popupMenu.showCanceledOption': return 'Show canceled';
 			case 'tasks.list.cancelButton': return 'Cancel tasks';
 			case 'tasks.list.canceledTaskMark': return 'Canceled';
+			case 'tasks.list.tasksLeftToComplete': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No tasks left to complete',
+				one: '${n} task left to complete',
+				other: '${n} tasks left to complete',
+			);
 			case 'tasks.list.empty.icon': return '¯\\_(ツ)_/¯';
 			case 'tasks.list.empty.title': return 'There is no tasks';
 			case 'tasks.list.empty.button': return 'Create a new one';
 			case 'tasks.list.empty.titleFilters': return 'There is no tasks with such filters';
 			case 'tasks.list.empty.buttonFilters': return 'Reset filters';
+			case 'tasks.list.planning.labelWhenEnabled': return 'Tasks for someday';
 			case 'tasks.view.title': return 'Task view';
 			case 'tasks.view.tooltips.editTaskButton': return 'Edit';
 			case 'tasks.edit.title.create': return 'New task';
