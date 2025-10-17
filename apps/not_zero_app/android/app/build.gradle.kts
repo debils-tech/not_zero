@@ -66,10 +66,6 @@ android {
             versionNameSuffix = ".dev"
             resValue("string", "app_name", "Not Zero Dev")
         }
-        create("prod") {
-            dimension = "not_zero_app"
-            resValue("string", "app_name", "Not Zero")
-        }
     }
 
     if (releaseSigning) {

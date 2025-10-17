@@ -1,9 +1,9 @@
 # Building and running
 
 build-android:
-	cd apps/not_zero_app && flutter build apk --flavor prod --split-per-abi
-	cd apps/not_zero_app && flutter build apk --flavor prod
-#    cd apps/not_zero_app && flutter build appbundle --flavor prod
+	cd apps/not_zero_app && flutter build apk --split-per-abi
+	cd apps/not_zero_app && flutter build apk
+#    cd apps/not_zero_app && flutter build appbundle
 	TAG=foss sh tools/android/move-builds.sh
 	sh tools/android/check-cert.sh
 
