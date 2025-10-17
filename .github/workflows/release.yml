@@ -15,9 +15,10 @@ jobs:
         uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.35.4"
+          flutter-version: "3.35.5"
           channel: stable
           cache: true
+      - uses: bluefireteam/melos-action@v3
       - uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-pubcache
@@ -28,14 +29,14 @@ jobs:
         run: flutter --version
       # Preparation
       - name: Get dependencies
-        run: dart run melos bootstrap
+        run: melos bootstrap
       # Checks
       - name: Ensure that code is formatted correctly
-        run: dart run melos format --set-exit-if-changed --output none $(git ls-files | grep --colour=never -e ".*\.dart")
+        run: melos format --set-exit-if-changed --output none $(git ls-files | grep --colour=never -e ".*\.dart")
       - name: Analyze code to find critical problems
-        run: dart run melos exec flutter analyze --no-fatal-infos
+        run: melos exec flutter analyze --no-fatal-infos
       - name: Run tests
-        run: dart run melos run --no-select test
+        run: melos run --no-select test
 
   version_update:
     name: Update pubspec version
@@ -110,7 +111,7 @@ jobs:
           java --version
       # Preparation
       - name: Get dependencies
-        run: dart run melos bootstrap
+        run: melos bootstrap
       - name: Decode and save android keystore
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > $HOME/keystore.jks
