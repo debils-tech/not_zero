@@ -34,6 +34,7 @@ final appRouter = GoRouter(
                 final extra = state.extra;
                 assert(extra is Task?, 'Extra should be Task object');
                 return TaskViewScreen(
+                  // TODO(uSlashVlad): Maybe will be helpful to load actual task
                   taskToView: extra! as Task,
                 );
               },
@@ -44,7 +45,7 @@ final appRouter = GoRouter(
                 final extra = state.extra;
                 assert(extra is Task?, 'Extra should be Task object');
                 return TaskEditScreen(
-                  taskToEdit: extra! as Task,
+                  taskToEdit: extra as Task?,
                 );
               },
             ),

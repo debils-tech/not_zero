@@ -5,7 +5,7 @@ import 'package:nz_base_models/nz_base_models.dart';
 class TasksFiltersNotifier extends Notifier<TasksFilters> {
   @override
   TasksFilters build() {
-    return TasksFilters(forDate: DateTime.now());
+    return TasksFilters(forDate: DateTime.now(), canceled: false);
   }
 
   void selectTag(ItemTag tag) {
@@ -17,6 +17,22 @@ class TasksFiltersNotifier extends Notifier<TasksFilters> {
   }
 
   void selectDay(DateTime day) {
-    state = state.copyWith(forDate: day);
+    state = state.toggleForDate(day);
+  }
+
+  void toggleSomeday() {
+    state = state.toggleSomeday();
+  }
+
+  void showCanceled() {
+    state = state.copyWith(canceled: null);
+  }
+
+  void hideCanceled() {
+    state = state.copyWith(canceled: false);
+  }
+
+  void resetFilters() {
+    state = build();
   }
 }

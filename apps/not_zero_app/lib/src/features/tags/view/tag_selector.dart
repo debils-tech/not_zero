@@ -21,7 +21,7 @@ class ItemTagSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(tagsListStreamProvider);
+    final state = ref.watch(tagsListNotifierProvider);
 
     return SizedBox(
       height: 35,

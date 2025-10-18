@@ -1,0 +1,48 @@
+---
+alwaysApply: true
+---
+
+# Repository understanding and authoring rules for Cursor
+
+## Summary of the repository
+
+- This is a Flutter + Dart monorepo managed by Melos.
+- Main app lives in `apps/not_zero_app` with features under `lib/src/features/`.
+- Shared technical packages live under `packages/` and should encapsulate reusable capabilities:
+  - `nz_drift` — Drift/SQLite database
+  - `nz_boxes` — key‑value storage (Shared Preferences)
+  - `nz_common`, `nz_base_models`, `nz_flutter_core`, `nz_logger` — shared utilities
+- Routing is in `apps/not_zero_app/lib/src/routes.dart` using `go_router`.
+- State management/DI is `flutter_riverpod`; providers typically live in a feature `di.dart`.
+- Codegen uses `freezed` + `json_serializable` (run via Melos scripts).
+- Pinned Flutter version is in `.fvmrc`.
+
+## Mandatory reading for agents
+
+- Always read `docs/README.md` and `docs/architecture.md` before making changes.
+- When working on or proposing a new feature, consult `docs/feature_spec_template.md` and update `docs/features.md`.
+- Respect package boundaries: UI code in the app must not access services directly; go through repositories/notifiers.
+
+## Authoring guidance
+
+- Prefer placing cross‑feature technical utilities into a `packages/` module.
+- Keep each feature self‑contained under `apps/not_zero_app/lib/src/features/<feature>/` with the structure:
+  - `services/`, `repositories/`, `notifiers/`, `view/` (+ optional `models/`, `utils/`, `di.dart`).
+- Add or update Riverpod providers in `di.dart` within the feature.
+- Update `lib/src/routes.dart` for navigation changes.
+- Use Melos scripts from the workspace root for code generation, test, and formatting.
+
+## Commands cheat‑sheet
+
+- Bootstrap workspace: `dart run melos bootstrap`
+- Generate code: `dart run melos generate`
+- Analyze: `dart run melos exec flutter analyze --no-fatal-infos`
+- Test: `dart run melos run --no-select test`
+- Build examples: `make build-android`, `make build-linux`
+
+## Documentation maintenance
+
+- Whenever adding a feature or materially changing behavior:
+  1) Create/update a spec using `docs/feature_spec_template.md`
+  2) Summarize in `docs/features.md`
+  3) If architectural boundaries change, update `docs/architecture.md`

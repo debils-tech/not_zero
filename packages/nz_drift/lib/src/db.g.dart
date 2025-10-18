@@ -47,17 +47,18 @@ class $TasksTableTable extends TasksTable
     aliasedName,
     false,
     type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
   );
   @override
-  late final GeneratedColumnWithTypeConverter<DateTime, String> forDate =
+  late final GeneratedColumnWithTypeConverter<DateTime?, String> forDate =
       GeneratedColumn<String>(
         'for_date',
         aliasedName,
-        false,
+        true,
         type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      ).withConverter<DateTime>($TasksTableTable.$converterforDate);
+        requiredDuringInsert: false,
+      ).withConverter<DateTime?>($TasksTableTable.$converterforDaten);
   static const VerificationMeta _persistentMeta = const VerificationMeta(
     'persistent',
   );
@@ -67,10 +68,11 @@ class $TasksTableTable extends TasksTable
     aliasedName,
     false,
     type: DriftSqlType.bool,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'CHECK ("persistent" IN (0, 1))',
     ),
+    defaultValue: const Constant(true),
   );
   static const VerificationMeta _modifiedAtMeta = const VerificationMeta(
     'modifiedAt',
@@ -89,6 +91,17 @@ class $TasksTableTable extends TasksTable
   @override
   late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
     'completed_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _canceledAtMeta = const VerificationMeta(
+    'canceledAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> canceledAt = GeneratedColumn<DateTime>(
+    'canceled_at',
     aliasedName,
     true,
     type: DriftSqlType.dateTime,
@@ -113,6 +126,7 @@ class $TasksTableTable extends TasksTable
     persistent,
     modifiedAt,
     completedAt,
+    canceledAt,
     importance,
   ];
   @override
@@ -156,16 +170,12 @@ class $TasksTableTable extends TasksTable
         _createdAtMeta,
         createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
       );
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
     }
     if (data.containsKey('persistent')) {
       context.handle(
         _persistentMeta,
         persistent.isAcceptableOrUnknown(data['persistent']!, _persistentMeta),
       );
-    } else if (isInserting) {
-      context.missing(_persistentMeta);
     }
     if (data.containsKey('modified_at')) {
       context.handle(
@@ -180,6 +190,12 @@ class $TasksTableTable extends TasksTable
           data['completed_at']!,
           _completedAtMeta,
         ),
+      );
+    }
+    if (data.containsKey('canceled_at')) {
+      context.handle(
+        _canceledAtMeta,
+        canceledAt.isAcceptableOrUnknown(data['canceled_at']!, _canceledAtMeta),
       );
     }
     return context;
@@ -209,12 +225,6 @@ class $TasksTableTable extends TasksTable
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
       )!,
-      forDate: $TasksTableTable.$converterforDate.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}for_date'],
-        )!,
-      ),
       description: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}description'],
@@ -226,6 +236,16 @@ class $TasksTableTable extends TasksTable
       completedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}completed_at'],
+      ),
+      canceledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}canceled_at'],
+      ),
+      forDate: $TasksTableTable.$converterforDaten.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}for_date'],
+        ),
       ),
       persistent: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
@@ -241,6 +261,8 @@ class $TasksTableTable extends TasksTable
 
   static TypeConverter<DateTime, String> $converterforDate =
       const DateConverter();
+  static TypeConverter<DateTime?, String?> $converterforDaten =
+      NullAwareTypeConverter.wrap($converterforDate);
   static JsonTypeConverter2<TaskImportance, int, int> $converterimportance =
       const EnumIndexConverter<TaskImportance>(TaskImportance.values);
 }
@@ -250,10 +272,11 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
   final Value<String> title;
   final Value<String> description;
   final Value<DateTime> createdAt;
-  final Value<DateTime> forDate;
+  final Value<DateTime?> forDate;
   final Value<bool> persistent;
   final Value<DateTime?> modifiedAt;
   final Value<DateTime?> completedAt;
+  final Value<DateTime?> canceledAt;
   final Value<TaskImportance> importance;
   final Value<int> rowid;
   const TasksTableCompanion({
@@ -265,6 +288,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     this.persistent = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     this.completedAt = const Value.absent(),
+    this.canceledAt = const Value.absent(),
     this.importance = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -272,19 +296,17 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     required String id,
     required String title,
     required String description,
-    required DateTime createdAt,
-    required DateTime forDate,
-    required bool persistent,
+    this.createdAt = const Value.absent(),
+    this.forDate = const Value.absent(),
+    this.persistent = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     this.completedAt = const Value.absent(),
+    this.canceledAt = const Value.absent(),
     required TaskImportance importance,
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        title = Value(title),
        description = Value(description),
-       createdAt = Value(createdAt),
-       forDate = Value(forDate),
-       persistent = Value(persistent),
        importance = Value(importance);
   static Insertable<Task> custom({
     Expression<String>? id,
@@ -295,6 +317,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     Expression<bool>? persistent,
     Expression<DateTime>? modifiedAt,
     Expression<DateTime>? completedAt,
+    Expression<DateTime>? canceledAt,
     Expression<int>? importance,
     Expression<int>? rowid,
   }) {
@@ -307,6 +330,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
       if (persistent != null) 'persistent': persistent,
       if (modifiedAt != null) 'modified_at': modifiedAt,
       if (completedAt != null) 'completed_at': completedAt,
+      if (canceledAt != null) 'canceled_at': canceledAt,
       if (importance != null) 'importance': importance,
       if (rowid != null) 'rowid': rowid,
     });
@@ -317,10 +341,11 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     Value<String>? title,
     Value<String>? description,
     Value<DateTime>? createdAt,
-    Value<DateTime>? forDate,
+    Value<DateTime?>? forDate,
     Value<bool>? persistent,
     Value<DateTime?>? modifiedAt,
     Value<DateTime?>? completedAt,
+    Value<DateTime?>? canceledAt,
     Value<TaskImportance>? importance,
     Value<int>? rowid,
   }) {
@@ -333,6 +358,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
       persistent: persistent ?? this.persistent,
       modifiedAt: modifiedAt ?? this.modifiedAt,
       completedAt: completedAt ?? this.completedAt,
+      canceledAt: canceledAt ?? this.canceledAt,
       importance: importance ?? this.importance,
       rowid: rowid ?? this.rowid,
     );
@@ -355,7 +381,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     }
     if (forDate.present) {
       map['for_date'] = Variable<String>(
-        $TasksTableTable.$converterforDate.toSql(forDate.value),
+        $TasksTableTable.$converterforDaten.toSql(forDate.value),
       );
     }
     if (persistent.present) {
@@ -366,6 +392,9 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
     }
     if (completedAt.present) {
       map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
+    if (canceledAt.present) {
+      map['canceled_at'] = Variable<DateTime>(canceledAt.value);
     }
     if (importance.present) {
       map['importance'] = Variable<int>(
@@ -389,6 +418,7 @@ class TasksTableCompanion extends UpdateCompanion<Task> {
           ..write('persistent: $persistent, ')
           ..write('modifiedAt: $modifiedAt, ')
           ..write('completedAt: $completedAt, ')
+          ..write('canceledAt: $canceledAt, ')
           ..write('importance: $importance, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -410,6 +440,7 @@ class _$TaskInsertable implements Insertable<Task> {
       persistent: Value(_object.persistent),
       modifiedAt: Value(_object.modifiedAt),
       completedAt: Value(_object.completedAt),
+      canceledAt: Value(_object.canceledAt),
       importance: Value(_object.importance),
     ).toColumns(false);
   }
@@ -465,7 +496,8 @@ class $TagsTableTable extends TagsTable
     aliasedName,
     false,
     type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
   );
   @override
   List<GeneratedColumn> get $columns => [id, name, colorIndex, createdAt];
@@ -507,8 +539,6 @@ class $TagsTableTable extends TagsTable
         _createdAtMeta,
         createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
       );
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
     }
     return context;
   }
@@ -561,12 +591,11 @@ class TagsTableCompanion extends UpdateCompanion<ItemTag> {
     required String id,
     required String name,
     required int colorIndex,
-    required DateTime createdAt,
+    this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        name = Value(name),
-       colorIndex = Value(colorIndex),
-       createdAt = Value(createdAt);
+       colorIndex = Value(colorIndex);
   static Insertable<ItemTag> custom({
     Expression<String>? id,
     Expression<String>? name,
@@ -891,11 +920,12 @@ typedef $$TasksTableTableCreateCompanionBuilder =
       required String id,
       required String title,
       required String description,
-      required DateTime createdAt,
-      required DateTime forDate,
-      required bool persistent,
+      Value<DateTime> createdAt,
+      Value<DateTime?> forDate,
+      Value<bool> persistent,
       Value<DateTime?> modifiedAt,
       Value<DateTime?> completedAt,
+      Value<DateTime?> canceledAt,
       required TaskImportance importance,
       Value<int> rowid,
     });
@@ -905,10 +935,11 @@ typedef $$TasksTableTableUpdateCompanionBuilder =
       Value<String> title,
       Value<String> description,
       Value<DateTime> createdAt,
-      Value<DateTime> forDate,
+      Value<DateTime?> forDate,
       Value<bool> persistent,
       Value<DateTime?> modifiedAt,
       Value<DateTime?> completedAt,
+      Value<DateTime?> canceledAt,
       Value<TaskImportance> importance,
       Value<int> rowid,
     });
@@ -971,7 +1002,7 @@ class $$TasksTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<DateTime, DateTime, String> get forDate =>
+  ColumnWithTypeConverterFilters<DateTime?, DateTime, String> get forDate =>
       $composableBuilder(
         column: $table.forDate,
         builder: (column) => ColumnWithTypeConverterFilters(column),
@@ -989,6 +1020,11 @@ class $$TasksTableTableFilterComposer
 
   ColumnFilters<DateTime> get completedAt => $composableBuilder(
     column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1073,6 +1109,11 @@ class $$TasksTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get importance => $composableBuilder(
     column: $table.importance,
     builder: (column) => ColumnOrderings(column),
@@ -1102,7 +1143,7 @@ class $$TasksTableTableAnnotationComposer
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<DateTime, String> get forDate =>
+  GeneratedColumnWithTypeConverter<DateTime?, String> get forDate =>
       $composableBuilder(column: $table.forDate, builder: (column) => column);
 
   GeneratedColumn<bool> get persistent => $composableBuilder(
@@ -1117,6 +1158,11 @@ class $$TasksTableTableAnnotationComposer
 
   GeneratedColumn<DateTime> get completedAt => $composableBuilder(
     column: $table.completedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
     builder: (column) => column,
   );
 
@@ -1184,10 +1230,11 @@ class $$TasksTableTableTableManager
                 Value<String> title = const Value.absent(),
                 Value<String> description = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> forDate = const Value.absent(),
+                Value<DateTime?> forDate = const Value.absent(),
                 Value<bool> persistent = const Value.absent(),
                 Value<DateTime?> modifiedAt = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
+                Value<DateTime?> canceledAt = const Value.absent(),
                 Value<TaskImportance> importance = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => TasksTableCompanion(
@@ -1199,6 +1246,7 @@ class $$TasksTableTableTableManager
                 persistent: persistent,
                 modifiedAt: modifiedAt,
                 completedAt: completedAt,
+                canceledAt: canceledAt,
                 importance: importance,
                 rowid: rowid,
               ),
@@ -1207,11 +1255,12 @@ class $$TasksTableTableTableManager
                 required String id,
                 required String title,
                 required String description,
-                required DateTime createdAt,
-                required DateTime forDate,
-                required bool persistent,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime?> forDate = const Value.absent(),
+                Value<bool> persistent = const Value.absent(),
                 Value<DateTime?> modifiedAt = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
+                Value<DateTime?> canceledAt = const Value.absent(),
                 required TaskImportance importance,
                 Value<int> rowid = const Value.absent(),
               }) => TasksTableCompanion.insert(
@@ -1223,6 +1272,7 @@ class $$TasksTableTableTableManager
                 persistent: persistent,
                 modifiedAt: modifiedAt,
                 completedAt: completedAt,
+                canceledAt: canceledAt,
                 importance: importance,
                 rowid: rowid,
               ),
@@ -1289,7 +1339,7 @@ typedef $$TagsTableTableCreateCompanionBuilder =
       required String id,
       required String name,
       required int colorIndex,
-      required DateTime createdAt,
+      Value<DateTime> createdAt,
       Value<int> rowid,
     });
 typedef $$TagsTableTableUpdateCompanionBuilder =
@@ -1509,7 +1559,7 @@ class $$TagsTableTableTableManager
                 required String id,
                 required String name,
                 required int colorIndex,
-                required DateTime createdAt,
+                Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => TagsTableCompanion.insert(
                 id: id,

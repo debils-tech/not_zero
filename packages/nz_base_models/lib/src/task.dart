@@ -15,10 +15,11 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     required String title,
     required TaskImportance importance,
     required DateTime createdAt,
-    required DateTime forDate,
     @Default('') String description,
     DateTime? modifiedAt,
     DateTime? completedAt,
+    DateTime? canceledAt,
+    DateTime? forDate,
     @Default(true) bool persistent,
     @JsonKey(toJson: Task._tagsToJson) @Default([]) List<ItemTag> tags,
   }) = _Task;
@@ -30,18 +31,18 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   factory Task.create({
     required String title,
     required TaskImportance importance,
-    required DateTime forDate,
     String? description,
     List<ItemTag>? tags,
+    DateTime? forDate,
     bool? persistent,
   }) => Task(
     id: const Uuid().v4(),
     title: title,
     description: description ?? '',
     createdAt: DateTime.now(),
-    forDate: forDate,
     importance: importance,
     tags: tags ?? [],
+    forDate: forDate,
     persistent: persistent ?? true,
   );
 
@@ -62,10 +63,17 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     persistent: persistent ?? this.persistent,
   );
 
-  Task complete({required bool completed}) =>
-      copyWith(completedAt: completed ? DateTime.now() : null);
+  Task complete({required bool completed}) => copyWith(
+    completedAt: completed ? DateTime.now() : null,
+    canceledAt: null,
+  );
 
   bool get isCompleted => completedAt != null;
+
+  Task cancel({required bool canceled}) =>
+      copyWith(canceledAt: canceled ? DateTime.now() : null, completedAt: null);
+
+  bool get isCanceled => canceledAt != null;
 
   @override
   int compareTo(Task other) {

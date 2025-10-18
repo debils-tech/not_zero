@@ -12,9 +12,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.35.4"
+          flutter-version: "3.35.5"
           channel: stable
           cache: true
+      - uses: bluefireteam/melos-action@v3
       - uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-pubcache
@@ -26,14 +27,14 @@ jobs:
       - name: Check flutter installation
         run: flutter --version
       - name: Get dependencies
-        run: dart run melos bootstrap
+        run: melos bootstrap
 
       ### ANALYSIS ###
       - name: Ensure that code is formatted correctly
         run: dart run melos format --set-exit-if-changed --output none $(git ls-files | grep --colour=never -e ".*\.dart")
       - name: Analyze code to find critical problems
-        run: dart run melos exec flutter analyze --no-fatal-infos
+        run: melos exec flutter analyze --no-fatal-infos
 
-#      ### TESTS ###
-#      - name: Run tests
-#        run: make test
+      ### TESTS ###
+      - name: Run tests
+        run: melos run --no-select test

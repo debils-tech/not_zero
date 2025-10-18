@@ -22,3 +22,4 @@ linter:
     unnecessary_await_in_return: true
     prefer_final_locals: true
     cascade_invocations: false
+    specify_nonobvious_property_types: false

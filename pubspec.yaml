@@ -6,6 +6,7 @@ environment:
 
 workspace:
   - apps/not_zero_app
+  - packages/nz_actions_bus
   - packages/nz_boxes
   - packages/nz_common
   - packages/nz_drift
@@ -25,7 +26,7 @@ melos:
         dependsOn:
           - build_runner
     l10n:
-      exec: dart run slang
+      exec: dart run slang && dart format lib
       packageFilters:
         dependsOn:
           - slang
@@ -34,3 +35,7 @@ melos:
     upgrade:
       exec: dart pub upgrade --major-versions
       orderDependents: true
+    test:
+      exec: flutter test
+      packageFilters:
+        dirExists: test

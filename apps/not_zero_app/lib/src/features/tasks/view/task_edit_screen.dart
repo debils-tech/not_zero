@@ -64,7 +64,7 @@ class _DeleteTaskButton extends ConsumerWidget {
         );
         if (confirm ?? false) {
           final repository = ref.read(tasksRepositoryProvider);
-          unawaited(repository.deleteTask(task.id));
+          unawaited(repository.deleteTask(task));
           navigator.pop();
         }
       },
@@ -87,7 +87,7 @@ class _TaskEditScreenBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final filters = ref.read(tasksFiltersNotifier);
-    final tags = ref.read(tagsListStreamProvider).value;
+    final tags = ref.read(tagsListNotifierProvider).value;
     final selectedTags = tags
         ?.where((e) => filters.searchTags.contains(e.id))
         .toList();
@@ -203,7 +203,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
       final importance = values[TaskEditImportanceField.name] as TaskImportance;
       final description = values[TaskEditDescriptionField.name] as String?;
       final tags = values[TaskEditTagsSelectionField.name] as List<ItemTag>?;
-      final forDate = values[TaskEditForDateField.name] as DateTime;
+      final forDate = values[TaskEditForDateField.name] as DateTime?;
       final persistent = values[TaskEditPersistenceField.name] as bool;
 
       final prevTask = taskToEdit;
@@ -224,7 +224,8 @@ class _FloatingSubmitButton extends ConsumerWidget {
       } else {
         unawaited(
           repository.updateTask(
-            prevTask.edit(
+            oldTask: prevTask,
+            newTask: prevTask.edit(
               title: title,
               importance: importance,
               description: description,

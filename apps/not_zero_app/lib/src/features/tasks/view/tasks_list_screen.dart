@@ -1,12 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:not_zero_app/src/features/tags/view/tag_selector.dart';
 import 'package:not_zero_app/src/features/tasks/di.dart';
 import 'package:not_zero_app/src/features/tasks/view/components/task_card.dart';
+import 'package:not_zero_app/src/features/tasks/view/components/tasks_empty_list_placeholder.dart';
 import 'package:not_zero_app/src/features/tasks/view/components/tasks_list_app_bar.dart';
+import 'package:not_zero_app/src/features/tasks/view/components/tasks_list_floating_buttons.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
@@ -23,53 +22,8 @@ class TasksListScreen extends ConsumerWidget {
       child: const Scaffold(
         appBar: TasksListAppBar(),
         body: _TasksListScreenBody(),
-        floatingActionButton: _TasksListFloatingButton(),
+        floatingActionButton: TasksListFloatingButtons(),
       ),
-    );
-  }
-}
-
-class _TasksListFloatingButton extends ConsumerWidget {
-  const _TasksListFloatingButton();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final selectionState = ref.watch(itemSelectionNotifierProvider);
-
-    if (selectionState.isNotEmpty) {
-      final theme = Theme.of(context);
-      return FloatingActionButton(
-        foregroundColor: theme.colorScheme.onError,
-        backgroundColor: theme.colorScheme.error,
-        onPressed: () async {
-          final selectedCount = ref.read(itemSelectionNotifierProvider).length;
-
-          final confirm = await showConfirmationDialog(
-            context,
-            title: t.common.dialog.deleteTitle,
-            content: t.tasks.list.deleteDialog.content(n: selectedCount),
-            confirm: t.common.dialog.deleteButton,
-            dangerous: true,
-          );
-          if (confirm ?? false) {
-            final notifier = ref.read(itemSelectionNotifierProvider.notifier);
-            unawaited(
-              ref
-                  .read(tasksRepositoryProvider)
-                  .deleteMultipleTasks(selectionState),
-            );
-            notifier.removeAll();
-          }
-        },
-        tooltip: t.tasks.list.tooltips.deleteSelectedButton,
-        child: const Icon(Icons.delete_outline_rounded),
-      );
-    }
-
-    return FloatingActionButton(
-      onPressed: () => context.push('/tasks/new'),
-      tooltip: t.tasks.list.tooltips.addNewButton,
-      child: const Icon(Icons.add_task_rounded),
     );
   }
 }
@@ -79,7 +33,7 @@ class _TasksListScreenBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(tasksListStreamProvider);
+    final state = ref.watch(tasksMainListNotifier);
 
     final hasSelection = ref.watch(
       itemSelectionNotifierProvider.select((selection) => selection.isNotEmpty),
@@ -127,12 +81,14 @@ class _TasksListView extends StatelessWidget {
         padding: const EdgeInsets.only(top: 5, bottom: 75, left: 10, right: 10),
         children: [
           const _TasksFilters(),
-          ...tasks.map(
-            (t) => TaskCard(
-              t,
-              key: Key('Task ${t.id}'),
+          if (tasks.isNotEmpty)
+            ...tasks.map(
+              (t) => TaskCard(
+                t,
+                key: Key('Task ${t.id}'),
+              ),
             ),
-          ),
+          if (tasks.isEmpty) const TasksEmptyListPlaceholder(),
         ],
       ),
     );
@@ -151,20 +107,31 @@ class _TasksFilters extends ConsumerWidget {
     final selectedTags = ref.watch(
       tasksFiltersNotifier.select((state) => state.searchTags),
     );
+    final (allTasksCount, tasksLeftToComplete) = ref.watch(
+      tasksMainListNotifier.select(
+        (state) => (
+          state.value?.length,
+          state.value?.where((task) => !task.isCompleted).length,
+        ),
+      ),
+    );
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DateRangeSwitch(
-          rangeType: DateRangeType.day,
-          initialDate: selectedDay,
-          onChanged: (startDay, endDay) {
-            assert(startDay.isAtSameDay(endDay), 'Invalid date range');
-            if (selectedDay?.isAtSameDay(endDay) ?? false) return;
+        if (selectedDay != null) ...[
+          DateRangeSwitch(
+            rangeType: DateRangeType.day,
+            initialDate: selectedDay,
+            onChanged: (startDay, endDay) {
+              assert(startDay.isAtSameDay(endDay), 'Invalid date range');
+              if (selectedDay.isAtSameDay(endDay)) return;
 
-            filtersNotifier.selectDay(endDay);
-          },
-        ),
-        const SizedBox(height: 8),
+              filtersNotifier.selectDay(endDay);
+            },
+          ),
+          const SizedBox(height: 8),
+        ],
         ItemTagSelector(
           selectedTags: selectedTags,
           onSelection: (tag, isSelected) {
@@ -177,6 +144,15 @@ class _TasksFilters extends ConsumerWidget {
           showAddButton: false,
         ),
         const SizedBox(height: 10),
+        if (tasksLeftToComplete != null &&
+            allTasksCount != null &&
+            allTasksCount > 0) ...[
+          Text(
+            t.tasks.list.tasksLeftToComplete(n: tasksLeftToComplete),
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+          const SizedBox(height: 8),
+        ],
       ],
     );
   }

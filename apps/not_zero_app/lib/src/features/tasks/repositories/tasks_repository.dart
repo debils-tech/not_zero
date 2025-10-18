@@ -1,98 +1,46 @@
-import 'package:not_zero_app/src/features/stats/repositories/stats_repository.dart';
+import 'package:not_zero_app/src/features/tasks/models/task_action.dart';
 import 'package:not_zero_app/src/features/tasks/models/tasks_filters.dart';
 import 'package:not_zero_app/src/features/tasks/services/tasks_local_service.dart';
+import 'package:nz_actions_bus/nz_actions_bus.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-import 'package:rxdart/rxdart.dart';
 
 class TasksRepository {
-  TasksRepository(this._localService, this._statsRepository);
+  const TasksRepository(this._localService, this._actionsBus);
 
   final TasksLocalService _localService;
-  final StatsRepository _statsRepository;
+  final ActionsBus _actionsBus;
 
-  final _tasksStreamController = BehaviorSubject<List<Task>>.seeded([]);
-
-  Stream<List<Task>> getTasks() => _tasksStreamController;
-
-  Task? getTaskById(String taskId) {
-    final currentList = _tasksStreamController.value;
-    final index = currentList.indexWhere((element) => element.id == taskId);
-
-    if (index != -1) {
-      return currentList[index];
-    }
-    return null;
+  Future<List<Task>> getTasks(TasksFilters filters) {
+    return _localService.getTasks(filters);
   }
 
-  Future<void> syncTasks(TasksFilters filters) async {
-    final localTasks = await _localService.getTasks(filters);
-    _tasksStreamController.add(localTasks);
-  }
-
-  Future<void> addTask(Task task) {
-    _tasksStreamController.add([task, ..._tasksStreamController.value]);
+  Future<void> addTask(Task task) async {
+    _actionsBus.emit(TaskAction.created(task: task));
     return _localService.saveTask(task);
   }
 
-  Future<void> updateTask(Task task) {
-    final currentList = _tasksStreamController.value;
-    final indexOfSavedTask = currentList.indexWhere((e) => e.id == task.id);
+  Future<void> updateTask({
+    required Task oldTask,
+    required Task newTask,
+  }) async {
+    _actionsBus.emit(TaskAction.updated(oldTask: oldTask, newTask: newTask));
 
-    if (indexOfSavedTask != -1) {
-      final newList = [...currentList];
-      newList[indexOfSavedTask] = task;
-
-      // Tracking if there is need to update total score or sort a list.
-      final oldTask = currentList[indexOfSavedTask];
-
-      if (oldTask.isCompleted != task.isCompleted) {
-        if (task.isCompleted) {
-          _statsRepository.includeCompletedTask(task.importance);
-        } else {
-          _statsRepository.excludeCompletedTask(task.importance);
-        }
-      } else if (oldTask.importance != task.importance && task.isCompleted) {
-        _statsRepository
-          ..excludeCompletedTask(oldTask.importance)
-          ..includeCompletedTask(task.importance);
-      }
-
-      _tasksStreamController.add(newList);
-    }
-
-    return _localService.saveTask(task);
+    return _localService.saveTask(newTask);
   }
 
-  Future<void> deleteTask(String task) {
-    final newList = [..._tasksStreamController.value]
-      ..removeWhere((element) {
-        if (element.id == task) {
-          if (element.isCompleted) {
-            _statsRepository.excludeCompletedTask(element.importance);
-          }
-          return true;
-        }
-        return false;
-      });
+  Future<void> deleteTask(Task task) async {
+    _actionsBus.emit(TaskAction.deleted(tasks: [task]));
 
-    _tasksStreamController.add(newList);
-
-    return _localService.deleteTasks([task]);
+    return _localService.deleteTasks([task.id]);
   }
 
-  Future<void> deleteMultipleTasks(Set<String> tasks) {
-    final newList = [..._tasksStreamController.value]
-      ..removeWhere((element) {
-        if (tasks.contains(element.id)) {
-          if (element.isCompleted) {
-            _statsRepository.excludeCompletedTask(element.importance);
-          }
-          return true;
-        }
-        return false;
-      });
-    _tasksStreamController.add(newList);
+  Future<void> deleteMultipleTasks(Iterable<Task> tasks) async {
+    _actionsBus.emit(TaskAction.deleted(tasks: tasks));
 
-    return _localService.deleteTasks(tasks);
+    return _localService.deleteTasks(tasks.map((t) => t.id));
+  }
+
+  Future<void> cancelMultipleTasks(Iterable<Task> tasks) {
+    return _localService.updateTasks(tasks);
   }
 }

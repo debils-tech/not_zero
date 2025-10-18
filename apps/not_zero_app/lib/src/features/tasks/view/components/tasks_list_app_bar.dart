@@ -19,6 +19,10 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
     if (selectedItemsCount == 0) {
       return AppBar(
         title: Text(t.tasks.list.title),
+        actions: const [
+          _TasksSomedayButton(),
+          _TasksPopupMenuButton(),
+        ],
       );
     } else {
       return AppBar(
@@ -28,7 +32,7 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
         actions: [
           IconButton(
             onPressed: () {
-              final taskList = ref.read(tasksListStreamProvider).value;
+              final taskList = ref.read(tasksMainListNotifier).value;
               selectionNotifier.addAll(
                 taskList?.map((e) => e.id).toSet() ?? const {},
               );
@@ -39,10 +43,73 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
           IconButton(
             onPressed: selectionNotifier.removeAll,
             tooltip: t.tasks.list.tooltips.removeSelectionButton,
-            icon: const Icon(Icons.close_rounded),
+            icon: const Icon(Icons.deselect_rounded),
           ),
         ],
       );
     }
+  }
+}
+
+class _TasksSomedayButton extends ConsumerWidget {
+  const _TasksSomedayButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(tasksFiltersNotifier.select((state) => state.someday))) {
+      return FilledButton.tonalIcon(
+        onPressed: () {
+          ref.read(tasksFiltersNotifier.notifier).selectDay(DateTime.now());
+        },
+        icon: const Icon(Icons.alarm_rounded),
+        label: Text(t.tasks.list.planning.labelWhenEnabled),
+      );
+    }
+
+    return IconButton(
+      onPressed: () {
+        ref.read(tasksFiltersNotifier.notifier).toggleSomeday();
+      },
+      icon: const Icon(Icons.alarm_off_rounded),
+    );
+  }
+}
+
+class _TasksPopupMenuButton extends ConsumerWidget {
+  const _TasksPopupMenuButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final showCanceled = ref.watch(
+      // null means show all
+      tasksFiltersNotifier.select((state) => state.canceled == null),
+    );
+
+    return PopupMenuButton(
+      itemBuilder: (context) => [
+        PopupMenuItem<void>(
+          onTap: () {
+            if (showCanceled) {
+              ref.read(tasksFiltersNotifier.notifier).hideCanceled();
+            } else {
+              ref.read(tasksFiltersNotifier.notifier).showCanceled();
+            }
+          },
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  t.tasks.list.appBarActions.popupMenu.showCanceledOption,
+                ),
+              ),
+              Visibility(
+                visible: showCanceled,
+                child: const Icon(Icons.check_rounded),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

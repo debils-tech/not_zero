@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero_app/src/features/settings/models/app_theme_settings.dart';
 import 'package:not_zero_app/src/features/settings/notifiers/theme_settings_notifier.dart';
 import 'package:not_zero_app/src/features/settings/repositories/settings_repository.dart';
 import 'package:not_zero_app/src/features/settings/services/settings_local_service.dart';
@@ -18,11 +17,9 @@ final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   );
 });
 
-final NotifierProvider<ThemeSettingsNotifier, AppThemeSettings>
-themeSettingsNotifierProvider =
-    NotifierProvider.autoDispose<ThemeSettingsNotifier, AppThemeSettings>(
-      ThemeSettingsNotifier.new,
-    );
+final themeSettingsNotifierProvider = NotifierProvider.autoDispose(
+  ThemeSettingsNotifier.new,
+);
 
 final appInfoProvider = FutureProvider<AppInfo>((ref) async {
   return AppInfo.fromEnvironment();

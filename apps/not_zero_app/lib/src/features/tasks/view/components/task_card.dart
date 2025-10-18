@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +17,7 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 200),
-      opacity: task.isCompleted ? 0.5 : 1,
+      opacity: task.isCompleted || task.isCanceled ? 0.5 : 1,
       child: SelectableCard(
         onTap: () => context.push('/tasks/view/${task.id}', extra: task),
         identifier: task.id,
@@ -66,6 +68,8 @@ class _TaskTextBlock extends StatelessWidget {
           maxLines: 3,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w600,
+            decoration: task.isCanceled ? TextDecoration.lineThrough : null,
+            decorationThickness: 2.5,
           ),
         ),
         const SizedBox(height: 4),
@@ -164,6 +168,57 @@ class _TaskCheckbox extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    assert(
+      !task.isCompleted || !task.isCanceled,
+      "Task can't be canceled and completed at the same time",
+    );
+
+    if (task.isCanceled) {
+      return TextButton.icon(
+        onPressed: () => ref
+            .read(tasksRepositoryProvider)
+            .updateTask(
+              oldTask: task,
+              newTask: task.complete(completed: false),
+            ),
+        icon: const Icon(
+          Icons.cancel_outlined,
+          size: 20,
+        ),
+        label: Text(t.tasks.list.canceledTaskMark),
+      );
+    }
+
+    if (task.forDate == null) {
+      return IconButton.outlined(
+        onPressed: () async {
+          final tasksRepo = ref.read(tasksRepositoryProvider);
+
+          final firstDate = DateTime.now();
+          final lastDate = firstDate.add(const Duration(days: 365));
+          final newDate = await showDatePicker(
+            context: context,
+            initialDate: firstDate,
+            firstDate: firstDate,
+            lastDate: lastDate,
+          );
+          if (newDate == null) return;
+
+          unawaited(
+            tasksRepo.updateTask(
+              oldTask: task,
+              newTask: task.copyWith(forDate: newDate),
+            ),
+          );
+        },
+        icon: const Icon(
+          Icons.calendar_today_rounded,
+          size: 20,
+        ),
+        tooltip: t.tasks.list.tooltips.selectDateForSomedayTasksButton,
+      );
+    }
+
     return Transform.scale(
       scale: 1.3,
       child: Checkbox(
@@ -172,7 +227,8 @@ class _TaskCheckbox extends ConsumerWidget {
         onChanged: (value) => ref
             .read(tasksRepositoryProvider)
             .updateTask(
-              task.complete(completed: value ?? false),
+              oldTask: task,
+              newTask: task.complete(completed: value ?? false),
             ),
       ),
     );

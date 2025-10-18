@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,248 +9,305 @@ part of 'backup_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
-
-BackupModel _$BackupModelFromJson(Map<String, dynamic> json) {
-  return _BackupModel.fromJson(json);
-}
 
 /// @nodoc
 mixin _$BackupModel {
-  Map<String, dynamic> get data => throw _privateConstructorUsedError;
-  int get version => throw _privateConstructorUsedError;
-  @JsonKey(name: 'app_info')
-  AppInfo? get appInfo => throw _privateConstructorUsedError;
+
+ Map<String, dynamic> get data; int get version;@JsonKey(name: 'app_info') AppInfo? get appInfo;
+/// Create a copy of BackupModel
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$BackupModelCopyWith<BackupModel> get copyWith => _$BackupModelCopyWithImpl<BackupModel>(this as BackupModel, _$identity);
 
   /// Serializes this BackupModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of BackupModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $BackupModelCopyWith<BackupModel> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BackupModel&&const DeepCollectionEquality().equals(other.data, data)&&(identical(other.version, version) || other.version == version)&&(identical(other.appInfo, appInfo) || other.appInfo == appInfo));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(data),version,appInfo);
+
+@override
+String toString() {
+  return 'BackupModel(data: $data, version: $version, appInfo: $appInfo)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $BackupModelCopyWith<$Res> {
-  factory $BackupModelCopyWith(
-    BackupModel value,
-    $Res Function(BackupModel) then,
-  ) = _$BackupModelCopyWithImpl<$Res, BackupModel>;
-  @useResult
-  $Res call({
-    Map<String, dynamic> data,
-    int version,
-    @JsonKey(name: 'app_info') AppInfo? appInfo,
-  });
+abstract mixin class $BackupModelCopyWith<$Res>  {
+  factory $BackupModelCopyWith(BackupModel value, $Res Function(BackupModel) _then) = _$BackupModelCopyWithImpl;
+@useResult
+$Res call({
+ Map<String, dynamic> data, int version,@JsonKey(name: 'app_info') AppInfo? appInfo
+});
 
-  $AppInfoCopyWith<$Res>? get appInfo;
+
+$AppInfoCopyWith<$Res>? get appInfo;
+
 }
-
 /// @nodoc
-class _$BackupModelCopyWithImpl<$Res, $Val extends BackupModel>
+class _$BackupModelCopyWithImpl<$Res>
     implements $BackupModelCopyWith<$Res> {
-  _$BackupModelCopyWithImpl(this._value, this._then);
+  _$BackupModelCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final BackupModel _self;
+  final $Res Function(BackupModel) _then;
 
-  /// Create a copy of BackupModel
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? data = null,
-    Object? version = null,
-    Object? appInfo = freezed,
-  }) {
-    return _then(
-      _value.copyWith(
-            data: null == data
-                ? _value.data
-                : data // ignore: cast_nullable_to_non_nullable
-                      as Map<String, dynamic>,
-            version: null == version
-                ? _value.version
-                : version // ignore: cast_nullable_to_non_nullable
-                      as int,
-            appInfo: freezed == appInfo
-                ? _value.appInfo
-                : appInfo // ignore: cast_nullable_to_non_nullable
-                      as AppInfo?,
-          )
-          as $Val,
-    );
-  }
-
-  /// Create a copy of BackupModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AppInfoCopyWith<$Res>? get appInfo {
-    if (_value.appInfo == null) {
-      return null;
-    }
-
-    return $AppInfoCopyWith<$Res>(_value.appInfo!, (value) {
-      return _then(_value.copyWith(appInfo: value) as $Val);
-    });
-  }
+/// Create a copy of BackupModel
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? data = null,Object? version = null,Object? appInfo = freezed,}) {
+  return _then(_self.copyWith(
+data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
+as int,appInfo: freezed == appInfo ? _self.appInfo : appInfo // ignore: cast_nullable_to_non_nullable
+as AppInfo?,
+  ));
 }
+/// Create a copy of BackupModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$AppInfoCopyWith<$Res>? get appInfo {
+    if (_self.appInfo == null) {
+    return null;
+  }
 
-/// @nodoc
-abstract class _$$BackupModelImplCopyWith<$Res>
-    implements $BackupModelCopyWith<$Res> {
-  factory _$$BackupModelImplCopyWith(
-    _$BackupModelImpl value,
-    $Res Function(_$BackupModelImpl) then,
-  ) = __$$BackupModelImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({
-    Map<String, dynamic> data,
-    int version,
-    @JsonKey(name: 'app_info') AppInfo? appInfo,
+  return $AppInfoCopyWith<$Res>(_self.appInfo!, (value) {
+    return _then(_self.copyWith(appInfo: value));
   });
-
-  @override
-  $AppInfoCopyWith<$Res>? get appInfo;
+}
 }
 
-/// @nodoc
-class __$$BackupModelImplCopyWithImpl<$Res>
-    extends _$BackupModelCopyWithImpl<$Res, _$BackupModelImpl>
-    implements _$$BackupModelImplCopyWith<$Res> {
-  __$$BackupModelImplCopyWithImpl(
-    _$BackupModelImpl _value,
-    $Res Function(_$BackupModelImpl) _then,
-  ) : super(_value, _then);
 
-  /// Create a copy of BackupModel
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? data = null,
-    Object? version = null,
-    Object? appInfo = freezed,
-  }) {
-    return _then(
-      _$BackupModelImpl(
-        data: null == data
-            ? _value._data
-            : data // ignore: cast_nullable_to_non_nullable
-                  as Map<String, dynamic>,
-        version: null == version
-            ? _value.version
-            : version // ignore: cast_nullable_to_non_nullable
-                  as int,
-        appInfo: freezed == appInfo
-            ? _value.appInfo
-            : appInfo // ignore: cast_nullable_to_non_nullable
-                  as AppInfo?,
-      ),
-    );
-  }
+/// Adds pattern-matching-related methods to [BackupModel].
+extension BackupModelPatterns on BackupModel {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _BackupModel value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _BackupModel() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _BackupModel value)  $default,){
+final _that = this;
+switch (_that) {
+case _BackupModel():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _BackupModel value)?  $default,){
+final _that = this;
+switch (_that) {
+case _BackupModel() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Map<String, dynamic> data,  int version, @JsonKey(name: 'app_info')  AppInfo? appInfo)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _BackupModel() when $default != null:
+return $default(_that.data,_that.version,_that.appInfo);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Map<String, dynamic> data,  int version, @JsonKey(name: 'app_info')  AppInfo? appInfo)  $default,) {final _that = this;
+switch (_that) {
+case _BackupModel():
+return $default(_that.data,_that.version,_that.appInfo);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Map<String, dynamic> data,  int version, @JsonKey(name: 'app_info')  AppInfo? appInfo)?  $default,) {final _that = this;
+switch (_that) {
+case _BackupModel() when $default != null:
+return $default(_that.data,_that.version,_that.appInfo);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$BackupModelImpl implements _BackupModel {
-  _$BackupModelImpl({
-    required final Map<String, dynamic> data,
-    this.version = 1,
-    @JsonKey(name: 'app_info') this.appInfo,
-  }) : _data = data;
+class _BackupModel implements BackupModel {
+   _BackupModel({required final  Map<String, dynamic> data, this.version = 1, @JsonKey(name: 'app_info') this.appInfo}): _data = data;
+  factory _BackupModel.fromJson(Map<String, dynamic> json) => _$BackupModelFromJson(json);
 
-  factory _$BackupModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BackupModelImplFromJson(json);
-
-  final Map<String, dynamic> _data;
-  @override
-  Map<String, dynamic> get data {
-    if (_data is EqualUnmodifiableMapView) return _data;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_data);
-  }
-
-  @override
-  @JsonKey()
-  final int version;
-  @override
-  @JsonKey(name: 'app_info')
-  final AppInfo? appInfo;
-
-  @override
-  String toString() {
-    return 'BackupModel(data: $data, version: $version, appInfo: $appInfo)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BackupModelImpl &&
-            const DeepCollectionEquality().equals(other._data, _data) &&
-            (identical(other.version, version) || other.version == version) &&
-            (identical(other.appInfo, appInfo) || other.appInfo == appInfo));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_data),
-    version,
-    appInfo,
-  );
-
-  /// Create a copy of BackupModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$BackupModelImplCopyWith<_$BackupModelImpl> get copyWith =>
-      __$$BackupModelImplCopyWithImpl<_$BackupModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BackupModelImplToJson(
-      this,
-    );
-  }
+ final  Map<String, dynamic> _data;
+@override Map<String, dynamic> get data {
+  if (_data is EqualUnmodifiableMapView) return _data;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_data);
 }
 
-abstract class _BackupModel implements BackupModel {
-  factory _BackupModel({
-    required final Map<String, dynamic> data,
-    final int version,
-    @JsonKey(name: 'app_info') final AppInfo? appInfo,
-  }) = _$BackupModelImpl;
+@override@JsonKey() final  int version;
+@override@JsonKey(name: 'app_info') final  AppInfo? appInfo;
 
-  factory _BackupModel.fromJson(Map<String, dynamic> json) =
-      _$BackupModelImpl.fromJson;
+/// Create a copy of BackupModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$BackupModelCopyWith<_BackupModel> get copyWith => __$BackupModelCopyWithImpl<_BackupModel>(this, _$identity);
 
-  @override
-  Map<String, dynamic> get data;
-  @override
-  int get version;
-  @override
-  @JsonKey(name: 'app_info')
-  AppInfo? get appInfo;
-
-  /// Create a copy of BackupModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BackupModelImplCopyWith<_$BackupModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+Map<String, dynamic> toJson() {
+  return _$BackupModelToJson(this, );
 }
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BackupModel&&const DeepCollectionEquality().equals(other._data, _data)&&(identical(other.version, version) || other.version == version)&&(identical(other.appInfo, appInfo) || other.appInfo == appInfo));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_data),version,appInfo);
+
+@override
+String toString() {
+  return 'BackupModel(data: $data, version: $version, appInfo: $appInfo)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$BackupModelCopyWith<$Res> implements $BackupModelCopyWith<$Res> {
+  factory _$BackupModelCopyWith(_BackupModel value, $Res Function(_BackupModel) _then) = __$BackupModelCopyWithImpl;
+@override @useResult
+$Res call({
+ Map<String, dynamic> data, int version,@JsonKey(name: 'app_info') AppInfo? appInfo
+});
+
+
+@override $AppInfoCopyWith<$Res>? get appInfo;
+
+}
+/// @nodoc
+class __$BackupModelCopyWithImpl<$Res>
+    implements _$BackupModelCopyWith<$Res> {
+  __$BackupModelCopyWithImpl(this._self, this._then);
+
+  final _BackupModel _self;
+  final $Res Function(_BackupModel) _then;
+
+/// Create a copy of BackupModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? data = null,Object? version = null,Object? appInfo = freezed,}) {
+  return _then(_BackupModel(
+data: null == data ? _self._data : data // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
+as int,appInfo: freezed == appInfo ? _self.appInfo : appInfo // ignore: cast_nullable_to_non_nullable
+as AppInfo?,
+  ));
+}
+
+/// Create a copy of BackupModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$AppInfoCopyWith<$Res>? get appInfo {
+    if (_self.appInfo == null) {
+    return null;
+  }
+
+  return $AppInfoCopyWith<$Res>(_self.appInfo!, (value) {
+    return _then(_self.copyWith(appInfo: value));
+  });
+}
+}
+
+// dart format on

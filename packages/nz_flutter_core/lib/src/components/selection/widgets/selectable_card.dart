@@ -16,7 +16,8 @@ class SelectableCard extends ConsumerWidget {
   final void Function()? onTap;
   final Widget child;
 
-  static const _animDuration = Duration(milliseconds: 150);
+  static const _animDuration = Duration(milliseconds: 200);
+  static const _animCurve = Curves.easeInOut;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,6 +45,7 @@ class SelectableCard extends ConsumerWidget {
     return AnimatedScale(
       scale: isSelected ? 0.95 : 1,
       duration: _animDuration,
+      curve: _animCurve,
       child: AnimatedContainer(
         decoration: BoxDecoration(
           border: isSelected
@@ -55,6 +57,7 @@ class SelectableCard extends ConsumerWidget {
           borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         duration: _animDuration,
+        curve: _animCurve,
         child: ClickableCard(
           child: InkWell(
             onTap: selectionIsActive ? toggleSelection : onTap,
