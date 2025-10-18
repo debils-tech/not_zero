@@ -113,7 +113,7 @@ jobs:
         run: |
           make build-android
       - name: Upload FOSS APK Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: artifacts-apk-foss
           path: apps/not_zero_app/build/releases/android
@@ -128,7 +128,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Download APKs Directory
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: artifacts-apk-foss
           path: artifacts/
