@@ -15,4 +15,4 @@ rm -f $RELEASE_DIR/*
 tools/copy-artifact.sh $LINUX_DIR/bundle.tar.gz $RELEASE_DIR/$APP_NAME-x86_64-"$BUILD_TAG".tar.gz
 
 echo -e "\033[92m ✔️ Linux builds copied into \"$RELEASE_DIR\":\033[0m"
-ls $RELEASE_DIR -1hs
+ls -1hs $RELEASE_DIR

@@ -11,6 +11,3 @@ build-linux:
 	rm -rf apps/not_zero_app/build/releases/linux
 	cd apps/not_zero_app && flutter build linux
 	sh tools/linux/move-builds.sh
-
-
-.PHONY: config gen format fmt run test

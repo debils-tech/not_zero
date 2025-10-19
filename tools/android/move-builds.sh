@@ -21,4 +21,4 @@ tools/copy-artifact.sh "$AAB_DIR/app-$FLAVOR-release.aab" "$RELEASE_DIR/$APP_NAM
 wait
 
 printf "\033[92m ✔️ Android builds copied into \"$RELEASE_DIR\":\033[0m\n"
-ls $RELEASE_DIR -1hs
+ls -1hs $RELEASE_DIR
