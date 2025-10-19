@@ -50,6 +50,7 @@ dev_dependencies:
   very_good_analysis: ^10.0.0
 
 flutter:
+  default-flavor: dev
   fonts:
     - family: NotZero
       fonts:
