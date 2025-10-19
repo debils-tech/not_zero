@@ -13,9 +13,12 @@ jobs:
       # Init
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Read Flutter version
+        id: fvm
+        run: echo "flutter_version=$(jq -r '.flutter' .fvmrc)" >> $GITHUB_OUTPUT
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.35.6"
+          flutter-version: ${{ steps.fvm.outputs.flutter_version }}
           channel: stable
           cache: true
       - uses: bluefireteam/melos-action@v3
@@ -25,6 +28,7 @@ jobs:
           path: |
             ~/.pub-cache/git
             ~/.pub-cache/hosted
+            ~/.pub-cache/hosted-hashes
       - name: Check flutter installation
         run: flutter --version
       # Preparation
@@ -84,10 +88,14 @@ jobs:
           path: |
             ~/.pub-cache/git
             ~/.pub-cache/hosted
+            ~/.pub-cache/hosted-hashes
+      - name: Read Flutter version
+        id: fvm
+        run: echo "flutter_version=$(jq -r '.flutter' .fvmrc)" >> $GITHUB_OUTPUT
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.35.6"
+          flutter-version: ${{ steps.fvm.outputs.flutter_version }}
           channel: stable
           cache: true
       - uses: bluefireteam/melos-action@v3
@@ -95,6 +103,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: "17"
+      - uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-androidsdk-flutter-${{ steps.fvm.outputs.flutter_version }}
+          path: | # Cache NDK and CMake so builds are quicker
+            /usr/local/lib/android/sdk/ndk/
+            /usr/local/lib/android/sdk/cmake/
       - name: Check flutter and Java installation installation
         run: |
           flutter --version
