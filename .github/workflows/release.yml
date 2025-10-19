@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.35.6"
           channel: stable
           cache: true
       - uses: bluefireteam/melos-action@v3
@@ -45,26 +45,13 @@ jobs:
     outputs:
       app_version: ${{ steps.update_version.outputs.app_version }}
       app_build_number: ${{ steps.update_version.outputs.app_build_number }}
-      tag_name: ${{ steps.get_tag.outputs.tag_name }}
-      branch: ${{ steps.find_branch.outputs.branch }}
+      commit_hash: ${{ steps.get_hash.outputs.commit_hash }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Get Tag Name
-        id: get_tag
-        run: echo "tag_name=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
-      - name: Find Branch Containing the Tag Commit
-        id: find_branch
-        run: |
-          BRANCH=$(git branch -r --contains $GITHUB_SHA | grep -v HEAD | head -n 1 | sed 's|origin/||')
-          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
-      - name: Checkout Branch
-        run: git checkout ${{ steps.find_branch.outputs.branch }}
       - name: Update Version
         id: update_version
-        run: tools/update-version.sh ${{ steps.get_tag.outputs.tag_name }} >> $GITHUB_OUTPUT
+        run: tools/update-version.sh $(echo $GITHUB_REF | sed 's|refs/heads/release/||') >> $GITHUB_OUTPUT
       - name: Validate release notes
         run: tools/validate-release-notes.sh ${{ steps.update_version.outputs.app_version }}
       - name: Commit and Push Changes
@@ -73,10 +60,13 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add pubspec.yaml
+          git add apps/not_zero_app/pubspec.yaml
           git commit -m "Bump version to ${{ steps.update_version.outputs.app_version }}+${{ steps.update_version.outputs.app_build_number }} [skip ci]"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-          git push origin ${{ steps.find_branch.outputs.branch }}
+          git push origin $(echo $GITHUB_REF | sed 's|refs/heads/||')
+      - name: Get commit hash
+        id: get_hash
+        run: echo "commit_hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
   build_android:
     name: Build android
@@ -87,8 +77,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          ref: ${{ needs.version_update.outputs.branch }}
-          fetch-depth: 0
+          ref: ${{ needs.version_update.outputs.commit_hash }}
       - uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-pubcache
@@ -98,9 +87,10 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.35.4"
+          flutter-version: "3.35.6"
           channel: stable
           cache: true
+      - uses: bluefireteam/melos-action@v3
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
@@ -128,7 +118,7 @@ jobs:
         run: |
           make build-android
       - name: Upload FOSS APK Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: artifacts-apk-foss
           path: apps/not_zero_app/build/releases/android
@@ -142,8 +132,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ needs.version_update.outputs.commit_hash }}
       - name: Download APKs Directory
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: artifacts-apk-foss
           path: artifacts/
@@ -152,7 +144,7 @@ jobs:
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ needs.version_update.outputs.tag_name }}
+          tag: ${{ needs.version_update.outputs.app_version }}
           name: v${{ needs.version_update.outputs.app_version }}
           bodyFile: release_notes/${{ needs.version_update.outputs.app_version }}/github/RELEASE_NOTES.md
           artifacts: "artifacts/*"

@@ -66,6 +66,12 @@ android {
             versionNameSuffix = ".dev"
             resValue("string", "app_name", "Not Zero Dev")
         }
+        create("foss") {
+            dimension = "not_zero_app"
+            applicationIdSuffix = null
+            versionNameSuffix = null
+            resValue("string", "app_name", "Not Zero")
+        }
     }
 
     if (releaseSigning) {
