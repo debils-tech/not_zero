@@ -59,7 +59,7 @@ class _QuickStatsBody extends StatelessWidget {
             padding: const EdgeInsets.all(4),
             child: Text(
               context.t.stats.quickView.weeklyChart,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: context.theme.textTheme.bodyLarge,
             ),
           ),
           const SizedBox(height: 8),

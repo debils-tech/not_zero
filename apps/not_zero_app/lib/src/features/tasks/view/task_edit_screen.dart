@@ -72,7 +72,7 @@ class _DeleteTaskButton extends ConsumerWidget {
       tooltip: context.t.tasks.edit.tooltips.deleteTaskButton,
       icon: Icon(
         Icons.delete_outline_rounded,
-        color: Theme.of(context).colorScheme.error,
+        color: context.theme.colorScheme.error,
       ),
     );
   }

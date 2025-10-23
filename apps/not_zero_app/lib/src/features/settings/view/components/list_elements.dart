@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsBlocHeader extends StatelessWidget {
@@ -13,7 +14,7 @@ class SettingsBlocHeader extends StatelessWidget {
       padding: const EdgeInsets.only(left: 9, top: 12, bottom: 6),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.titleSmall,
+        style: context.theme.textTheme.titleSmall,
       ),
     );
   }

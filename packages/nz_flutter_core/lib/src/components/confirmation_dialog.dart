@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nz_flutter_core/src/translations/translations.g.dart';
+import 'package:nz_flutter_core/src/utils/build_context_quick_access_ext.dart';
 
 Future<bool?> showConfirmationDialog(
   BuildContext context, {
@@ -26,7 +27,7 @@ Future<bool?> showConfirmationDialog(
             confirm ?? context.t.common.dialog.okButton,
             style: dangerous
                 ? TextStyle(
-                    color: Theme.of(context).colorScheme.error,
+                    color: context.theme.colorScheme.error,
                     fontWeight: FontWeight.bold,
                   )
                 : null,

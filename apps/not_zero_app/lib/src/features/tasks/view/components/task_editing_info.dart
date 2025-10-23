@@ -10,7 +10,7 @@ class TaskEditingInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme.titleSmall;
+    final textTheme = context.theme.textTheme.titleSmall;
 
     final timeFormat = DateFormat.Hm();
     final dateFormat = DateFormat.yMMMMd();

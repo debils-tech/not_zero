@@ -41,7 +41,7 @@ class _TaskViewImportanceIndicator extends StatelessWidget
       child: ColoredBox(
         color: _colorByImportance(
           task.importance,
-          Theme.of(context).tasksColorScheme,
+          context.theme.tasksColorScheme,
         ),
       ),
     );
@@ -64,7 +64,6 @@ class _TaskViewScreenBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     final task =
         ref.watch(specificTaskStreamProvider(taskToView.id)).value ??
         taskToView;
@@ -88,7 +87,7 @@ class _TaskViewScreenBody extends ConsumerWidget {
               const SizedBox(height: 8),
               Text(
                 task.title,
-                style: theme.textTheme.titleLarge?.copyWith(
+                style: context.theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),

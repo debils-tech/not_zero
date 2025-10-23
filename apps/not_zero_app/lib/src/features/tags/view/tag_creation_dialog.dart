@@ -64,7 +64,7 @@ class _TagCreationDialogState extends State<TagCreationDialog> {
               isEdit
                   ? context.t.tags.creation.title.existing
                   : context.t.tags.creation.title.create,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: context.theme.textTheme.headlineSmall,
             ),
             const SizedBox(height: 8),
             FormBuilderTextField(
@@ -182,7 +182,7 @@ class _DeleteButton extends ConsumerWidget {
       tooltip: context.t.tags.creation.tooltips.deleteTagButton,
       icon: Icon(
         Icons.delete_outline_rounded,
-        color: Theme.of(context).colorScheme.error,
+        color: context.theme.colorScheme.error,
       ),
     );
   }

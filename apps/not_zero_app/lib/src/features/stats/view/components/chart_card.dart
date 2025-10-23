@@ -22,7 +22,7 @@ class ChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       borderRadius: const BorderRadius.all(Radius.circular(16)),
-      color: Theme.of(context).chartsColorScheme.chartBackgroundColor,
+      color: context.theme.chartsColorScheme.chartBackgroundColor,
       elevation: 7,
       child: Container(
         padding: padding,

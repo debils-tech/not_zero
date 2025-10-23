@@ -114,7 +114,7 @@ class _TaskTimeText extends StatelessWidget {
       finalTextTime = ts.createdAt(time: formattedTime);
     }
 
-    final textStyle = Theme.of(context).textTheme.labelMedium;
+    final textStyle = context.theme.textTheme.labelMedium;
     return Text(
       finalTextTime,
       style: textStyle?.copyWith(
@@ -142,7 +142,7 @@ class _ImportanceIndicatorBox extends StatelessWidget {
             width: 7,
             color: _colorByImportance(
               importance,
-              Theme.of(context).tasksColorScheme,
+              context.theme.tasksColorScheme,
             ),
           ),
         ),

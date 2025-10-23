@@ -24,7 +24,7 @@ class WeeklyStatsChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chartsColors = Theme.of(context).chartsColorScheme;
+    final chartsColors = context.theme.chartsColorScheme;
 
     final barData = LineChartBarData(
       spots: _getChartSpots(),
@@ -79,7 +79,7 @@ class WeeklyStatsChart extends StatelessWidget {
                 return LineTooltipItem(
                   lineBarSpot.y.toInt().toString(),
                   TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: context.theme.colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 );

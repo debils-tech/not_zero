@@ -38,7 +38,7 @@ class _HabitViewImportanceIndicator extends StatelessWidget
       child: ColoredBox(
         color: _colorByImportance(
           habit.importance,
-          Theme.of(context).tasksColorScheme,
+          context.theme.tasksColorScheme,
         ),
       ),
     );
@@ -62,7 +62,6 @@ class _HabitViewScreenBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     // TODO(uSlashVlad): Add a stream to watch for habit changes
     final habit = habitToView;
 
@@ -80,7 +79,7 @@ class _HabitViewScreenBody extends ConsumerWidget {
               const SizedBox(height: 8),
               Text(
                 habit.title,
-                style: theme.textTheme.titleLarge?.copyWith(
+                style: context.theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),

@@ -40,8 +40,6 @@ class _HabitTextBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,7 +48,7 @@ class _HabitTextBlock extends StatelessWidget {
           habit.title,
           overflow: TextOverflow.ellipsis,
           maxLines: 3,
-          style: theme.textTheme.titleMedium?.copyWith(
+          style: context.theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -62,7 +60,7 @@ class _HabitTextBlock extends StatelessWidget {
             ),
             child: Text(
               habit.description,
-              style: theme.textTheme.bodySmall?.copyWith(
+              style: context.theme.textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w500,
               ),
               overflow: TextOverflow.ellipsis,
@@ -93,7 +91,7 @@ class _ImportanceIndicatorBox extends StatelessWidget {
             width: 7,
             color: _colorByImportance(
               importance,
-              Theme.of(context).tasksColorScheme,
+              context.theme.tasksColorScheme,
             ),
           ),
         ),

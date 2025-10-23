@@ -71,7 +71,7 @@ class _NavigationCard extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: context.theme.textTheme.titleLarge,
                 ),
               ],
             ),

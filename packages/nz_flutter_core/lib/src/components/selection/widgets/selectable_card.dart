@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nz_flutter_core/src/components/common_widgets/clickable_card.dart';
 import 'package:nz_flutter_core/src/components/selection/di.dart';
+import 'package:nz_flutter_core/src/utils/build_context_quick_access_ext.dart';
 
 class SelectableCard extends ConsumerWidget {
   const SelectableCard({
@@ -31,8 +32,6 @@ class SelectableCard extends ConsumerWidget {
       itemSelectionNotifierProvider.select((selection) => selection.isNotEmpty),
     );
 
-    final theme = Theme.of(context);
-
     void toggleSelection() {
       if (isSelected) {
         notifier.remove(identifier);
@@ -50,7 +49,9 @@ class SelectableCard extends ConsumerWidget {
           border: isSelected
               ? Border.all(
                   width: 3.5,
-                  color: theme.colorScheme.primary.withValues(alpha: 0.7),
+                  color: context.theme.colorScheme.primary.withValues(
+                    alpha: 0.7,
+                  ),
                 )
               : null,
           borderRadius: const BorderRadius.all(Radius.circular(15)),
