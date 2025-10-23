@@ -30,9 +30,8 @@ Development is divided into several stages, with specific features planned for e
 - [x] Export and import of app's data `(now broken 😢)`
 - [x] Basic stats
 - [x] Tags & Sublists
-- [ ] Make app ready for data synchronization
-- [ ] Tasks of the "do it someday" type
-- [ ] Habits
+- [x] Tasks of the "do it someday" type
+- [ ] Habits `Work in progress 🚧`
 - [ ] Better stats
 - [ ] "Start your day" and "end your day" features
 
