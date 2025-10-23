@@ -983,7 +983,8 @@ class HabitsTable extends Table with TableInfo<HabitsTable, HabitsTableData> {
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
+    defaultValue: const CustomExpression('\'\''),
   );
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
     'created_at',
@@ -1014,7 +1015,8 @@ class HabitsTable extends Table with TableInfo<HabitsTable, HabitsTableData> {
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
+    defaultValue: const CustomExpression('\'{"type":"daily"}\''),
   );
   @override
   List<GeneratedColumn> get $columns => [
@@ -1245,17 +1247,15 @@ class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
   HabitsTableCompanion.insert({
     required String id,
     required String title,
-    required String description,
+    this.description = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     required int importance,
-    required String regularity,
+    this.regularity = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        title = Value(title),
-       description = Value(description),
-       importance = Value(importance),
-       regularity = Value(regularity);
+       importance = Value(importance);
   static Insertable<HabitsTableData> custom({
     Expression<String>? id,
     Expression<String>? title,

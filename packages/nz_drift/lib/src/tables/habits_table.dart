@@ -7,11 +7,13 @@ import 'package:nz_drift/src/converters/habit_regularity_converter.dart';
 class HabitsTable extends Table {
   TextColumn get id => text()();
   TextColumn get title => text()();
-  TextColumn get description => text()();
+  TextColumn get description => text().withDefault(const Constant(''))();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get modifiedAt => dateTime().nullable()();
   IntColumn get importance => intEnum<TaskImportance>()();
-  TextColumn get regularity => text().map(const HabitRegularityConverter())();
+  TextColumn get regularity => text()
+      .map(const HabitRegularityConverter())
+      .withDefault(Constant(HabitRegularityConverter.defaultValue))();
 
   @override
   Set<Column<Object>>? get primaryKey => {id};

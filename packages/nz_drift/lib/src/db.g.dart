@@ -929,7 +929,8 @@ class $HabitsTableTable extends HabitsTable
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -970,7 +971,8 @@ class $HabitsTableTable extends HabitsTable
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
+    defaultValue: Constant(HabitRegularityConverter.defaultValue),
   ).withConverter<HabitRegularity>($HabitsTableTable.$converterregularity);
   @override
   List<GeneratedColumn> get $columns => [
@@ -1015,8 +1017,6 @@ class $HabitsTableTable extends HabitsTable
           _descriptionMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_descriptionMeta);
     }
     if (data.containsKey('created_at')) {
       context.handle(
@@ -1107,17 +1107,15 @@ class HabitsTableCompanion extends UpdateCompanion<Habit> {
   HabitsTableCompanion.insert({
     required String id,
     required String title,
-    required String description,
+    this.description = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     required TaskImportance importance,
-    required HabitRegularity regularity,
+    this.regularity = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        title = Value(title),
-       description = Value(description),
-       importance = Value(importance),
-       regularity = Value(regularity);
+       importance = Value(importance);
   static Insertable<Habit> custom({
     Expression<String>? id,
     Expression<String>? title,
@@ -2579,11 +2577,11 @@ typedef $$HabitsTableTableCreateCompanionBuilder =
     HabitsTableCompanion Function({
       required String id,
       required String title,
-      required String description,
+      Value<String> description,
       Value<DateTime> createdAt,
       Value<DateTime?> modifiedAt,
       required TaskImportance importance,
-      required HabitRegularity regularity,
+      Value<HabitRegularity> regularity,
       Value<int> rowid,
     });
 typedef $$HabitsTableTableUpdateCompanionBuilder =
@@ -2863,11 +2861,11 @@ class $$HabitsTableTableTableManager
               ({
                 required String id,
                 required String title,
-                required String description,
+                Value<String> description = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime?> modifiedAt = const Value.absent(),
                 required TaskImportance importance,
-                required HabitRegularity regularity,
+                Value<HabitRegularity> regularity = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => HabitsTableCompanion.insert(
                 id: id,

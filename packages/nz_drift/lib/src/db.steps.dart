@@ -557,11 +557,11 @@ final class Schema7 extends i0.VersionedSchema {
       columns: [
         _column_0,
         _column_1,
-        _column_2,
+        _column_18,
         _column_14,
         _column_4,
         _column_6,
-        _column_18,
+        _column_19,
       ],
       attachedDatabase: database,
     ),
@@ -573,7 +573,7 @@ final class Schema7 extends i0.VersionedSchema {
       withoutRowId: false,
       isStrict: false,
       tableConstraints: ['PRIMARY KEY(id)', 'UNIQUE(habit_id, completed_date)'],
-      columns: [_column_0, _column_19, _column_20, _column_21],
+      columns: [_column_0, _column_20, _column_21, _column_22],
       attachedDatabase: database,
     ),
     alias: null,
@@ -600,10 +600,19 @@ class Shape6 extends i0.VersionedTable {
 
 i1.GeneratedColumn<String> _column_18(String aliasedName) =>
     i1.GeneratedColumn<String>(
+      'description',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      defaultValue: const CustomExpression('\'\''),
+    );
+i1.GeneratedColumn<String> _column_19(String aliasedName) =>
+    i1.GeneratedColumn<String>(
       'regularity',
       aliasedName,
       false,
       type: i1.DriftSqlType.string,
+      defaultValue: const CustomExpression('\'{"type":"daily"}\''),
     );
 
 class Shape7 extends i0.VersionedTable {
@@ -618,7 +627,7 @@ class Shape7 extends i0.VersionedTable {
       columnsByName['completed_date']! as i1.GeneratedColumn<String>;
 }
 
-i1.GeneratedColumn<String> _column_19(String aliasedName) =>
+i1.GeneratedColumn<String> _column_20(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'habit_id',
       aliasedName,
@@ -628,14 +637,14 @@ i1.GeneratedColumn<String> _column_19(String aliasedName) =>
         'REFERENCES habits_table (id)',
       ),
     );
-i1.GeneratedColumn<int> _column_20(String aliasedName) =>
+i1.GeneratedColumn<int> _column_21(String aliasedName) =>
     i1.GeneratedColumn<int>(
       'type',
       aliasedName,
       false,
       type: i1.DriftSqlType.int,
     );
-i1.GeneratedColumn<String> _column_21(String aliasedName) =>
+i1.GeneratedColumn<String> _column_22(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'completed_date',
       aliasedName,

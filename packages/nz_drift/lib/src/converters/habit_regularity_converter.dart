@@ -15,4 +15,7 @@ class HabitRegularityConverter extends TypeConverter<HabitRegularity, String> {
   String toSql(HabitRegularity value) {
     return jsonEncode(value.toJson());
   }
+
+  static String get defaultValue =>
+      const HabitRegularityConverter().toSql(HabitRegularity.daily());
 }

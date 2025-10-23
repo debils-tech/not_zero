@@ -12,6 +12,11 @@ QueryExecutor openDriftDatabase({bool permanent = true}) {
     return LazyDatabase(() async {
       final path = await getDatabasePath();
       final file = File(path!);
+
+      if (_useLogs) {
+        print('Open database at "$path"');
+      }
+
       return NativeDatabase(file, logStatements: _useLogs);
     });
   }
