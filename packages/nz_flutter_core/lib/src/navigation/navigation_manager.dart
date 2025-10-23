@@ -22,5 +22,5 @@ class NavigationManager {
   void popToRoot() => _router.go('/');
 
   void replace(String path, {Object? extra}) =>
-      _router.replace(path, extra: extra);
+      _router.replace<void>(path, extra: extra);
 }

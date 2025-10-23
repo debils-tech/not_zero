@@ -12,6 +12,7 @@ analyzer:
     # Added since JsonKey and JsonSerializable should be used in "invalid" place with freezed
     invalid_annotation_target: ignore
     avoid_positional_boolean_parameters: ignore
+    prefer_foreach: ignore
 
 linter:
   rules:

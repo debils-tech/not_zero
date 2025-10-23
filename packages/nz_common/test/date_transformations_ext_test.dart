@@ -1,7 +1,5 @@
-import 'package:test/test.dart';
 import 'package:nz_common/nz_common.dart';
-
-const oneMicrosend = Duration(microseconds: 1);
+import 'package:test/test.dart';
 
 void main() {
   final niceDay = DateTime(2022, 02, 02, 11, 34, 123, 456); // wednesday btw

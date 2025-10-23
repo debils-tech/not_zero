@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'extensions/charts_colors.dart';
-import 'extensions/tags_colors.dart';
-import 'extensions/tasks_colors.dart';
+import 'package:nz_flutter_core/src/themes/extensions/charts_colors.dart';
+import 'package:nz_flutter_core/src/themes/extensions/tags_colors.dart';
+import 'package:nz_flutter_core/src/themes/extensions/tasks_colors.dart';
 
 export 'extensions/charts_colors.dart';
 export 'extensions/tags_colors.dart';

@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:drift/drift.dart';
-import 'package:nz_drift/src/database/native_database.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-
-import 'converters/date_converter.dart';
-import 'migrations/migrations.dart';
-import 'tables/tags_table.dart';
-import 'tables/tasks_table.dart';
+import 'package:nz_drift/src/converters/date_converter.dart';
+import 'package:nz_drift/src/database/native_database.dart';
+import 'package:nz_drift/src/migrations/migrations.dart';
+import 'package:nz_drift/src/tables/tags_table.dart';
+import 'package:nz_drift/src/tables/tasks_table.dart';
 
 part 'db.g.dart';
 

@@ -1,8 +1,8 @@
 // coverage:ignore-file
 
 import 'package:drift/drift.dart';
-import 'package:nz_drift/src/converters/date_converter.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_drift/src/converters/date_converter.dart';
 
 @UseRowClass(Task, generateInsertable: true)
 class TasksTable extends Table {
