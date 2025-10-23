@@ -47,12 +47,11 @@ class _HabitViewImportanceIndicator extends StatelessWidget
   Color _colorByImportance(
     TaskImportance importance,
     TasksColorScheme colorScheme,
-  ) =>
-      switch (importance) {
-        TaskImportance.notImportant => colorScheme.notImportantColor,
-        TaskImportance.normal => colorScheme.normalColor,
-        TaskImportance.important => colorScheme.importantColor,
-      };
+  ) => switch (importance) {
+    TaskImportance.notImportant => colorScheme.notImportantColor,
+    TaskImportance.normal => colorScheme.normalColor,
+    TaskImportance.important => colorScheme.importantColor,
+  };
 }
 
 class _HabitViewScreenBody extends ConsumerWidget {

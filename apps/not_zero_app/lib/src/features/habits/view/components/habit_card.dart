@@ -103,10 +103,9 @@ class _ImportanceIndicatorBox extends StatelessWidget {
   Color _colorByImportance(
     TaskImportance importance,
     TasksColorScheme colorScheme,
-  ) =>
-      switch (importance) {
-        TaskImportance.notImportant => colorScheme.notImportantColor,
-        TaskImportance.normal => colorScheme.normalColor,
-        TaskImportance.important => colorScheme.importantColor,
-      };
+  ) => switch (importance) {
+    TaskImportance.notImportant => colorScheme.notImportantColor,
+    TaskImportance.normal => colorScheme.normalColor,
+    TaskImportance.important => colorScheme.importantColor,
+  };
 }

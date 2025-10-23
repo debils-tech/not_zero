@@ -99,7 +99,13 @@ class _TasksPopupMenuButton extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  context.t.tasks.list.appBarActions.popupMenu.showCanceledOption,
+                  context
+                      .t
+                      .tasks
+                      .list
+                      .appBarActions
+                      .popupMenu
+                      .showCanceledOption,
                 ),
               ),
               Visibility(

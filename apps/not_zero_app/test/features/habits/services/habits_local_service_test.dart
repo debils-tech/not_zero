@@ -247,8 +247,9 @@ void main() {
         );
         await habitsLocalService.saveCompletion(completion);
 
-        final updatedCompletion =
-            completion.copyWith(type: HabitCompletionType.skipped);
+        final updatedCompletion = completion.copyWith(
+          type: HabitCompletionType.skipped,
+        );
         await habitsLocalService.saveCompletion(updatedCompletion);
 
         final result = await db.select(db.habitCompletionsTable).get();
@@ -284,8 +285,9 @@ void main() {
         await habitsLocalService.deleteHabit(habit);
 
         final habitResult = await db.select(db.habitsTable).get();
-        final completionsResult =
-            await db.select(db.habitCompletionsTable).get();
+        final completionsResult = await db
+            .select(db.habitCompletionsTable)
+            .get();
 
         expect(habitResult.isEmpty, isTrue);
         expect(completionsResult.isEmpty, isTrue);

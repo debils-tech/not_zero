@@ -47,7 +47,9 @@ class _ElevatedCopyButtonState extends State<ElevatedCopyButton> {
           duration: const Duration(milliseconds: 500),
           child: _isCopied
               ? Text(widget.copiedText ?? context.t.common.copy.completedText)
-              : Text(widget.defaultCopyText ?? context.t.common.copy.defaultText),
+              : Text(
+                  widget.defaultCopyText ?? context.t.common.copy.defaultText,
+                ),
         ),
       ),
     );

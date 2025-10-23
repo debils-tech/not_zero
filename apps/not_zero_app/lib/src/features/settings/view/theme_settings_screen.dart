@@ -83,7 +83,12 @@ class _DynamicColorsCheckbox extends StatelessWidget {
       subtitle: Text(
         isSupported
             ? context.t.settings.theme.useDynamicColorsOption.subtitle
-            : context.t.settings.theme.useDynamicColorsOption.subttileUnavailable,
+            : context
+                  .t
+                  .settings
+                  .theme
+                  .useDynamicColorsOption
+                  .subttileUnavailable,
       ),
     );
   }
