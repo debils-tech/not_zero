@@ -9,27 +9,27 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.settings.list.title),
+        title: Text(context.t.settings.list.title),
       ),
       body: ListView(
         children: [
-          SettingsBlocHeader(t.settings.list.blocks.lookAndFeel),
+          SettingsBlocHeader(context.t.settings.list.blocks.lookAndFeel),
           SettingsMenuEntry(
             route: '/settings/theme',
             icon: Icons.wb_sunny_outlined,
-            title: t.settings.theme.title,
+            title: context.t.settings.theme.title,
           ),
-          SettingsBlocHeader(t.settings.list.blocks.other),
+          SettingsBlocHeader(context.t.settings.list.blocks.other),
           SettingsMenuEntry(
             disabled: true,
             route: '/settings/storage',
             icon: Icons.import_export_rounded,
-            title: t.settings.storage.title,
+            title: context.t.settings.storage.title,
           ),
           SettingsMenuEntry(
             route: '/settings/about',
             icon: Icons.info_outline_rounded,
-            title: t.settings.about.title,
+            title: context.t.settings.about.title,
           ),
         ],
       ),

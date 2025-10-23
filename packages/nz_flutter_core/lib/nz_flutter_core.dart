@@ -13,4 +13,5 @@ export 'src/components/selection/widgets/selectable_card.dart';
 export 'src/themes/themes.dart';
 export 'src/themes/utils/dynamic_theme_application_ext.dart';
 export 'src/translations/translations.g.dart';
+export 'src/utils/build_context_quick_access_ext.dart';
 export 'src/utils/nz_date_time_format.dart';

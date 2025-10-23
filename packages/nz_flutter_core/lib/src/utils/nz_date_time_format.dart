@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/src/translations/translations.g.dart';
 
 abstract final class NzDateTimeFormat {
   static String relativeLocalFormat(
+    BuildContext context,
     DateTime dateTime, {
     DateTime? dateToCompare,
     dynamic locale,
@@ -12,15 +14,15 @@ abstract final class NzDateTimeFormat {
 
     // If today
     if (dateTime.isAtSameDay(dateToCompare)) {
-      return t.common.timeOptions.today;
+      return context.t.common.timeOptions.today;
     }
     // If yesterday
     if (dateTime.isAtSameDay(dateToCompare.dayBefore)) {
-      return t.common.timeOptions.yesterday;
+      return context.t.common.timeOptions.yesterday;
     }
     // If tomorrow
     if (dateTime.isAtSameDay(dateToCompare.dayAfter)) {
-      return t.common.timeOptions.tomorrow;
+      return context.t.common.timeOptions.tomorrow;
     }
 
     return localFormat(dateTime, dateToCompare: dateToCompare, locale: locale);

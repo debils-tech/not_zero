@@ -104,7 +104,7 @@ class _TaskTimeText extends StatelessWidget {
 
     final formattedTime = NzDateTimeFormat.localFormat(timeToShow);
 
-    final ts = t.common.timeSubtitle;
+    final ts = context.t.common.timeSubtitle;
     final String finalTextTime;
     if (task.isCompleted) {
       finalTextTime = ts.completedAt(time: formattedTime);
@@ -185,7 +185,7 @@ class _TaskCheckbox extends ConsumerWidget {
           Icons.cancel_outlined,
           size: 20,
         ),
-        label: Text(t.tasks.list.canceledTaskMark),
+        label: Text(context.t.tasks.list.canceledTaskMark),
       );
     }
 
@@ -215,7 +215,7 @@ class _TaskCheckbox extends ConsumerWidget {
           Icons.calendar_today_rounded,
           size: 20,
         ),
-        tooltip: t.tasks.list.tooltips.selectDateForSomedayTasksButton,
+        tooltip: context.t.tasks.list.tooltips.selectDateForSomedayTasksButton,
       );
     }
 

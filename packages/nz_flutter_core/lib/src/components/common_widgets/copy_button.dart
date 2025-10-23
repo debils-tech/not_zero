@@ -46,8 +46,8 @@ class _ElevatedCopyButtonState extends State<ElevatedCopyButton> {
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
           child: _isCopied
-              ? Text(widget.copiedText ?? t.common.copy.completedText)
-              : Text(widget.defaultCopyText ?? t.common.copy.defaultText),
+              ? Text(widget.copiedText ?? context.t.common.copy.completedText)
+              : Text(widget.defaultCopyText ?? context.t.common.copy.defaultText),
         ),
       ),
     );

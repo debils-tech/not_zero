@@ -10,23 +10,23 @@ class StorageSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(t.settings.storage.title)),
+      appBar: AppBar(title: Text(context.t.settings.storage.title)),
       body: ListView(
         children: [
-          SettingsBlocHeader(t.settings.storage.aboutHeader),
+          SettingsBlocHeader(context.t.settings.storage.aboutHeader),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 6, 15, 18),
-            child: SelectableText(t.settings.storage.aboutContent),
+            child: SelectableText(context.t.settings.storage.aboutContent),
           ),
           ListTile(
             // onTap: () => _exportData(context),
             leading: const Icon(Icons.save_rounded),
-            title: Text(t.settings.storage.exportTitle),
+            title: Text(context.t.settings.storage.exportTitle),
           ),
           ListTile(
             // onTap: () => _importData(context),
             leading: const Icon(Icons.download_rounded),
-            title: Text(t.settings.storage.importTitle),
+            title: Text(context.t.settings.storage.importTitle),
           ),
         ],
       ),

@@ -151,7 +151,7 @@ class _TasksFilters extends ConsumerWidget {
             allTasksCount != null &&
             allTasksCount > 0) ...[
           Text(
-            t.tasks.list.tasksLeftToComplete(n: tasksLeftToComplete),
+            context.t.tasks.list.tasksLeftToComplete(n: tasksLeftToComplete),
             style: Theme.of(context).textTheme.labelMedium,
           ),
           const SizedBox(height: 8),

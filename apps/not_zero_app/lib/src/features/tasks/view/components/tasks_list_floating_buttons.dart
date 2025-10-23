@@ -55,7 +55,7 @@ class _CancelTasksButton extends ConsumerWidget {
         selectionNotifier.removeAll();
       },
       icon: const Icon(Icons.cancel_outlined),
-      label: Text(t.tasks.list.cancelButton),
+      label: Text(context.t.tasks.list.cancelButton),
     );
   }
 }
@@ -78,9 +78,9 @@ class _DeleteTasksButton extends ConsumerWidget {
 
         final confirm = await showConfirmationDialog(
           context,
-          title: t.common.dialog.deleteTitle,
-          content: t.tasks.list.deleteDialog.content(n: selectedCount),
-          confirm: t.common.dialog.deleteButton,
+          title: context.t.common.dialog.deleteTitle,
+          content: context.t.tasks.list.deleteDialog.content(n: selectedCount),
+          confirm: context.t.common.dialog.deleteButton,
           dangerous: true,
         );
         if (confirm ?? false) {
@@ -95,7 +95,7 @@ class _DeleteTasksButton extends ConsumerWidget {
           selectionNotifier.removeAll();
         }
       },
-      tooltip: t.tasks.list.tooltips.deleteSelectedButton,
+      tooltip: context.t.tasks.list.tooltips.deleteSelectedButton,
       child: const Icon(Icons.delete_outline_rounded),
     );
   }
@@ -108,7 +108,7 @@ class _NewTaskButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () => context.push('/tasks/new'),
-      tooltip: t.tasks.list.tooltips.addNewButton,
+      tooltip: context.t.tasks.list.tooltips.addNewButton,
       child: const Icon(Icons.add_task_rounded),
     );
   }

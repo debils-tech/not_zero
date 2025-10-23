@@ -24,14 +24,14 @@ class TasksEmptyListPlaceholder extends ConsumerWidget {
       children: [
         const SizedBox(height: 24),
         Text(
-          t.tasks.list.empty.icon,
+          context.t.tasks.list.empty.icon,
           style: theme.textTheme.displayLarge?.copyWith(fontSize: 48),
         ),
         const SizedBox(height: 16),
         Text(
           hasFilters
-              ? t.tasks.list.empty.titleFilters
-              : t.tasks.list.empty.title,
+              ? context.t.tasks.list.empty.titleFilters
+              : context.t.tasks.list.empty.title,
           style: theme.textTheme.titleLarge,
         ),
         const SizedBox(height: 8),
@@ -45,8 +45,8 @@ class TasksEmptyListPlaceholder extends ConsumerWidget {
           },
           child: Text(
             hasFilters
-                ? t.tasks.list.empty.buttonFilters
-                : t.tasks.list.empty.button,
+                ? context.t.tasks.list.empty.buttonFilters
+                : context.t.tasks.list.empty.button,
           ),
         ),
         const SizedBox(height: 24),

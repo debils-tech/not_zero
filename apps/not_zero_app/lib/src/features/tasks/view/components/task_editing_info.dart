@@ -28,13 +28,13 @@ class TaskEditingInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          t.common.timeSubtitle.createdAt(time: createAtDate),
+          context.t.common.timeSubtitle.createdAt(time: createAtDate),
           style: textTheme,
         ),
         const SizedBox(height: 2),
         if (modifiedAtDate != null)
           Text(
-            t.common.timeSubtitle.modifiedAt(time: modifiedAtDate),
+            context.t.common.timeSubtitle.modifiedAt(time: modifiedAtDate),
             style: textTheme,
           ),
       ],

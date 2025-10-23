@@ -9,7 +9,7 @@ class HabitsListFloatingButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () => context.push('/habits/new'),
-      tooltip: t.habits.list.tooltips.addNewButton,
+      tooltip: context.t.habits.list.tooltips.addNewButton,
       child: const Icon(Icons.add_rounded),
     );
   }

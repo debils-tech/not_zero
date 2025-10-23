@@ -13,17 +13,17 @@ Future<bool?> showConfirmationDialog(
   return showDialog<bool>(
     context: context,
     builder: (_) => AlertDialog(
-      title: Text(title ?? t.common.dialog.confirmTitle),
+      title: Text(title ?? context.t.common.dialog.confirmTitle),
       content: content != null ? Text(content) : null,
       actions: [
         TextButton(
           onPressed: () => context.pop(false),
-          child: Text(cancel ?? t.common.dialog.cancelButton),
+          child: Text(cancel ?? context.t.common.dialog.cancelButton),
         ),
         TextButton(
           onPressed: () => context.pop(true),
           child: Text(
-            confirm ?? t.common.dialog.okButton,
+            confirm ?? context.t.common.dialog.okButton,
             style: dangerous
                 ? TextStyle(
                     color: Theme.of(context).colorScheme.error,

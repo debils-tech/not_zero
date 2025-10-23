@@ -30,7 +30,7 @@ class _QuickStatsAppBar extends ConsumerWidget implements PreferredSizeWidget {
       quickStatisticsNotifierProvider.notifier,
     );
     return AppBar(
-      title: Text(t.stats.quickView.title),
+      title: Text(context.t.stats.quickView.title),
       bottom: PreferredSize(
         preferredSize: Size.zero,
         child: Padding(
@@ -58,7 +58,7 @@ class _QuickStatsBody extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(4),
             child: Text(
-              t.stats.quickView.weeklyChart,
+              context.t.stats.quickView.weeklyChart,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),

@@ -17,7 +17,7 @@ class TaskEditTitleField extends StatelessWidget {
       autofocus: true,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
-        labelText: t.tasks.edit.fields.taskTitle,
+        labelText: context.t.tasks.edit.fields.taskTitle,
         counter: const SizedBox.shrink(),
       ),
       validator: FormBuilderValidators.compose([
@@ -39,7 +39,7 @@ class TaskEditDescriptionField extends StatelessWidget {
       name: name,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
-        labelText: t.tasks.edit.fields.taskDescription,
+        labelText: context.t.tasks.edit.fields.taskDescription,
       ),
       maxLines: null,
     );
@@ -125,7 +125,7 @@ class TaskEditForDateField extends StatelessWidget {
               OutlinedButton.icon(
                 onPressed: () => field.didChange(null),
                 icon: const Icon(Icons.close_rounded),
-                label: Text(t.tasks.edit.fields.taskForSomeday),
+                label: Text(context.t.tasks.edit.fields.taskForSomeday),
               ),
             ],
           ],
@@ -147,7 +147,7 @@ class TaskEditPersistenceField extends StatelessWidget {
       decoration: const InputDecoration(border: InputBorder.none),
       controlAffinity: ListTileControlAffinity.leading,
       title: Text(
-        t.tasks.edit.fields.taskPersistence,
+        context.t.tasks.edit.fields.taskPersistence,
         style: const TextStyle(fontSize: 15),
       ),
     );

@@ -18,7 +18,7 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
     if (selectedItemsCount == 0) {
       return AppBar(
-        title: Text(t.tasks.list.title),
+        title: Text(context.t.tasks.list.title),
         actions: const [
           _TasksSomedayButton(),
           _TasksPopupMenuButton(),
@@ -27,7 +27,7 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
     } else {
       return AppBar(
         title: Text(
-          t.tasks.list.titleSelection(n: selectedItemsCount),
+          context.t.tasks.list.titleSelection(n: selectedItemsCount),
         ),
         actions: [
           IconButton(
@@ -37,12 +37,12 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 taskList?.map((e) => e.id).toSet() ?? const {},
               );
             },
-            tooltip: t.tasks.list.tooltips.selectAllButton,
+            tooltip: context.t.tasks.list.tooltips.selectAllButton,
             icon: const Icon(Icons.select_all_rounded),
           ),
           IconButton(
             onPressed: selectionNotifier.removeAll,
-            tooltip: t.tasks.list.tooltips.removeSelectionButton,
+            tooltip: context.t.tasks.list.tooltips.removeSelectionButton,
             icon: const Icon(Icons.deselect_rounded),
           ),
         ],
@@ -62,7 +62,7 @@ class _TasksSomedayButton extends ConsumerWidget {
           ref.read(tasksFiltersNotifier.notifier).selectDay(DateTime.now());
         },
         icon: const Icon(Icons.alarm_rounded),
-        label: Text(t.tasks.list.planning.labelWhenEnabled),
+        label: Text(context.t.tasks.list.planning.labelWhenEnabled),
       );
     }
 
@@ -99,7 +99,7 @@ class _TasksPopupMenuButton extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  t.tasks.list.appBarActions.popupMenu.showCanceledOption,
+                  context.t.tasks.list.appBarActions.popupMenu.showCanceledOption,
                 ),
               ),
               Visibility(

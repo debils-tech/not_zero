@@ -147,7 +147,7 @@ class _MiddleButton extends StatelessWidget {
     final String text;
 
     if (rangeStart.isAtSameDay(rangeEnd)) {
-      text = NzDateTimeFormat.relativeLocalFormat(rangeStart);
+      text = NzDateTimeFormat.relativeLocalFormat(context, rangeStart);
     } else {
       text = NzDateTimeFormat.rangeLocalFormat(rangeStart, rangeEnd);
     }

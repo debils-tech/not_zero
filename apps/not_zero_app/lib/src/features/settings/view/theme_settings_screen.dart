@@ -18,7 +18,7 @@ class ThemeSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.settings.theme.title),
+        title: Text(context.t.settings.theme.title),
       ),
       body: RadioGroup<ThemeState>(
         groupValue: themeSettings.themeState,
@@ -30,15 +30,15 @@ class ThemeSettingsScreen extends ConsumerWidget {
         child: ListView(
           children: [
             RadioListTile<ThemeState>(
-              title: Text(t.settings.theme.values.light),
+              title: Text(context.t.settings.theme.values.light),
               value: ThemeState.light,
             ),
             RadioListTile<ThemeState>(
-              title: Text(t.settings.theme.values.dark),
+              title: Text(context.t.settings.theme.values.dark),
               value: ThemeState.dark,
             ),
             RadioListTile<ThemeState>(
-              title: Text(t.settings.theme.values.system),
+              title: Text(context.t.settings.theme.values.system),
               value: ThemeState.system,
             ),
             const Divider(),
@@ -49,8 +49,8 @@ class ThemeSettingsScreen extends ConsumerWidget {
             SwitchListTile(
               value: themeSettings.harmonizeColors,
               onChanged: themeStateController.setHarmonizeColors,
-              title: Text(t.settings.theme.harmonizeColors.title),
-              subtitle: Text(t.settings.theme.harmonizeColors.subtitle),
+              title: Text(context.t.settings.theme.harmonizeColors.title),
+              subtitle: Text(context.t.settings.theme.harmonizeColors.subtitle),
             ),
           ],
         ),
@@ -79,11 +79,11 @@ class _DynamicColorsCheckbox extends StatelessWidget {
     return SwitchListTile(
       value: enabled,
       onChanged: isSupported ? onChanged : null,
-      title: Text(t.settings.theme.useDynamicColorsOption.title),
+      title: Text(context.t.settings.theme.useDynamicColorsOption.title),
       subtitle: Text(
         isSupported
-            ? t.settings.theme.useDynamicColorsOption.subtitle
-            : t.settings.theme.useDynamicColorsOption.subttileUnavailable,
+            ? context.t.settings.theme.useDynamicColorsOption.subtitle
+            : context.t.settings.theme.useDynamicColorsOption.subttileUnavailable,
       ),
     );
   }

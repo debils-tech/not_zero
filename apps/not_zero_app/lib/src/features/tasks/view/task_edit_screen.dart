@@ -22,8 +22,8 @@ class TaskEditScreen extends ConsumerWidget {
     final formKey = ref.watch(_formKeyProvider);
 
     final screenTitle = taskToEdit == null
-        ? t.tasks.edit.title.create
-        : t.tasks.edit.title.existing;
+        ? context.t.tasks.edit.title.create
+        : context.t.tasks.edit.title.existing;
     final taskActions = taskToEdit != null
         ? [_DeleteTaskButton(taskToEdit!)]
         : null;
@@ -57,8 +57,8 @@ class _DeleteTaskButton extends ConsumerWidget {
         final navigator = GoRouter.of(context);
         final confirm = await showConfirmationDialog(
           context,
-          title: t.common.dialog.deleteTitle,
-          content: t.tasks.edit.deleteDialog.content,
+          title: context.t.common.dialog.deleteTitle,
+          content: context.t.tasks.edit.deleteDialog.content,
           confirm: t.common.dialog.deleteButton,
           dangerous: true,
         );
@@ -69,7 +69,7 @@ class _DeleteTaskButton extends ConsumerWidget {
         }
       },
       iconSize: 26,
-      tooltip: t.tasks.edit.tooltips.deleteTaskButton,
+      tooltip: context.t.tasks.edit.tooltips.deleteTaskButton,
       icon: Icon(
         Icons.delete_outline_rounded,
         color: Theme.of(context).colorScheme.error,
@@ -157,8 +157,8 @@ class _TaskEditScreenBody extends ConsumerWidget {
 
     final confirm = await showConfirmationDialog(
       context,
-      title: t.common.dialog.exitTitle,
-      content: t.common.dialog.exitContent,
+      title: context.t.common.dialog.exitTitle,
+      content: context.t.common.dialog.exitContent,
       dangerous: true,
     );
     if (confirm ?? false) return true;
@@ -186,8 +186,8 @@ class _FloatingSubmitButton extends ConsumerWidget {
       ),
       child: Text(
         taskToEdit == null
-            ? t.tasks.edit.submit.create
-            : t.tasks.edit.submit.existing,
+            ? context.t.tasks.edit.submit.create
+            : context.t.tasks.edit.submit.existing,
         style: const TextStyle(fontSize: 20),
       ),
     );

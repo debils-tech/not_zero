@@ -16,7 +16,7 @@ class TaskViewScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.tasks.view.title),
+        title: Text(context.t.tasks.view.title),
         bottom: _TaskViewImportanceIndicator(taskToView),
       ),
       body: _TaskViewScreenBody(taskToView),
@@ -120,7 +120,7 @@ class _EditFloatingButton extends ConsumerWidget {
         '/tasks/edit/${taskToView.id}',
         extra: taskToView,
       ),
-      tooltip: t.tasks.view.tooltips.editTaskButton,
+      tooltip: context.t.tasks.view.tooltips.editTaskButton,
       child: const Icon(Icons.edit_rounded),
     );
   }

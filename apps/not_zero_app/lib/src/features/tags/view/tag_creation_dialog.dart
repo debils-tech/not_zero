@@ -62,8 +62,8 @@ class _TagCreationDialogState extends State<TagCreationDialog> {
           children: [
             Text(
               isEdit
-                  ? t.tags.creation.title.existing
-                  : t.tags.creation.title.create,
+                  ? context.t.tags.creation.title.existing
+                  : context.t.tags.creation.title.create,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 8),
@@ -169,9 +169,9 @@ class _DeleteButton extends ConsumerWidget {
         final navigator = GoRouter.of(context);
         final confirm = await showConfirmationDialog(
           context,
-          title: t.common.dialog.deleteTitle,
-          content: t.tags.creation.deleteDialog.content,
-          confirm: t.common.dialog.deleteButton,
+          title: context.t.common.dialog.deleteTitle,
+          content: context.t.tags.creation.deleteDialog.content,
+          confirm: context.t.common.dialog.deleteButton,
           dangerous: true,
         );
         if (confirm ?? false) {
@@ -179,7 +179,7 @@ class _DeleteButton extends ConsumerWidget {
           navigator.pop();
         }
       },
-      tooltip: t.tags.creation.tooltips.deleteTagButton,
+      tooltip: context.t.tags.creation.tooltips.deleteTagButton,
       icon: Icon(
         Icons.delete_outline_rounded,
         color: Theme.of(context).colorScheme.error,
@@ -220,7 +220,7 @@ class _SubmitButton extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: 16),
       ),
       child: Text(
-        t.tags.creation.submit,
+        context.t.tags.creation.submit,
         style: const TextStyle(fontSize: 20),
       ),
     );

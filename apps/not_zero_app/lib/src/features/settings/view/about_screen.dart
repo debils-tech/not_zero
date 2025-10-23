@@ -13,26 +13,26 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.settings.about.title),
+        title: Text(context.t.settings.about.title),
       ),
       body: ListView(
         children: [
-          SettingsBlocHeader(t.settings.about.blocks.version),
+          SettingsBlocHeader(context.t.settings.about.blocks.version),
           const _AppInfoTile(),
-          SettingsBlocHeader(t.settings.about.blocks.links),
+          SettingsBlocHeader(context.t.settings.about.blocks.links),
           SettingsUrlEntry(
             url: ContactLinks.telegram,
-            title: t.settings.about.blocks.telegram,
+            title: context.t.settings.about.blocks.telegram,
             icon: NotZeroIcons.telegram_plane,
           ),
           SettingsUrlEntry(
             url: ContactLinks.repository,
-            title: t.settings.about.blocks.repository,
+            title: context.t.settings.about.blocks.repository,
             icon: NotZeroIcons.github_circled,
           ),
           SettingsMenuEntry(
             route: '/settings/about/licenses',
-            title: t.settings.about.blocks.licenses,
+            title: context.t.settings.about.blocks.licenses,
           ),
         ],
       ),

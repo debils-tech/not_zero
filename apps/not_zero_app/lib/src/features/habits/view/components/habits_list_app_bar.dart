@@ -11,7 +11,7 @@ class HabitsListAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
-      title: Text(t.habits.list.title),
+      title: Text(context.t.habits.list.title),
     );
   }
 }

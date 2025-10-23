@@ -21,8 +21,7 @@ class FancyDatePickerButton extends StatelessWidget {
         style: FilledButton.styleFrom(padding: const EdgeInsets.all(16)),
         icon: const Icon(Icons.calendar_today_rounded),
         label: Text(
-          NzDateTimeFormat.relativeLocalFormat(dateValue),
-          // ,
+          NzDateTimeFormat.relativeLocalFormat(context, dateValue),
         ),
       );
     }
@@ -31,7 +30,7 @@ class FancyDatePickerButton extends StatelessWidget {
       onPressed: () => _selectDay(context),
       style: OutlinedButton.styleFrom(padding: const EdgeInsets.all(16)),
       icon: const Icon(Icons.alarm_off_rounded),
-      label: Text(t.tasks.edit.fields.taskForSomeday),
+      label: Text(context.t.tasks.edit.fields.taskForSomeday),
     );
   }
 

@@ -13,7 +13,7 @@ class HabitViewScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.habits.view.title),
+        title: Text(context.t.habits.view.title),
         bottom: _HabitViewImportanceIndicator(habitToView),
       ),
       body: _HabitViewScreenBody(habitToView),
@@ -111,7 +111,7 @@ class _EditFloatingButton extends ConsumerWidget {
         '/habits/edit/${habitToView.id}',
         extra: habitToView,
       ),
-      tooltip: t.habits.view.tooltips.editHabitButton,
+      tooltip: context.t.habits.view.tooltips.editHabitButton,
       child: const Icon(Icons.edit_rounded),
     );
   }
