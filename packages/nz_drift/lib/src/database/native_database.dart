@@ -38,6 +38,7 @@ bool get _useLogs {
       isInDebug = true;
       return true;
     })(),
+    'Database should be opened in debug mode',
   );
   return isInDebug;
 }

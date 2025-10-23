@@ -14,7 +14,8 @@ dependencies:
   nz_common:
     path: ../nz_common
   shared_preferences: ^2.3.2
+  logging: ^1.3.0
 
 dev_dependencies:
-  flutter_lints: ^6.0.0
+  nz_lint: ^1.0.0
 

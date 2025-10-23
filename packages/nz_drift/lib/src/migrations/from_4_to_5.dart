@@ -7,7 +7,7 @@ Future<void> _from4To5(Migrator m, Schema5 schema) {
       columnTransformer: {
         schema.tasksTable.forDate: schema.tasksTable.forDate
             .dartCast<DateTime>()
-            .modify(DateTimeModifier.localTime())
+            .modify(const DateTimeModifier.localTime())
             .date,
       },
     ),

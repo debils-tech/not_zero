@@ -11,4 +11,4 @@ dependencies:
   logging: ^1.2.0
 
 dev_dependencies:
-  lints: ^6.0.0
+  nz_lint: ^1.0.0

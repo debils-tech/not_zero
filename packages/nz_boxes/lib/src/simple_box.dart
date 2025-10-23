@@ -1,12 +1,16 @@
+import 'package:logging/logging.dart';
 import 'package:nz_boxes/src/not_zero_box.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotZeroSimpleBox implements NotZeroBox<String> {
+  NotZeroSimpleBox(this._boxName)
+    : _log = Logger('NotZeroSimpleBox($_boxName)');
+
   final String _boxName;
 
-  late SharedPreferencesWithCache _prefs;
+  SharedPreferencesWithCache? _prefs;
 
-  NotZeroSimpleBox(this._boxName);
+  final Logger _log;
 
   @override
   Future<void> init() async {
@@ -19,15 +23,18 @@ class NotZeroSimpleBox implements NotZeroBox<String> {
   Future<void> dispose() async {}
 
   String? getString(String key, {String? defaultValue}) {
-    return _prefs.getString(key) ?? defaultValue;
+    _logIfNotInitBox();
+    return _prefs?.getString(key) ?? defaultValue;
   }
 
   int? getInt(String key, {int? defaultValue}) {
-    return _prefs.getInt(key) ?? defaultValue;
+    _logIfNotInitBox();
+    return _prefs?.getInt(key) ?? defaultValue;
   }
 
   bool? getBool(String key, {bool? defaultValue}) {
-    return _prefs.getBool(key) ?? defaultValue;
+    _logIfNotInitBox();
+    return _prefs?.getBool(key) ?? defaultValue;
   }
 
   @Deprecated('[value] method was deprecated, use [getString] instead')
@@ -35,15 +42,18 @@ class NotZeroSimpleBox implements NotZeroBox<String> {
   String? value(String key) => getString(key);
 
   Future<void> putString(String key, String value) {
-    return _prefs.setString(key, value);
+    _logIfNotInitBox();
+    return _prefs?.setString(key, value) ?? Future.value();
   }
 
   Future<void> putInt(String key, int value) {
-    return _prefs.setInt(key, value);
+    _logIfNotInitBox();
+    return _prefs?.setInt(key, value) ?? Future.value();
   }
 
   Future<void> putBool(String key, bool value) {
-    return _prefs.setBool(key, value);
+    _logIfNotInitBox();
+    return _prefs?.setBool(key, value) ?? Future.value();
   }
 
   @Deprecated('Do not use this method, use [putString] instead')
@@ -62,17 +72,19 @@ class NotZeroSimpleBox implements NotZeroBox<String> {
 
   @override
   Future<void> clearAll() async {
+    _logIfNotInitBox();
     for (final key in _keys) {
-      _prefs.remove(key);
+      await _prefs?.remove(key);
     }
   }
 
   @override
   Map<String, String> dump() {
+    _logIfNotInitBox();
     final data = <String, String>{};
 
     for (final key in _keys) {
-      final value = _prefs.getString(key);
+      final value = _prefs?.getString(key);
       if (value != null) {
         data[key] = value;
       }
@@ -85,14 +97,21 @@ class NotZeroSimpleBox implements NotZeroBox<String> {
   Future<void> deleteBox() => clearAll();
 
   Future<void> _remove(String key) {
-    return _prefs.remove(_key(key));
+    _logIfNotInitBox();
+    return _prefs?.remove(_key(key)) ?? Future.value();
   }
 
   Set<String> get _keys =>
-      _prefs.keys.where((key) => key.startsWith(_boxName)).toSet();
+      _prefs?.keys.where((key) => key.startsWith(_boxName)).toSet() ?? {};
 
   String _key(String key) {
     if (_boxName.isEmpty) return key;
     return '${_boxName}_$key';
+  }
+
+  void _logIfNotInitBox() {
+    if (_prefs == null) {
+      _log.severe('Box not initialized');
+    }
   }
 }

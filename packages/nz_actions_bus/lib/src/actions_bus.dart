@@ -25,6 +25,6 @@ class ActionsBus implements LivingObject {
 
   @override
   void dispose() {
-    _actionsInternalController.close();
+    unawaited(_actionsInternalController.close());
   }
 }

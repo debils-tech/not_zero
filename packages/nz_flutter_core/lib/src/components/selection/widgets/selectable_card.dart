@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../common_widgets/clickable_card.dart';
-import '../di.dart';
+import 'package:nz_flutter_core/src/components/common_widgets/clickable_card.dart';
+import 'package:nz_flutter_core/src/components/selection/di.dart';
 
 class SelectableCard extends ConsumerWidget {
   const SelectableCard({

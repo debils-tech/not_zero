@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:nz_common/nz_common.dart';
-
-import '../translations/translations.g.dart';
+import 'package:nz_flutter_core/src/translations/translations.g.dart';
 
 abstract final class NzDateTimeFormat {
   static String relativeLocalFormat(

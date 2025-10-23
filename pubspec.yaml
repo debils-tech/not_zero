@@ -13,6 +13,7 @@ workspace:
   - packages/nz_flutter_core
   - packages/nz_logger
   - packages/nz_base_models
+  - packages/nz_lint
 
 dev_dependencies:
   melos: ^7.1.1

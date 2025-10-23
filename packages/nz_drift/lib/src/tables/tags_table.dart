@@ -2,8 +2,7 @@
 
 import 'package:drift/drift.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-
-import 'tasks_table.dart';
+import 'package:nz_drift/src/tables/tasks_table.dart';
 
 @UseRowClass(ItemTag, generateInsertable: true)
 class TagsTable extends Table {

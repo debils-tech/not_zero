@@ -75,9 +75,9 @@ extension DynamicThemeApplicationExt on ThemeData {
 
       resultTheme = resultTheme.copyWith(
         extensions: [
-          if (tasksColorScheme != null) tasksColorScheme,
-          if (tagsColorScheme != null) tagsColorScheme,
-          if (chartsColorScheme != null) chartsColorScheme,
+          ?tasksColorScheme,
+          ?tagsColorScheme,
+          ?chartsColorScheme,
         ],
       );
     }

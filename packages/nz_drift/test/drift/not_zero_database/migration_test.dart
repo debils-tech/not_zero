@@ -1,8 +1,6 @@
 // dart format width=80
-// ignore_for_file: unused_local_variable, unused_import
 import 'package:drift/drift.dart';
 import 'package:drift_dev/api/migrations_native.dart';
-import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_drift/src/db.dart';
 import 'package:test/test.dart';
 import 'generated/schema.dart';
@@ -39,6 +37,7 @@ void main() {
 
   test(
     // Somehow I getting an SQLite error:
+    // ignore: lines_longer_than_80_chars
     // NOT NULL constraint failed: tmp_for_copy_tasks_table.created_at, constraint failed
     // While there is no null data in the table
     skip: true,
