@@ -1,3 +1,7 @@
+// [print] is used here without flutter package,
+// so no kDebugMode or debugPrint available here.
+// ignore_for_file: avoid_print
+
 import 'package:logging/logging.dart';
 
 void configLogger({bool production = false}) {
