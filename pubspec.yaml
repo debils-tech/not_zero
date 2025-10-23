@@ -21,8 +21,9 @@ dev_dependencies:
 melos:
   scripts:
     generate:
-      exec: dart run build_runner build -d
-      orderDependents: true
+      run: dart run build_runner build -d
+      exec:
+        orderDependents: true
       packageFilters:
         dependsOn:
           - build_runner
@@ -34,8 +35,9 @@ melos:
     fix:
       exec: dart fix --apply .
     upgrade:
-      exec: dart pub upgrade --major-versions
-      orderDependents: true
+      run: dart pub upgrade --major-versions
+      exec:
+        orderDependents: true
     test:
       exec: flutter test
       packageFilters:

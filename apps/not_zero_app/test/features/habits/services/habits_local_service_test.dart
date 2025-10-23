@@ -180,7 +180,6 @@ void main() {
         final habit = Habit(
           id: const Uuid().v4(),
           title: 'New Habit',
-          importance: TaskImportance.normal,
           createdAt: DateTime.now(),
         );
 
@@ -196,7 +195,6 @@ void main() {
         final habit = Habit(
           id: const Uuid().v4(),
           title: 'Original Title',
-          importance: TaskImportance.normal,
           createdAt: DateTime.now(),
         );
         await habitsLocalService.saveHabit(habit);
@@ -215,7 +213,6 @@ void main() {
         final habit = Habit(
           id: const Uuid().v4(),
           title: 'Habit with Completion',
-          importance: TaskImportance.normal,
           createdAt: DateTime.now(),
         );
         await habitsLocalService.saveHabit(habit);
@@ -238,7 +235,6 @@ void main() {
         final habit = Habit(
           id: const Uuid().v4(),
           title: 'Habit with Completion',
-          importance: TaskImportance.normal,
           createdAt: DateTime.now(),
         );
         await habitsLocalService.saveHabit(habit);
@@ -266,7 +262,6 @@ void main() {
         final habit = Habit(
           id: const Uuid().v4(),
           title: 'Habit to Delete',
-          importance: TaskImportance.normal,
           createdAt: DateTime.now(),
         );
         await habitsLocalService.saveHabit(habit);

@@ -8,7 +8,9 @@ class HabitRegularityConverter extends TypeConverter<HabitRegularity, String> {
 
   @override
   HabitRegularity fromSql(String fromDb) {
-    return HabitRegularity.fromJson(jsonDecode(fromDb));
+    return HabitRegularity.fromJson(
+      Map<String, dynamic>.from(jsonDecode(fromDb) as Map),
+    );
   }
 
   @override
@@ -17,5 +19,5 @@ class HabitRegularityConverter extends TypeConverter<HabitRegularity, String> {
   }
 
   static String get defaultValue =>
-      const HabitRegularityConverter().toSql(HabitRegularity.daily());
+      const HabitRegularityConverter().toSql(const HabitRegularity.daily());
 }

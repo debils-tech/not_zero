@@ -14,6 +14,9 @@ QueryExecutor openDriftDatabase({bool permanent = true}) {
       final file = File(path!);
 
       if (_useLogs) {
+        // No flutter package, so no kDebugMode or debugPrint available here.
+        // Checking debug with _useLogs flag
+        // ignore: avoid_print
         print('Open database at "$path"');
       }
 

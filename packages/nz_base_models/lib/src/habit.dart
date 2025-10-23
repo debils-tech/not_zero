@@ -12,9 +12,9 @@ abstract class Habit with _$Habit {
   const factory Habit({
     required String id,
     required String title,
+    required DateTime createdAt,
     @Default('') String description,
     @Default(TaskImportance.normal) TaskImportance importance,
-    required DateTime createdAt,
     DateTime? modifiedAt,
     @JsonKey(toJson: Habit._completionsToJson)
     @Default([])
