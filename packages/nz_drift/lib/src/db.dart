@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_drift/src/converters/date_converter.dart';
+import 'package:nz_drift/src/converters/habit_regularity_converter.dart';
 import 'package:nz_drift/src/database/native_database.dart';
 import 'package:nz_drift/src/migrations/migrations.dart';
 import 'package:nz_drift/src/tables/habits_table.dart';
