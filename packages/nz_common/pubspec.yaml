@@ -8,5 +8,5 @@ environment:
   sdk: ^3.9.2
 
 dev_dependencies:
-  lints: ^6.0.0
+  nz_lint: ^1.0.0
   test: ^1.25.8

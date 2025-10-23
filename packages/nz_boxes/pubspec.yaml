@@ -16,5 +16,5 @@ dependencies:
   shared_preferences: ^2.3.2
 
 dev_dependencies:
-  flutter_lints: ^6.0.0
+  nz_lint: ^1.0.0
 

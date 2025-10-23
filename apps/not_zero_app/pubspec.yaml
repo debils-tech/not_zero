@@ -47,7 +47,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   json_serializable: ^6.8.0
-  very_good_analysis: ^10.0.0
+  nz_lint: ^1.0.0
 
 flutter:
   default-flavor: dev

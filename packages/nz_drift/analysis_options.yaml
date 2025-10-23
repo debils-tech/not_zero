@@ -1,6 +1,1 @@
-include: package:lints/recommended.yaml
-
-analyzer:
-  exclude:
-    - lib/**/*.g.dart
-    - lib/**/*.freezed.dart
+include: package:nz_lint/nz_lint.yaml

@@ -1,15 +1,11 @@
-name: nz_actions_bus
+name: nz_lint
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
+publish_to: none
 resolution: workspace
 
 environment:
   sdk: ^3.9.2
 
 dependencies:
-  rxdart: ^0.28.0
-  nz_common: ^1.0.0
-  meta: ^1.16.0
-
-dev_dependencies:
-  nz_lint: ^1.0.0
+  very_good_analysis: ^10.0.0
