@@ -1,4 +1,7 @@
 import 'package:go_router/go_router.dart';
+import 'package:not_zero_app/src/features/habits/view/habit_edit_screen.dart';
+import 'package:not_zero_app/src/features/habits/view/habit_view_screen.dart';
+import 'package:not_zero_app/src/features/habits/view/habits_list_screen.dart';
 import 'package:not_zero_app/src/features/home/view/home_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/about_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/licenses_screen.dart';
@@ -32,7 +35,7 @@ final appRouter = GoRouter(
               path: 'view/:id',
               builder: (context, state) {
                 final extra = state.extra;
-                assert(extra is Task?, 'Extra should be Task object');
+                assert(extra is Task, 'Extra should be Task object');
                 return TaskViewScreen(
                   // TODO(uSlashVlad): Maybe will be helpful to load actual task
                   taskToView: extra! as Task,
@@ -43,9 +46,39 @@ final appRouter = GoRouter(
               path: 'edit/:id',
               builder: (context, state) {
                 final extra = state.extra;
-                assert(extra is Task?, 'Extra should be Task object');
+                assert(extra is Task, 'Extra should be Task object');
                 return TaskEditScreen(
                   taskToEdit: extra as Task?,
+                );
+              },
+            ),
+          ],
+        ),
+        GoRoute(
+          path: 'habits',
+          builder: (_, _) => const HabitsListScreen(),
+          routes: [
+            GoRoute(
+              path: 'new',
+              builder: (_, _) => const HabitEditScreen(),
+            ),
+            GoRoute(
+              path: 'view/:id',
+              builder: (context, state) {
+                final extra = state.extra;
+                assert(extra is Habit, 'Extra should be Habit object');
+                return HabitViewScreen(
+                  habitToView: extra! as Habit,
+                );
+              },
+            ),
+            GoRoute(
+              path: 'edit/:id',
+              builder: (context, state) {
+                final extra = state.extra;
+                assert(extra is Habit, 'Extra should be Habit object');
+                return HabitEditScreen(
+                  habitToEdit: extra as Habit?,
                 );
               },
             ),

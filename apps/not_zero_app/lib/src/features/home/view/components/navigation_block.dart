@@ -19,6 +19,12 @@ class HomeNavigationBlock extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             _NavigationCard(
+              route: '/habits',
+              icon: Icons.published_with_changes_rounded,
+              title: t.habits.list.title,
+            ),
+            const SizedBox(height: 6),
+            _NavigationCard(
               route: '/stats',
               icon: Icons.bar_chart_rounded,
               title: t.stats.quickView.title,

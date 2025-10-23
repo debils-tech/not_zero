@@ -21,8 +21,8 @@ class TasksListScreen extends ConsumerWidget {
       ],
       child: const Scaffold(
         appBar: TasksListAppBar(),
-        body: _TasksListScreenBody(),
         floatingActionButton: TasksListFloatingButtons(),
+        body: _TasksListScreenBody(),
       ),
     );
   }
@@ -51,7 +51,11 @@ class _TasksListScreenBody extends ConsumerWidget {
       },
       child: switch (state) {
         AsyncData(value: final tasks) => _TasksListView(tasks),
-        _ => const _TasksLoadingView(),
+        AsyncLoading() => const _TasksLoadingView(),
+        AsyncError(:final error, :final stackTrace) => EverythingBrokeText(
+          error,
+          stackTrace,
+        ),
       },
     );
   }
@@ -81,13 +85,12 @@ class _TasksListView extends StatelessWidget {
         padding: const EdgeInsets.only(top: 5, bottom: 75, left: 10, right: 10),
         children: [
           const _TasksFilters(),
-          if (tasks.isNotEmpty)
-            ...tasks.map(
-              (t) => TaskCard(
-                t,
-                key: Key('Task ${t.id}'),
-              ),
+          ...tasks.map(
+            (t) => TaskCard(
+              t,
+              key: Key('Task ${t.id}'),
             ),
+          ),
           if (tasks.isEmpty) const TasksEmptyListPlaceholder(),
         ],
       ),

@@ -1,0 +1,17 @@
+list:
+  title: 'Habits'
+  tooltips:
+    addNewButton: 'Add new habit'
+
+view:
+  title: 'Habit view'
+  tooltips:
+    editHabitButton: 'Edit'
+
+edit:
+  title:
+    create: 'New habit'
+    existing: 'Edit habit'
+  fields:
+    habitTitle: 'Title'
+    habitDescription: 'Description'

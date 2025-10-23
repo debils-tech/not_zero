@@ -2,6 +2,7 @@ export 'src/components/adaptive/list_limiter.dart';
 export 'src/components/common_widgets/clickable_card.dart';
 export 'src/components/common_widgets/copy_button.dart';
 export 'src/components/common_widgets/date_range_switch.dart';
+export 'src/components/common_widgets/everything_broke_text.dart';
 export 'src/components/common_widgets/fancy_date_picker_button.dart';
 export 'src/components/common_widgets/stars_rate.dart';
 export 'src/components/confirmation_dialog.dart';

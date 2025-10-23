@@ -54,6 +54,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 
   // Translations
   late final TranslationsCommonEn common = TranslationsCommonEn._(_root);
+  late final TranslationsHabitsEn habits = TranslationsHabitsEn._(_root);
   late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
   late final TranslationsStatsEn stats = TranslationsStatsEn._(_root);
   late final TranslationsTagsEn tags = TranslationsTagsEn._(_root);
@@ -75,6 +76,18 @@ class TranslationsCommonEn {
   late final TranslationsCommonCopyEn copy = TranslationsCommonCopyEn._(_root);
   late final TranslationsCommonTimeOptionsEn timeOptions =
       TranslationsCommonTimeOptionsEn._(_root);
+}
+
+// Path: habits
+class TranslationsHabitsEn {
+  TranslationsHabitsEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+  late final TranslationsHabitsListEn list = TranslationsHabitsListEn._(_root);
+  late final TranslationsHabitsViewEn view = TranslationsHabitsViewEn._(_root);
+  late final TranslationsHabitsEditEn edit = TranslationsHabitsEditEn._(_root);
 }
 
 // Path: settings
@@ -215,6 +228,49 @@ class TranslationsCommonTimeOptionsEn {
 
   /// en: 'Tomorrow'
   String get tomorrow => 'Tomorrow';
+}
+
+// Path: habits.list
+class TranslationsHabitsListEn {
+  TranslationsHabitsListEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Habits'
+  String get title => 'Habits';
+
+  late final TranslationsHabitsListTooltipsEn tooltips =
+      TranslationsHabitsListTooltipsEn._(_root);
+}
+
+// Path: habits.view
+class TranslationsHabitsViewEn {
+  TranslationsHabitsViewEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Habit view'
+  String get title => 'Habit view';
+
+  late final TranslationsHabitsViewTooltipsEn tooltips =
+      TranslationsHabitsViewTooltipsEn._(_root);
+}
+
+// Path: habits.edit
+class TranslationsHabitsEditEn {
+  TranslationsHabitsEditEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+  late final TranslationsHabitsEditTitleEn title =
+      TranslationsHabitsEditTitleEn._(_root);
+  late final TranslationsHabitsEditFieldsEn fields =
+      TranslationsHabitsEditFieldsEn._(_root);
 }
 
 // Path: settings.list
@@ -416,6 +472,60 @@ class TranslationsTasksEditEn {
       TranslationsTasksEditDeleteDialogEn._(_root);
   late final TranslationsTasksEditTooltipsEn tooltips =
       TranslationsTasksEditTooltipsEn._(_root);
+}
+
+// Path: habits.list.tooltips
+class TranslationsHabitsListTooltipsEn {
+  TranslationsHabitsListTooltipsEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Add new habit'
+  String get addNewButton => 'Add new habit';
+}
+
+// Path: habits.view.tooltips
+class TranslationsHabitsViewTooltipsEn {
+  TranslationsHabitsViewTooltipsEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Edit'
+  String get editHabitButton => 'Edit';
+}
+
+// Path: habits.edit.title
+class TranslationsHabitsEditTitleEn {
+  TranslationsHabitsEditTitleEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'New habit'
+  String get create => 'New habit';
+
+  /// en: 'Edit habit'
+  String get existing => 'Edit habit';
+}
+
+// Path: habits.edit.fields
+class TranslationsHabitsEditFieldsEn {
+  TranslationsHabitsEditFieldsEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Title'
+  String get habitTitle => 'Title';
+
+  /// en: 'Description'
+  String get habitDescription => 'Description';
 }
 
 // Path: settings.list.blocks
@@ -837,6 +947,22 @@ extension on Translations {
         return 'Yesterday';
       case 'common.timeOptions.tomorrow':
         return 'Tomorrow';
+      case 'habits.list.title':
+        return 'Habits';
+      case 'habits.list.tooltips.addNewButton':
+        return 'Add new habit';
+      case 'habits.view.title':
+        return 'Habit view';
+      case 'habits.view.tooltips.editHabitButton':
+        return 'Edit';
+      case 'habits.edit.title.create':
+        return 'New habit';
+      case 'habits.edit.title.existing':
+        return 'Edit habit';
+      case 'habits.edit.fields.habitTitle':
+        return 'Title';
+      case 'habits.edit.fields.habitDescription':
+        return 'Description';
       case 'settings.list.title':
         return 'Settings';
       case 'settings.list.blocks.lookAndFeel':
