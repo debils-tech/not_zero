@@ -1,7 +1,8 @@
 import 'package:not_zero_app/src/features/tags/services/tags_local_service.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_common/nz_common.dart';
 
-class TagsRepository {
+class TagsRepository implements BaseRepository {
   const TagsRepository(this._localService);
 
   final TagsLocalService _localService;

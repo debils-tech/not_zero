@@ -3,8 +3,9 @@ import 'package:not_zero_app/src/features/tasks/models/tasks_filters.dart';
 import 'package:not_zero_app/src/features/tasks/services/tasks_local_service.dart';
 import 'package:nz_actions_bus/nz_actions_bus.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_common/nz_common.dart';
 
-class TasksRepository {
+class TasksRepository implements BaseRepository {
   const TasksRepository(this._localService, this._actionsBus);
 
   final TasksLocalService _localService;

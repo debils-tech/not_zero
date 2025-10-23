@@ -1,10 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:not_zero_app/src/features/tasks/models/tasks_filters.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:nz_drift/nz_drift.dart';
 
-class TasksLocalService {
-  TasksLocalService(this._db);
+class TasksLocalService implements BaseService {
+  const TasksLocalService(this._db);
 
   final NotZeroDatabase _db;
 

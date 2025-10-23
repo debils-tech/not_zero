@@ -1,8 +1,9 @@
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:nz_drift/nz_drift.dart';
 
-class TagsLocalService {
-  TagsLocalService(this._db);
+class TagsLocalService implements BaseService {
+  const TagsLocalService(this._db);
 
   final NotZeroDatabase _db;
 

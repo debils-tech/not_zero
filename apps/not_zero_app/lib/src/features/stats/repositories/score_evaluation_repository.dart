@@ -1,7 +1,8 @@
 import 'package:not_zero_app/src/features/stats/models/tasks_counting_data.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_common/nz_common.dart';
 
-class ScoreEvaluationRepository {
+class ScoreEvaluationRepository implements BaseRepository {
   const ScoreEvaluationRepository();
 
   static const _taskCompletedNotImportantScore = 3;

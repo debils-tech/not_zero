@@ -4,3 +4,5 @@ export 'src/insert_separators.dart';
 export 'src/living_object.dart';
 export 'src/object_id_mixin.dart';
 export 'src/platform_checks.dart';
+export 'src/architecture/base_service.dart';
+export 'src/architecture/base_repository.dart';

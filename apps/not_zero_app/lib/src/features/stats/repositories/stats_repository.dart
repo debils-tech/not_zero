@@ -2,7 +2,7 @@ import 'package:not_zero_app/src/features/stats/repositories/score_evaluation_re
 import 'package:not_zero_app/src/features/stats/services/tasks_stats_local_service.dart';
 import 'package:nz_common/nz_common.dart';
 
-class StatsRepository {
+class StatsRepository implements BaseRepository {
   const StatsRepository(this._localService, this._scoreEvaluationRepository);
 
   final TasksStatsLocalService _localService;

@@ -2,8 +2,9 @@ import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/settings/models/app_theme_settings.dart';
 import 'package:not_zero_app/src/features/settings/models/theme_state.dart';
 import 'package:not_zero_app/src/features/settings/services/settings_local_service.dart';
+import 'package:nz_common/nz_common.dart';
 
-class SettingsRepository {
+class SettingsRepository implements BaseRepository {
   const SettingsRepository(this._settingsLocalService);
 
   final SettingsLocalService _settingsLocalService;

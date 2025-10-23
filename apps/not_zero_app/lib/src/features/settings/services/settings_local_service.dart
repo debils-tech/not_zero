@@ -1,8 +1,9 @@
 import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/settings/models/theme_state.dart';
 import 'package:nz_boxes/nz_boxes.dart';
+import 'package:nz_common/nz_common.dart';
 
-class SettingsLocalService {
+class SettingsLocalService implements BaseService {
   const SettingsLocalService(this._settingsBox);
 
   final NotZeroSimpleBox _settingsBox;
