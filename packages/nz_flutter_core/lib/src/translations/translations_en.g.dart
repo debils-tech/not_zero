@@ -271,6 +271,12 @@ class TranslationsHabitsEditEn {
       TranslationsHabitsEditTitleEn._(_root);
   late final TranslationsHabitsEditFieldsEn fields =
       TranslationsHabitsEditFieldsEn._(_root);
+  late final TranslationsHabitsEditSubmitEn submit =
+      TranslationsHabitsEditSubmitEn._(_root);
+  late final TranslationsHabitsEditDeleteDialogEn deleteDialog =
+      TranslationsHabitsEditDeleteDialogEn._(_root);
+  late final TranslationsHabitsEditTooltipsEn tooltips =
+      TranslationsHabitsEditTooltipsEn._(_root);
 }
 
 // Path: settings.list
@@ -526,6 +532,45 @@ class TranslationsHabitsEditFieldsEn {
 
   /// en: 'Description'
   String get habitDescription => 'Description';
+}
+
+// Path: habits.edit.submit
+class TranslationsHabitsEditSubmitEn {
+  TranslationsHabitsEditSubmitEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Create new habit!'
+  String get create => 'Create new habit!';
+
+  /// en: 'Save changes'
+  String get existing => 'Save changes';
+}
+
+// Path: habits.edit.deleteDialog
+class TranslationsHabitsEditDeleteDialogEn {
+  TranslationsHabitsEditDeleteDialogEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Are you sure you want delete this habit?'
+  String get content => 'Are you sure you want delete this habit?';
+}
+
+// Path: habits.edit.tooltips
+class TranslationsHabitsEditTooltipsEn {
+  TranslationsHabitsEditTooltipsEn._(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Delete'
+  String get deleteHabitButton => 'Delete';
 }
 
 // Path: settings.list.blocks
@@ -963,6 +1008,14 @@ extension on Translations {
         return 'Title';
       case 'habits.edit.fields.habitDescription':
         return 'Description';
+      case 'habits.edit.submit.create':
+        return 'Create new habit!';
+      case 'habits.edit.submit.existing':
+        return 'Save changes';
+      case 'habits.edit.deleteDialog.content':
+        return 'Are you sure you want delete this habit?';
+      case 'habits.edit.tooltips.deleteHabitButton':
+        return 'Delete';
       case 'settings.list.title':
         return 'Settings';
       case 'settings.list.blocks.lookAndFeel':

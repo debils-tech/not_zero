@@ -23,6 +23,7 @@ class TaskEditTitleField extends StatelessWidget {
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
       ]),
+      textInputAction: TextInputAction.next,
       maxLength: 75,
     );
   }
@@ -41,6 +42,7 @@ class TaskEditDescriptionField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: context.t.tasks.edit.fields.taskDescription,
       ),
+      textInputAction: TextInputAction.next,
       maxLines: null,
     );
   }

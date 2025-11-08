@@ -243,12 +243,14 @@ class _FloatingSubmitButton extends ConsumerWidget {
   }
 }
 
-final StateProvider<GlobalKey<FormBuilderState>> _formKeyProvider =
-    StateProvider.autoDispose<GlobalKey<FormBuilderState>>((ref) {
-      return GlobalKey<FormBuilderState>();
-    });
+final _formKeyProvider = Provider.autoDispose<GlobalKey<FormBuilderState>>((
+  ref,
+) {
+  return GlobalKey<FormBuilderState>();
+});
 
-final StateProvider<bool> _isTaskChangedProvider =
-    StateProvider.autoDispose<bool>((ref) {
-      return false;
-    });
+// TODO(uSlashVlad): Move `StateProvider` to `NotifierProvider`
+// Maybe create some universal class for this.
+final _isTaskChangedProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
+});

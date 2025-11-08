@@ -1,17 +1,24 @@
 list:
-  title: 'Habits'
+  title: "Habits"
   tooltips:
-    addNewButton: 'Add new habit'
+    addNewButton: "Add new habit"
 
 view:
-  title: 'Habit view'
+  title: "Habit view"
   tooltips:
-    editHabitButton: 'Edit'
+    editHabitButton: "Edit"
 
 edit:
   title:
-    create: 'New habit'
-    existing: 'Edit habit'
+    create: "New habit"
+    existing: "Edit habit"
   fields:
-    habitTitle: 'Title'
-    habitDescription: 'Description'
+    habitTitle: "Title"
+    habitDescription: "Description"
+  submit:
+    create: "Create new habit!"
+    existing: "Save changes"
+  deleteDialog:
+    content: "Are you sure you want delete this habit?"
+  tooltips:
+    deleteHabitButton: "Delete"

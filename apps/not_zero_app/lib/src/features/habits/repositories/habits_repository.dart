@@ -16,4 +16,19 @@ class HabitsRepository implements BaseRepository {
       endDate: currentDate,
     );
   }
+
+  Future<void> addHabit(Habit habit) {
+    return _localService.saveHabit(habit);
+  }
+
+  Future<void> updateHabit({
+    required Habit oldHabit,
+    required Habit newHabit,
+  }) {
+    return _localService.saveHabit(newHabit);
+  }
+
+  Future<void> deleteHabit(Habit habit) {
+    return _localService.deleteHabit(habit);
+  }
 }
