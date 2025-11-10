@@ -1619,6 +1619,191 @@ class HabitCompletionsTableCompanion
   }
 }
 
+class HabitsTagEntries extends Table
+    with TableInfo<HabitsTagEntries, HabitsTagEntriesData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  HabitsTagEntries(this.attachedDatabase, [this._alias]);
+  late final GeneratedColumn<String> habit = GeneratedColumn<String>(
+    'habit',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES habits_table (id)',
+    ),
+  );
+  late final GeneratedColumn<String> tag = GeneratedColumn<String>(
+    'tag',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tags_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [habit, tag];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'habits_tag_entries';
+  @override
+  Set<GeneratedColumn> get $primaryKey => {habit, tag};
+  @override
+  HabitsTagEntriesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return HabitsTagEntriesData(
+      habit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}habit'],
+      )!,
+      tag: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag'],
+      )!,
+    );
+  }
+
+  @override
+  HabitsTagEntries createAlias(String alias) {
+    return HabitsTagEntries(attachedDatabase, alias);
+  }
+}
+
+class HabitsTagEntriesData extends DataClass
+    implements Insertable<HabitsTagEntriesData> {
+  final String habit;
+  final String tag;
+  const HabitsTagEntriesData({required this.habit, required this.tag});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['habit'] = Variable<String>(habit);
+    map['tag'] = Variable<String>(tag);
+    return map;
+  }
+
+  HabitsTagEntriesCompanion toCompanion(bool nullToAbsent) {
+    return HabitsTagEntriesCompanion(habit: Value(habit), tag: Value(tag));
+  }
+
+  factory HabitsTagEntriesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return HabitsTagEntriesData(
+      habit: serializer.fromJson<String>(json['habit']),
+      tag: serializer.fromJson<String>(json['tag']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'habit': serializer.toJson<String>(habit),
+      'tag': serializer.toJson<String>(tag),
+    };
+  }
+
+  HabitsTagEntriesData copyWith({String? habit, String? tag}) =>
+      HabitsTagEntriesData(habit: habit ?? this.habit, tag: tag ?? this.tag);
+  HabitsTagEntriesData copyWithCompanion(HabitsTagEntriesCompanion data) {
+    return HabitsTagEntriesData(
+      habit: data.habit.present ? data.habit.value : this.habit,
+      tag: data.tag.present ? data.tag.value : this.tag,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HabitsTagEntriesData(')
+          ..write('habit: $habit, ')
+          ..write('tag: $tag')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(habit, tag);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is HabitsTagEntriesData &&
+          other.habit == this.habit &&
+          other.tag == this.tag);
+}
+
+class HabitsTagEntriesCompanion extends UpdateCompanion<HabitsTagEntriesData> {
+  final Value<String> habit;
+  final Value<String> tag;
+  final Value<int> rowid;
+  const HabitsTagEntriesCompanion({
+    this.habit = const Value.absent(),
+    this.tag = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  HabitsTagEntriesCompanion.insert({
+    required String habit,
+    required String tag,
+    this.rowid = const Value.absent(),
+  }) : habit = Value(habit),
+       tag = Value(tag);
+  static Insertable<HabitsTagEntriesData> custom({
+    Expression<String>? habit,
+    Expression<String>? tag,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (habit != null) 'habit': habit,
+      if (tag != null) 'tag': tag,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  HabitsTagEntriesCompanion copyWith({
+    Value<String>? habit,
+    Value<String>? tag,
+    Value<int>? rowid,
+  }) {
+    return HabitsTagEntriesCompanion(
+      habit: habit ?? this.habit,
+      tag: tag ?? this.tag,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (habit.present) {
+      map['habit'] = Variable<String>(habit.value);
+    }
+    if (tag.present) {
+      map['tag'] = Variable<String>(tag.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HabitsTagEntriesCompanion(')
+          ..write('habit: $habit, ')
+          ..write('tag: $tag, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class DatabaseAtV7 extends GeneratedDatabase {
   DatabaseAtV7(QueryExecutor e) : super(e);
   late final TasksTable tasksTable = TasksTable(this);
@@ -1627,6 +1812,7 @@ class DatabaseAtV7 extends GeneratedDatabase {
   late final HabitsTable habitsTable = HabitsTable(this);
   late final HabitCompletionsTable habitCompletionsTable =
       HabitCompletionsTable(this);
+  late final HabitsTagEntries habitsTagEntries = HabitsTagEntries(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1637,6 +1823,7 @@ class DatabaseAtV7 extends GeneratedDatabase {
     tasksTagEntries,
     habitsTable,
     habitCompletionsTable,
+    habitsTagEntries,
   ];
   @override
   int get schemaVersion => 7;

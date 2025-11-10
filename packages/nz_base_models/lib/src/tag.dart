@@ -30,4 +30,7 @@ abstract class ItemTag with _$ItemTag, ObjectIdMixin {
     name: name ?? this.name,
     colorIndex: colorIndex ?? this.colorIndex,
   );
+
+  static List<String> tagsToIds(List<ItemTag> field) =>
+      field.map((e) => e.id).toList();
 }

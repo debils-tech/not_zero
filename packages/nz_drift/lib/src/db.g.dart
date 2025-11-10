@@ -1047,6 +1047,10 @@ class $HabitsTableTable extends HabitsTable
         DriftSqlType.string,
         data['${effectivePrefix}title'],
       )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
       description: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}description'],
@@ -1057,10 +1061,6 @@ class $HabitsTableTable extends HabitsTable
           data['${effectivePrefix}importance'],
         )!,
       ),
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
       modifiedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}modified_at'],
@@ -1474,6 +1474,220 @@ extension HabitCompletionToInsertable on HabitCompletion {
   }
 }
 
+class $HabitsTagEntriesTable extends HabitsTagEntries
+    with TableInfo<$HabitsTagEntriesTable, HabitsTagEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $HabitsTagEntriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _habitMeta = const VerificationMeta('habit');
+  @override
+  late final GeneratedColumn<String> habit = GeneratedColumn<String>(
+    'habit',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES habits_table (id)',
+    ),
+  );
+  static const VerificationMeta _tagMeta = const VerificationMeta('tag');
+  @override
+  late final GeneratedColumn<String> tag = GeneratedColumn<String>(
+    'tag',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tags_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [habit, tag];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'habits_tag_entries';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<HabitsTagEntry> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('habit')) {
+      context.handle(
+        _habitMeta,
+        habit.isAcceptableOrUnknown(data['habit']!, _habitMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_habitMeta);
+    }
+    if (data.containsKey('tag')) {
+      context.handle(
+        _tagMeta,
+        tag.isAcceptableOrUnknown(data['tag']!, _tagMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tagMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {habit, tag};
+  @override
+  HabitsTagEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return HabitsTagEntry(
+      habit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}habit'],
+      )!,
+      tag: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag'],
+      )!,
+    );
+  }
+
+  @override
+  $HabitsTagEntriesTable createAlias(String alias) {
+    return $HabitsTagEntriesTable(attachedDatabase, alias);
+  }
+}
+
+class HabitsTagEntry extends DataClass implements Insertable<HabitsTagEntry> {
+  final String habit;
+  final String tag;
+  const HabitsTagEntry({required this.habit, required this.tag});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['habit'] = Variable<String>(habit);
+    map['tag'] = Variable<String>(tag);
+    return map;
+  }
+
+  HabitsTagEntriesCompanion toCompanion(bool nullToAbsent) {
+    return HabitsTagEntriesCompanion(habit: Value(habit), tag: Value(tag));
+  }
+
+  factory HabitsTagEntry.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return HabitsTagEntry(
+      habit: serializer.fromJson<String>(json['habit']),
+      tag: serializer.fromJson<String>(json['tag']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'habit': serializer.toJson<String>(habit),
+      'tag': serializer.toJson<String>(tag),
+    };
+  }
+
+  HabitsTagEntry copyWith({String? habit, String? tag}) =>
+      HabitsTagEntry(habit: habit ?? this.habit, tag: tag ?? this.tag);
+  HabitsTagEntry copyWithCompanion(HabitsTagEntriesCompanion data) {
+    return HabitsTagEntry(
+      habit: data.habit.present ? data.habit.value : this.habit,
+      tag: data.tag.present ? data.tag.value : this.tag,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HabitsTagEntry(')
+          ..write('habit: $habit, ')
+          ..write('tag: $tag')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(habit, tag);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is HabitsTagEntry &&
+          other.habit == this.habit &&
+          other.tag == this.tag);
+}
+
+class HabitsTagEntriesCompanion extends UpdateCompanion<HabitsTagEntry> {
+  final Value<String> habit;
+  final Value<String> tag;
+  final Value<int> rowid;
+  const HabitsTagEntriesCompanion({
+    this.habit = const Value.absent(),
+    this.tag = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  HabitsTagEntriesCompanion.insert({
+    required String habit,
+    required String tag,
+    this.rowid = const Value.absent(),
+  }) : habit = Value(habit),
+       tag = Value(tag);
+  static Insertable<HabitsTagEntry> custom({
+    Expression<String>? habit,
+    Expression<String>? tag,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (habit != null) 'habit': habit,
+      if (tag != null) 'tag': tag,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  HabitsTagEntriesCompanion copyWith({
+    Value<String>? habit,
+    Value<String>? tag,
+    Value<int>? rowid,
+  }) {
+    return HabitsTagEntriesCompanion(
+      habit: habit ?? this.habit,
+      tag: tag ?? this.tag,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (habit.present) {
+      map['habit'] = Variable<String>(habit.value);
+    }
+    if (tag.present) {
+      map['tag'] = Variable<String>(tag.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HabitsTagEntriesCompanion(')
+          ..write('habit: $habit, ')
+          ..write('tag: $tag, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$NotZeroDatabase extends GeneratedDatabase {
   _$NotZeroDatabase(QueryExecutor e) : super(e);
   $NotZeroDatabaseManager get managers => $NotZeroDatabaseManager(this);
@@ -1485,6 +1699,9 @@ abstract class _$NotZeroDatabase extends GeneratedDatabase {
   late final $HabitsTableTable habitsTable = $HabitsTableTable(this);
   late final $HabitCompletionsTableTable habitCompletionsTable =
       $HabitCompletionsTableTable(this);
+  late final $HabitsTagEntriesTable habitsTagEntries = $HabitsTagEntriesTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1495,6 +1712,7 @@ abstract class _$NotZeroDatabase extends GeneratedDatabase {
     tasksTagEntries,
     habitsTable,
     habitCompletionsTable,
+    habitsTagEntries,
   ];
 }
 
@@ -1961,6 +2179,30 @@ final class $$TagsTableTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$HabitsTagEntriesTable, List<HabitsTagEntry>>
+  _habitsTagEntriesRefsTable(_$NotZeroDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.habitsTagEntries,
+        aliasName: $_aliasNameGenerator(
+          db.tagsTable.id,
+          db.habitsTagEntries.tag,
+        ),
+      );
+
+  $$HabitsTagEntriesTableProcessedTableManager get habitsTagEntriesRefs {
+    final manager = $$HabitsTagEntriesTableTableManager(
+      $_db,
+      $_db.habitsTagEntries,
+    ).filter((f) => f.tag.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _habitsTagEntriesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$TagsTableTableFilterComposer
@@ -2008,6 +2250,31 @@ class $$TagsTableTableFilterComposer
           }) => $$TasksTagEntriesTableFilterComposer(
             $db: $db,
             $table: $db.tasksTagEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> habitsTagEntriesRefs(
+    Expression<bool> Function($$HabitsTagEntriesTableFilterComposer f) f,
+  ) {
+    final $$HabitsTagEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.habitsTagEntries,
+      getReferencedColumn: (t) => t.tag,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$HabitsTagEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.habitsTagEntries,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -2095,6 +2362,31 @@ class $$TagsTableTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> habitsTagEntriesRefs<T extends Object>(
+    Expression<T> Function($$HabitsTagEntriesTableAnnotationComposer a) f,
+  ) {
+    final $$HabitsTagEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.habitsTagEntries,
+      getReferencedColumn: (t) => t.tag,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$HabitsTagEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.habitsTagEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$TagsTableTableTableManager
@@ -2110,7 +2402,10 @@ class $$TagsTableTableTableManager
           $$TagsTableTableUpdateCompanionBuilder,
           (ItemTag, $$TagsTableTableReferences),
           ItemTag,
-          PrefetchHooks Function({bool tasksTagEntriesRefs})
+          PrefetchHooks Function({
+            bool tasksTagEntriesRefs,
+            bool habitsTagEntriesRefs,
+          })
         > {
   $$TagsTableTableTableManager(_$NotZeroDatabase db, $TagsTableTable table)
     : super(
@@ -2159,38 +2454,63 @@ class $$TagsTableTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({tasksTagEntriesRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (tasksTagEntriesRefs) db.tasksTagEntries,
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (tasksTagEntriesRefs)
-                    await $_getPrefetchedData<
-                      ItemTag,
-                      $TagsTableTable,
-                      TasksTagEntry
-                    >(
-                      currentTable: table,
-                      referencedTable: $$TagsTableTableReferences
-                          ._tasksTagEntriesRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$TagsTableTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).tasksTagEntriesRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.tag == item.id),
-                      typedResults: items,
-                    ),
-                ];
+          prefetchHooksCallback:
+              ({tasksTagEntriesRefs = false, habitsTagEntriesRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (tasksTagEntriesRefs) db.tasksTagEntries,
+                    if (habitsTagEntriesRefs) db.habitsTagEntries,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (tasksTagEntriesRefs)
+                        await $_getPrefetchedData<
+                          ItemTag,
+                          $TagsTableTable,
+                          TasksTagEntry
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TagsTableTableReferences
+                              ._tasksTagEntriesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TagsTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).tasksTagEntriesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.tag == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (habitsTagEntriesRefs)
+                        await $_getPrefetchedData<
+                          ItemTag,
+                          $TagsTableTable,
+                          HabitsTagEntry
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TagsTableTableReferences
+                              ._habitsTagEntriesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TagsTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).habitsTagEntriesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.tag == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -2207,7 +2527,10 @@ typedef $$TagsTableTableProcessedTableManager =
       $$TagsTableTableUpdateCompanionBuilder,
       (ItemTag, $$TagsTableTableReferences),
       ItemTag,
-      PrefetchHooks Function({bool tasksTagEntriesRefs})
+      PrefetchHooks Function({
+        bool tasksTagEntriesRefs,
+        bool habitsTagEntriesRefs,
+      })
     >;
 typedef $$TasksTagEntriesTableCreateCompanionBuilder =
     TasksTagEntriesCompanion Function({
@@ -2624,6 +2947,30 @@ final class $$HabitsTableTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$HabitsTagEntriesTable, List<HabitsTagEntry>>
+  _habitsTagEntriesRefsTable(_$NotZeroDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.habitsTagEntries,
+        aliasName: $_aliasNameGenerator(
+          db.habitsTable.id,
+          db.habitsTagEntries.habit,
+        ),
+      );
+
+  $$HabitsTagEntriesTableProcessedTableManager get habitsTagEntriesRefs {
+    final manager = $$HabitsTagEntriesTableTableManager(
+      $_db,
+      $_db.habitsTagEntries,
+    ).filter((f) => f.habit.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _habitsTagEntriesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$HabitsTableTableFilterComposer
@@ -2695,6 +3042,31 @@ class $$HabitsTableTableFilterComposer
                     $removeJoinBuilderFromRootComposer,
               ),
         );
+    return f(composer);
+  }
+
+  Expression<bool> habitsTagEntriesRefs(
+    Expression<bool> Function($$HabitsTagEntriesTableFilterComposer f) f,
+  ) {
+    final $$HabitsTagEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.habitsTagEntries,
+      getReferencedColumn: (t) => t.habit,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$HabitsTagEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.habitsTagEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
@@ -2809,6 +3181,31 @@ class $$HabitsTableTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> habitsTagEntriesRefs<T extends Object>(
+    Expression<T> Function($$HabitsTagEntriesTableAnnotationComposer a) f,
+  ) {
+    final $$HabitsTagEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.habitsTagEntries,
+      getReferencedColumn: (t) => t.habit,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$HabitsTagEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.habitsTagEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$HabitsTableTableTableManager
@@ -2824,7 +3221,10 @@ class $$HabitsTableTableTableManager
           $$HabitsTableTableUpdateCompanionBuilder,
           (Habit, $$HabitsTableTableReferences),
           Habit,
-          PrefetchHooks Function({bool habitCompletionsTableRefs})
+          PrefetchHooks Function({
+            bool habitCompletionsTableRefs,
+            bool habitsTagEntriesRefs,
+          })
         > {
   $$HabitsTableTableTableManager(_$NotZeroDatabase db, $HabitsTableTable table)
     : super(
@@ -2885,38 +3285,66 @@ class $$HabitsTableTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({habitCompletionsTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (habitCompletionsTableRefs) db.habitCompletionsTable,
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (habitCompletionsTableRefs)
-                    await $_getPrefetchedData<
-                      Habit,
-                      $HabitsTableTable,
-                      HabitCompletion
-                    >(
-                      currentTable: table,
-                      referencedTable: $$HabitsTableTableReferences
-                          ._habitCompletionsTableRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$HabitsTableTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).habitCompletionsTableRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.habitId == item.id),
-                      typedResults: items,
-                    ),
-                ];
+          prefetchHooksCallback:
+              ({
+                habitCompletionsTableRefs = false,
+                habitsTagEntriesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (habitCompletionsTableRefs) db.habitCompletionsTable,
+                    if (habitsTagEntriesRefs) db.habitsTagEntries,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (habitCompletionsTableRefs)
+                        await $_getPrefetchedData<
+                          Habit,
+                          $HabitsTableTable,
+                          HabitCompletion
+                        >(
+                          currentTable: table,
+                          referencedTable: $$HabitsTableTableReferences
+                              ._habitCompletionsTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$HabitsTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).habitCompletionsTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.habitId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (habitsTagEntriesRefs)
+                        await $_getPrefetchedData<
+                          Habit,
+                          $HabitsTableTable,
+                          HabitsTagEntry
+                        >(
+                          currentTable: table,
+                          referencedTable: $$HabitsTableTableReferences
+                              ._habitsTagEntriesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$HabitsTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).habitsTagEntriesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.habit == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -2933,7 +3361,10 @@ typedef $$HabitsTableTableProcessedTableManager =
       $$HabitsTableTableUpdateCompanionBuilder,
       (Habit, $$HabitsTableTableReferences),
       Habit,
-      PrefetchHooks Function({bool habitCompletionsTableRefs})
+      PrefetchHooks Function({
+        bool habitCompletionsTableRefs,
+        bool habitsTagEntriesRefs,
+      })
     >;
 typedef $$HabitCompletionsTableTableCreateCompanionBuilder =
     HabitCompletionsTableCompanion Function({
@@ -3265,6 +3696,372 @@ typedef $$HabitCompletionsTableTableProcessedTableManager =
       HabitCompletion,
       PrefetchHooks Function({bool habitId})
     >;
+typedef $$HabitsTagEntriesTableCreateCompanionBuilder =
+    HabitsTagEntriesCompanion Function({
+      required String habit,
+      required String tag,
+      Value<int> rowid,
+    });
+typedef $$HabitsTagEntriesTableUpdateCompanionBuilder =
+    HabitsTagEntriesCompanion Function({
+      Value<String> habit,
+      Value<String> tag,
+      Value<int> rowid,
+    });
+
+final class $$HabitsTagEntriesTableReferences
+    extends
+        BaseReferences<
+          _$NotZeroDatabase,
+          $HabitsTagEntriesTable,
+          HabitsTagEntry
+        > {
+  $$HabitsTagEntriesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $HabitsTableTable _habitTable(_$NotZeroDatabase db) =>
+      db.habitsTable.createAlias(
+        $_aliasNameGenerator(db.habitsTagEntries.habit, db.habitsTable.id),
+      );
+
+  $$HabitsTableTableProcessedTableManager get habit {
+    final $_column = $_itemColumn<String>('habit')!;
+
+    final manager = $$HabitsTableTableTableManager(
+      $_db,
+      $_db.habitsTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_habitTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TagsTableTable _tagTable(_$NotZeroDatabase db) =>
+      db.tagsTable.createAlias(
+        $_aliasNameGenerator(db.habitsTagEntries.tag, db.tagsTable.id),
+      );
+
+  $$TagsTableTableProcessedTableManager get tag {
+    final $_column = $_itemColumn<String>('tag')!;
+
+    final manager = $$TagsTableTableTableManager(
+      $_db,
+      $_db.tagsTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_tagTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$HabitsTagEntriesTableFilterComposer
+    extends Composer<_$NotZeroDatabase, $HabitsTagEntriesTable> {
+  $$HabitsTagEntriesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$HabitsTableTableFilterComposer get habit {
+    final $$HabitsTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.habit,
+      referencedTable: $db.habitsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$HabitsTableTableFilterComposer(
+            $db: $db,
+            $table: $db.habitsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TagsTableTableFilterComposer get tag {
+    final $$TagsTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tag,
+      referencedTable: $db.tagsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagsTableTableFilterComposer(
+            $db: $db,
+            $table: $db.tagsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$HabitsTagEntriesTableOrderingComposer
+    extends Composer<_$NotZeroDatabase, $HabitsTagEntriesTable> {
+  $$HabitsTagEntriesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$HabitsTableTableOrderingComposer get habit {
+    final $$HabitsTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.habit,
+      referencedTable: $db.habitsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$HabitsTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.habitsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TagsTableTableOrderingComposer get tag {
+    final $$TagsTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tag,
+      referencedTable: $db.tagsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagsTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.tagsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$HabitsTagEntriesTableAnnotationComposer
+    extends Composer<_$NotZeroDatabase, $HabitsTagEntriesTable> {
+  $$HabitsTagEntriesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$HabitsTableTableAnnotationComposer get habit {
+    final $$HabitsTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.habit,
+      referencedTable: $db.habitsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$HabitsTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.habitsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TagsTableTableAnnotationComposer get tag {
+    final $$TagsTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tag,
+      referencedTable: $db.tagsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagsTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tagsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$HabitsTagEntriesTableTableManager
+    extends
+        RootTableManager<
+          _$NotZeroDatabase,
+          $HabitsTagEntriesTable,
+          HabitsTagEntry,
+          $$HabitsTagEntriesTableFilterComposer,
+          $$HabitsTagEntriesTableOrderingComposer,
+          $$HabitsTagEntriesTableAnnotationComposer,
+          $$HabitsTagEntriesTableCreateCompanionBuilder,
+          $$HabitsTagEntriesTableUpdateCompanionBuilder,
+          (HabitsTagEntry, $$HabitsTagEntriesTableReferences),
+          HabitsTagEntry,
+          PrefetchHooks Function({bool habit, bool tag})
+        > {
+  $$HabitsTagEntriesTableTableManager(
+    _$NotZeroDatabase db,
+    $HabitsTagEntriesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$HabitsTagEntriesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$HabitsTagEntriesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$HabitsTagEntriesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> habit = const Value.absent(),
+                Value<String> tag = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => HabitsTagEntriesCompanion(
+                habit: habit,
+                tag: tag,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String habit,
+                required String tag,
+                Value<int> rowid = const Value.absent(),
+              }) => HabitsTagEntriesCompanion.insert(
+                habit: habit,
+                tag: tag,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$HabitsTagEntriesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({habit = false, tag = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (habit) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.habit,
+                                referencedTable:
+                                    $$HabitsTagEntriesTableReferences
+                                        ._habitTable(db),
+                                referencedColumn:
+                                    $$HabitsTagEntriesTableReferences
+                                        ._habitTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (tag) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.tag,
+                                referencedTable:
+                                    $$HabitsTagEntriesTableReferences._tagTable(
+                                      db,
+                                    ),
+                                referencedColumn:
+                                    $$HabitsTagEntriesTableReferences
+                                        ._tagTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$HabitsTagEntriesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NotZeroDatabase,
+      $HabitsTagEntriesTable,
+      HabitsTagEntry,
+      $$HabitsTagEntriesTableFilterComposer,
+      $$HabitsTagEntriesTableOrderingComposer,
+      $$HabitsTagEntriesTableAnnotationComposer,
+      $$HabitsTagEntriesTableCreateCompanionBuilder,
+      $$HabitsTagEntriesTableUpdateCompanionBuilder,
+      (HabitsTagEntry, $$HabitsTagEntriesTableReferences),
+      HabitsTagEntry,
+      PrefetchHooks Function({bool habit, bool tag})
+    >;
 
 class $NotZeroDatabaseManager {
   final _$NotZeroDatabase _db;
@@ -3279,4 +4076,6 @@ class $NotZeroDatabaseManager {
       $$HabitsTableTableTableManager(_db, _db.habitsTable);
   $$HabitCompletionsTableTableTableManager get habitCompletionsTable =>
       $$HabitCompletionsTableTableTableManager(_db, _db.habitCompletionsTable);
+  $$HabitsTagEntriesTableTableManager get habitsTagEntries =>
+      $$HabitsTagEntriesTableTableManager(_db, _db.habitsTagEntries);
 }

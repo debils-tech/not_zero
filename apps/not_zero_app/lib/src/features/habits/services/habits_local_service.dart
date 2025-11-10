@@ -11,15 +11,33 @@ class HabitsLocalService implements BaseService {
   Future<List<Habit>> getHabitsWithCompletions({
     required DateTime startDate,
     required DateTime endDate,
-  }) async {
-    return _db.transaction(() {
-      return _db.select(_db.habitsTable).asyncMap((habit) async {
+  }) {
+    return _db.transaction(() async {
+      final habitsQuery =
+          _db.select(_db.habitsTable).join([
+              leftOuterJoin(
+                _db.habitsTagEntries,
+                _db.habitsTagEntries.habit.equalsExp(_db.habitsTable.id),
+                useColumns: false,
+              ),
+            ])
+            ..addColumns([_db.habitsTagEntries.tagsList])
+            ..groupBy([_db.habitsTable.id]);
+
+      final tagsMapper = TagsEfficientMapper(_db);
+
+      return habitsQuery.asyncMap((row) async {
+        final habit = row.readTable(_db.habitsTable);
+        final tags = await tagsMapper.readHabitTags(row);
         final completions = await _getHabitCompletions(
           habitId: habit.id,
           startDate: startDate,
           endDate: endDate,
         );
-        return habit.copyWith(completions: completions);
+        return habit.copyWith(
+          completions: completions,
+          tags: tags,
+        );
       }).get();
     });
   }
@@ -40,9 +58,21 @@ class HabitsLocalService implements BaseService {
   }
 
   Future<void> saveHabit(Habit habit) {
-    return _db
-        .into(_db.habitsTable)
-        .insertOnConflictUpdate(habit.toInsertable());
+    return _db.transaction(() async {
+      await _db
+          .into(_db.habitsTable)
+          .insertOnConflictUpdate(habit.toInsertable());
+      await (_db.delete(
+        _db.habitsTagEntries,
+      )..where((tbl) => tbl.habit.equals(habit.id))).go();
+      for (final tag in habit.tags) {
+        await _db
+            .into(_db.habitsTagEntries)
+            .insertOnConflictUpdate(
+              HabitsTagEntry(habit: habit.id, tag: tag.id),
+            );
+      }
+    });
   }
 
   Future<void> saveCompletion(HabitCompletion completion) {
@@ -53,6 +83,9 @@ class HabitsLocalService implements BaseService {
 
   Future<void> deleteHabit(Habit habit) {
     return _db.transaction(() async {
+      await (_db.delete(
+        _db.habitsTagEntries,
+      )..where((tbl) => tbl.habit.equals(habit.id))).go();
       await (_db.delete(
         _db.habitCompletionsTable,
       )..where((tbl) => tbl.habitId.equals(habit.id))).go();

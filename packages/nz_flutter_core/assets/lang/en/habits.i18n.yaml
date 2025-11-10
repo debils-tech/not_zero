@@ -15,6 +15,8 @@ edit:
   fields:
     habitTitle: "Title"
     habitDescription: "Description"
+    habitRegularity: "Regularity"
+    habitRegularityDaily: "Daily"
   submit:
     create: "Create new habit!"
     existing: "Save changes"

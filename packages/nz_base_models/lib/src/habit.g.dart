@@ -9,11 +9,11 @@ part of 'habit.dart';
 _Habit _$HabitFromJson(Map<String, dynamic> json) => _Habit(
   id: json['id'] as String,
   title: json['title'] as String,
+  createdAt: DateTime.parse(json['createdAt'] as String),
   description: json['description'] as String? ?? '',
   importance:
       $enumDecodeNullable(_$TaskImportanceEnumMap, json['importance']) ??
       TaskImportance.normal,
-  createdAt: DateTime.parse(json['createdAt'] as String),
   modifiedAt: json['modifiedAt'] == null
       ? null
       : DateTime.parse(json['modifiedAt'] as String),
@@ -25,17 +25,23 @@ _Habit _$HabitFromJson(Map<String, dynamic> json) => _Habit(
   regularity: json['regularity'] == null
       ? const HabitRegularity.daily()
       : HabitRegularity.fromJson(json['regularity'] as Map<String, dynamic>),
+  tags:
+      (json['tags'] as List<dynamic>?)
+          ?.map((e) => ItemTag.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$HabitToJson(_Habit instance) => <String, dynamic>{
   'id': instance.id,
   'title': instance.title,
+  'createdAt': instance.createdAt.toIso8601String(),
   'description': instance.description,
   'importance': _$TaskImportanceEnumMap[instance.importance]!,
-  'createdAt': instance.createdAt.toIso8601String(),
   'modifiedAt': instance.modifiedAt?.toIso8601String(),
   'completions': Habit._completionsToJson(instance.completions),
   'regularity': instance.regularity,
+  'tags': ItemTag.tagsToIds(instance.tags),
 };
 
 const _$TaskImportanceEnumMap = {

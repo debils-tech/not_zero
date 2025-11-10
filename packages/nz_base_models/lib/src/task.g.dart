@@ -43,7 +43,7 @@ Map<String, dynamic> _$TaskToJson(_Task instance) => <String, dynamic>{
   'canceledAt': instance.canceledAt?.toIso8601String(),
   'forDate': instance.forDate?.toIso8601String(),
   'persistent': instance.persistent,
-  'tags': Task._tagsToJson(instance.tags),
+  'tags': ItemTag.tagsToIds(instance.tags),
 };
 
 const _$TaskImportanceEnumMap = {

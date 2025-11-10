@@ -532,6 +532,12 @@ class TranslationsHabitsEditFieldsEn {
 
   /// en: 'Description'
   String get habitDescription => 'Description';
+
+  /// en: 'Regularity'
+  String get habitRegularity => 'Regularity';
+
+  /// en: 'Daily'
+  String get habitRegularityDaily => 'Daily';
 }
 
 // Path: habits.edit.submit
@@ -1008,6 +1014,10 @@ extension on Translations {
         return 'Title';
       case 'habits.edit.fields.habitDescription':
         return 'Description';
+      case 'habits.edit.fields.habitRegularity':
+        return 'Regularity';
+      case 'habits.edit.fields.habitRegularityDaily':
+        return 'Daily';
       case 'habits.edit.submit.create':
         return 'Create new habit!';
       case 'habits.edit.submit.existing':

@@ -2,6 +2,7 @@
 
 import 'package:drift/drift.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_drift/src/tables/habits_table.dart';
 import 'package:nz_drift/src/tables/tasks_table.dart';
 
 @UseRowClass(ItemTag, generateInsertable: true)
@@ -22,4 +23,17 @@ class TasksTagEntries extends Table {
 
   @override
   Set<Column<Object>>? get primaryKey => {task, tag};
+
+  Expression<String> get tagsList => tag.groupConcat();
+}
+
+@DataClassName('HabitsTagEntry')
+class HabitsTagEntries extends Table {
+  TextColumn get habit => text().references(HabitsTable, #id)();
+  TextColumn get tag => text().references(TagsTable, #id)();
+
+  @override
+  Set<Column<Object>>? get primaryKey => {habit, tag};
+
+  Expression<String> get tagsList => tag.groupConcat();
 }

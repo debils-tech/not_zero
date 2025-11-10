@@ -9,27 +9,28 @@ class TasksLocalService implements BaseService {
 
   final NotZeroDatabase _db;
 
-  Future<List<Task>> getTasks(TasksFilters filters) async {
-    final allTags = await _tagMappings;
-    final joinedTagsWithTasks =
-        _db.select(_db.tasksTable).join([
-            leftOuterJoin(
-              _db.tasksTagEntries,
-              _db.tasksTagEntries.task.equalsExp(_db.tasksTable.id),
-            ),
-          ])
-          ..orderBy(_tasksOrdering)
-          ..groupBy([_db.tasksTable.id])
-          ..where(_createFilterForTasks(filters));
+  Future<List<Task>> getTasks(TasksFilters filters) {
+    return _db.transaction(() async {
+      final joinedTagsWithTasks =
+          _db.select(_db.tasksTable).join([
+              leftOuterJoin(
+                _db.tasksTagEntries,
+                _db.tasksTagEntries.task.equalsExp(_db.tasksTable.id),
+                useColumns: false,
+              ),
+            ])
+            ..addColumns({_db.tasksTagEntries.tagsList})
+            ..orderBy(_tasksOrdering)
+            ..groupBy([_db.tasksTable.id])
+            ..where(_createFilterForTasks(filters));
 
-    final tasksEntries = joinedTagsWithTasks.map((rows) {
-      final task = rows.readTable(_db.tasksTable);
-      final tagsForTask = allTags[task.id];
-      if (tagsForTask == null) return task;
-      return task.copyWith(tags: tagsForTask);
+      final tagsMapper = TagsEfficientMapper(_db);
+      return joinedTagsWithTasks.asyncMap((rows) async {
+        final task = rows.readTable(_db.tasksTable);
+        final tags = await tagsMapper.readTaskTags(rows);
+        return task.copyWith(tags: tags);
+      }).get();
     });
-
-    return tasksEntries.get();
   }
 
   Expression<bool> _createFilterForTasks(TasksFilters filters) {
@@ -80,26 +81,6 @@ class TasksLocalService implements BaseService {
     return Expression.and(dbFilters);
   }
 
-  Future<Map<String, List<ItemTag>>> get _tagMappings async {
-    final tags = await _db.select(_db.tasksTagEntries).join(
-      [
-        innerJoin(
-          _db.tagsTable,
-          _db.tasksTagEntries.tag.equalsExp(_db.tagsTable.id),
-        ),
-      ],
-    ).get();
-
-    final map = <String, List<ItemTag>>{};
-    for (final tagRow in tags) {
-      final taskId = tagRow.read(_db.tasksTagEntries.task)!;
-      final tag = tagRow.readTable(_db.tagsTable);
-      map.putIfAbsent(taskId, () => []).add(tag);
-    }
-
-    return map;
-  }
-
   List<OrderingTerm> get _tasksOrdering => [
     OrderingTerm(expression: _db.tasksTable.isCompleted),
     OrderingTerm(
@@ -126,8 +107,8 @@ class TasksLocalService implements BaseService {
     });
   }
 
-  // It neither update tags nor inserts new data, only updates fields for
-  // multiple rows in single transaction.
+  /// It neither update tags nor inserts new data, only updates fields for
+  /// multiple rows in single transaction.
   Future<void> updateTasks(Iterable<Task> tasks) {
     return _db.transaction(() async {
       for (final task in tasks) {

@@ -503,6 +503,7 @@ final class Schema7 extends i0.VersionedSchema {
     tasksTagEntries,
     habitsTable,
     habitCompletionsTable,
+    habitsTagEntries,
   ];
   late final Shape5 tasksTable = Shape5(
     source: i0.VersionedTable(
@@ -574,6 +575,17 @@ final class Schema7 extends i0.VersionedSchema {
       isStrict: false,
       tableConstraints: ['PRIMARY KEY(id)', 'UNIQUE(habit_id, completed_date)'],
       columns: [_column_0, _column_20, _column_21, _column_22],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape8 habitsTagEntries = Shape8(
+    source: i0.VersionedTable(
+      entityName: 'habits_tag_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(habit, tag)'],
+      columns: [_column_23, _column_10],
       attachedDatabase: database,
     ),
     alias: null,
@@ -650,6 +662,25 @@ i1.GeneratedColumn<String> _column_22(String aliasedName) =>
       aliasedName,
       false,
       type: i1.DriftSqlType.string,
+    );
+
+class Shape8 extends i0.VersionedTable {
+  Shape8({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get habit =>
+      columnsByName['habit']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get tag =>
+      columnsByName['tag']! as i1.GeneratedColumn<String>;
+}
+
+i1.GeneratedColumn<String> _column_23(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'habit',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
+        'REFERENCES habits_table (id)',
+      ),
     );
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,

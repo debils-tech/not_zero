@@ -19,6 +19,7 @@ part 'db.g.dart';
     TasksTagEntries,
     HabitsTable,
     HabitCompletionsTable,
+    HabitsTagEntries,
   ],
 )
 class NotZeroDatabase extends _$NotZeroDatabase {

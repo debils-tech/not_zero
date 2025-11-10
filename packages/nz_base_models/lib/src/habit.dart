@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nz_base_models/src/habit_completion.dart';
 import 'package:nz_base_models/src/habit_regularity.dart';
+import 'package:nz_base_models/src/tag.dart';
 import 'package:nz_base_models/src/task_importance.dart';
 import 'package:uuid/uuid.dart';
 
@@ -20,6 +21,7 @@ abstract class Habit with _$Habit {
     @Default([])
     List<HabitCompletion> completions,
     @Default(HabitRegularity.daily()) HabitRegularity regularity,
+    @JsonKey(toJson: ItemTag.tagsToIds) @Default([]) List<ItemTag> tags,
   }) = _Habit;
 
   const Habit._();
@@ -30,23 +32,27 @@ abstract class Habit with _$Habit {
     required String title,
     String? description,
     TaskImportance? importance,
+    HabitRegularity? regularity,
   }) => Habit(
     id: const Uuid().v4(),
     title: title,
     description: description ?? '',
     createdAt: DateTime.now(),
     importance: importance ?? TaskImportance.normal,
+    regularity: regularity ?? const HabitRegularity.daily(),
   );
 
   Habit edit({
     String? title,
     String? description,
     TaskImportance? importance,
+    HabitRegularity? regularity,
   }) => copyWith(
     title: title ?? this.title,
     description: description ?? this.description,
     importance: importance ?? this.importance,
     modifiedAt: DateTime.now(),
+    regularity: regularity ?? this.regularity,
   );
 
   static List<String> _completionsToJson(List<HabitCompletion> field) =>

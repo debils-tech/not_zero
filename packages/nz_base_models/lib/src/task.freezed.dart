@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Task {
 
- String get id; String get title; TaskImportance get importance; DateTime get createdAt; String get description; DateTime? get modifiedAt; DateTime? get completedAt; DateTime? get canceledAt; DateTime? get forDate; bool get persistent;@JsonKey(toJson: Task._tagsToJson) List<ItemTag> get tags;
+ String get id; String get title; TaskImportance get importance; DateTime get createdAt; String get description; DateTime? get modifiedAt; DateTime? get completedAt; DateTime? get canceledAt; DateTime? get forDate; bool get persistent;@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> get tags;
 /// Create a copy of Task
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $TaskCopyWith<$Res>  {
   factory $TaskCopyWith(Task value, $Res Function(Task) _then) = _$TaskCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, TaskImportance importance, DateTime createdAt, String description, DateTime? modifiedAt, DateTime? completedAt, DateTime? canceledAt, DateTime? forDate, bool persistent,@JsonKey(toJson: Task._tagsToJson) List<ItemTag> tags
+ String id, String title, TaskImportance importance, DateTime createdAt, String description, DateTime? modifiedAt, DateTime? completedAt, DateTime? canceledAt, DateTime? forDate, bool persistent,@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> tags
 });
 
 
@@ -163,7 +163,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  DateTime? canceledAt,  DateTime? forDate,  bool persistent, @JsonKey(toJson: Task._tagsToJson)  List<ItemTag> tags)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  DateTime? canceledAt,  DateTime? forDate,  bool persistent, @JsonKey(toJson: ItemTag.tagsToIds)  List<ItemTag> tags)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Task() when $default != null:
 return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.description,_that.modifiedAt,_that.completedAt,_that.canceledAt,_that.forDate,_that.persistent,_that.tags);case _:
@@ -184,7 +184,7 @@ return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.desc
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  DateTime? canceledAt,  DateTime? forDate,  bool persistent, @JsonKey(toJson: Task._tagsToJson)  List<ItemTag> tags)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  DateTime? canceledAt,  DateTime? forDate,  bool persistent, @JsonKey(toJson: ItemTag.tagsToIds)  List<ItemTag> tags)  $default,) {final _that = this;
 switch (_that) {
 case _Task():
 return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.description,_that.modifiedAt,_that.completedAt,_that.canceledAt,_that.forDate,_that.persistent,_that.tags);case _:
@@ -204,7 +204,7 @@ return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.desc
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  DateTime? canceledAt,  DateTime? forDate,  bool persistent, @JsonKey(toJson: Task._tagsToJson)  List<ItemTag> tags)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  TaskImportance importance,  DateTime createdAt,  String description,  DateTime? modifiedAt,  DateTime? completedAt,  DateTime? canceledAt,  DateTime? forDate,  bool persistent, @JsonKey(toJson: ItemTag.tagsToIds)  List<ItemTag> tags)?  $default,) {final _that = this;
 switch (_that) {
 case _Task() when $default != null:
 return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.description,_that.modifiedAt,_that.completedAt,_that.canceledAt,_that.forDate,_that.persistent,_that.tags);case _:
@@ -219,7 +219,7 @@ return $default(_that.id,_that.title,_that.importance,_that.createdAt,_that.desc
 @JsonSerializable()
 
 class _Task extends Task {
-   _Task({required this.id, required this.title, required this.importance, required this.createdAt, this.description = '', this.modifiedAt, this.completedAt, this.canceledAt, this.forDate, this.persistent = true, @JsonKey(toJson: Task._tagsToJson) final  List<ItemTag> tags = const []}): _tags = tags,super._();
+   _Task({required this.id, required this.title, required this.importance, required this.createdAt, this.description = '', this.modifiedAt, this.completedAt, this.canceledAt, this.forDate, this.persistent = true, @JsonKey(toJson: ItemTag.tagsToIds) final  List<ItemTag> tags = const []}): _tags = tags,super._();
   factory _Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 
 @override final  String id;
@@ -233,7 +233,7 @@ class _Task extends Task {
 @override final  DateTime? forDate;
 @override@JsonKey() final  bool persistent;
  final  List<ItemTag> _tags;
-@override@JsonKey(toJson: Task._tagsToJson) List<ItemTag> get tags {
+@override@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> get tags {
   if (_tags is EqualUnmodifiableListView) return _tags;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_tags);
@@ -273,7 +273,7 @@ abstract mixin class _$TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
   factory _$TaskCopyWith(_Task value, $Res Function(_Task) _then) = __$TaskCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, TaskImportance importance, DateTime createdAt, String description, DateTime? modifiedAt, DateTime? completedAt, DateTime? canceledAt, DateTime? forDate, bool persistent,@JsonKey(toJson: Task._tagsToJson) List<ItemTag> tags
+ String id, String title, TaskImportance importance, DateTime createdAt, String description, DateTime? modifiedAt, DateTime? completedAt, DateTime? canceledAt, DateTime? forDate, bool persistent,@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> tags
 });
 
 
