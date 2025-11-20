@@ -17,17 +17,17 @@ class TasksStatsLocalService implements BaseService {
     return _db.transaction(() async {
       return TasksCountingData(
         notImportant: await _completedInPeriodByImportance(
-          importance: enumConverter.toSql(TaskImportance.notImportant),
+          importance: enumConverter.toSql(.notImportant),
           startPeriod: startPeriod,
           endPeriod: endPeriod,
         ),
         normal: await _completedInPeriodByImportance(
-          importance: enumConverter.toSql(TaskImportance.normal),
+          importance: enumConverter.toSql(.normal),
           startPeriod: startPeriod,
           endPeriod: endPeriod,
         ),
         important: await _completedInPeriodByImportance(
-          importance: enumConverter.toSql(TaskImportance.important),
+          importance: enumConverter.toSql(.important),
           startPeriod: startPeriod,
           endPeriod: endPeriod,
         ),

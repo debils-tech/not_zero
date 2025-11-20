@@ -14,7 +14,7 @@ class HabitEditTitleField extends StatelessWidget {
     return FormBuilderTextField(
       name: name,
       autofocus: true,
-      textCapitalization: TextCapitalization.sentences,
+      textCapitalization: .sentences,
       decoration: InputDecoration(
         labelText: context.t.habits.edit.fields.habitTitle,
         counter: const SizedBox.shrink(),
@@ -22,7 +22,7 @@ class HabitEditTitleField extends StatelessWidget {
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
       ]),
-      textInputAction: TextInputAction.next,
+      textInputAction: .next,
       maxLength: 75,
     );
   }
@@ -37,11 +37,11 @@ class HabitEditDescriptionField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: name,
-      textCapitalization: TextCapitalization.sentences,
+      textCapitalization: .sentences,
       decoration: InputDecoration(
         labelText: context.t.habits.edit.fields.habitDescription,
       ),
-      textInputAction: TextInputAction.next,
+      textInputAction: .next,
       maxLines: null,
     );
   }

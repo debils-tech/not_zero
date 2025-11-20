@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:not_zero_app/src/features/settings/di.dart';
-import 'package:not_zero_app/src/features/settings/models/theme_state.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
 import 'package:not_zero_app/src/helpers/global_navigation.dart';
 import 'package:not_zero_app/src/helpers/licenses.dart';
@@ -73,9 +72,9 @@ class MyApp extends ConsumerWidget {
 
           //-- Themes --
           themeMode: switch (themeSettings.themeState) {
-            ThemeState.light => ThemeMode.light,
-            ThemeState.dark => ThemeMode.dark,
-            ThemeState.system => ThemeMode.system,
+            .light => ThemeMode.light,
+            .dark => ThemeMode.dark,
+            .system => ThemeMode.system,
           },
           theme: lightTheme,
           darkTheme: darkTheme,

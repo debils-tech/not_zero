@@ -1,18 +1,13 @@
 enum TaskImportance {
   notImportant,
   normal,
-  important;
+  important
+  ;
 
-  factory TaskImportance.fromIndex(int? index) {
-    switch (index) {
-      case 0:
-        return TaskImportance.notImportant;
-      case 1:
-        return TaskImportance.normal;
-      case 2:
-        return TaskImportance.important;
-      default:
-        return TaskImportance.normal;
-    }
-  }
+  factory TaskImportance.fromIndex(int? index) => switch (index) {
+    0 => .notImportant,
+    1 => .normal,
+    2 => .important,
+    _ => .normal,
+  };
 }

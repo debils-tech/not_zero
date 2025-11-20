@@ -47,14 +47,16 @@ class SelectableCard extends ConsumerWidget {
       child: AnimatedContainer(
         decoration: BoxDecoration(
           border: isSelected
-              ? Border.all(
-                  width: 3.5,
-                  color: context.theme.colorScheme.primary.withValues(
-                    alpha: 0.7,
+              ? .fromBorderSide(
+                  BorderSide(
+                    width: 3.5,
+                    color: context.theme.colorScheme.primary.withValues(
+                      alpha: 0.7,
+                    ),
                   ),
                 )
               : null,
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          borderRadius: const .all(.circular(15)),
         ),
         duration: _animDuration,
         curve: _animCurve,

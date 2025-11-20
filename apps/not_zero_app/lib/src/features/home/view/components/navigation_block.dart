@@ -9,7 +9,7 @@ class HomeNavigationBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return AdaptiveListLimiter(
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const .all(8),
         child: Column(
           children: [
             _NavigationCard(
@@ -61,7 +61,7 @@ class _NavigationCard extends StatelessWidget {
         child: InkWell(
           onTap: () => context.push(route),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const .symmetric(horizontal: 16),
             child: Row(
               children: [
                 Icon(

@@ -10,7 +10,7 @@ class EverythingBrokeText extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const .all(8),
       child: Center(
         child: SelectableText(
           '>>> ERROR HAPPENED <<<\n$error\n\n$stackTrace',

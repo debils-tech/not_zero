@@ -15,7 +15,7 @@ class TaskEditTitleField extends StatelessWidget {
     return FormBuilderTextField(
       name: name,
       autofocus: true,
-      textCapitalization: TextCapitalization.sentences,
+      textCapitalization: .sentences,
       decoration: InputDecoration(
         labelText: context.t.tasks.edit.fields.taskTitle,
         counter: const SizedBox.shrink(),
@@ -23,7 +23,7 @@ class TaskEditTitleField extends StatelessWidget {
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
       ]),
-      textInputAction: TextInputAction.next,
+      textInputAction: .next,
       maxLength: 75,
     );
   }
@@ -38,11 +38,11 @@ class TaskEditDescriptionField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: name,
-      textCapitalization: TextCapitalization.sentences,
+      textCapitalization: .sentences,
       decoration: InputDecoration(
         labelText: context.t.tasks.edit.fields.taskDescription,
       ),
-      textInputAction: TextInputAction.next,
+      textInputAction: .next,
       maxLines: null,
     );
   }
@@ -146,8 +146,8 @@ class TaskEditPersistenceField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderSwitch(
       name: name,
-      decoration: const InputDecoration(border: InputBorder.none),
-      controlAffinity: ListTileControlAffinity.leading,
+      decoration: const InputDecoration(border: .none),
+      controlAffinity: .leading,
       title: Text(
         context.t.tasks.edit.fields.taskPersistence,
         style: const TextStyle(fontSize: 15),

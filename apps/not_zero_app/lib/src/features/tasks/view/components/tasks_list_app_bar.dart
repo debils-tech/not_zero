@@ -7,7 +7,7 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const TasksListAppBar({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(60);
+  Size get preferredSize => const .fromHeight(60);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

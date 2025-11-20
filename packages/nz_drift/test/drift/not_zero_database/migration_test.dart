@@ -48,15 +48,15 @@ void main() {
           id: 'd9be9a9e-fb36-46e8-ad57-348efe38bb4a',
           title: 'Cool new task',
           description: 'Nice description',
-          createdAt: DateTime.fromMicrosecondsSinceEpoch(
+          createdAt: .fromMicrosecondsSinceEpoch(
             1388084662312456,
             isUtc: true,
           ),
-          modifiedAt: DateTime.fromMicrosecondsSinceEpoch(
+          modifiedAt: .fromMicrosecondsSinceEpoch(
             1366934400012087,
             isUtc: true,
           ),
-          completedAt: DateTime.fromMicrosecondsSinceEpoch(
+          completedAt: .fromMicrosecondsSinceEpoch(
             1717843669610792,
             isUtc: true,
           ),
@@ -68,15 +68,15 @@ void main() {
           id: 'd9be9a9e-fb36-46e8-ad57-348efe38bb4a',
           title: 'Cool new task',
           description: 'Nice description',
-          createdAt: DateTime.fromMicrosecondsSinceEpoch(
+          createdAt: .fromMicrosecondsSinceEpoch(
             1388084662000000,
             isUtc: true,
           ),
-          modifiedAt: DateTime.fromMicrosecondsSinceEpoch(
+          modifiedAt: .fromMicrosecondsSinceEpoch(
             1366934400000000,
             isUtc: true,
           ),
-          completedAt: DateTime.fromMicrosecondsSinceEpoch(
+          completedAt: .fromMicrosecondsSinceEpoch(
             1717843669000000,
             isUtc: true,
           ),

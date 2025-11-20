@@ -22,7 +22,7 @@ class _QuickStatsAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const _QuickStatsAppBar();
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const .fromHeight(100);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,11 +32,11 @@ class _QuickStatsAppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(context.t.stats.quickView.title),
       bottom: PreferredSize(
-        preferredSize: Size.zero,
+        preferredSize: .zero,
         child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: const .all(4),
           child: DateRangeSwitch(
-            rangeType: DateRangeType.week,
+            rangeType: .week,
             onChanged: quickStatsNotifier.loadDays,
           ),
         ),
@@ -53,10 +53,10 @@ class _QuickStatsBody extends StatelessWidget {
     return AdaptiveListLimiter(
       maxWidth: 600,
       child: ListView(
-        padding: const EdgeInsets.all(10),
+        padding: const .all(10),
         children: [
           Padding(
-            padding: const EdgeInsets.all(4),
+            padding: const .all(4),
             child: Text(
               context.t.stats.quickView.weeklyChart,
               style: context.theme.textTheme.bodyLarge,
@@ -86,11 +86,11 @@ class _WeeklyChartWithSelection extends ConsumerWidget {
 
     return ChartCard(
       innerHeight: 220,
-      padding: const EdgeInsets.symmetric(vertical: 15),
+      padding: const .symmetric(vertical: 15),
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
+            padding: const .symmetric(horizontal: 25),
             child: WeeklyStatsChart(
               stats: chartStats,
               rendererKey: weeklyRendererKey,
@@ -131,7 +131,7 @@ class _SelectionGesture extends ConsumerWidget {
               event.localPosition,
               constrains,
             ),
-            behavior: HitTestBehavior.opaque,
+            behavior: .opaque,
           ),
         );
       },

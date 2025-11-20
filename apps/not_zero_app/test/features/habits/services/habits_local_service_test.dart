@@ -28,12 +28,12 @@ void main() {
           final habit1 = HabitsTableCompanion.insert(
             id: habit1Id,
             title: 'Habit 1',
-            importance: TaskImportance.normal,
+            importance: .normal,
           );
           final habit2 = HabitsTableCompanion.insert(
             id: habit2Id,
             title: 'Habit 2',
-            importance: TaskImportance.notImportant,
+            importance: .notImportant,
           );
 
           await db.into(db.habitsTable).insert(habit1);
@@ -43,20 +43,20 @@ void main() {
           final completion1 = HabitCompletionsTableCompanion.insert(
             id: const Uuid().v4(),
             habitId: habit1Id,
-            type: HabitCompletionType.completed,
+            type: .completed,
             completedDate: now,
           );
           final completion2 = HabitCompletionsTableCompanion.insert(
             id: const Uuid().v4(),
             habitId: habit1Id,
-            type: HabitCompletionType.completed,
+            type: .completed,
             completedDate: now.subtract(const Duration(days: 1)),
           );
           // This one is outside the date range
           final completion3 = HabitCompletionsTableCompanion.insert(
             id: const Uuid().v4(),
             habitId: habit2Id,
-            type: HabitCompletionType.completed,
+            type: .completed,
             completedDate: now.subtract(const Duration(days: 5)),
           );
 
@@ -89,7 +89,7 @@ void main() {
         final habit = HabitsTableCompanion.insert(
           id: habitId,
           title: 'Yearly Habit',
-          importance: TaskImportance.important,
+          importance: .important,
         );
         await db.into(db.habitsTable).insert(habit);
 
@@ -100,7 +100,7 @@ void main() {
             HabitCompletionsTableCompanion.insert(
               id: const Uuid().v4(),
               habitId: habitId,
-              type: HabitCompletionType.completed,
+              type: .completed,
               completedDate: now.subtract(Duration(days: i)),
             ),
           );
@@ -127,7 +127,7 @@ void main() {
         final habit = HabitsTableCompanion.insert(
           id: habitId,
           title: 'Monthly Habit',
-          importance: TaskImportance.important,
+          importance: .important,
         );
         await db.into(db.habitsTable).insert(habit);
 
@@ -138,7 +138,7 @@ void main() {
             HabitCompletionsTableCompanion.insert(
               id: const Uuid().v4(),
               habitId: habitId,
-              type: HabitCompletionType.completed,
+              type: .completed,
               completedDate: now.subtract(Duration(days: i)),
             ),
           );
@@ -220,7 +220,7 @@ void main() {
         final completion = HabitCompletion(
           id: const Uuid().v4(),
           habitId: habit.id,
-          type: HabitCompletionType.completed,
+          type: .completed,
           completedDate: DateTime.now(),
         );
         await habitsLocalService.saveCompletion(completion);
@@ -242,13 +242,13 @@ void main() {
         final completion = HabitCompletion(
           id: const Uuid().v4(),
           habitId: habit.id,
-          type: HabitCompletionType.completed,
+          type: .completed,
           completedDate: DateTime.now(),
         );
         await habitsLocalService.saveCompletion(completion);
 
         final updatedCompletion = completion.copyWith(
-          type: HabitCompletionType.skipped,
+          type: .skipped,
         );
         await habitsLocalService.saveCompletion(updatedCompletion);
 
@@ -270,13 +270,13 @@ void main() {
         final completion1 = HabitCompletion(
           id: const Uuid().v4(),
           habitId: habit.id,
-          type: HabitCompletionType.completed,
+          type: .completed,
           completedDate: DateTime.now(),
         );
         final completion2 = HabitCompletion(
           id: const Uuid().v4(),
           habitId: habit.id,
-          type: HabitCompletionType.completed,
+          type: .completed,
           completedDate: DateTime.now().subtract(const Duration(days: 1)),
         );
         await habitsLocalService.saveCompletion(completion1);

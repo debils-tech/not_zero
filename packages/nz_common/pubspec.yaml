@@ -5,7 +5,7 @@ publish_to: none
 resolution: workspace
 
 environment:
-  sdk: ^3.9.2
+  sdk: ^3.10.0
 
 dev_dependencies:
   nz_lint: ^1.0.0

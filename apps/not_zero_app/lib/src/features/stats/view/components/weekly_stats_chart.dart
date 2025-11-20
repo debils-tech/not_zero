@@ -12,8 +12,8 @@ class WeeklyStatsChart extends StatelessWidget {
     DateTime? start,
     DateTime? end,
     super.key,
-  }) : rangeStart = start ?? DateTime.now().startOfWeek,
-       rangeEnd = end ?? DateTime.now().endOfWeek;
+  }) : rangeStart = start ?? .now().startOfWeek,
+       rangeEnd = end ?? .now().endOfWeek;
 
   final List<int> stats;
   final int? selectedIndex;
@@ -73,14 +73,14 @@ class WeeklyStatsChart extends StatelessWidget {
           // },
           touchTooltipData: LineTouchTooltipData(
             getTooltipColor: (_) => chartsColors.tooltipBackgroundColor,
-            tooltipBorderRadius: const BorderRadius.all(Radius.circular(8)),
+            tooltipBorderRadius: const .all(.circular(8)),
             getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
               return lineBarsSpot.map((lineBarSpot) {
                 return LineTooltipItem(
                   lineBarSpot.y.toInt().toString(),
                   TextStyle(
                     color: context.theme.colorScheme.primary,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 );
               }).toList();
@@ -99,7 +99,7 @@ class WeeklyStatsChart extends StatelessWidget {
         ),
         borderData: FlBorderData(
           show: true,
-          border: Border.fromBorderSide(
+          border: .fromBorderSide(
             BorderSide(color: chartsColors.borderColor),
           ),
         ),
@@ -141,7 +141,7 @@ class WeeklyStatsChart extends StatelessWidget {
     final specificDay = start.add(Duration(days: value.round()));
     final title = DateFormat.E().format(specificDay);
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const .only(top: 10),
       child: Text(title),
     );
   }

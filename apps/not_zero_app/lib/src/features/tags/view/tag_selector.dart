@@ -27,7 +27,7 @@ class ItemTagSelector extends ConsumerWidget {
       height: 35,
       child: switch (state) {
         AsyncData(value: final tags) => ListView(
-          scrollDirection: Axis.horizontal,
+          scrollDirection: .horizontal,
           children: <Widget>[
             ...tags.map((tag) {
               final isSelected = selectedTags.contains(tag.id);
@@ -74,7 +74,7 @@ class _TagButton extends StatelessWidget {
       child: Text(
         tag.name.toUpperCase(),
         style: const TextStyle(
-          fontWeight: FontWeight.w600,
+          fontWeight: .w600,
           height: 1,
         ),
       ),

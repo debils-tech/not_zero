@@ -32,12 +32,12 @@ class _TaskViewImportanceIndicator extends StatelessWidget
   final Task task;
 
   @override
-  Size get preferredSize => const Size.fromHeight(8);
+  Size get preferredSize => const .fromHeight(8);
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints.expand(height: preferredSize.height),
+      constraints: .expand(height: preferredSize.height),
       child: ColoredBox(
         color: _colorByImportance(
           task.importance,
@@ -51,9 +51,9 @@ class _TaskViewImportanceIndicator extends StatelessWidget
     TaskImportance importance,
     TasksColorScheme colorScheme,
   ) => switch (importance) {
-    TaskImportance.notImportant => colorScheme.notImportantColor,
-    TaskImportance.normal => colorScheme.normalColor,
-    TaskImportance.important => colorScheme.importantColor,
+    .notImportant => colorScheme.notImportantColor,
+    .normal => colorScheme.normalColor,
+    .important => colorScheme.importantColor,
   };
 }
 
@@ -69,12 +69,12 @@ class _TaskViewScreenBody extends ConsumerWidget {
         taskToView;
 
     return ListView(
-      padding: const EdgeInsets.only(top: 7, bottom: 75, left: 7, right: 7),
+      padding: const .only(top: 7, bottom: 75, left: 7, right: 7),
       children: [
         TagListIndicator(
           tags: task.tags,
           fontSize: 13,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderRadius: const .all(.circular(12)),
         ),
         GestureDetector(
           onTap: () => context.pushReplacement(
@@ -82,13 +82,13 @@ class _TaskViewScreenBody extends ConsumerWidget {
             extra: taskToView,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: [
               const SizedBox(height: 8),
               Text(
                 task.title,
                 style: context.theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                 ),
               ),
               const SizedBox(height: 10),
@@ -97,7 +97,7 @@ class _TaskViewScreenBody extends ConsumerWidget {
         ),
         if (task.description.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const .symmetric(horizontal: 8),
             child: SelectableText(task.description),
           ),
         const SizedBox(height: 10),

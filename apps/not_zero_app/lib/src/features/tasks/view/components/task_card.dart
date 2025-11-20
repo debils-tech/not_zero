@@ -27,7 +27,7 @@ class TaskCard extends StatelessWidget {
             children: [
               const SizedBox(width: 15),
               Flexible(
-                fit: FlexFit.tight,
+                fit: .tight,
                 child: _TaskTextBlock(task: task),
               ),
               const SizedBox(width: 12),
@@ -51,7 +51,7 @@ class _TaskTextBlock extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         const SizedBox(height: 2),
         SizedBox(
@@ -59,31 +59,31 @@ class _TaskTextBlock extends StatelessWidget {
           child: _TaskTimeText(task),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 2, bottom: 8),
+          padding: const .only(top: 2, bottom: 8),
           child: TagListIndicator(tags: task.tags),
         ),
         Text(
           task.title,
-          overflow: TextOverflow.ellipsis,
+          overflow: .ellipsis,
           maxLines: 3,
           style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            decoration: task.isCanceled ? TextDecoration.lineThrough : null,
+            fontWeight: .w600,
+            decoration: task.isCanceled ? .lineThrough : null,
             decorationThickness: 2.5,
           ),
         ),
         const SizedBox(height: 4),
         if (task.description.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(
+            padding: const .symmetric(
               horizontal: 4,
             ),
             child: Text(
               task.description,
               style: theme.textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.w500,
+                fontWeight: .w500,
               ),
-              overflow: TextOverflow.ellipsis,
+              overflow: .ellipsis,
               maxLines: 4,
             ),
           ),
@@ -155,9 +155,9 @@ class _ImportanceIndicatorBox extends StatelessWidget {
     TaskImportance importance,
     TasksColorScheme colorScheme,
   ) => switch (importance) {
-    TaskImportance.notImportant => colorScheme.notImportantColor,
-    TaskImportance.normal => colorScheme.normalColor,
-    TaskImportance.important => colorScheme.importantColor,
+    .notImportant => colorScheme.notImportantColor,
+    .normal => colorScheme.normalColor,
+    .important => colorScheme.importantColor,
   };
 }
 

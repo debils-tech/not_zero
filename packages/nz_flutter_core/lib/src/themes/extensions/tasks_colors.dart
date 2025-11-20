@@ -3,7 +3,7 @@ import 'package:theme_tailor_annotation/theme_tailor_annotation.dart';
 
 part 'tasks_colors.tailor.dart';
 
-@TailorMixin(themeGetter: ThemeGetter.onThemeData)
+@TailorMixin(themeGetter: .onThemeData)
 class TasksColorScheme extends ThemeExtension<TasksColorScheme>
     with _$TasksColorSchemeTailorMixin {
   const TasksColorScheme({

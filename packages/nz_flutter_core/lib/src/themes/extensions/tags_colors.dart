@@ -3,7 +3,7 @@ import 'package:theme_tailor_annotation/theme_tailor_annotation.dart';
 
 part 'tags_colors.tailor.dart';
 
-@TailorMixin(themeGetter: ThemeGetter.onThemeData)
+@TailorMixin(themeGetter: .onThemeData)
 class TagsColorScheme extends ThemeExtension<TagsColorScheme>
     with _$TagsColorSchemeTailorMixin {
   const TagsColorScheme({

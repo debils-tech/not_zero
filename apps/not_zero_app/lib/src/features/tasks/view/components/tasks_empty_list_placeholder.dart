@@ -20,7 +20,7 @@ class TasksEmptyListPlaceholder extends ConsumerWidget {
 
     final theme = Theme.of(context);
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: .center,
       children: [
         const SizedBox(height: 24),
         Text(

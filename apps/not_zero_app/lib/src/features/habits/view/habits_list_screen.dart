@@ -71,7 +71,7 @@ class _HabitsListView extends StatelessWidget {
     return AdaptiveListLimiter(
       maxWidth: 600,
       child: ListView(
-        padding: const EdgeInsets.only(top: 5, bottom: 75, left: 10, right: 10),
+        padding: const .only(top: 5, bottom: 75, left: 10, right: 10),
         children: [
           ...habits.map(
             (h) => HabitCard(

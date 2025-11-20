@@ -15,7 +15,7 @@ class LicensesScreen extends ConsumerWidget {
         _ => '...',
       },
       applicationIcon: const Padding(
-        padding: EdgeInsets.only(top: 13, bottom: 8),
+        padding: .only(top: 13, bottom: 8),
         child: Icon(NotZeroIcons.zero, size: 35),
       ),
       applicationLegalese: 'GNU GENERAL PUBLIC LICENSE version 3',

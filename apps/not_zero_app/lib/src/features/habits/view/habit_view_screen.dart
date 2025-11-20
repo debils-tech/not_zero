@@ -29,12 +29,12 @@ class _HabitViewImportanceIndicator extends StatelessWidget
   final Habit habit;
 
   @override
-  Size get preferredSize => const Size.fromHeight(8);
+  Size get preferredSize => const .fromHeight(8);
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints.expand(height: preferredSize.height),
+      constraints: .expand(height: preferredSize.height),
       child: ColoredBox(
         color: _colorByImportance(
           habit.importance,
@@ -48,9 +48,9 @@ class _HabitViewImportanceIndicator extends StatelessWidget
     TaskImportance importance,
     TasksColorScheme colorScheme,
   ) => switch (importance) {
-    TaskImportance.notImportant => colorScheme.notImportantColor,
-    TaskImportance.normal => colorScheme.normalColor,
-    TaskImportance.important => colorScheme.importantColor,
+    .notImportant => colorScheme.notImportantColor,
+    .normal => colorScheme.normalColor,
+    .important => colorScheme.importantColor,
   };
 }
 
@@ -65,7 +65,7 @@ class _HabitViewScreenBody extends ConsumerWidget {
     final habit = habitToView;
 
     return ListView(
-      padding: const EdgeInsets.only(top: 7, bottom: 75, left: 7, right: 7),
+      padding: const .only(top: 7, bottom: 75, left: 7, right: 7),
       children: [
         GestureDetector(
           onTap: () => context.pushReplacement(
@@ -73,13 +73,13 @@ class _HabitViewScreenBody extends ConsumerWidget {
             extra: habitToView,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: [
               const SizedBox(height: 8),
               Text(
                 habit.title,
                 style: context.theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                 ),
               ),
               const SizedBox(height: 10),
@@ -88,7 +88,7 @@ class _HabitViewScreenBody extends ConsumerWidget {
         ),
         if (habit.description.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const .symmetric(horizontal: 8),
             child: SelectableText(habit.description),
           ),
         const SizedBox(height: 10),

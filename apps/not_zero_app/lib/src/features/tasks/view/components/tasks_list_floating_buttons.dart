@@ -18,7 +18,7 @@ class TasksListFloatingButtons extends ConsumerWidget {
       switchOutCurve: Curves.easeInOut,
       child: selectionState.isNotEmpty
           ? Row(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: .min,
               children: [
                 _CancelTasksButton(selectionState: selectionState),
                 const SizedBox(width: 8),

@@ -9,7 +9,7 @@ class ChartCard extends StatelessWidget {
     EdgeInsets? padding,
   }) : padding =
            padding ??
-           const EdgeInsets.symmetric(
+           const .symmetric(
              horizontal: 30,
              vertical: 15,
            );
@@ -21,7 +21,7 @@ class ChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      borderRadius: const BorderRadius.all(Radius.circular(16)),
+      borderRadius: const .all(.circular(16)),
       color: context.theme.chartsColorScheme.chartBackgroundColor,
       elevation: 7,
       child: Container(

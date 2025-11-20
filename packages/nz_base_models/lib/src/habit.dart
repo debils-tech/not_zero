@@ -38,7 +38,7 @@ abstract class Habit with _$Habit {
     title: title,
     description: description ?? '',
     createdAt: DateTime.now(),
-    importance: importance ?? TaskImportance.normal,
+    importance: importance ?? .normal,
     regularity: regularity ?? const HabitRegularity.daily(),
   );
 

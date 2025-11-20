@@ -35,12 +35,12 @@ class _StarsRateWidgetState extends State<StarsRateWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: .center,
       children: List<Widget>.generate(widget.count, (index) {
         final active = index <= currentValue;
 
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3),
+          padding: const .symmetric(horizontal: 3),
           child: _StarIcon(
             active: active,
             onTap: () {

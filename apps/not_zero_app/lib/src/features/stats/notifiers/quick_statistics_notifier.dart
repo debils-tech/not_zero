@@ -14,8 +14,8 @@ class QuickStatisticsNotifier extends Notifier<QuickStatisticsState> {
   }
 
   Future<void> loadDays([DateTime? start, DateTime? end]) async {
-    final rangeStart = start ?? DateTime.now().startOfWeek;
-    final rangeEnd = end ?? DateTime.now().endOfWeek;
+    final rangeStart = start ?? .now().startOfWeek;
+    final rangeEnd = end ?? .now().endOfWeek;
 
     final repository = ref.read(statsRepositoryProvider);
     final weeklyStats = await repository.getStatsByDays(rangeStart, rangeEnd);

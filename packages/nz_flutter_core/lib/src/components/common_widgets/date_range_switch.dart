@@ -24,25 +24,25 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
   late DateTime _currentDate;
 
   DateTime get _rangeStart => switch (widget.rangeType) {
-    DateRangeType.day => _currentDate.startOfDay,
-    DateRangeType.week => _currentDate.startOfWeek,
+    .day => _currentDate.startOfDay,
+    .week => _currentDate.startOfWeek,
   };
 
   DateTime get _rangeEnd => switch (widget.rangeType) {
-    DateRangeType.day => _currentDate.endOfDay,
-    DateRangeType.week => _currentDate.endOfWeek,
+    .day => _currentDate.endOfDay,
+    .week => _currentDate.endOfWeek,
   };
 
   @override
   void initState() {
-    _currentDate = widget.initialDate ?? DateTime.now();
+    _currentDate = widget.initialDate ?? .now();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: .center,
       children: [
         IconButton(
           onPressed: _previousRange,
@@ -54,7 +54,7 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
             constraints: const BoxConstraints(maxWidth: 230),
             child: _MiddleButton(
               onTap: _todayRange,
-              onLongPress: widget.rangeType == DateRangeType.day
+              onLongPress: widget.rangeType == .day
                   ? _selectCalendarRange
                   : null,
               rangeStart: _rangeStart,
@@ -73,15 +73,15 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
 
   void _todayRange() {
     setState(() {
-      _currentDate = DateTime.now();
+      _currentDate = .now();
     });
     widget.onChanged?.call(_rangeStart, _rangeEnd);
   }
 
   void _previousRange() {
     final newDate = switch (widget.rangeType) {
-      DateRangeType.day => _currentDate.dayBefore,
-      DateRangeType.week => _currentDate.weekBefore,
+      .day => _currentDate.dayBefore,
+      .week => _currentDate.weekBefore,
     };
     setState(() {
       _currentDate = newDate;
@@ -91,8 +91,8 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
 
   void _nextRange() {
     final newDate = switch (widget.rangeType) {
-      DateRangeType.day => _currentDate.dayAfter,
-      DateRangeType.week => _currentDate.weekAfter,
+      .day => _currentDate.dayAfter,
+      .week => _currentDate.weekAfter,
     };
     setState(() {
       _currentDate = newDate;

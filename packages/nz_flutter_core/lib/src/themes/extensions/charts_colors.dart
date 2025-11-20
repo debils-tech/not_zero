@@ -3,7 +3,7 @@ import 'package:theme_tailor_annotation/theme_tailor_annotation.dart';
 
 part 'charts_colors.tailor.dart';
 
-@TailorMixin(themeGetter: ThemeGetter.onThemeData)
+@TailorMixin(themeGetter: .onThemeData)
 class ChartsColorScheme extends ThemeExtension<ChartsColorScheme>
     with _$ChartsColorSchemeTailorMixin {
   const ChartsColorScheme({

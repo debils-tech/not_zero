@@ -25,7 +25,7 @@ class TaskEditingInfo extends StatelessWidget {
         : null;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text(
           context.t.common.timeSubtitle.createdAt(time: createAtDate),

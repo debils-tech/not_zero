@@ -82,7 +82,7 @@ class _TasksListView extends StatelessWidget {
     return AdaptiveListLimiter(
       maxWidth: 600,
       child: ListView(
-        padding: const EdgeInsets.only(top: 5, bottom: 75, left: 10, right: 10),
+        padding: const .only(top: 5, bottom: 75, left: 10, right: 10),
         children: [
           const _TasksFilters(),
           ...tasks.map(
@@ -120,11 +120,11 @@ class _TasksFilters extends ConsumerWidget {
     );
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         if (selectedDay != null) ...[
           DateRangeSwitch(
-            rangeType: DateRangeType.day,
+            rangeType: .day,
             initialDate: selectedDay,
             onChanged: (startDay, endDay) {
               assert(startDay.isAtSameDay(endDay), 'Invalid date range');

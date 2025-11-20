@@ -22,7 +22,7 @@ class HabitCard extends StatelessWidget {
           children: [
             const SizedBox(width: 15),
             Flexible(
-              fit: FlexFit.tight,
+              fit: .tight,
               child: _HabitTextBlock(habit: habit),
             ),
             const SizedBox(width: 12),
@@ -41,29 +41,29 @@ class _HabitTextBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         const SizedBox(height: 8),
         Text(
           habit.title,
-          overflow: TextOverflow.ellipsis,
+          overflow: .ellipsis,
           maxLines: 3,
           style: context.theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w600,
+            fontWeight: .w600,
           ),
         ),
         const SizedBox(height: 4),
         if (habit.description.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(
+            padding: const .symmetric(
               horizontal: 4,
             ),
             child: Text(
               habit.description,
               style: context.theme.textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.w500,
+                fontWeight: .w500,
               ),
-              overflow: TextOverflow.ellipsis,
+              overflow: .ellipsis,
               maxLines: 4,
             ),
           ),
@@ -104,8 +104,8 @@ class _ImportanceIndicatorBox extends StatelessWidget {
     TaskImportance importance,
     TasksColorScheme colorScheme,
   ) => switch (importance) {
-    TaskImportance.notImportant => colorScheme.notImportantColor,
-    TaskImportance.normal => colorScheme.normalColor,
-    TaskImportance.important => colorScheme.importantColor,
+    .notImportant => colorScheme.notImportantColor,
+    .normal => colorScheme.normalColor,
+    .important => colorScheme.importantColor,
   };
 }

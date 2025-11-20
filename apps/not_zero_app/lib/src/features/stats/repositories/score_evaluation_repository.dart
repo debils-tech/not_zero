@@ -18,9 +18,9 @@ class ScoreEvaluationRepository implements BaseRepository {
 
   int evaluateTaskImportanceScore(TaskImportance importance) =>
       switch (importance) {
-        TaskImportance.notImportant => _taskCompletedNotImportantScore,
-        TaskImportance.normal => _taskCompletedNormalScore,
-        TaskImportance.important => _taskCompletedImportantScore,
+        .notImportant => _taskCompletedNotImportantScore,
+        .normal => _taskCompletedNormalScore,
+        .important => _taskCompletedImportantScore,
       };
 
   int evaluateTaskCreatedScore() => _taskCreatedScore;

@@ -31,13 +31,13 @@ class TagListIndicator extends StatelessWidget {
             (tag) => Container(
               padding:
                   padding ??
-                  const EdgeInsets.symmetric(
+                  const .symmetric(
                     horizontal: 6,
                     vertical: 4,
                   ),
               decoration: BoxDecoration(
                 borderRadius:
-                    borderRadius ?? const BorderRadius.all(Radius.circular(10)),
+                    borderRadius ?? const .all(.circular(10)),
                 color: theme.tagsColorScheme.colorByIndex(tag.colorIndex),
               ),
               child: Text(

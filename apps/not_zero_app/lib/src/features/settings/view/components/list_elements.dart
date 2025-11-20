@@ -11,7 +11,7 @@ class SettingsBlocHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 9, top: 12, bottom: 6),
+      padding: const .only(left: 9, top: 12, bottom: 6),
       child: Text(
         text,
         style: context.theme.textTheme.titleSmall,
@@ -70,7 +70,7 @@ class SettingsUrlEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => launchUrlString(url, mode: LaunchMode.externalApplication),
+      onTap: () => launchUrlString(url, mode: .externalApplication),
       leading: icon != null ? Icon(icon) : null,
       title: Text(title),
     );

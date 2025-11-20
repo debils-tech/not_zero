@@ -31,15 +31,15 @@ class ThemeSettingsScreen extends ConsumerWidget {
           children: [
             RadioListTile<ThemeState>(
               title: Text(context.t.settings.theme.values.light),
-              value: ThemeState.light,
+              value: .light,
             ),
             RadioListTile<ThemeState>(
               title: Text(context.t.settings.theme.values.dark),
-              value: ThemeState.dark,
+              value: .dark,
             ),
             RadioListTile<ThemeState>(
               title: Text(context.t.settings.theme.values.system),
-              value: ThemeState.system,
+              value: .system,
             ),
             const Divider(),
             _DynamicColorsCheckbox(

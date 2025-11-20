@@ -11,7 +11,7 @@ class ClickableCard extends StatelessWidget {
     return Card(
       color: context.theme.cardTheme.color,
       elevation: 2,
-      clipBehavior: Clip.antiAlias,
+      clipBehavior: .antiAlias,
       child: child,
     );
   }

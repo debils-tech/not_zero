@@ -9,7 +9,7 @@ export 'extensions/tags_colors.dart';
 export 'extensions/tasks_colors.dart';
 
 final defaultLightTheme = _lightThemeBase.copyWith(
-  splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
+  splashFactory: InkSparkle.splashFactory,
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
       ..._lightThemeBase.pageTransitionsTheme.builders,
@@ -18,7 +18,7 @@ final defaultLightTheme = _lightThemeBase.copyWith(
   ),
   inputDecorationTheme: _lightThemeBase.inputDecorationTheme.copyWith(
     border: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(8)),
+      borderRadius: .all(.circular(8)),
     ),
   ),
 );
@@ -37,8 +37,8 @@ final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
       tooltipBackgroundColor: Color(0xFF1B171E),
       weeklyStatsLine: Color(0xFFBB86FC),
       weeklyStatsBelowGradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
+        begin: .topCenter,
+        end: .bottomCenter,
         colors: [Color(0x80BB86FC), Color(0x60BB86FC)],
       ),
     ),
@@ -58,7 +58,7 @@ final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
 );
 
 final defaultDarkTheme = _darkThemeBase.copyWith(
-  splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
+  splashFactory: InkSparkle.splashFactory,
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
       ..._lightThemeBase.pageTransitionsTheme.builders,
@@ -67,7 +67,7 @@ final defaultDarkTheme = _darkThemeBase.copyWith(
   ),
   inputDecorationTheme: _lightThemeBase.inputDecorationTheme.copyWith(
     border: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(12)),
+      borderRadius: .all(.circular(12)),
     ),
   ),
 );
@@ -86,8 +86,8 @@ final _darkThemeBase = ThemeData.dark(useMaterial3: true).copyWith(
       tooltipBackgroundColor: Color(0xFF1B171E),
       weeklyStatsLine: Color(0xFF6200EE),
       weeklyStatsBelowGradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
+        begin: .topCenter,
+        end: .bottomCenter,
         colors: [Color(0x806200EE), Color(0x40BB86FC)],
       ),
     ),

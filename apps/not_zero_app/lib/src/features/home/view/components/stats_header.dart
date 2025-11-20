@@ -18,11 +18,11 @@ class HomeStatsHeader extends ConsumerWidget {
 
     return Container(
       height: 150,
-      alignment: Alignment.center,
+      alignment: .center,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
+          begin: .bottomCenter,
+          end: .topCenter,
           colors: [
             theme.scaffoldBackgroundColor,
             theme.colorScheme.primaryContainer,
@@ -31,16 +31,16 @@ class HomeStatsHeader extends ConsumerWidget {
           stops: const [0.0, 0.3, 1.0],
         ),
       ),
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: const .only(bottom: 15),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           if (totalScore != null)
             Text(
               totalScore.toString(),
               style: const TextStyle(
                 fontSize: 34,
-                fontWeight: FontWeight.w700,
+                fontWeight: .w700,
               ),
             )
           else

@@ -40,7 +40,7 @@ class TaskEditScreen extends ConsumerWidget {
       floatingActionButton: isChanged
           ? _FloatingSubmitButton(formKey, taskToEdit: taskToEdit)
           : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: .centerFloat,
     );
   }
 }
@@ -120,7 +120,7 @@ class _TaskEditScreenBody extends ConsumerWidget {
       child: Stack(
         children: [
           ListView(
-            padding: const EdgeInsets.only(
+            padding: const .only(
               left: 10,
               right: 10,
               top: 5,
@@ -179,7 +179,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
       onPressed: () => _onTap(context, ref),
       style: FilledButton.styleFrom(
         elevation: 20,
-        padding: const EdgeInsets.symmetric(
+        padding: const .symmetric(
           horizontal: 20,
           vertical: 15,
         ),

@@ -23,9 +23,9 @@ class TagCreationDialog extends StatefulWidget {
       useSafeArea: true,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(28),
-          topRight: Radius.circular(28),
+        borderRadius: .only(
+          topLeft: .circular(28),
+          topRight: .circular(28),
         ),
       ),
       builder: (_) => TagCreationDialog(
@@ -58,7 +58,7 @@ class _TagCreationDialogState extends State<TagCreationDialog> {
                 'color': 0,
               },
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: [
             Text(
               isEdit
@@ -70,7 +70,7 @@ class _TagCreationDialogState extends State<TagCreationDialog> {
             FormBuilderTextField(
               name: 'name',
               // autofocus: true,
-              textCapitalization: TextCapitalization.words,
+              textCapitalization: .words,
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(),
               ]),
@@ -83,7 +83,7 @@ class _TagCreationDialogState extends State<TagCreationDialog> {
             const _TagColorField(),
             const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: .spaceEvenly,
               children: [
                 SizedBox(
                   width: 48,
@@ -120,12 +120,12 @@ class _TagColorField extends StatelessWidget {
       builder: (field) {
         return Container(
           height: 2 * (verticalPadding + iconButtonPadding) + iconSize,
-          padding: const EdgeInsets.symmetric(
+          padding: const .symmetric(
             horizontal: 16,
             vertical: verticalPadding,
           ),
           child: ListView.separated(
-            scrollDirection: Axis.horizontal,
+            scrollDirection: .horizontal,
             itemBuilder: (_, index) {
               final isSelected = field.value == index;
               return IconButton(
@@ -140,7 +140,7 @@ class _TagColorField extends StatelessWidget {
                             strokeAlign: BorderSide.strokeAlignCenter,
                           )
                         : null,
-                    shape: BoxShape.circle,
+                    shape: .circle,
                   ),
                   child: const SizedBox.square(dimension: iconSize),
                 ),
@@ -207,7 +207,7 @@ class _SubmitButton extends ConsumerWidget {
 
           final ItemTag tag;
           if (tagToEdit == null) {
-            tag = ItemTag.create(name: name, colorIndex: color);
+            tag = .create(name: name, colorIndex: color);
           } else {
             tag = tagToEdit!.edit(name: name, colorIndex: color);
           }
@@ -217,7 +217,7 @@ class _SubmitButton extends ConsumerWidget {
         }
       },
       style: FilledButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const .symmetric(vertical: 16),
       ),
       child: Text(
         context.t.tags.creation.submit,

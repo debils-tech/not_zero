@@ -15,7 +15,7 @@ class StorageSettingsScreen extends StatelessWidget {
         children: [
           SettingsBlocHeader(context.t.settings.storage.aboutHeader),
           Padding(
-            padding: const EdgeInsets.fromLTRB(15, 6, 15, 18),
+            padding: const .fromLTRB(15, 6, 15, 18),
             child: SelectableText(context.t.settings.storage.aboutContent),
           ),
           ListTile(
@@ -102,7 +102,7 @@ class StorageSettingsScreen extends StatelessWidget {
   //             icon: const Icon(Icons.save_rounded),
   //             title: Text(title),
   //             content: const Row(
-  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               mainAxisAlignment: .center,
   //               children: [
   //                 CircularProgressIndicator(),
   //               ],

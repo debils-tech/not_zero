@@ -5,7 +5,7 @@
 import 'package:logging/logging.dart';
 
 void configLogger({bool production = false}) {
-  Logger.root.level = production ? Level.INFO : Level.ALL;
+  Logger.root.level = production ? .INFO : .ALL;
 
   Logger.root.onRecord.listen(_printConsoleWrapped);
 }

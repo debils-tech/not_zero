@@ -28,7 +28,7 @@ Future<bool?> showConfirmationDialog(
             style: dangerous
                 ? TextStyle(
                     color: context.theme.colorScheme.error,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   )
                 : null,
           ),

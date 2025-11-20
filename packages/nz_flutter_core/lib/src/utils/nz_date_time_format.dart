@@ -10,7 +10,7 @@ abstract final class NzDateTimeFormat {
     DateTime? dateToCompare,
     dynamic locale,
   }) {
-    dateToCompare ??= DateTime.now();
+    dateToCompare ??= .now();
 
     // If today
     if (dateTime.isAtSameDay(dateToCompare)) {
@@ -33,7 +33,7 @@ abstract final class NzDateTimeFormat {
     DateTime? dateToCompare,
     dynamic locale,
   }) {
-    dateToCompare ??= DateTime.now();
+    dateToCompare ??= .now();
 
     // If the same day
     if (dateTime.isAtSameDay(dateToCompare)) {
