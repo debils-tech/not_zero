@@ -1,0 +1,19 @@
+name: License Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check-license:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Check License Headers
+        run: dart tools/license_manager.dart --check
