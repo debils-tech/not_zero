@@ -42,8 +42,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Symbolic link to Flutter SDK created by FVM
-/.fvm/flutter_sdk
-
 # FVM Version Cache
 .fvm/
