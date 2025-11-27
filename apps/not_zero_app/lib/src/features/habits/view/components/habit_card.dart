@@ -46,6 +46,7 @@ class HabitCard extends ConsumerWidget {
       ),
     );
     final repository = ref.watch(habitsRepositoryProvider);
+    final habitsUiStyle = ref.watch(habitsUiStyleNotifierProvider);
 
     return SelectableCard(
       onTap: () {
@@ -87,7 +88,7 @@ class HabitCard extends ConsumerWidget {
         child: _ImportanceIndicatorBox(
           importance: habit.importance,
           child: Padding(
-            padding: const .only(left: 15, right: 12, top: 4, bottom: 8),
+            padding: const .only(left: 15, right: 8, top: 4, bottom: 6),
             child: AnimatedSize(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
@@ -110,7 +111,8 @@ class HabitCard extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  _HabitCompletionsHistory(habit: habit),
+                  if (habitsUiStyle == .expanded)
+                    _HabitCompletionsHistory(habit: habit),
                 ],
               ),
             ),

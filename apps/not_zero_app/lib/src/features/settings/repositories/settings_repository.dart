@@ -16,6 +16,7 @@
 
 import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/settings/models/app_theme_settings.dart';
+import 'package:not_zero_app/src/features/settings/models/habits_ui_style.dart';
 import 'package:not_zero_app/src/features/settings/models/theme_state.dart';
 import 'package:not_zero_app/src/features/settings/services/settings_local_service.dart';
 import 'package:nz_common/nz_common.dart';
@@ -41,5 +42,15 @@ class SettingsRepository implements BaseRepository {
     await _settingsLocalService.setThemeState(settings.themeState);
     await _settingsLocalService.setUseDynamicColors(settings.useDynamicColors);
     await _settingsLocalService.setHarmonizeColors(settings.harmonizeColors);
+  }
+
+  HabitsUiStyle getHabitsUiStyle() {
+    final isExpanded = _settingsLocalService.getExpandedHabitsUi();
+    if (isExpanded == null) return .expanded;
+    return isExpanded ? .expanded : .compact;
+  }
+
+  Future<void> setHabitsUiStyle(HabitsUiStyle value) {
+    return _settingsLocalService.setExpandedHabitsUi(value == .expanded);
   }
 }

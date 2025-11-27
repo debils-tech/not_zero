@@ -29,6 +29,7 @@ class SettingsLocalService implements BaseService {
   static const _themeStateKey = 'themeState';
   static const _useDynamicColorsKey = 'useDynamicColors';
   static const _harmonizeColorsKey = 'harmonizeColors';
+  static const _expandedHabitsUiKey = 'expandedHabitsUi';
 
   ThemeState? getThemeState() {
     final stringValue = _settingsBox.getString(_themeStateKey);
@@ -57,5 +58,13 @@ class SettingsLocalService implements BaseService {
 
   Future<void> setHarmonizeColors(bool value) {
     return _settingsBox.putBool(_harmonizeColorsKey, value);
+  }
+
+  bool? getExpandedHabitsUi() {
+    return _settingsBox.getBool(_expandedHabitsUiKey);
+  }
+
+  Future<void> setExpandedHabitsUi(bool value) {
+    return _settingsBox.putBool(_expandedHabitsUiKey, value);
   }
 }

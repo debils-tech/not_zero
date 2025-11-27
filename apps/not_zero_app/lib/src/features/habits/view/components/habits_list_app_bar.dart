@@ -32,9 +32,24 @@ class HabitsListAppBar extends ConsumerWidget implements PreferredSizeWidget {
       itemSelectionNotifierProvider.select((selection) => selection.length),
     );
 
+    final habitsUiStyle = ref.watch(habitsUiStyleNotifierProvider);
+    final habitsUiStyleNotifier = ref.watch(
+      habitsUiStyleNotifierProvider.notifier,
+    );
+
     if (selectedItemsCount == 0) {
       return AppBar(
         title: Text(context.t.habits.list.title),
+        actions: [
+          IconButton(
+            onPressed: habitsUiStyleNotifier.toggleExpandedHabitsUi,
+            icon: Icon(
+              habitsUiStyle == .compact
+                  ? Icons.unfold_more_rounded
+                  : Icons.unfold_less_rounded,
+            ),
+          ),
+        ],
       );
     } else {
       return AppBar(
