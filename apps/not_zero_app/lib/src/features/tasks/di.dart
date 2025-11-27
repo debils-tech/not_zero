@@ -38,10 +38,15 @@ final tasksRepositoryProvider = Provider<TasksRepository>((ref) {
 });
 
 final specificTaskStreamProvider = FutureProvider.autoDispose
-    .family<Task?, String>((ref, taskId) async {
-      // TODO(uSlashVlad): Doesn't work if a task isn't from the main list :(
-      final mainList = await ref.watch(tasksMainListNotifier.future);
-      return mainList.firstWhereOrNull((task) => task.id == taskId);
+    .family<Task?, String>((
+      ref,
+      taskId,
+    ) {
+      return ref.watch(
+        tasksMainListNotifier.selectAsync(
+          (list) => list.firstWhereOrNull((task) => task.id == taskId),
+        ),
+      );
     });
 
 final tasksFiltersNotifier = NotifierProvider.autoDispose(

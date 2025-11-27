@@ -24,3 +24,5 @@ linter:
     prefer_final_locals: true
     cascade_invocations: false
     specify_nonobvious_property_types: false
+    # TODO(uSlashVlad): Temporary removed since it isn't helping much
+    lines_longer_than_80_chars: false

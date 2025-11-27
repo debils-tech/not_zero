@@ -56,8 +56,4 @@ class TasksRepository implements BaseRepository {
 
     return _localService.deleteTasks(tasks.map((t) => t.id));
   }
-
-  Future<void> cancelMultipleTasks(Iterable<Task> tasks) {
-    return _localService.updateTasks(tasks);
-  }
 }

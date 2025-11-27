@@ -190,13 +190,11 @@ class _TaskCheckbox extends ConsumerWidget {
     );
 
     if (task.isCanceled) {
+      // State of checkbox widget when task is canceled
       return TextButton.icon(
         onPressed: () => ref
-            .read(tasksRepositoryProvider)
-            .updateTask(
-              oldTask: task,
-              newTask: task.complete(completed: false),
-            ),
+            .read(tasksMainListNotifier.notifier)
+            .updateTask(task.complete(completed: false)),
         icon: const Icon(
           Icons.cancel_outlined,
           size: 20,
@@ -206,10 +204,9 @@ class _TaskCheckbox extends ConsumerWidget {
     }
 
     if (task.forDate == null) {
+      // State of checkbox widget when task is not scheduled for a specific date
       return IconButton.outlined(
         onPressed: () async {
-          final tasksRepo = ref.read(tasksRepositoryProvider);
-
           final firstDate = DateTime.now();
           final lastDate = firstDate.add(const Duration(days: 365));
           final newDate = await showDatePicker(
@@ -221,10 +218,9 @@ class _TaskCheckbox extends ConsumerWidget {
           if (newDate == null) return;
 
           unawaited(
-            tasksRepo.updateTask(
-              oldTask: task,
-              newTask: task.copyWith(forDate: newDate),
-            ),
+            ref
+                .read(tasksMainListNotifier.notifier)
+                .updateTask(task.copyWith(forDate: newDate)),
           );
         },
         icon: const Icon(
@@ -235,17 +231,15 @@ class _TaskCheckbox extends ConsumerWidget {
       );
     }
 
+    // The most normal state of a task checkbox widget (actual checkbox)
     return Transform.scale(
       scale: 1.3,
       child: Checkbox(
         value: task.isCompleted,
         shape: const CircleBorder(),
         onChanged: (value) => ref
-            .read(tasksRepositoryProvider)
-            .updateTask(
-              oldTask: task,
-              newTask: task.complete(completed: value ?? false),
-            ),
+            .read(tasksMainListNotifier.notifier)
+            .updateTask(task.complete(completed: value ?? false)),
       ),
     );
   }

@@ -107,11 +107,14 @@ class HabitEditRegularityField extends StatelessWidget {
           children: [
             Text(
               context.t.habits.edit.fields.habitRegularity,
-              style: context.theme.textTheme.bodySmall,
+              style: context.theme.textTheme.bodySmall?.copyWith(
+                color: context.theme.colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 8),
             OutlinedButton(
-              onPressed: () => field.didChange(const HabitRegularity.daily()),
+              onPressed: null,
+              // onPressed: () => field.didChange(const HabitRegularity.daily()),
               child: Text(context.t.habits.edit.fields.habitRegularityDaily),
             ),
           ],

@@ -469,8 +469,8 @@ class TranslationsHabitsEditFieldsEn {
 	/// en: 'Description'
 	String get habitDescription => 'Description';
 
-	/// en: 'Regularity'
-	String get habitRegularity => 'Regularity';
+	/// en: 'Regularity (Currently unavailable)'
+	String get habitRegularity => 'Regularity (Currently unavailable)';
 
 	/// en: 'Daily'
 	String get habitRegularityDaily => 'Daily';
@@ -920,7 +920,7 @@ extension on Translations {
 			'habits.edit.title.existing' => 'Edit habit',
 			'habits.edit.fields.habitTitle' => 'Title',
 			'habits.edit.fields.habitDescription' => 'Description',
-			'habits.edit.fields.habitRegularity' => 'Regularity',
+			'habits.edit.fields.habitRegularity' => 'Regularity (Currently unavailable)',
 			'habits.edit.fields.habitRegularityDaily' => 'Daily',
 			'habits.edit.submit.create' => 'Create new habit!',
 			'habits.edit.submit.existing' => 'Save changes',

@@ -37,7 +37,6 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
         title: Text(context.t.tasks.list.title),
         actions: const [
           _TasksSomedayButton(),
-          _TasksPopupMenuButton(),
         ],
       );
     } else {
@@ -87,51 +86,6 @@ class _TasksSomedayButton extends ConsumerWidget {
         ref.read(tasksFiltersNotifier.notifier).toggleSomeday();
       },
       icon: const Icon(Icons.alarm_off_rounded),
-    );
-  }
-}
-
-class _TasksPopupMenuButton extends ConsumerWidget {
-  const _TasksPopupMenuButton();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final showCanceled = ref.watch(
-      // null means show all
-      tasksFiltersNotifier.select((state) => state.canceled == null),
-    );
-
-    return PopupMenuButton(
-      itemBuilder: (context) => [
-        PopupMenuItem<void>(
-          onTap: () {
-            if (showCanceled) {
-              ref.read(tasksFiltersNotifier.notifier).hideCanceled();
-            } else {
-              ref.read(tasksFiltersNotifier.notifier).showCanceled();
-            }
-          },
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  context
-                      .t
-                      .tasks
-                      .list
-                      .appBarActions
-                      .popupMenu
-                      .showCanceledOption,
-                ),
-              ),
-              Visibility(
-                visible: showCanceled,
-                child: const Icon(Icons.check_rounded),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

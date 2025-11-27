@@ -123,23 +123,6 @@ class TasksLocalService implements BaseService {
     });
   }
 
-  /// It neither update tags nor inserts new data, only updates fields for
-  /// multiple rows in single transaction.
-  Future<void> updateTasks(Iterable<Task> tasks) {
-    return _db.transaction(() async {
-      for (final task in tasks) {
-        final affected = await _db
-            .update(_db.tasksTable)
-            .replace(task.toInsertable());
-
-        assert(
-          affected,
-          "Somehow tried to update task that wasn't presented in the db",
-        );
-      }
-    });
-  }
-
   Future<void> deleteTasks(Iterable<String> tasks) {
     return _db.transaction(() async {
       await (_db.delete(

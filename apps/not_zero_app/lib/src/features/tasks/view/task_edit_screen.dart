@@ -223,10 +223,10 @@ class _FloatingSubmitButton extends ConsumerWidget {
       final persistent = values[TaskEditPersistenceField.name] as bool;
 
       final prevTask = taskToEdit;
-      final repository = ref.read(tasksRepositoryProvider);
+      final notifier = ref.read(tasksMainListNotifier.notifier);
       if (prevTask == null) {
         unawaited(
-          repository.addTask(
+          notifier.addTask(
             Task.create(
               title: title,
               importance: importance,
@@ -239,9 +239,8 @@ class _FloatingSubmitButton extends ConsumerWidget {
         );
       } else {
         unawaited(
-          repository.updateTask(
-            oldTask: prevTask,
-            newTask: prevTask.edit(
+          notifier.updateTask(
+            prevTask.edit(
               title: title,
               importance: importance,
               description: description,

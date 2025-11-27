@@ -36,42 +36,11 @@ class TasksListFloatingButtons extends ConsumerWidget {
           ? Row(
               mainAxisSize: .min,
               children: [
-                _CancelTasksButton(selectionState: selectionState),
                 const SizedBox(width: 8),
                 _DeleteTasksButton(selectionState: selectionState), // ⚡
               ],
             )
           : const _NewTaskButton(),
-    );
-  }
-}
-
-class _CancelTasksButton extends ConsumerWidget {
-  const _CancelTasksButton({
-    required this.selectionState,
-  });
-
-  final Set<String> selectionState;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return FloatingActionButton.extended(
-      onPressed: () {
-        final showCanceled = ref.read(
-          tasksFiltersNotifier.select((state) => state.canceled == null),
-        );
-        final selectionNotifier = ref.read(
-          itemSelectionNotifierProvider.notifier,
-        );
-        unawaited(
-          ref
-              .read(tasksMainListNotifier.notifier)
-              .cancelMultipleTasks(selectionState, showCanceled: showCanceled),
-        );
-        selectionNotifier.removeAll();
-      },
-      icon: const Icon(Icons.cancel_outlined),
-      label: Text(context.t.tasks.list.cancelButton),
     );
   }
 }
