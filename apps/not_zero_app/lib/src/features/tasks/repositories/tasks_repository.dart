@@ -45,15 +45,9 @@ class TasksRepository implements BaseRepository {
     return _localService.saveTask(newTask);
   }
 
-  Future<void> deleteTask(Task task) async {
-    _actionsBus.emit(TaskAction.deleted(tasks: [task]));
-
-    return _localService.deleteTasks([task.id]);
-  }
-
-  Future<void> deleteMultipleTasks(Iterable<Task> tasks) async {
+  Future<void> deleteTasks(Iterable<Task> tasks) async {
     _actionsBus.emit(TaskAction.deleted(tasks: tasks));
 
-    return _localService.deleteTasks(tasks.map((t) => t.id));
+    return _localService.deleteTasks(tasks.map((t) => t.id).toSet());
   }
 }

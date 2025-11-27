@@ -14,13 +14,49 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/habits/di.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_common/nz_common.dart';
 
 class HabitsListNotifier extends AsyncNotifier<List<Habit>> {
   @override
   Future<List<Habit>> build() async {
     return ref.watch(habitsRepositoryProvider).getAllHabits();
+  }
+
+  Future<void> addHabit(Habit habit) {
+    state = AsyncData([habit, ...state.value ?? []]);
+    return ref.watch(habitsRepositoryProvider).addHabit(habit);
+  }
+
+  Future<void> updateHabit(Habit habit) {
+    final oldHabit = state.value?.firstWhereOrNull(
+      (oldHabit) => oldHabit.id == habit.id,
+    );
+    if (oldHabit == null) {
+      // Can't update a habit that isn't in the list
+      return Future.value();
+    }
+
+    state = AsyncData([
+      ...state.value?.map((e) => e.id == habit.id ? habit : e) ?? [habit],
+    ]);
+
+    return ref
+        .watch(habitsRepositoryProvider)
+        .updateHabit(
+          oldHabit: oldHabit,
+          newHabit: habit,
+        );
+  }
+
+  Future<void> deleteHabits(Set<String> habits) {
+    final (newList, takenList) =
+        state.value?.takeWhere((e) => habits.contains(e.id)) ??
+        (const <Habit>[], const <Habit>[]);
+    state = AsyncData(newList);
+    return ref.watch(habitsRepositoryProvider).deleteHabits(takenList);
   }
 }

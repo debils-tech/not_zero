@@ -14,33 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import 'dart:async';
-
-import 'package:meta/meta.dart';
-import 'package:nz_common/nz_common.dart';
-import 'package:rxdart/rxdart.dart';
-
-@immutable
-abstract class AppAction {
-  const AppAction();
-}
-
-class ActionsBus implements LivingObject {
-  final _actionsInternalController = PublishSubject<AppAction>();
-
-  Stream<T> getStream<T extends AppAction>() {
-    return _actionsInternalController.whereType<T>();
-  }
-
-  void emit(AppAction action) {
-    _actionsInternalController.add(action);
-  }
-
-  @override
-  void init() {}
-
-  @override
-  void dispose() {
-    unawaited(_actionsInternalController.close());
+extension ListTakeWhereExt<T> on List<T> {
+  (List<T> newList, List<T> takenList) takeWhere(bool Function(T e) filter) {
+    return (
+      where((e) => !filter(e)).toList(),
+      where(filter).toList(),
+    );
   }
 }

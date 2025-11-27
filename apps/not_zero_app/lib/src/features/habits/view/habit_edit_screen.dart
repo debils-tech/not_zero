@@ -76,8 +76,8 @@ class _DeleteHabitButton extends ConsumerWidget {
           dangerous: true,
         );
         if (confirm ?? false) {
-          final repository = ref.read(habitsRepositoryProvider);
-          unawaited(repository.deleteHabit(habit));
+          final notifier = ref.read(habitsListNotifierProvider.notifier);
+          unawaited(notifier.deleteHabits({habit.id}));
           navigator.pop();
         }
       },
@@ -198,10 +198,10 @@ class _FloatingSubmitButton extends ConsumerWidget {
           values[HabitEditRegularityField.name] as HabitRegularity?;
 
       final prevHabit = habitToEdit;
-      final repository = ref.read(habitsRepositoryProvider);
+      final notifier = ref.read(habitsListNotifierProvider.notifier);
       if (prevHabit == null) {
         unawaited(
-          repository.addHabit(
+          notifier.addHabit(
             Habit.create(
               title: title,
               description: description,
@@ -212,9 +212,8 @@ class _FloatingSubmitButton extends ConsumerWidget {
         );
       } else {
         unawaited(
-          repository.updateHabit(
-            oldHabit: prevHabit,
-            newHabit: prevHabit.edit(
+          notifier.updateHabit(
+            prevHabit.edit(
               title: title,
               description: description,
               importance: importance,

@@ -16,6 +16,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/habits/di.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class HabitsListAppBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -26,8 +27,38 @@ class HabitsListAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AppBar(
-      title: Text(context.t.habits.list.title),
+    final selectionNotifier = ref.watch(itemSelectionNotifierProvider.notifier);
+    final selectedItemsCount = ref.watch(
+      itemSelectionNotifierProvider.select((selection) => selection.length),
     );
+
+    if (selectedItemsCount == 0) {
+      return AppBar(
+        title: Text(context.t.habits.list.title),
+      );
+    } else {
+      return AppBar(
+        title: Text(
+          context.t.habits.list.titleSelection(n: selectedItemsCount),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              final habitList = ref.read(habitsListNotifierProvider).value;
+              selectionNotifier.addAll(
+                habitList?.map((e) => e.id).toSet() ?? const {},
+              );
+            },
+            tooltip: context.t.tasks.list.tooltips.selectAllButton,
+            icon: const Icon(Icons.select_all_rounded),
+          ),
+          IconButton(
+            onPressed: selectionNotifier.removeAll,
+            tooltip: context.t.tasks.list.tooltips.removeSelectionButton,
+            icon: const Icon(Icons.deselect_rounded),
+          ),
+        ],
+      );
+    }
   }
 }

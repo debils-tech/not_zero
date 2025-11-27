@@ -213,6 +213,13 @@ class TranslationsHabitsListEn {
 	/// en: 'Habits'
 	String get title => 'Habits';
 
+	/// en: '(one) {Selected $n task} (other) {Selected $n tasks}'
+	String titleSelection({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: 'Selected ${n} task',
+		other: 'Selected ${n} tasks',
+	);
+
+	late final TranslationsHabitsListDeleteDialogEn deleteDialog = TranslationsHabitsListDeleteDialogEn._(_root);
 	late final TranslationsHabitsListTooltipsEn tooltips = TranslationsHabitsListTooltipsEn._(_root);
 }
 
@@ -414,6 +421,21 @@ class TranslationsTasksEditEn {
 	late final TranslationsTasksEditSubmitEn submit = TranslationsTasksEditSubmitEn._(_root);
 	late final TranslationsTasksEditDeleteDialogEn deleteDialog = TranslationsTasksEditDeleteDialogEn._(_root);
 	late final TranslationsTasksEditTooltipsEn tooltips = TranslationsTasksEditTooltipsEn._(_root);
+}
+
+// Path: habits.list.deleteDialog
+class TranslationsHabitsListDeleteDialogEn {
+	TranslationsHabitsListDeleteDialogEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: '(one) {Are you sure you want delete selected habit?} (other) {Are you sure you want delete $n selected habits?}'
+	String content({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: 'Are you sure you want delete selected habit?',
+		other: 'Are you sure you want delete ${n} selected habits?',
+	);
 }
 
 // Path: habits.list.tooltips
@@ -913,6 +935,8 @@ extension on Translations {
 			'common.timeOptions.yesterday' => 'Yesterday',
 			'common.timeOptions.tomorrow' => 'Tomorrow',
 			'habits.list.title' => 'Habits',
+			'habits.list.titleSelection' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Selected ${n} task', other: 'Selected ${n} tasks', ), 
+			'habits.list.deleteDialog.content' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Are you sure you want delete selected habit?', other: 'Are you sure you want delete ${n} selected habits?', ), 
 			'habits.list.tooltips.addNewButton' => 'Add new habit',
 			'habits.view.title' => 'Habit view',
 			'habits.view.tooltips.editHabitButton' => 'Edit',

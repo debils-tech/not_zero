@@ -14,14 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:not_zero_app/src/features/habits/models/habit_action.dart';
 import 'package:not_zero_app/src/features/habits/services/habits_local_service.dart';
+import 'package:nz_actions_bus/nz_actions_bus.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
 
 class HabitsRepository implements BaseRepository {
-  const HabitsRepository(this._localService);
+  const HabitsRepository(this._localService, this._actionsBus);
 
   final HabitsLocalService _localService;
+  final ActionsBus _actionsBus;
 
   Future<List<Habit>> getAllHabits() {
     final currentDate = DateTime.now();
@@ -34,6 +37,8 @@ class HabitsRepository implements BaseRepository {
   }
 
   Future<void> addHabit(Habit habit) {
+    _actionsBus.emit(HabitAction.created(habit: habit));
+
     return _localService.saveHabit(habit);
   }
 
@@ -41,10 +46,16 @@ class HabitsRepository implements BaseRepository {
     required Habit oldHabit,
     required Habit newHabit,
   }) {
+    _actionsBus.emit(
+      HabitAction.updated(oldHabit: oldHabit, newHabit: newHabit),
+    );
+
     return _localService.saveHabit(newHabit);
   }
 
-  Future<void> deleteHabit(Habit habit) {
-    return _localService.deleteHabit(habit);
+  Future<void> deleteHabits(Iterable<Habit> habits) {
+    _actionsBus.emit(HabitAction.deleted(habits: habits));
+
+    return _localService.deleteHabits(habits.map((e) => e.id).toSet());
   }
 }

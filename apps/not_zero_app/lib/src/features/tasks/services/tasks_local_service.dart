@@ -126,11 +126,11 @@ class TasksLocalService implements BaseService {
   Future<void> deleteTasks(Iterable<String> tasks) {
     return _db.transaction(() async {
       await (_db.delete(
-        _db.tasksTable,
-      )..where((tbl) => tbl.id.isIn(tasks))).go();
-      await (_db.delete(
         _db.tasksTagEntries,
       )..where((tbl) => tbl.task.isIn(tasks))).go();
+      await (_db.delete(
+        _db.tasksTable,
+      )..where((tbl) => tbl.id.isIn(tasks))).go();
     });
   }
 }

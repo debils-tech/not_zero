@@ -14,12 +14,75 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero_app/src/features/habits/di.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
-class HabitsListFloatingButtons extends StatelessWidget {
+class HabitsListFloatingButtons extends ConsumerWidget {
   const HabitsListFloatingButtons({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectionState = ref.watch(itemSelectionNotifierProvider);
+
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      switchInCurve: Curves.easeInOut,
+      switchOutCurve: Curves.easeInOut,
+      child: selectionState.isNotEmpty
+          ? _DeleteHabitsButton(selectionState: selectionState)
+          : const _NewHabitButton(),
+    );
+  }
+}
+
+class _DeleteHabitsButton extends ConsumerWidget {
+  const _DeleteHabitsButton({
+    required this.selectionState,
+  });
+
+  final Set<String> selectionState;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    return FloatingActionButton(
+      foregroundColor: theme.colorScheme.onError,
+      backgroundColor: theme.colorScheme.error,
+      onPressed: () async {
+        final selectedCount = ref.read(itemSelectionNotifierProvider).length;
+
+        final confirm = await showConfirmationDialog(
+          context,
+          title: context.t.common.dialog.deleteTitle,
+          content: context.t.habits.list.deleteDialog.content(n: selectedCount),
+          confirm: context.t.common.dialog.deleteButton,
+          dangerous: true,
+        );
+        if (confirm ?? false) {
+          final selectionNotifier = ref.read(
+            itemSelectionNotifierProvider.notifier,
+          );
+          unawaited(
+            ref
+                .read(habitsListNotifierProvider.notifier)
+                .deleteHabits(selectionState),
+          );
+          selectionNotifier.removeAll();
+        }
+      },
+      tooltip: context.t.tasks.list.tooltips.deleteSelectedButton,
+      child: const Icon(Icons.delete_outline_rounded),
+    );
+  }
+}
+
+class _NewHabitButton extends StatelessWidget {
+  const _NewHabitButton();
 
   @override
   Widget build(BuildContext context) {

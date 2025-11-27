@@ -14,33 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import 'dart:async';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nz_actions_bus/nz_actions_bus.dart';
+import 'package:nz_base_models/nz_base_models.dart';
 
-import 'package:meta/meta.dart';
-import 'package:nz_common/nz_common.dart';
-import 'package:rxdart/rxdart.dart';
+part 'habit_action.freezed.dart';
 
-@immutable
-abstract class AppAction {
-  const AppAction();
-}
+@freezed
+sealed class HabitAction extends AppAction with _$HabitAction {
+  const factory HabitAction.created({required Habit habit}) =
+      HabitActionCreated;
 
-class ActionsBus implements LivingObject {
-  final _actionsInternalController = PublishSubject<AppAction>();
+  const factory HabitAction.updated({
+    required Habit oldHabit,
+    required Habit newHabit,
+  }) = HabitActionUpdated;
 
-  Stream<T> getStream<T extends AppAction>() {
-    return _actionsInternalController.whereType<T>();
-  }
+  const factory HabitAction.deleted({required Iterable<Habit> habits}) =
+      HabitActionDeletedMultiple;
 
-  void emit(AppAction action) {
-    _actionsInternalController.add(action);
-  }
-
-  @override
-  void init() {}
-
-  @override
-  void dispose() {
-    unawaited(_actionsInternalController.close());
-  }
+  const HabitAction._();
 }

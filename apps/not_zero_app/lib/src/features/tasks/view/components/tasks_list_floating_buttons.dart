@@ -33,13 +33,7 @@ class TasksListFloatingButtons extends ConsumerWidget {
       switchInCurve: Curves.easeInOut,
       switchOutCurve: Curves.easeInOut,
       child: selectionState.isNotEmpty
-          ? Row(
-              mainAxisSize: .min,
-              children: [
-                const SizedBox(width: 8),
-                _DeleteTasksButton(selectionState: selectionState), // ⚡
-              ],
-            )
+          ? _DeleteTasksButton(selectionState: selectionState)
           : const _NewTaskButton(),
     );
   }
@@ -75,7 +69,7 @@ class _DeleteTasksButton extends ConsumerWidget {
           unawaited(
             ref
                 .read(tasksMainListNotifier.notifier)
-                .deleteMultipleTasks(selectionState),
+                .deleteTasks(selectionState),
           );
           selectionNotifier.removeAll();
         }

@@ -298,7 +298,7 @@ void main() {
         await habitsLocalService.saveCompletion(completion1);
         await habitsLocalService.saveCompletion(completion2);
 
-        await habitsLocalService.deleteHabit(habit);
+        await habitsLocalService.deleteHabits([habit.id]);
 
         final habitResult = await db.select(db.habitsTable).get();
         final completionsResult = await db

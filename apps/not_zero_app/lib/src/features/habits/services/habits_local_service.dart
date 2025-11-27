@@ -73,6 +73,8 @@ class HabitsLocalService implements BaseService {
         .get();
   }
 
+  /// Saves general habit information and tags.
+  /// Does not save or delete completions.
   Future<void> saveHabit(Habit habit) {
     return _db.transaction(() async {
       await _db
@@ -97,17 +99,23 @@ class HabitsLocalService implements BaseService {
         .insertOnConflictUpdate(completion.toInsertable());
   }
 
-  Future<void> deleteHabit(Habit habit) {
+  Future<void> deleteCompletion(HabitCompletion completion) {
+    return (_db.delete(
+      _db.habitCompletionsTable,
+    )..where((tbl) => tbl.id.equals(completion.id))).go();
+  }
+
+  Future<void> deleteHabits(Iterable<String> habits) {
     return _db.transaction(() async {
       await (_db.delete(
         _db.habitsTagEntries,
-      )..where((tbl) => tbl.habit.equals(habit.id))).go();
+      )..where((tbl) => tbl.habit.isIn(habits))).go();
       await (_db.delete(
         _db.habitCompletionsTable,
-      )..where((tbl) => tbl.habitId.equals(habit.id))).go();
+      )..where((tbl) => tbl.habitId.isIn(habits))).go();
       await (_db.delete(
         _db.habitsTable,
-      )..where((tbl) => tbl.id.equals(habit.id))).go();
+      )..where((tbl) => tbl.id.isIn(habits))).go();
     });
   }
 }
