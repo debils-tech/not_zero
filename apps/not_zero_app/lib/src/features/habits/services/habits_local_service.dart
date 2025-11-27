@@ -24,10 +24,7 @@ class HabitsLocalService implements BaseService {
 
   final NotZeroDatabase _db;
 
-  Future<List<Habit>> getHabitsWithCompletions({
-    required DateTime startDate,
-    required DateTime endDate,
-  }) {
+  Future<List<Habit>> getHabits() {
     return _db.transaction(() async {
       final habitsQuery =
           _db.select(_db.habitsTable).join([
@@ -45,31 +42,27 @@ class HabitsLocalService implements BaseService {
       return habitsQuery.asyncMap((row) async {
         final habit = row.readTable(_db.habitsTable);
         final tags = await tagsMapper.readHabitTags(row);
-        final completions = await _getHabitCompletions(
-          habitId: habit.id,
-          startDate: startDate,
-          endDate: endDate,
-        );
-        return habit.copyWith(
-          completions: completions,
-          tags: tags,
-        );
+        return habit.copyWith(tags: tags);
       }).get();
     });
   }
 
-  Future<List<HabitCompletion>> _getHabitCompletions({
+  Future<List<HabitCompletion>> getHabitCompletions({
     required String habitId,
     required DateTime startDate,
     required DateTime endDate,
   }) {
     return (_db.select(
-          _db.habitCompletionsTable,
-        )..where(
-          (tbl) =>
-              tbl.habitId.equals(habitId) &
-              tbl.completedDate.dayInRange(startDate, endDate),
-        ))
+            _db.habitCompletionsTable,
+          )
+          ..where(
+            (tbl) =>
+                tbl.habitId.equals(habitId) &
+                tbl.completedDate.dayInRange(startDate, endDate),
+          )
+          ..orderBy([
+            (tbl) => OrderingTerm.asc(tbl.completedDate),
+          ]))
         .get();
   }
 

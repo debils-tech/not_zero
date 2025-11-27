@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nz_base_models/src/habit_completion.dart';
 import 'package:nz_base_models/src/habit_regularity.dart';
 import 'package:nz_base_models/src/tag.dart';
 import 'package:nz_base_models/src/task_importance.dart';
@@ -33,9 +32,6 @@ abstract class Habit with _$Habit {
     @Default('') String description,
     @Default(TaskImportance.normal) TaskImportance importance,
     DateTime? modifiedAt,
-    @JsonKey(toJson: Habit._completionsToJson)
-    @Default([])
-    List<HabitCompletion> completions,
     @Default(HabitRegularity.daily()) HabitRegularity regularity,
     @JsonKey(toJson: ItemTag.tagsToIds) @Default([]) List<ItemTag> tags,
   }) = _Habit;
@@ -70,7 +66,4 @@ abstract class Habit with _$Habit {
     modifiedAt: DateTime.now(),
     regularity: regularity ?? this.regularity,
   );
-
-  static List<String> _completionsToJson(List<HabitCompletion> field) =>
-      field.map((e) => e.id).toList();
 }

@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:collection/collection.dart';
 import 'package:not_zero_app/src/features/habits/models/habit_action.dart';
 import 'package:not_zero_app/src/features/habits/services/habits_local_service.dart';
 import 'package:nz_actions_bus/nz_actions_bus.dart';
@@ -26,15 +27,7 @@ class HabitsRepository implements BaseRepository {
   final HabitsLocalService _localService;
   final ActionsBus _actionsBus;
 
-  Future<List<Habit>> getAllHabits() {
-    final currentDate = DateTime.now();
-    final startDate = currentDate.subtract(const Duration(days: 30));
-
-    return _localService.getHabitsWithCompletions(
-      startDate: startDate,
-      endDate: currentDate,
-    );
-  }
+  Future<List<Habit>> getAllHabits() => _localService.getHabits();
 
   Future<void> addHabit(Habit habit) {
     _actionsBus.emit(HabitAction.created(habit: habit));
@@ -57,5 +50,55 @@ class HabitsRepository implements BaseRepository {
     _actionsBus.emit(HabitAction.deleted(habits: habits));
 
     return _localService.deleteHabits(habits.map((e) => e.id).toSet());
+  }
+
+  Future<List<Pair<DateTime, HabitCompletion?>>> getHabitCompletionsAroundDate({
+    required String habitId,
+    int daysBefore = 0,
+    int daysAfter = 0,
+  }) async {
+    final today = DateTime.now();
+    final startDate = today.subtract(Duration(days: daysBefore));
+    final endDate = today.add(Duration(days: daysAfter));
+
+    final completions = await _localService.getHabitCompletions(
+      habitId: habitId,
+      startDate: startDate,
+      endDate: endDate,
+    );
+
+    return startDate
+        .rangeToIncluding(endDate)
+        .map(
+          (date) => (
+            date,
+            completions.firstWhereOrNull(
+              (completion) => completion.completedDate.isAtSameDay(date),
+            ),
+          ),
+        )
+        .toList();
+  }
+
+  Future<void> addHabitCompletion({
+    required Habit habit,
+    required HabitCompletion completion,
+  }) {
+    _actionsBus.emit(
+      HabitAction.completed(habit: habit, completion: completion),
+    );
+
+    return _localService.saveCompletion(completion);
+  }
+
+  Future<void> deleteHabitCompletion({
+    required Habit habit,
+    required HabitCompletion completion,
+  }) {
+    _actionsBus.emit(
+      HabitAction.notCompleted(habit: habit, completion: completion),
+    );
+
+    return _localService.deleteCompletion(completion);
   }
 }

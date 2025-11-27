@@ -39,17 +39,17 @@ class TaskCard extends StatelessWidget {
         identifier: task.id,
         child: _ImportanceIndicatorBox(
           importance: task.importance,
-          child: Row(
-            children: [
-              const SizedBox(width: 15),
-              Flexible(
-                fit: .tight,
-                child: _TaskTextBlock(task: task),
-              ),
-              const SizedBox(width: 12),
-              _TaskCheckbox(task: task),
-              const SizedBox(width: 8),
-            ],
+          child: Padding(
+            padding: const .only(left: 15, right: 8, top: 2, bottom: 6),
+            child: Row(
+              spacing: 12,
+              children: [
+                Expanded(
+                  child: _TaskTextBlock(task: task),
+                ),
+                _TaskCheckbox(task: task),
+              ],
+            ),
           ),
         ),
       ),
@@ -64,12 +64,9 @@ class _TaskTextBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Column(
       crossAxisAlignment: .start,
       children: [
-        const SizedBox(height: 2),
         SizedBox(
           height: 20,
           child: _TaskTimeText(task),
@@ -82,7 +79,7 @@ class _TaskTextBlock extends StatelessWidget {
           task.title,
           overflow: .ellipsis,
           maxLines: 3,
-          style: theme.textTheme.titleMedium?.copyWith(
+          style: context.theme.textTheme.titleMedium?.copyWith(
             fontWeight: .w600,
             decoration: task.isCanceled ? .lineThrough : null,
             decorationThickness: 2.5,
@@ -96,14 +93,13 @@ class _TaskTextBlock extends StatelessWidget {
             ),
             child: Text(
               task.description,
-              style: theme.textTheme.bodySmall?.copyWith(
+              style: context.theme.textTheme.bodySmall?.copyWith(
                 fontWeight: .w500,
               ),
               overflow: .ellipsis,
               maxLines: 4,
             ),
           ),
-        const SizedBox(height: 6),
       ],
     );
   }

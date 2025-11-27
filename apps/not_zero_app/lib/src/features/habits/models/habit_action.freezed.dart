@@ -269,4 +269,176 @@ as Iterable<Habit>,
 
 }
 
+/// @nodoc
+
+
+class HabitActionCompleted extends HabitAction {
+  const HabitActionCompleted({required this.habit, required this.completion}): super._();
+  
+
+ final  Habit habit;
+ final  HabitCompletion completion;
+
+/// Create a copy of HabitAction
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$HabitActionCompletedCopyWith<HabitActionCompleted> get copyWith => _$HabitActionCompletedCopyWithImpl<HabitActionCompleted>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HabitActionCompleted&&(identical(other.habit, habit) || other.habit == habit)&&(identical(other.completion, completion) || other.completion == completion));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,habit,completion);
+
+@override
+String toString() {
+  return 'HabitAction.completed(habit: $habit, completion: $completion)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $HabitActionCompletedCopyWith<$Res> implements $HabitActionCopyWith<$Res> {
+  factory $HabitActionCompletedCopyWith(HabitActionCompleted value, $Res Function(HabitActionCompleted) _then) = _$HabitActionCompletedCopyWithImpl;
+@useResult
+$Res call({
+ Habit habit, HabitCompletion completion
+});
+
+
+$HabitCopyWith<$Res> get habit;$HabitCompletionCopyWith<$Res> get completion;
+
+}
+/// @nodoc
+class _$HabitActionCompletedCopyWithImpl<$Res>
+    implements $HabitActionCompletedCopyWith<$Res> {
+  _$HabitActionCompletedCopyWithImpl(this._self, this._then);
+
+  final HabitActionCompleted _self;
+  final $Res Function(HabitActionCompleted) _then;
+
+/// Create a copy of HabitAction
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? habit = null,Object? completion = null,}) {
+  return _then(HabitActionCompleted(
+habit: null == habit ? _self.habit : habit // ignore: cast_nullable_to_non_nullable
+as Habit,completion: null == completion ? _self.completion : completion // ignore: cast_nullable_to_non_nullable
+as HabitCompletion,
+  ));
+}
+
+/// Create a copy of HabitAction
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$HabitCopyWith<$Res> get habit {
+  
+  return $HabitCopyWith<$Res>(_self.habit, (value) {
+    return _then(_self.copyWith(habit: value));
+  });
+}/// Create a copy of HabitAction
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$HabitCompletionCopyWith<$Res> get completion {
+  
+  return $HabitCompletionCopyWith<$Res>(_self.completion, (value) {
+    return _then(_self.copyWith(completion: value));
+  });
+}
+}
+
+/// @nodoc
+
+
+class HabitActionNotCompleted extends HabitAction {
+  const HabitActionNotCompleted({required this.habit, required this.completion}): super._();
+  
+
+ final  Habit habit;
+ final  HabitCompletion completion;
+
+/// Create a copy of HabitAction
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$HabitActionNotCompletedCopyWith<HabitActionNotCompleted> get copyWith => _$HabitActionNotCompletedCopyWithImpl<HabitActionNotCompleted>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HabitActionNotCompleted&&(identical(other.habit, habit) || other.habit == habit)&&(identical(other.completion, completion) || other.completion == completion));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,habit,completion);
+
+@override
+String toString() {
+  return 'HabitAction.notCompleted(habit: $habit, completion: $completion)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $HabitActionNotCompletedCopyWith<$Res> implements $HabitActionCopyWith<$Res> {
+  factory $HabitActionNotCompletedCopyWith(HabitActionNotCompleted value, $Res Function(HabitActionNotCompleted) _then) = _$HabitActionNotCompletedCopyWithImpl;
+@useResult
+$Res call({
+ Habit habit, HabitCompletion completion
+});
+
+
+$HabitCopyWith<$Res> get habit;$HabitCompletionCopyWith<$Res> get completion;
+
+}
+/// @nodoc
+class _$HabitActionNotCompletedCopyWithImpl<$Res>
+    implements $HabitActionNotCompletedCopyWith<$Res> {
+  _$HabitActionNotCompletedCopyWithImpl(this._self, this._then);
+
+  final HabitActionNotCompleted _self;
+  final $Res Function(HabitActionNotCompleted) _then;
+
+/// Create a copy of HabitAction
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? habit = null,Object? completion = null,}) {
+  return _then(HabitActionNotCompleted(
+habit: null == habit ? _self.habit : habit // ignore: cast_nullable_to_non_nullable
+as Habit,completion: null == completion ? _self.completion : completion // ignore: cast_nullable_to_non_nullable
+as HabitCompletion,
+  ));
+}
+
+/// Create a copy of HabitAction
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$HabitCopyWith<$Res> get habit {
+  
+  return $HabitCopyWith<$Res>(_self.habit, (value) {
+    return _then(_self.copyWith(habit: value));
+  });
+}/// Create a copy of HabitAction
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$HabitCompletionCopyWith<$Res> get completion {
+  
+  return $HabitCompletionCopyWith<$Res>(_self.completion, (value) {
+    return _then(_self.copyWith(completion: value));
+  });
+}
+}
+
 // dart format on

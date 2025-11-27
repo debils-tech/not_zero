@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 part 'habit_completion.freezed.dart';
 part 'habit_completion.g.dart';
@@ -27,6 +28,17 @@ abstract class HabitCompletion with _$HabitCompletion {
     required HabitCompletionType type,
     required DateTime completedDate,
   }) = _HabitCompletion;
+
+  factory HabitCompletion.create({
+    required String habitId,
+    required DateTime completedDate,
+    HabitCompletionType type = HabitCompletionType.completed,
+  }) => HabitCompletion(
+    id: const Uuid().v4(),
+    habitId: habitId,
+    type: type,
+    completedDate: completedDate,
+  );
 
   factory HabitCompletion.fromJson(Map<String, dynamic> json) =>
       _$HabitCompletionFromJson(json);

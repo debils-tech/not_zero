@@ -16,10 +16,13 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/actions_bus/di.dart';
+import 'package:not_zero_app/src/features/habits/notifiers/habits_completions_history_notifier.dart';
 import 'package:not_zero_app/src/features/habits/notifiers/habits_list_notifier.dart';
 import 'package:not_zero_app/src/features/habits/repositories/habits_repository.dart';
 import 'package:not_zero_app/src/features/habits/services/habits_local_service.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
+import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_common/nz_common.dart';
 
 final habitsLocalServiceProvider = Provider<HabitsLocalService>((ref) {
   return HabitsLocalService(
@@ -37,3 +40,13 @@ final habitsRepositoryProvider = Provider<HabitsRepository>((ref) {
 final habitsListNotifierProvider = AsyncNotifierProvider.autoDispose(
   HabitsListNotifier.new,
 );
+
+final habitCompletionsWeekHistoryNotifierProvider = AsyncNotifierProvider
+    .autoDispose
+    .family<
+      HabitsCompletionsHistoryNotifier,
+      List<Pair<DateTime, HabitCompletion?>>,
+      Habit
+    >(
+      (habit) => HabitsCompletionsHistoryNotifier(habit: habit, daysCount: 7),
+    );

@@ -448,6 +448,9 @@ class TranslationsHabitsListTooltipsEn {
 
 	/// en: 'Add new habit'
 	String get addNewButton => 'Add new habit';
+
+	/// en: 'More details'
+	String get viewHabitButton => 'More details';
 }
 
 // Path: habits.view.tooltips
@@ -938,6 +941,7 @@ extension on Translations {
 			'habits.list.titleSelection' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Selected ${n} task', other: 'Selected ${n} tasks', ), 
 			'habits.list.deleteDialog.content' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Are you sure you want delete selected habit?', other: 'Are you sure you want delete ${n} selected habits?', ), 
 			'habits.list.tooltips.addNewButton' => 'Add new habit',
+			'habits.list.tooltips.viewHabitButton' => 'More details',
 			'habits.view.title' => 'Habit view',
 			'habits.view.tooltips.editHabitButton' => 'Edit',
 			'habits.edit.title.create' => 'New habit',

@@ -33,5 +33,15 @@ sealed class HabitAction extends AppAction with _$HabitAction {
   const factory HabitAction.deleted({required Iterable<Habit> habits}) =
       HabitActionDeletedMultiple;
 
+  const factory HabitAction.completed({
+    required Habit habit,
+    required HabitCompletion completion,
+  }) = HabitActionCompleted;
+
+  const factory HabitAction.notCompleted({
+    required Habit habit,
+    required HabitCompletion completion,
+  }) = HabitActionNotCompleted;
+
   const HabitAction._();
 }

@@ -14,15 +14,4 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-export 'src/architecture/base_repository.dart';
-export 'src/architecture/base_service.dart';
-export 'src/common_tuples.dart';
-export 'src/date_range_ext.dart';
-export 'src/date_time_checks_ext.dart';
-export 'src/date_transformations_ext.dart';
-export 'src/functional_object_ext.dart';
-export 'src/insert_separators.dart';
-export 'src/list_take_where_ext.dart';
-export 'src/living_object.dart';
-export 'src/object_id_mixin.dart';
-export 'src/platform_checks.dart';
+typedef Pair<T1, T2> = (T1 first, T2 second);

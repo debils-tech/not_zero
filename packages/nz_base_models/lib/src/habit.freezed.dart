@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Habit {
 
- String get id; String get title; DateTime get createdAt; String get description; TaskImportance get importance; DateTime? get modifiedAt;@JsonKey(toJson: Habit._completionsToJson) List<HabitCompletion> get completions; HabitRegularity get regularity;@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> get tags;
+ String get id; String get title; DateTime get createdAt; String get description; TaskImportance get importance; DateTime? get modifiedAt; HabitRegularity get regularity;@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> get tags;
 /// Create a copy of Habit
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $HabitCopyWith<Habit> get copyWith => _$HabitCopyWithImpl<Habit>(this as Habit, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Habit&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.description, description) || other.description == description)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt)&&const DeepCollectionEquality().equals(other.completions, completions)&&(identical(other.regularity, regularity) || other.regularity == regularity)&&const DeepCollectionEquality().equals(other.tags, tags));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Habit&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.description, description) || other.description == description)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt)&&(identical(other.regularity, regularity) || other.regularity == regularity)&&const DeepCollectionEquality().equals(other.tags, tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,createdAt,description,importance,modifiedAt,const DeepCollectionEquality().hash(completions),regularity,const DeepCollectionEquality().hash(tags));
+int get hashCode => Object.hash(runtimeType,id,title,createdAt,description,importance,modifiedAt,regularity,const DeepCollectionEquality().hash(tags));
 
 @override
 String toString() {
-  return 'Habit(id: $id, title: $title, createdAt: $createdAt, description: $description, importance: $importance, modifiedAt: $modifiedAt, completions: $completions, regularity: $regularity, tags: $tags)';
+  return 'Habit(id: $id, title: $title, createdAt: $createdAt, description: $description, importance: $importance, modifiedAt: $modifiedAt, regularity: $regularity, tags: $tags)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $HabitCopyWith<$Res>  {
   factory $HabitCopyWith(Habit value, $Res Function(Habit) _then) = _$HabitCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, DateTime createdAt, String description, TaskImportance importance, DateTime? modifiedAt,@JsonKey(toJson: Habit._completionsToJson) List<HabitCompletion> completions, HabitRegularity regularity,@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> tags
+ String id, String title, DateTime createdAt, String description, TaskImportance importance, DateTime? modifiedAt, HabitRegularity regularity,@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> tags
 });
 
 
@@ -65,7 +65,7 @@ class _$HabitCopyWithImpl<$Res>
 
 /// Create a copy of Habit
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? createdAt = null,Object? description = null,Object? importance = null,Object? modifiedAt = freezed,Object? completions = null,Object? regularity = null,Object? tags = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? createdAt = null,Object? description = null,Object? importance = null,Object? modifiedAt = freezed,Object? regularity = null,Object? tags = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -73,8 +73,7 @@ as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: 
 as DateTime,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,importance: null == importance ? _self.importance : importance // ignore: cast_nullable_to_non_nullable
 as TaskImportance,modifiedAt: freezed == modifiedAt ? _self.modifiedAt : modifiedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,completions: null == completions ? _self.completions : completions // ignore: cast_nullable_to_non_nullable
-as List<HabitCompletion>,regularity: null == regularity ? _self.regularity : regularity // ignore: cast_nullable_to_non_nullable
+as DateTime?,regularity: null == regularity ? _self.regularity : regularity // ignore: cast_nullable_to_non_nullable
 as HabitRegularity,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<ItemTag>,
   ));
@@ -170,10 +169,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  DateTime createdAt,  String description,  TaskImportance importance,  DateTime? modifiedAt, @JsonKey(toJson: Habit._completionsToJson)  List<HabitCompletion> completions,  HabitRegularity regularity, @JsonKey(toJson: ItemTag.tagsToIds)  List<ItemTag> tags)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  DateTime createdAt,  String description,  TaskImportance importance,  DateTime? modifiedAt,  HabitRegularity regularity, @JsonKey(toJson: ItemTag.tagsToIds)  List<ItemTag> tags)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Habit() when $default != null:
-return $default(_that.id,_that.title,_that.createdAt,_that.description,_that.importance,_that.modifiedAt,_that.completions,_that.regularity,_that.tags);case _:
+return $default(_that.id,_that.title,_that.createdAt,_that.description,_that.importance,_that.modifiedAt,_that.regularity,_that.tags);case _:
   return orElse();
 
 }
@@ -191,10 +190,10 @@ return $default(_that.id,_that.title,_that.createdAt,_that.description,_that.imp
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  DateTime createdAt,  String description,  TaskImportance importance,  DateTime? modifiedAt, @JsonKey(toJson: Habit._completionsToJson)  List<HabitCompletion> completions,  HabitRegularity regularity, @JsonKey(toJson: ItemTag.tagsToIds)  List<ItemTag> tags)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  DateTime createdAt,  String description,  TaskImportance importance,  DateTime? modifiedAt,  HabitRegularity regularity, @JsonKey(toJson: ItemTag.tagsToIds)  List<ItemTag> tags)  $default,) {final _that = this;
 switch (_that) {
 case _Habit():
-return $default(_that.id,_that.title,_that.createdAt,_that.description,_that.importance,_that.modifiedAt,_that.completions,_that.regularity,_that.tags);case _:
+return $default(_that.id,_that.title,_that.createdAt,_that.description,_that.importance,_that.modifiedAt,_that.regularity,_that.tags);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -211,10 +210,10 @@ return $default(_that.id,_that.title,_that.createdAt,_that.description,_that.imp
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  DateTime createdAt,  String description,  TaskImportance importance,  DateTime? modifiedAt, @JsonKey(toJson: Habit._completionsToJson)  List<HabitCompletion> completions,  HabitRegularity regularity, @JsonKey(toJson: ItemTag.tagsToIds)  List<ItemTag> tags)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  DateTime createdAt,  String description,  TaskImportance importance,  DateTime? modifiedAt,  HabitRegularity regularity, @JsonKey(toJson: ItemTag.tagsToIds)  List<ItemTag> tags)?  $default,) {final _that = this;
 switch (_that) {
 case _Habit() when $default != null:
-return $default(_that.id,_that.title,_that.createdAt,_that.description,_that.importance,_that.modifiedAt,_that.completions,_that.regularity,_that.tags);case _:
+return $default(_that.id,_that.title,_that.createdAt,_that.description,_that.importance,_that.modifiedAt,_that.regularity,_that.tags);case _:
   return null;
 
 }
@@ -226,7 +225,7 @@ return $default(_that.id,_that.title,_that.createdAt,_that.description,_that.imp
 @JsonSerializable()
 
 class _Habit extends Habit {
-  const _Habit({required this.id, required this.title, required this.createdAt, this.description = '', this.importance = TaskImportance.normal, this.modifiedAt, @JsonKey(toJson: Habit._completionsToJson) final  List<HabitCompletion> completions = const [], this.regularity = const HabitRegularity.daily(), @JsonKey(toJson: ItemTag.tagsToIds) final  List<ItemTag> tags = const []}): _completions = completions,_tags = tags,super._();
+  const _Habit({required this.id, required this.title, required this.createdAt, this.description = '', this.importance = TaskImportance.normal, this.modifiedAt, this.regularity = const HabitRegularity.daily(), @JsonKey(toJson: ItemTag.tagsToIds) final  List<ItemTag> tags = const []}): _tags = tags,super._();
   factory _Habit.fromJson(Map<String, dynamic> json) => _$HabitFromJson(json);
 
 @override final  String id;
@@ -235,13 +234,6 @@ class _Habit extends Habit {
 @override@JsonKey() final  String description;
 @override@JsonKey() final  TaskImportance importance;
 @override final  DateTime? modifiedAt;
- final  List<HabitCompletion> _completions;
-@override@JsonKey(toJson: Habit._completionsToJson) List<HabitCompletion> get completions {
-  if (_completions is EqualUnmodifiableListView) return _completions;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_completions);
-}
-
 @override@JsonKey() final  HabitRegularity regularity;
  final  List<ItemTag> _tags;
 @override@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> get tags {
@@ -264,16 +256,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Habit&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.description, description) || other.description == description)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt)&&const DeepCollectionEquality().equals(other._completions, _completions)&&(identical(other.regularity, regularity) || other.regularity == regularity)&&const DeepCollectionEquality().equals(other._tags, _tags));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Habit&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.description, description) || other.description == description)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt)&&(identical(other.regularity, regularity) || other.regularity == regularity)&&const DeepCollectionEquality().equals(other._tags, _tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,createdAt,description,importance,modifiedAt,const DeepCollectionEquality().hash(_completions),regularity,const DeepCollectionEquality().hash(_tags));
+int get hashCode => Object.hash(runtimeType,id,title,createdAt,description,importance,modifiedAt,regularity,const DeepCollectionEquality().hash(_tags));
 
 @override
 String toString() {
-  return 'Habit(id: $id, title: $title, createdAt: $createdAt, description: $description, importance: $importance, modifiedAt: $modifiedAt, completions: $completions, regularity: $regularity, tags: $tags)';
+  return 'Habit(id: $id, title: $title, createdAt: $createdAt, description: $description, importance: $importance, modifiedAt: $modifiedAt, regularity: $regularity, tags: $tags)';
 }
 
 
@@ -284,7 +276,7 @@ abstract mixin class _$HabitCopyWith<$Res> implements $HabitCopyWith<$Res> {
   factory _$HabitCopyWith(_Habit value, $Res Function(_Habit) _then) = __$HabitCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, DateTime createdAt, String description, TaskImportance importance, DateTime? modifiedAt,@JsonKey(toJson: Habit._completionsToJson) List<HabitCompletion> completions, HabitRegularity regularity,@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> tags
+ String id, String title, DateTime createdAt, String description, TaskImportance importance, DateTime? modifiedAt, HabitRegularity regularity,@JsonKey(toJson: ItemTag.tagsToIds) List<ItemTag> tags
 });
 
 
@@ -301,7 +293,7 @@ class __$HabitCopyWithImpl<$Res>
 
 /// Create a copy of Habit
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? createdAt = null,Object? description = null,Object? importance = null,Object? modifiedAt = freezed,Object? completions = null,Object? regularity = null,Object? tags = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? createdAt = null,Object? description = null,Object? importance = null,Object? modifiedAt = freezed,Object? regularity = null,Object? tags = null,}) {
   return _then(_Habit(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -309,8 +301,7 @@ as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: 
 as DateTime,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,importance: null == importance ? _self.importance : importance // ignore: cast_nullable_to_non_nullable
 as TaskImportance,modifiedAt: freezed == modifiedAt ? _self.modifiedAt : modifiedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,completions: null == completions ? _self._completions : completions // ignore: cast_nullable_to_non_nullable
-as List<HabitCompletion>,regularity: null == regularity ? _self.regularity : regularity // ignore: cast_nullable_to_non_nullable
+as DateTime?,regularity: null == regularity ? _self.regularity : regularity // ignore: cast_nullable_to_non_nullable
 as HabitRegularity,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<ItemTag>,
   ));

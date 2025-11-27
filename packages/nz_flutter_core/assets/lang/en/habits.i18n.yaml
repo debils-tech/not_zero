@@ -1,14 +1,15 @@
 list:
   title: "Habits"
   titleSelection:
-    one: 'Selected $n task'
-    other: 'Selected $n tasks'
+    one: "Selected $n task"
+    other: "Selected $n tasks"
   deleteDialog:
     content:
-      one: 'Are you sure you want delete selected habit?'
-      other: 'Are you sure you want delete $n selected habits?'
+      one: "Are you sure you want delete selected habit?"
+      other: "Are you sure you want delete $n selected habits?"
   tooltips:
     addNewButton: "Add new habit"
+    viewHabitButton: More details
 
 view:
   title: "Habit view"
