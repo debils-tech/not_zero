@@ -21,21 +21,21 @@ extension DateTimeExpressionHelper on Expression<DateTime> {
       this.date.equalsExp(_dateStr(date));
 
   Expression<bool> inPeriod(DateTime? startPeriod, DateTime? endPeriod) {
-    if (startPeriod == null && endPeriod != null) {
-      // in range (-inf, end]
-      return this.isNotNull() & isSmallerOrEqualValue(endPeriod);
-    }
-
-    if (startPeriod != null && endPeriod == null) {
-      // in range [start, +inf)
-      return this.isNotNull() & isBiggerOrEqualValue(startPeriod);
-    }
-
     if (startPeriod != null && endPeriod != null) {
       // in range [start, end]
       return this.isNotNull() &
           isSmallerOrEqualValue(endPeriod) &
           isBiggerOrEqualValue(startPeriod);
+    }
+
+    if (startPeriod != null) {
+      // in range [start, +inf)
+      return this.isNotNull() & isBiggerOrEqualValue(startPeriod);
+    }
+
+    if (endPeriod != null) {
+      // in range (-inf, end]
+      return this.isNotNull() & isSmallerOrEqualValue(endPeriod);
     }
 
     // in range (-inf, +inf)
@@ -50,9 +50,27 @@ extension TextDateExpressionHelper on Expression<String> {
 
   Expression<bool> dayAfter(DateTime date) => isBiggerThan(_dateStr(date));
 
-  Expression<bool> dayInRange(DateTime startDate, DateTime endDate) =>
-      isSmallerOrEqual(_dateStr(endDate)) &
-      isBiggerOrEqual(_dateStr(startDate));
+  Expression<bool> dayInRange(DateTime? startDate, DateTime? endDate) {
+    if (startDate != null && endDate != null) {
+      // in range [start, end]
+      return this.isNotNull() &
+          isSmallerOrEqual(_dateStr(endDate)) &
+          isBiggerOrEqual(_dateStr(startDate));
+    }
+
+    if (startDate != null) {
+      // in range [start, +inf)
+      return this.isNotNull() & isBiggerOrEqual(_dateStr(startDate));
+    }
+
+    if (endDate != null) {
+      // in range (-inf, end]
+      return this.isNotNull() & isSmallerOrEqual(_dateStr(endDate));
+    }
+
+    // in range (-inf, +inf)
+    return this.isNotNull();
+  }
 }
 
 Expression<String> _dateStr(DateTime date) => Variable(date).date;

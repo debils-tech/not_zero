@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:not_zero_app/src/features/stats/models/habits_counting_data.dart';
 import 'package:not_zero_app/src/features/stats/models/tasks_counting_data.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
@@ -26,11 +27,18 @@ class ScoreEvaluationRepository implements BaseRepository {
   static const _taskCompletedImportantScore = 8;
   static const _taskCreatedScore = 1;
 
+  static const _habitCompletedNotImportantScore = 1;
+  static const _habitCompletedNormalScore = 2;
+  static const _habitCompletedImportantScore = 3;
+  static const _habitCreatedScore = 2;
+
+  // --- TASKS ---
+
   int evaluateTasksScore(TasksCountingData countingData) =>
-      countingData.notImportant * _taskCompletedNotImportantScore +
-      countingData.normal * _taskCompletedNormalScore +
-      countingData.important * _taskCompletedImportantScore +
-      countingData.created * _taskCreatedScore;
+      countingData.notImportant * evaluateTaskImportanceScore(.notImportant) +
+      countingData.normal * evaluateTaskImportanceScore(.normal) +
+      countingData.important * evaluateTaskImportanceScore(.important) +
+      countingData.created * evaluateTaskCreatedScore();
 
   int evaluateTaskImportanceScore(TaskImportance importance) =>
       switch (importance) {
@@ -40,4 +48,40 @@ class ScoreEvaluationRepository implements BaseRepository {
       };
 
   int evaluateTaskCreatedScore() => _taskCreatedScore;
+
+  // --- HABITS ---
+
+  int evaluateHabitsScore(HabitsCountingData countingData) =>
+      countingData.completed.entries
+          .fold<double>(
+            0,
+            (sum, entry) =>
+                // Calculate score by multiplying amount of completions
+                // by the score for this combination
+                sum +
+                entry.value *
+                    evaluateHabitScore(
+                      entry.key.importance,
+                      entry.key.regularity,
+                    ),
+          )
+          .floor() +
+      countingData.created * evaluateHabitCreatedScore();
+
+  double evaluateHabitScore(
+    TaskImportance importance,
+    HabitRegularity regularity,
+  ) =>
+      switch (importance) {
+        .notImportant => _habitCompletedNotImportantScore,
+        .normal => _habitCompletedNormalScore,
+        .important => _habitCompletedImportantScore,
+      } *
+      switch (regularity) {
+        DailyHabitRegularity() => 1.0,
+        TimesPerWeekHabitRegularity(:final times) => 7 / times,
+        AtWeekdaysHabitRegularity(:final weekdays) => 7 / weekdays.length,
+      }.clamp(0, 2);
+
+  int evaluateHabitCreatedScore() => _habitCreatedScore;
 }

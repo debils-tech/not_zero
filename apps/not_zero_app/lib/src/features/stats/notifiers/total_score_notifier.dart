@@ -14,7 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/habits/models/habit_action.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
 import 'package:not_zero_app/src/features/tasks/models/task_action.dart';
 import 'package:not_zero_app/src/helpers/ref_actions_extension.dart';
@@ -23,6 +26,7 @@ class TotalScoreNotifier extends AsyncNotifier<int> {
   @override
   Future<int> build() async {
     ref.listenActions<TaskAction>(_handleTaskAction);
+    ref.listenActions<HabitAction>(_handleHabitAction);
 
     return _countTotalPoints();
   }
@@ -33,9 +37,9 @@ class TotalScoreNotifier extends AsyncNotifier<int> {
   }
 
   void _handleTaskAction(TaskAction action) {
-    if (!state.hasValue) return;
+    final currentPoints = state.value;
+    if (currentPoints == null) return;
 
-    final currentPoints = state.value!;
     final scoreEvaluation = ref.read(scoreEvaluationRepositoryProvider);
     var newPoints = currentPoints;
 
@@ -76,6 +80,51 @@ class TotalScoreNotifier extends AsyncNotifier<int> {
 
       case TaskActionCreated():
         newPoints += scoreEvaluation.evaluateTaskCreatedScore();
+    }
+
+    if (newPoints != currentPoints) {
+      state = AsyncValue.data(newPoints);
+    }
+  }
+
+  void _handleHabitAction(HabitAction action) {
+    final currentPoints = state.value;
+    if (currentPoints == null) return;
+
+    final scoreEvaluation = ref.read(scoreEvaluationRepositoryProvider);
+    var newPoints = currentPoints;
+
+    switch (action) {
+      case HabitActionUpdated(:final oldHabit, :final newHabit):
+        if (oldHabit.importance != newHabit.importance) {
+          unawaited(
+            _countTotalPoints().then((value) => state = AsyncValue.data(value)),
+          );
+        }
+
+      case HabitActionDeletedMultiple():
+        unawaited(
+          _countTotalPoints().then((value) => state = AsyncValue.data(value)),
+        );
+
+      case HabitActionCreated():
+        newPoints += scoreEvaluation.evaluateTaskCreatedScore();
+
+      case HabitActionCompleted(:final habit):
+        newPoints += scoreEvaluation
+            .evaluateHabitScore(
+              habit.importance,
+              habit.regularity,
+            )
+            .round();
+
+      case HabitActionNotCompleted(:final habit):
+        newPoints -= scoreEvaluation
+            .evaluateHabitScore(
+              habit.importance,
+              habit.regularity,
+            )
+            .round();
     }
 
     if (newPoints != currentPoints) {

@@ -29,21 +29,20 @@ class TasksStatsLocalService implements BaseService {
     DateTime? startPeriod,
     DateTime? endPeriod,
   }) async {
-    const enumConverter = EnumIndexConverter(TaskImportance.values);
     return _db.transaction(() async {
       return TasksCountingData(
         notImportant: await _completedInPeriodByImportance(
-          importance: enumConverter.toSql(.notImportant),
+          importance: .notImportant,
           startPeriod: startPeriod,
           endPeriod: endPeriod,
         ),
         normal: await _completedInPeriodByImportance(
-          importance: enumConverter.toSql(.normal),
+          importance: .normal,
           startPeriod: startPeriod,
           endPeriod: endPeriod,
         ),
         important: await _completedInPeriodByImportance(
-          importance: enumConverter.toSql(.important),
+          importance: .important,
           startPeriod: startPeriod,
           endPeriod: endPeriod,
         ),
@@ -56,7 +55,7 @@ class TasksStatsLocalService implements BaseService {
   }
 
   Future<int> _completedInPeriodByImportance({
-    required int importance,
+    required TaskImportance importance,
     DateTime? startPeriod,
     DateTime? endPeriod,
   }) async {
@@ -64,7 +63,7 @@ class TasksStatsLocalService implements BaseService {
       ..addColumns({countAll()})
       ..where(
         _db.tasksTable.completedAt.inPeriod(startPeriod, endPeriod) &
-            _db.tasksTable.importance.equals(importance),
+            _db.tasksTable.importance.equalsValue(importance),
       );
     final result = await query.getSingleOrNull();
     return result?.read(countAll()) ?? 0;
