@@ -73,4 +73,10 @@ extension TextDateExpressionHelper on Expression<String> {
   }
 }
 
-Expression<String> _dateStr(DateTime date) => Variable(date).date;
+Expression<String> _dateStr(DateTime date) {
+  // Format the date as YYYY-MM-DD
+  // Can't use `.date` here because it breaks days boundaries on non-UTC timezones
+  final str =
+      '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  return Variable<String>(str);
+}

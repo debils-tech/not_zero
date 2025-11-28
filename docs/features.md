@@ -14,6 +14,14 @@ This is a concise overview of the primary features implemented in the main app (
 - Define tags to group related tasks
 - Build sublists for focused workflows
 
+### Habits
+
+- Create, edit, view, and delete recurring habits
+- Track daily habit completions with recent history around the current date
+- Habits persist locally via Drift/SQLite (`nz_drift`) and can be linked with tags
+- Habit list UI supports compact and expanded layouts
+- Habit events integrate with the app’s statistics and scoring system
+
 ### Quick statistics
 
 - Simple charts and counters (powered by `fl_chart`) to provide a quick view on progress

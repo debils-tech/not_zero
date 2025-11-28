@@ -16,6 +16,7 @@ alwaysApply: true
 - State management/DI is `flutter_riverpod`; providers typically live in a feature `di.dart`.
 - Codegen uses `freezed` + `json_serializable` (run via Melos scripts).
 - Pinned Flutter version is in `.fvmrc`.
+- Habits feature (recurring habit tracking with per‑day completions and history) lives in `apps/not_zero_app/lib/src/features/habits/`.
 
 ## Mandatory reading for agents
 
