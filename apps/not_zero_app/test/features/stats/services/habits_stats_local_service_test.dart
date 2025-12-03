@@ -21,20 +21,24 @@ void main() {
 
     test('should count created habits in period', () async {
       final now = DateTime.now();
-      await db.into(db.habitsTable).insert(Habit(
-            id: uuid.v4(),
-            title: 'Habit 1',
-            createdAt: now,
-            importance: TaskImportance.normal,
-            regularity: const HabitRegularity.daily(),
-          ).toInsertable());
-      await db.into(db.habitsTable).insert(Habit(
-            id: uuid.v4(),
-            title: 'Habit 2',
-            createdAt: now.subtract(const Duration(days: 2)),
-            importance: TaskImportance.normal,
-            regularity: const HabitRegularity.daily(),
-          ).toInsertable());
+      await db
+          .into(db.habitsTable)
+          .insert(
+            Habit(
+              id: uuid.v4(),
+              title: 'Habit 1',
+              createdAt: now,
+            ).toInsertable(),
+          );
+      await db
+          .into(db.habitsTable)
+          .insert(
+            Habit(
+              id: uuid.v4(),
+              title: 'Habit 2',
+              createdAt: now.subtract(const Duration(days: 2)),
+            ).toInsertable(),
+          );
 
       final result = await service.countHabitStats(
         startPeriod: now.startOfDay,
@@ -48,29 +52,40 @@ void main() {
       final now = DateTime(2023, 1, 1, 12); // Noon
       final habitId = uuid.v4();
 
-      await db.into(db.habitsTable).insert(Habit(
-            id: habitId,
-            title: 'Habit 1',
-            createdAt: now.subtract(const Duration(days: 10)),
-            importance: TaskImportance.important,
-            regularity: const HabitRegularity.daily(),
-          ).toInsertable());
+      await db
+          .into(db.habitsTable)
+          .insert(
+            Habit(
+              id: habitId,
+              title: 'Habit 1',
+              createdAt: now.subtract(const Duration(days: 10)),
+              importance: TaskImportance.important,
+            ).toInsertable(),
+          );
 
       // Completion today
-      await db.into(db.habitCompletionsTable).insert(HabitCompletion(
-            id: uuid.v4(),
-            habitId: habitId,
-            type: HabitCompletionType.completed,
-            completedDate: now,
-          ).toInsertable());
+      await db
+          .into(db.habitCompletionsTable)
+          .insert(
+            HabitCompletion(
+              id: uuid.v4(),
+              habitId: habitId,
+              type: HabitCompletionType.completed,
+              completedDate: now,
+            ).toInsertable(),
+          );
 
       // Completion yesterday
-      await db.into(db.habitCompletionsTable).insert(HabitCompletion(
-            id: uuid.v4(),
-            habitId: habitId,
-            type: HabitCompletionType.completed,
-            completedDate: now.subtract(const Duration(days: 1)),
-          ).toInsertable());
+      await db
+          .into(db.habitCompletionsTable)
+          .insert(
+            HabitCompletion(
+              id: uuid.v4(),
+              habitId: habitId,
+              type: HabitCompletionType.completed,
+              completedDate: now.subtract(const Duration(days: 1)),
+            ).toInsertable(),
+          );
 
       final result = await service.countHabitStats(
         startPeriod: now.startOfDay,
@@ -79,60 +94,82 @@ void main() {
 
       expect(result.completed.length, 1);
       // Key is Record (importance, regularity)
-      final key = (importance: TaskImportance.important, regularity: const HabitRegularity.daily());
+      const key = (
+        importance: TaskImportance.important,
+        regularity: HabitRegularity.daily(),
+      );
       expect(result.completed[key], 1);
     });
 
-    test('Day Edge: should NOT count completion from next day 00:00:00', () async {
-      final day1 = DateTime(2023, 1, 1);
-      final day2 = DateTime(2023, 1, 2); // 00:00:00
+    test(
+      'Day Edge: should NOT count completion from next day 00:00:00',
+      () async {
+        final day1 = DateTime(2023);
+        final day2 = DateTime(2023, 1, 2); // 00:00:00
 
-      final habitId = uuid.v4();
-       await db.into(db.habitsTable).insert(Habit(
-            id: habitId,
-            title: 'Habit 1',
-            createdAt: day1,
-            importance: TaskImportance.normal,
-            regularity: const HabitRegularity.daily(),
-          ).toInsertable());
+        final habitId = uuid.v4();
+        await db
+            .into(db.habitsTable)
+            .insert(
+              Habit(
+                id: habitId,
+                title: 'Habit 1',
+                createdAt: day1,
+              ).toInsertable(),
+            );
 
-      // Completion on Day 2 00:00:00
-      await db.into(db.habitCompletionsTable).insert(HabitCompletion(
-            id: uuid.v4(),
-            habitId: habitId,
-            type: HabitCompletionType.completed,
-            completedDate: day2,
-          ).toInsertable());
+        // Completion on Day 2 00:00:00
+        await db
+            .into(db.habitCompletionsTable)
+            .insert(
+              HabitCompletion(
+                id: uuid.v4(),
+                habitId: habitId,
+                type: HabitCompletionType.completed,
+                completedDate: day2,
+              ).toInsertable(),
+            );
 
-      // Query Day 1 [00:00:00, 23:59:59.999]
-      final result = await service.countHabitStats(
-        startPeriod: day1.startOfDay,
-        endPeriod: day1.endOfDay,
-      );
+        // Query Day 1 [00:00:00, 23:59:59.999]
+        final result = await service.countHabitStats(
+          startPeriod: day1.startOfDay,
+          endPeriod: day1.endOfDay,
+        );
 
-      expect(result.completed.isNotEmpty, isTrue);
-      expect(result.completed.values.first, 0, reason: 'Should count 0 for Day 2 completion in Day 1');
-    });
+        expect(result.completed.isNotEmpty, isTrue);
+        expect(
+          result.completed.values.first,
+          0,
+          reason: 'Should count 0 for Day 2 completion in Day 1',
+        );
+      },
+    );
 
     test('Day Edge: should count completion on Day 1', () async {
-      final day1 = DateTime(2023, 1, 1);
+      final day1 = DateTime(2023);
 
       final habitId = uuid.v4();
-       await db.into(db.habitsTable).insert(Habit(
-            id: habitId,
-            title: 'Habit 1',
-            createdAt: day1,
-            importance: TaskImportance.normal,
-            regularity: const HabitRegularity.daily(),
-          ).toInsertable());
+      await db
+          .into(db.habitsTable)
+          .insert(
+            Habit(
+              id: habitId,
+              title: 'Habit 1',
+              createdAt: day1,
+            ).toInsertable(),
+          );
 
       // Completion on Day 1
-      await db.into(db.habitCompletionsTable).insert(HabitCompletion(
-            id: uuid.v4(),
-            habitId: habitId,
-            type: HabitCompletionType.completed,
-            completedDate: day1,
-          ).toInsertable());
+      await db
+          .into(db.habitCompletionsTable)
+          .insert(
+            HabitCompletion(
+              id: uuid.v4(),
+              habitId: habitId,
+              type: HabitCompletionType.completed,
+              completedDate: day1,
+            ).toInsertable(),
+          );
 
       // Query Day 1
       final result = await service.countHabitStats(
@@ -145,4 +182,3 @@ void main() {
     });
   });
 }
-

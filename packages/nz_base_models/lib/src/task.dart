@@ -28,9 +28,9 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   factory Task({
     required String id,
     required String title,
-    required TaskImportance importance,
     required DateTime createdAt,
     @Default('') String description,
+    @Default(TaskImportance.normal) TaskImportance importance,
     DateTime? modifiedAt,
     DateTime? completedAt,
     DateTime? canceledAt,
