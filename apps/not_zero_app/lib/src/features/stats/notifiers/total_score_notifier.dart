@@ -112,7 +112,7 @@ class TotalScoreNotifier extends AsyncNotifier<int> {
         );
 
       case HabitActionCreated():
-        newPoints += scoreEvaluation.evaluateTaskCreatedScore();
+        newPoints += scoreEvaluation.evaluateHabitCreatedScore();
 
       // case HabitActionCompleted(:final habit):
       //   newPoints += scoreEvaluation
