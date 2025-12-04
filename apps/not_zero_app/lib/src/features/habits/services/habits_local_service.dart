@@ -123,10 +123,17 @@ class HabitsLocalService implements BaseService {
         nextStreak++;
         final changed =
             await (_db.update(
-              _db.habitCompletionsTable,
-            )..where((tbl) => tbl.completedDate.equalsValue(nextDate))).write(
-              HabitCompletionsTableCompanion(streakCount: Value(nextStreak)),
-            );
+                  _db.habitCompletionsTable,
+                )..where(
+                  (tbl) =>
+                      tbl.completedDate.equalsValue(nextDate) &
+                      tbl.habitId.equals(completion.habitId),
+                ))
+                .write(
+                  HabitCompletionsTableCompanion(
+                    streakCount: Value(nextStreak),
+                  ),
+                );
         rowsChanged = changed > 0;
       }
     });
@@ -147,10 +154,17 @@ class HabitsLocalService implements BaseService {
         nextDate = nextDate.add(const Duration(days: 1));
         final changed =
             await (_db.update(
-              _db.habitCompletionsTable,
-            )..where((tbl) => tbl.completedDate.equalsValue(nextDate))).write(
-              HabitCompletionsTableCompanion(streakCount: Value(nextStreak)),
-            );
+                  _db.habitCompletionsTable,
+                )..where(
+                  (tbl) =>
+                      tbl.completedDate.equalsValue(nextDate) &
+                      tbl.habitId.equals(completion.habitId),
+                ))
+                .write(
+                  HabitCompletionsTableCompanion(
+                    streakCount: Value(nextStreak),
+                  ),
+                );
         rowsChanged = changed > 0;
         nextStreak++;
       }
