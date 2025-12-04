@@ -327,5 +327,238 @@ void main() {
         expect(completions[2].streakCount, 2, reason: 'Day 4 should be 2');
       });
     });
+
+    group('Cross-Habit Isolation', () {
+      test(
+        'should not affect other habits when propagating streaks on insert',
+        () async {
+          final habitA = Habit(
+            id: const Uuid().v4(),
+            title: 'Habit A',
+            createdAt: DateTime.now(),
+          );
+          final habitB = Habit(
+            id: const Uuid().v4(),
+            title: 'Habit B',
+            createdAt: DateTime.now(),
+          );
+          await habitsLocalService.saveHabit(habitA);
+          await habitsLocalService.saveHabit(habitB);
+
+          final baseDate = DateTime(2024);
+
+          // Setup Habit A: Days 1, 3 with gap at day 2
+          final habitADay1 = HabitCompletion(
+            id: const Uuid().v4(),
+            habitId: habitA.id,
+            type: HabitCompletionType.completed,
+            completedDate: baseDate,
+            streakCount: 1,
+          );
+          final habitADay3 = HabitCompletion(
+            id: const Uuid().v4(),
+            habitId: habitA.id,
+            type: HabitCompletionType.completed,
+            completedDate: baseDate.add(const Duration(days: 2)),
+            streakCount: 1,
+          );
+          await habitsLocalService.saveCompletion(habitADay1);
+          await habitsLocalService.saveCompletion(habitADay3);
+
+          // Setup Habit B: Days 1, 2, 3 (continuous streak)
+          for (var i = 0; i < 3; i++) {
+            await habitsLocalService.saveCompletion(
+              HabitCompletion(
+                id: const Uuid().v4(),
+                habitId: habitB.id,
+                type: HabitCompletionType.completed,
+                completedDate: baseDate.add(Duration(days: i)),
+                streakCount: i + 1,
+              ),
+            );
+          }
+
+          // Verify Habit B before modification
+          var habitBCompletions = await habitsLocalService.getHabitCompletions(
+            habitId: habitB.id,
+            startDate: baseDate,
+            endDate: baseDate.add(const Duration(days: 5)),
+          );
+          expect(habitBCompletions.length, 3);
+          expect(habitBCompletions[0].streakCount, 1);
+          expect(habitBCompletions[1].streakCount, 2);
+          expect(habitBCompletions[2].streakCount, 3);
+
+          // Insert Day 2 for Habit A (fills the gap and propagates to Day 3)
+          final habitADay2 = HabitCompletion(
+            id: const Uuid().v4(),
+            habitId: habitA.id,
+            type: HabitCompletionType.completed,
+            completedDate: baseDate.add(const Duration(days: 1)),
+            streakCount: 2,
+          );
+          await habitsLocalService.saveCompletion(habitADay2);
+
+          // Verify Habit A changes
+          final habitACompletions = await habitsLocalService
+              .getHabitCompletions(
+                habitId: habitA.id,
+                startDate: baseDate,
+                endDate: baseDate.add(const Duration(days: 5)),
+              );
+          habitACompletions.sort(
+            (a, b) => a.completedDate.compareTo(b.completedDate),
+          );
+          expect(habitACompletions.length, 3);
+          expect(habitACompletions[0].streakCount, 1);
+          expect(habitACompletions[1].streakCount, 2);
+          expect(
+            habitACompletions[2].streakCount,
+            3,
+            reason: 'Habit A Day 3 should propagate to 3',
+          );
+
+          // Verify Habit B remains unchanged
+          habitBCompletions = await habitsLocalService.getHabitCompletions(
+            habitId: habitB.id,
+            startDate: baseDate,
+            endDate: baseDate.add(const Duration(days: 5)),
+          );
+          expect(habitBCompletions.length, 3);
+          expect(
+            habitBCompletions[0].streakCount,
+            1,
+            reason: 'Habit B should be unaffected',
+          );
+          expect(
+            habitBCompletions[1].streakCount,
+            2,
+            reason: 'Habit B should be unaffected',
+          );
+          expect(
+            habitBCompletions[2].streakCount,
+            3,
+            reason: 'Habit B should be unaffected',
+          );
+        },
+      );
+
+      test(
+        'should not affect other habits when resetting streaks on delete',
+        () async {
+          final habitA = Habit(
+            id: const Uuid().v4(),
+            title: 'Habit A',
+            createdAt: DateTime.now(),
+          );
+          final habitB = Habit(
+            id: const Uuid().v4(),
+            title: 'Habit B',
+            createdAt: DateTime.now(),
+          );
+          await habitsLocalService.saveHabit(habitA);
+          await habitsLocalService.saveHabit(habitB);
+
+          final baseDate = DateTime(2024);
+
+          // Setup both habits with identical continuous streaks: Days 1-4
+          for (var i = 0; i < 4; i++) {
+            await habitsLocalService.saveCompletion(
+              HabitCompletion(
+                id: const Uuid().v4(),
+                habitId: habitA.id,
+                type: HabitCompletionType.completed,
+                completedDate: baseDate.add(Duration(days: i)),
+                streakCount: i + 1,
+              ),
+            );
+            await habitsLocalService.saveCompletion(
+              HabitCompletion(
+                id: const Uuid().v4(),
+                habitId: habitB.id,
+                type: HabitCompletionType.completed,
+                completedDate: baseDate.add(Duration(days: i)),
+                streakCount: i + 1,
+              ),
+            );
+          }
+
+          // Verify both habits before deletion
+          var habitACompletions = await habitsLocalService.getHabitCompletions(
+            habitId: habitA.id,
+            startDate: baseDate,
+            endDate: baseDate.add(const Duration(days: 5)),
+          );
+          var habitBCompletions = await habitsLocalService.getHabitCompletions(
+            habitId: habitB.id,
+            startDate: baseDate,
+            endDate: baseDate.add(const Duration(days: 5)),
+          );
+          expect(habitACompletions.length, 4);
+          expect(habitBCompletions.length, 4);
+
+          // Delete Day 2 from Habit A only
+          final habitADay2 = habitACompletions.firstWhere(
+            (c) => c.completedDate.isAtSameMomentAs(
+              baseDate.add(const Duration(days: 1)),
+            ),
+          );
+          await habitsLocalService.deleteCompletion(habitADay2);
+
+          // Verify Habit A changes (streak reset)
+          habitACompletions = await habitsLocalService.getHabitCompletions(
+            habitId: habitA.id,
+            startDate: baseDate,
+            endDate: baseDate.add(const Duration(days: 5)),
+          );
+          habitACompletions.sort(
+            (a, b) => a.completedDate.compareTo(b.completedDate),
+          );
+          expect(habitACompletions.length, 3); // Day 2 deleted
+          expect(habitACompletions[0].streakCount, 1); // Day 1
+          expect(
+            habitACompletions[1].streakCount,
+            1,
+            reason: 'Habit A Day 3 should reset to 1',
+          ); // Day 3
+          expect(
+            habitACompletions[2].streakCount,
+            2,
+            reason: 'Habit A Day 4 should be 2',
+          ); // Day 4
+
+          // Verify Habit B remains unchanged
+          habitBCompletions = await habitsLocalService.getHabitCompletions(
+            habitId: habitB.id,
+            startDate: baseDate,
+            endDate: baseDate.add(const Duration(days: 5)),
+          );
+          habitBCompletions.sort(
+            (a, b) => a.completedDate.compareTo(b.completedDate),
+          );
+          expect(habitBCompletions.length, 4);
+          expect(
+            habitBCompletions[0].streakCount,
+            1,
+            reason: 'Habit B should remain unchanged',
+          );
+          expect(
+            habitBCompletions[1].streakCount,
+            2,
+            reason: 'Habit B should remain unchanged',
+          );
+          expect(
+            habitBCompletions[2].streakCount,
+            3,
+            reason: 'Habit B should remain unchanged',
+          );
+          expect(
+            habitBCompletions[3].streakCount,
+            4,
+            reason: 'Habit B should remain unchanged',
+          );
+        },
+      );
+    });
   });
 }

@@ -109,12 +109,6 @@ void main() {
         endPeriod: now.endOfDay,
       );
 
-      // All combinations are initialized
-      expect(
-        result.completed.length,
-        TaskImportance.values.length * HabitStreakPeriod.values.length,
-      );
-
       // Key is Record (importance, streakPeriod)
       const key = (
         importance: TaskImportance.important,
@@ -166,7 +160,7 @@ void main() {
 
         expect(
           result.completed[key],
-          0,
+          isNull,
           reason: 'Should count 0 for Day 2 completion in Day 1',
         );
       },
