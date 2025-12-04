@@ -21,8 +21,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:not_zero_app/src/features/habits/di.dart';
+import 'package:not_zero_app/src/features/stats/models/habits_counting_data.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class HabitCard extends ConsumerWidget {
@@ -97,6 +97,7 @@ class HabitCard extends ConsumerWidget {
                 spacing: 8,
                 children: [
                   Row(
+                    spacing: 4,
                     children: [
                       Expanded(
                         child: _HabitTextBlock(habit: habit),
@@ -133,13 +134,21 @@ class _HabitTextBlock extends StatelessWidget {
     return Column(
       crossAxisAlignment: .start,
       children: [
-        Text(
-          habit.title,
-          overflow: .ellipsis,
-          maxLines: 3,
-          style: context.theme.textTheme.titleMedium?.copyWith(
-            fontWeight: .w600,
-          ),
+        Row(
+          spacing: 4,
+          children: [
+            Expanded(
+              child: Text(
+                habit.title,
+                overflow: .ellipsis,
+                maxLines: 3,
+                style: context.theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: .w600,
+                ),
+              ),
+            ),
+            _StreakCountIndicator(habit: habit),
+          ],
         ),
         const SizedBox(height: 4),
         if (habit.description.isNotEmpty)
@@ -156,6 +165,45 @@ class _HabitTextBlock extends StatelessWidget {
               maxLines: 4,
             ),
           ),
+      ],
+    );
+  }
+}
+
+class _StreakCountIndicator extends ConsumerWidget {
+  const _StreakCountIndicator({required this.habit});
+
+  final Habit habit;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final streakState = ref.watch(habitCurrentStreakNotifierProvider(habit));
+    final streak = streakState.value;
+    if (streak == null || streak == 0) return const SizedBox.shrink();
+
+    final streakPeriod = HabitStreakPeriod.fromStreak(streak);
+    final streakColor = switch (streakPeriod) {
+      .fewDays => context.theme.colorScheme.onSurface,
+      .fewWeeks => context.theme.colorScheme.secondary,
+      .fewMonths => context.theme.colorScheme.primary,
+    };
+    final streakFontWeight = switch (streakPeriod) {
+      .fewDays => FontWeight.w400,
+      .fewWeeks => FontWeight.w600,
+      .fewMonths => FontWeight.w700,
+    };
+
+    return Row(
+      spacing: 2,
+      children: [
+        Text(
+          streak.toString(),
+          style: context.theme.textTheme.bodyMedium?.copyWith(
+            color: streakColor,
+            fontWeight: streakFontWeight,
+          ),
+        ),
+        Icon(Icons.whatshot_rounded, size: 16, color: streakColor),
       ],
     );
   }
@@ -246,9 +294,6 @@ class _HabitCompletionDay extends ConsumerWidget {
     ).format(date).toUpperCase();
 
     final currentCompletion = completion;
-    final isBlocked =
-        date.isBefore(habit.createdAt.startOfDay) ||
-        date.isAfter(DateTime.now().endOfDay);
 
     final repository = ref.watch(habitsRepositoryProvider);
 
@@ -300,70 +345,59 @@ class _HabitCompletionDay extends ConsumerWidget {
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeInOut,
         decoration: buttonDecoration,
-        child: isBlocked
-            ? GestureDetector(
-                // Gesture detector to prevent the tap to the whole card.
-                onTap: () {},
-                onDoubleTap: () {},
-                behavior: .opaque,
-                child: Opacity(opacity: 0.5, child: child),
-              )
-            : Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    if (currentCompletion != null) {
-                      unawaited(
-                        repository.deleteHabitCompletion(
-                          habit: habit,
-                          completion: currentCompletion,
-                        ),
-                      );
-                      return;
-                    }
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              if (currentCompletion != null) {
+                unawaited(
+                  repository.deleteHabitCompletion(
+                    habit: habit,
+                    completion: currentCompletion,
+                  ),
+                );
+                return;
+              }
 
-                    unawaited(
-                      repository.addHabitCompletion(
-                        habit: habit,
-                        completion: HabitCompletion.create(
-                          habitId: habit.id,
-                          completedDate: date,
-                        ),
-                      ),
-                    );
-                  },
-                  onLongPress: () {
-                    if (currentCompletion != null &&
-                        currentCompletion.type == .skipped) {
-                      unawaited(
-                        repository.deleteHabitCompletion(
-                          habit: habit,
-                          completion: currentCompletion,
-                        ),
-                      );
-                      return;
-                    }
-
-                    unawaited(
-                      repository.addHabitCompletion(
-                        habit: habit,
-                        completion:
-                            currentCompletion?.copyWith(type: .skipped) ??
-                            HabitCompletion.create(
-                              habitId: habit.id,
-                              completedDate: date,
-                              type: .skipped,
-                            ),
-                      ),
-                    );
-                  },
-                  borderRadius: radius,
-                  child: Opacity(
-                    opacity: isBlocked ? 0.5 : 1,
-                    child: child,
+              unawaited(
+                repository.addHabitCompletion(
+                  habit: habit,
+                  completion: HabitCompletion.create(
+                    habitId: habit.id,
+                    completedDate: date,
                   ),
                 ),
-              ),
+              );
+            },
+            onLongPress: () {
+              if (currentCompletion != null &&
+                  currentCompletion.type == .skipped) {
+                unawaited(
+                  repository.deleteHabitCompletion(
+                    habit: habit,
+                    completion: currentCompletion,
+                  ),
+                );
+                return;
+              }
+
+              unawaited(
+                repository.addHabitCompletion(
+                  habit: habit,
+                  completion:
+                      currentCompletion?.copyWith(type: .skipped) ??
+                      HabitCompletion.create(
+                        habitId: habit.id,
+                        completedDate: date,
+                        type: .skipped,
+                      ),
+                ),
+              );
+            },
+            borderRadius: radius,
+            child: child,
+          ),
+        ),
       ),
     );
   }

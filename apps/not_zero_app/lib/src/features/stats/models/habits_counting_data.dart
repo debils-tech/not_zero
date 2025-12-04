@@ -33,15 +33,25 @@ typedef UniqueHabitCombination = ({
 });
 
 enum HabitStreakPeriod {
-  fewDays(1, 14),
-  fewWeeks(14, 28),
-  fewMonths(28, null)
+  fewDays(1, 15),
+  fewWeeks(15, 29),
+  fewMonths(29, null)
   ;
 
   const HabitStreakPeriod(
     this.minDays,
     this.maxDays,
   );
+
+  factory HabitStreakPeriod.fromStreak(int streak) {
+    for (final period in values) {
+      final maxDays = period.maxDays;
+      if (streak >= period.minDays && (maxDays == null || streak < maxDays)) {
+        return period;
+      }
+    }
+    return fewDays;
+  }
 
   final int minDays;
   final int? maxDays;

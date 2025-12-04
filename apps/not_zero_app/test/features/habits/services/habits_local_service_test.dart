@@ -152,5 +152,180 @@ void main() {
         expect(completionsResult.isEmpty, isTrue);
       });
     });
+
+    group('Streak Logic', () {
+      test(
+        'should propagate streak updates to future completions on insert',
+        () async {
+          final habit = Habit(
+            id: const Uuid().v4(),
+            title: 'Streak Habit',
+            createdAt: DateTime.now(),
+          );
+          await habitsLocalService.saveHabit(habit);
+
+          // Use midnight to avoid time stripping issues during round-trip
+          final baseDate = DateTime(2024);
+
+          // Insert Day 1: Streak 1
+          final day1 = HabitCompletion(
+            id: const Uuid().v4(),
+            habitId: habit.id,
+            type: HabitCompletionType.completed,
+            completedDate: baseDate,
+          );
+          await habitsLocalService.saveCompletion(day1);
+
+          // Insert Day 3: Streak 1 (Gap day 2, so it starts fresh at 1)
+          final day3 = HabitCompletion(
+            id: const Uuid().v4(),
+            habitId: habit.id,
+            type: HabitCompletionType.completed,
+            completedDate: baseDate.add(const Duration(days: 2)),
+          );
+          await habitsLocalService.saveCompletion(day3);
+
+          // Verify initial state
+          var completions = await habitsLocalService.getHabitCompletions(
+            habitId: habit.id,
+            startDate: baseDate,
+            endDate: baseDate.add(const Duration(days: 5)),
+          );
+          expect(completions.length, 2);
+          expect(
+            completions
+                .firstWhere((c) => c.completedDate.isAtSameMomentAs(baseDate))
+                .streakCount,
+            1,
+          );
+          expect(
+            completions
+                .firstWhere(
+                  (c) => c.completedDate.isAtSameMomentAs(
+                    baseDate.add(const Duration(days: 2)),
+                  ),
+                )
+                .streakCount,
+            1,
+          );
+
+          // Insert Day 2: Should connect Day 1 and Day 3.
+          // Caller is responsible for calculating Day 2 streak based on Day 1.
+          // Day 1 (S1) -> Day 2 (S2).
+          final day2 = HabitCompletion(
+            id: const Uuid().v4(),
+            habitId: habit.id,
+            type: HabitCompletionType.completed,
+            completedDate: baseDate.add(const Duration(days: 1)),
+            streakCount: 2,
+          );
+          await habitsLocalService.saveCompletion(day2);
+
+          // Verify propagation: Day 3 should now be updated to Streak 3.
+          completions = await habitsLocalService.getHabitCompletions(
+            habitId: habit.id,
+            startDate: baseDate,
+            endDate: baseDate.add(const Duration(days: 5)),
+          );
+
+          // Ensure ordered by date
+          completions.sort(
+            (a, b) => a.completedDate.compareTo(b.completedDate),
+          );
+
+          expect(completions.length, 3);
+          expect(
+            completions[0].streakCount,
+            1,
+            reason: 'Day 1 should remain 1',
+          );
+          expect(
+            completions[1].streakCount,
+            2,
+            reason: 'Day 2 should be saved as 2',
+          );
+          expect(
+            completions[2].streakCount,
+            3,
+            reason: 'Day 3 should be updated to 3',
+          );
+        },
+      );
+
+      test('should reset future streaks when a completion is deleted', () async {
+        final habit = Habit(
+          id: const Uuid().v4(),
+          title: 'Streak Habit Delete',
+          createdAt: DateTime.now(),
+        );
+        await habitsLocalService.saveHabit(habit);
+
+        final baseDate = DateTime(2024);
+
+        // Setup continuous streak: Day 1 (S1), Day 2 (S2), Day 3 (S3), Day 4 (S4)
+        for (var i = 0; i < 4; i++) {
+          await habitsLocalService.saveCompletion(
+            HabitCompletion(
+              id: const Uuid().v4(),
+              habitId: habit.id,
+              type: HabitCompletionType.completed,
+              completedDate: baseDate.add(Duration(days: i)),
+              streakCount: i + 1,
+            ),
+          );
+        }
+
+        // Verify setup
+        var completions = await habitsLocalService.getHabitCompletions(
+          habitId: habit.id,
+          startDate: baseDate,
+          endDate: baseDate.add(const Duration(days: 10)),
+        );
+        expect(completions.length, 4);
+        expect(completions.last.streakCount, 4);
+
+        // Delete Day 2
+        // We need the exact completion object (ID matters for deletion)
+        final day2Completion = completions.firstWhere(
+          (c) => c.completedDate.isAtSameMomentAs(
+            baseDate.add(const Duration(days: 1)),
+          ),
+        );
+        await habitsLocalService.deleteCompletion(day2Completion);
+
+        // Verify logic
+        completions = await habitsLocalService.getHabitCompletions(
+          habitId: habit.id,
+          startDate: baseDate,
+          endDate: baseDate.add(const Duration(days: 10)),
+        );
+
+        completions.sort((a, b) => a.completedDate.compareTo(b.completedDate));
+
+        expect(completions.length, 3); // 1, 3, 4 (2 is deleted)
+
+        // Day 1: Streak 1
+        expect(completions[0].completedDate, baseDate);
+        expect(completions[0].streakCount, 1);
+
+        // Day 3: Should reset to 1 because the chain is broken
+        expect(
+          completions[1].completedDate,
+          baseDate.add(const Duration(days: 2)),
+        );
+        expect(
+          completions[1].streakCount,
+          1,
+          reason: 'Day 3 should reset to 1',
+        );
+
+        // Day 4: Should be 2 (1 + 1)
+        expect(
+          completions[2].completedDate,
+          baseDate.add(const Duration(days: 3)),
+        );
+        expect(completions[2].streakCount, 2, reason: 'Day 4 should be 2');
+      });
+    });
   });
 }

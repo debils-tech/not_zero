@@ -66,12 +66,14 @@ class HabitsStatsLocalService implements BaseService {
 
     return HabitsCountingData(
       completed: Map.fromEntries(
-        completionsByStreakPeriod.map(
-          (e) => MapEntry(
-            (importance: e.$1, streakPeriod: e.$2),
-            resultSet.read(e.$3) ?? 0,
-          ),
-        ),
+        completionsByStreakPeriod
+            .map(
+              (e) => MapEntry(
+                (importance: e.$1, streakPeriod: e.$2),
+                resultSet.read(e.$3) ?? 0,
+              ),
+            )
+            .where((entry) => entry.value > 0),
       ),
       created: resultSet.read(createdInPeriod) ?? 0,
     );

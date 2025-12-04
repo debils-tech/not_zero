@@ -80,10 +80,23 @@ class HabitsRepository implements BaseRepository {
         .toList();
   }
 
+  Future<int> getHabitStreak({required Habit habit, DateTime? date}) async {
+    return _localService.getHabitStreak(
+      habitId: habit.id,
+      streakDate: date ?? DateTime.now(),
+    );
+  }
+
   Future<void> addHabitCompletion({
     required Habit habit,
     required HabitCompletion completion,
-  }) {
+  }) async {
+    final streakForCompletion = await _localService.getHabitStreak(
+      habitId: habit.id,
+      streakDate: completion.completedDate,
+    );
+    completion = completion.copyWith(streakCount: streakForCompletion + 1);
+
     _actionsBus.emit(
       HabitAction.completed(habit: habit, completion: completion),
     );

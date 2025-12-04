@@ -108,15 +108,53 @@ class HabitsLocalService implements BaseService {
   }
 
   Future<void> saveCompletion(HabitCompletion completion) {
-    return _db
-        .into(_db.habitCompletionsTable)
-        .insertOnConflictUpdate(completion.toInsertable());
+    return _db.transaction(() async {
+      // Saving this completion
+      await _db
+          .into(_db.habitCompletionsTable)
+          .insertOnConflictUpdate(completion.toInsertable());
+
+      // Updating all the subsequent completions to update their streak count
+      var rowsChanged = true;
+      var nextDate = completion.completedDate;
+      var nextStreak = completion.streakCount;
+      while (rowsChanged) {
+        nextDate = nextDate.add(const Duration(days: 1));
+        nextStreak++;
+        final changed =
+            await (_db.update(
+              _db.habitCompletionsTable,
+            )..where((tbl) => tbl.completedDate.equalsValue(nextDate))).write(
+              HabitCompletionsTableCompanion(streakCount: Value(nextStreak)),
+            );
+        rowsChanged = changed > 0;
+      }
+    });
   }
 
   Future<void> deleteCompletion(HabitCompletion completion) {
-    return (_db.delete(
-      _db.habitCompletionsTable,
-    )..where((tbl) => tbl.id.equals(completion.id))).go();
+    return _db.transaction(() async {
+      // Deleting this completion
+      await (_db.delete(
+        _db.habitCompletionsTable,
+      )..where((tbl) => tbl.id.equals(completion.id))).go();
+
+      // Updating all the subsequent completions to update their streak count
+      var rowsChanged = true;
+      var nextDate = completion.completedDate;
+      var nextStreak = 1;
+      while (rowsChanged) {
+        nextDate = nextDate.add(const Duration(days: 1));
+        final changed =
+            await (_db.update(
+              _db.habitCompletionsTable,
+            )..where((tbl) => tbl.completedDate.equalsValue(nextDate))).write(
+              HabitCompletionsTableCompanion(streakCount: Value(nextStreak)),
+            );
+        rowsChanged = changed > 0;
+        nextStreak++;
+      }
+    });
   }
 
   Future<void> deleteHabits(Iterable<String> habits) {
