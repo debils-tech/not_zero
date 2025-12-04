@@ -62,26 +62,26 @@ class ScoreEvaluationRepository implements BaseRepository {
                 entry.value *
                     evaluateHabitScore(
                       entry.key.importance,
-                      entry.key.regularity,
+                      entry.key.streakPeriod,
                     ),
           )
           .floor() +
       countingData.created * evaluateHabitCreatedScore();
 
-  double evaluateHabitScore(
+  int evaluateHabitScore(
     TaskImportance importance,
-    HabitRegularity regularity,
+    HabitStreakPeriod streakPeriod,
   ) =>
       switch (importance) {
         .notImportant => _habitCompletedNotImportantScore,
         .normal => _habitCompletedNormalScore,
         .important => _habitCompletedImportantScore,
       } *
-      switch (regularity) {
-        DailyHabitRegularity() => 1.0,
-        TimesPerWeekHabitRegularity(:final times) => 7 / times,
-        AtWeekdaysHabitRegularity(:final weekdays) => 7 / weekdays.length,
-      }.clamp(0, 2);
+      switch (streakPeriod) {
+        HabitStreakPeriod.fewDays => 1,
+        HabitStreakPeriod.fewWeeks => 2,
+        HabitStreakPeriod.fewMonths => 3,
+      };
 
   int evaluateHabitCreatedScore() => _habitCreatedScore;
 }

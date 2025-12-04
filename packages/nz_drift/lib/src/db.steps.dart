@@ -1,19 +1,3 @@
-// Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 // dart format width=80
 import 'package:drift/internal/versioned_schema.dart' as i0;
 import 'package:drift/drift.dart' as i1;
@@ -578,7 +562,6 @@ final class Schema7 extends i0.VersionedSchema {
         _column_14,
         _column_4,
         _column_6,
-        _column_19,
       ],
       attachedDatabase: database,
     ),
@@ -590,7 +573,7 @@ final class Schema7 extends i0.VersionedSchema {
       withoutRowId: false,
       isStrict: false,
       tableConstraints: ['PRIMARY KEY(id)', 'UNIQUE(habit_id, completed_date)'],
-      columns: [_column_0, _column_20, _column_21, _column_22],
+      columns: [_column_0, _column_19, _column_20, _column_21, _column_22],
       attachedDatabase: database,
     ),
     alias: null,
@@ -622,8 +605,6 @@ class Shape6 extends i0.VersionedTable {
       columnsByName['modified_at']! as i1.GeneratedColumn<DateTime>;
   i1.GeneratedColumn<int> get importance =>
       columnsByName['importance']! as i1.GeneratedColumn<int>;
-  i1.GeneratedColumn<String> get regularity =>
-      columnsByName['regularity']! as i1.GeneratedColumn<String>;
 }
 
 i1.GeneratedColumn<String> _column_18(String aliasedName) =>
@@ -633,14 +614,6 @@ i1.GeneratedColumn<String> _column_18(String aliasedName) =>
       false,
       type: i1.DriftSqlType.string,
       defaultValue: const CustomExpression('\'\''),
-    );
-i1.GeneratedColumn<String> _column_19(String aliasedName) =>
-    i1.GeneratedColumn<String>(
-      'regularity',
-      aliasedName,
-      false,
-      type: i1.DriftSqlType.string,
-      defaultValue: const CustomExpression('\'{"type":"daily"}\''),
     );
 
 class Shape7 extends i0.VersionedTable {
@@ -653,9 +626,11 @@ class Shape7 extends i0.VersionedTable {
       columnsByName['type']! as i1.GeneratedColumn<int>;
   i1.GeneratedColumn<String> get completedDate =>
       columnsByName['completed_date']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get streakCount =>
+      columnsByName['streak_count']! as i1.GeneratedColumn<int>;
 }
 
-i1.GeneratedColumn<String> _column_20(String aliasedName) =>
+i1.GeneratedColumn<String> _column_19(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'habit_id',
       aliasedName,
@@ -665,19 +640,27 @@ i1.GeneratedColumn<String> _column_20(String aliasedName) =>
         'REFERENCES habits_table (id)',
       ),
     );
-i1.GeneratedColumn<int> _column_21(String aliasedName) =>
+i1.GeneratedColumn<int> _column_20(String aliasedName) =>
     i1.GeneratedColumn<int>(
       'type',
       aliasedName,
       false,
       type: i1.DriftSqlType.int,
     );
-i1.GeneratedColumn<String> _column_22(String aliasedName) =>
+i1.GeneratedColumn<String> _column_21(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'completed_date',
       aliasedName,
       false,
       type: i1.DriftSqlType.string,
+    );
+i1.GeneratedColumn<int> _column_22(String aliasedName) =>
+    i1.GeneratedColumn<int>(
+      'streak_count',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.int,
+      defaultValue: const CustomExpression('1'),
     );
 
 class Shape8 extends i0.VersionedTable {

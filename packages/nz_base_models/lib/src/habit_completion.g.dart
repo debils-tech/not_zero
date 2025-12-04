@@ -12,6 +12,7 @@ _HabitCompletion _$HabitCompletionFromJson(Map<String, dynamic> json) =>
       habitId: json['habitId'] as String,
       type: $enumDecode(_$HabitCompletionTypeEnumMap, json['type']),
       completedDate: DateTime.parse(json['completedDate'] as String),
+      streakCount: (json['streakCount'] as num?)?.toInt() ?? 1,
     );
 
 Map<String, dynamic> _$HabitCompletionToJson(_HabitCompletion instance) =>
@@ -20,6 +21,7 @@ Map<String, dynamic> _$HabitCompletionToJson(_HabitCompletion instance) =>
       'habitId': instance.habitId,
       'type': _$HabitCompletionTypeEnumMap[instance.type]!,
       'completedDate': instance.completedDate.toIso8601String(),
+      'streakCount': instance.streakCount,
     };
 
 const _$HabitCompletionTypeEnumMap = {

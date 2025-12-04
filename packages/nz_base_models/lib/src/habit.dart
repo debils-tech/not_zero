@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nz_base_models/src/habit_regularity.dart';
 import 'package:nz_base_models/src/tag.dart';
 import 'package:nz_base_models/src/task_importance.dart';
 import 'package:uuid/uuid.dart';
@@ -32,7 +31,6 @@ abstract class Habit with _$Habit {
     @Default('') String description,
     @Default(TaskImportance.normal) TaskImportance importance,
     DateTime? modifiedAt,
-    @Default(HabitRegularity.daily()) HabitRegularity regularity,
     @JsonKey(toJson: ItemTag.tagsToIds) @Default([]) List<ItemTag> tags,
   }) = _Habit;
 
@@ -44,26 +42,22 @@ abstract class Habit with _$Habit {
     required String title,
     String? description,
     TaskImportance? importance,
-    HabitRegularity? regularity,
   }) => Habit(
     id: const Uuid().v4(),
     title: title,
     description: description ?? '',
     createdAt: DateTime.now(),
     importance: importance ?? .normal,
-    regularity: regularity ?? const HabitRegularity.daily(),
   );
 
   Habit edit({
     String? title,
     String? description,
     TaskImportance? importance,
-    HabitRegularity? regularity,
   }) => copyWith(
     title: title ?? this.title,
     description: description ?? this.description,
     importance: importance ?? this.importance,
     modifiedAt: DateTime.now(),
-    regularity: regularity ?? this.regularity,
   );
 }

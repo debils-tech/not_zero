@@ -215,12 +215,6 @@ class $TasksTableTable extends TasksTable
         DriftSqlType.string,
         data['${effectivePrefix}title'],
       )!,
-      importance: $TasksTableTable.$converterimportance.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.int,
-          data['${effectivePrefix}importance'],
-        )!,
-      ),
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -229,6 +223,12 @@ class $TasksTableTable extends TasksTable
         DriftSqlType.string,
         data['${effectivePrefix}description'],
       )!,
+      importance: $TasksTableTable.$converterimportance.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}importance'],
+        )!,
+      ),
       modifiedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}modified_at'],
@@ -965,16 +965,6 @@ class $HabitsTableTable extends HabitsTable
         requiredDuringInsert: true,
       ).withConverter<TaskImportance>($HabitsTableTable.$converterimportance);
   @override
-  late final GeneratedColumnWithTypeConverter<HabitRegularity, String>
-  regularity = GeneratedColumn<String>(
-    'regularity',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    defaultValue: Constant(HabitRegularityConverter.defaultValue),
-  ).withConverter<HabitRegularity>($HabitsTableTable.$converterregularity);
-  @override
   List<GeneratedColumn> get $columns => [
     id,
     title,
@@ -982,7 +972,6 @@ class $HabitsTableTable extends HabitsTable
     createdAt,
     modifiedAt,
     importance,
-    regularity,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1065,12 +1054,6 @@ class $HabitsTableTable extends HabitsTable
         DriftSqlType.dateTime,
         data['${effectivePrefix}modified_at'],
       ),
-      regularity: $HabitsTableTable.$converterregularity.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}regularity'],
-        )!,
-      ),
     );
   }
 
@@ -1081,8 +1064,6 @@ class $HabitsTableTable extends HabitsTable
 
   static JsonTypeConverter2<TaskImportance, int, int> $converterimportance =
       const EnumIndexConverter<TaskImportance>(TaskImportance.values);
-  static TypeConverter<HabitRegularity, String> $converterregularity =
-      const HabitRegularityConverter();
 }
 
 class HabitsTableCompanion extends UpdateCompanion<Habit> {
@@ -1092,7 +1073,6 @@ class HabitsTableCompanion extends UpdateCompanion<Habit> {
   final Value<DateTime> createdAt;
   final Value<DateTime?> modifiedAt;
   final Value<TaskImportance> importance;
-  final Value<HabitRegularity> regularity;
   final Value<int> rowid;
   const HabitsTableCompanion({
     this.id = const Value.absent(),
@@ -1101,7 +1081,6 @@ class HabitsTableCompanion extends UpdateCompanion<Habit> {
     this.createdAt = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     this.importance = const Value.absent(),
-    this.regularity = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   HabitsTableCompanion.insert({
@@ -1111,7 +1090,6 @@ class HabitsTableCompanion extends UpdateCompanion<Habit> {
     this.createdAt = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     required TaskImportance importance,
-    this.regularity = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        title = Value(title),
@@ -1123,7 +1101,6 @@ class HabitsTableCompanion extends UpdateCompanion<Habit> {
     Expression<DateTime>? createdAt,
     Expression<DateTime>? modifiedAt,
     Expression<int>? importance,
-    Expression<String>? regularity,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1133,7 +1110,6 @@ class HabitsTableCompanion extends UpdateCompanion<Habit> {
       if (createdAt != null) 'created_at': createdAt,
       if (modifiedAt != null) 'modified_at': modifiedAt,
       if (importance != null) 'importance': importance,
-      if (regularity != null) 'regularity': regularity,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1145,7 +1121,6 @@ class HabitsTableCompanion extends UpdateCompanion<Habit> {
     Value<DateTime>? createdAt,
     Value<DateTime?>? modifiedAt,
     Value<TaskImportance>? importance,
-    Value<HabitRegularity>? regularity,
     Value<int>? rowid,
   }) {
     return HabitsTableCompanion(
@@ -1155,7 +1130,6 @@ class HabitsTableCompanion extends UpdateCompanion<Habit> {
       createdAt: createdAt ?? this.createdAt,
       modifiedAt: modifiedAt ?? this.modifiedAt,
       importance: importance ?? this.importance,
-      regularity: regularity ?? this.regularity,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1183,11 +1157,6 @@ class HabitsTableCompanion extends UpdateCompanion<Habit> {
         $HabitsTableTable.$converterimportance.toSql(importance.value),
       );
     }
-    if (regularity.present) {
-      map['regularity'] = Variable<String>(
-        $HabitsTableTable.$converterregularity.toSql(regularity.value),
-      );
-    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1203,7 +1172,6 @@ class HabitsTableCompanion extends UpdateCompanion<Habit> {
           ..write('createdAt: $createdAt, ')
           ..write('modifiedAt: $modifiedAt, ')
           ..write('importance: $importance, ')
-          ..write('regularity: $regularity, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1222,7 +1190,6 @@ class _$HabitInsertable implements Insertable<Habit> {
       createdAt: Value(_object.createdAt),
       modifiedAt: Value(_object.modifiedAt),
       importance: Value(_object.importance),
-      regularity: Value(_object.regularity),
     ).toColumns(false);
   }
 }
@@ -1284,8 +1251,26 @@ class $HabitCompletionsTableTable extends HabitCompletionsTable
       ).withConverter<DateTime>(
         $HabitCompletionsTableTable.$convertercompletedDate,
       );
+  static const VerificationMeta _streakCountMeta = const VerificationMeta(
+    'streakCount',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, habitId, type, completedDate];
+  late final GeneratedColumn<int> streakCount = GeneratedColumn<int>(
+    'streak_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    habitId,
+    type,
+    completedDate,
+    streakCount,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1310,6 +1295,15 @@ class $HabitCompletionsTableTable extends HabitCompletionsTable
       );
     } else if (isInserting) {
       context.missing(_habitIdMeta);
+    }
+    if (data.containsKey('streak_count')) {
+      context.handle(
+        _streakCountMeta,
+        streakCount.isAcceptableOrUnknown(
+          data['streak_count']!,
+          _streakCountMeta,
+        ),
+      );
     }
     return context;
   }
@@ -1345,6 +1339,10 @@ class $HabitCompletionsTableTable extends HabitCompletionsTable
               data['${effectivePrefix}completed_date'],
             )!,
           ),
+      streakCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}streak_count'],
+      )!,
     );
   }
 
@@ -1364,12 +1362,14 @@ class HabitCompletionsTableCompanion extends UpdateCompanion<HabitCompletion> {
   final Value<String> habitId;
   final Value<HabitCompletionType> type;
   final Value<DateTime> completedDate;
+  final Value<int> streakCount;
   final Value<int> rowid;
   const HabitCompletionsTableCompanion({
     this.id = const Value.absent(),
     this.habitId = const Value.absent(),
     this.type = const Value.absent(),
     this.completedDate = const Value.absent(),
+    this.streakCount = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   HabitCompletionsTableCompanion.insert({
@@ -1377,6 +1377,7 @@ class HabitCompletionsTableCompanion extends UpdateCompanion<HabitCompletion> {
     required String habitId,
     required HabitCompletionType type,
     required DateTime completedDate,
+    this.streakCount = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        habitId = Value(habitId),
@@ -1387,6 +1388,7 @@ class HabitCompletionsTableCompanion extends UpdateCompanion<HabitCompletion> {
     Expression<String>? habitId,
     Expression<int>? type,
     Expression<String>? completedDate,
+    Expression<int>? streakCount,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1394,6 +1396,7 @@ class HabitCompletionsTableCompanion extends UpdateCompanion<HabitCompletion> {
       if (habitId != null) 'habit_id': habitId,
       if (type != null) 'type': type,
       if (completedDate != null) 'completed_date': completedDate,
+      if (streakCount != null) 'streak_count': streakCount,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1403,6 +1406,7 @@ class HabitCompletionsTableCompanion extends UpdateCompanion<HabitCompletion> {
     Value<String>? habitId,
     Value<HabitCompletionType>? type,
     Value<DateTime>? completedDate,
+    Value<int>? streakCount,
     Value<int>? rowid,
   }) {
     return HabitCompletionsTableCompanion(
@@ -1410,6 +1414,7 @@ class HabitCompletionsTableCompanion extends UpdateCompanion<HabitCompletion> {
       habitId: habitId ?? this.habitId,
       type: type ?? this.type,
       completedDate: completedDate ?? this.completedDate,
+      streakCount: streakCount ?? this.streakCount,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1435,6 +1440,9 @@ class HabitCompletionsTableCompanion extends UpdateCompanion<HabitCompletion> {
         ),
       );
     }
+    if (streakCount.present) {
+      map['streak_count'] = Variable<int>(streakCount.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1448,6 +1456,7 @@ class HabitCompletionsTableCompanion extends UpdateCompanion<HabitCompletion> {
           ..write('habitId: $habitId, ')
           ..write('type: $type, ')
           ..write('completedDate: $completedDate, ')
+          ..write('streakCount: $streakCount, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1464,6 +1473,7 @@ class _$HabitCompletionInsertable implements Insertable<HabitCompletion> {
       habitId: Value(_object.habitId),
       type: Value(_object.type),
       completedDate: Value(_object.completedDate),
+      streakCount: Value(_object.streakCount),
     ).toColumns(false);
   }
 }
@@ -2904,7 +2914,6 @@ typedef $$HabitsTableTableCreateCompanionBuilder =
       Value<DateTime> createdAt,
       Value<DateTime?> modifiedAt,
       required TaskImportance importance,
-      Value<HabitRegularity> regularity,
       Value<int> rowid,
     });
 typedef $$HabitsTableTableUpdateCompanionBuilder =
@@ -2915,7 +2924,6 @@ typedef $$HabitsTableTableUpdateCompanionBuilder =
       Value<DateTime> createdAt,
       Value<DateTime?> modifiedAt,
       Value<TaskImportance> importance,
-      Value<HabitRegularity> regularity,
       Value<int> rowid,
     });
 
@@ -3013,12 +3021,6 @@ class $$HabitsTableTableFilterComposer
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<HabitRegularity, HabitRegularity, String>
-  get regularity => $composableBuilder(
-    column: $table.regularity,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
   Expression<bool> habitCompletionsTableRefs(
     Expression<bool> Function($$HabitCompletionsTableTableFilterComposer f) f,
   ) {
@@ -3109,11 +3111,6 @@ class $$HabitsTableTableOrderingComposer
     column: $table.importance,
     builder: (column) => ColumnOrderings(column),
   );
-
-  ColumnOrderings<String> get regularity => $composableBuilder(
-    column: $table.regularity,
-    builder: (column) => ColumnOrderings(column),
-  );
 }
 
 class $$HabitsTableTableAnnotationComposer
@@ -3147,12 +3144,6 @@ class $$HabitsTableTableAnnotationComposer
   GeneratedColumnWithTypeConverter<TaskImportance, int> get importance =>
       $composableBuilder(
         column: $table.importance,
-        builder: (column) => column,
-      );
-
-  GeneratedColumnWithTypeConverter<HabitRegularity, String> get regularity =>
-      $composableBuilder(
-        column: $table.regularity,
         builder: (column) => column,
       );
 
@@ -3245,7 +3236,6 @@ class $$HabitsTableTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime?> modifiedAt = const Value.absent(),
                 Value<TaskImportance> importance = const Value.absent(),
-                Value<HabitRegularity> regularity = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => HabitsTableCompanion(
                 id: id,
@@ -3254,7 +3244,6 @@ class $$HabitsTableTableTableManager
                 createdAt: createdAt,
                 modifiedAt: modifiedAt,
                 importance: importance,
-                regularity: regularity,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -3265,7 +3254,6 @@ class $$HabitsTableTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime?> modifiedAt = const Value.absent(),
                 required TaskImportance importance,
-                Value<HabitRegularity> regularity = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => HabitsTableCompanion.insert(
                 id: id,
@@ -3274,7 +3262,6 @@ class $$HabitsTableTableTableManager
                 createdAt: createdAt,
                 modifiedAt: modifiedAt,
                 importance: importance,
-                regularity: regularity,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -3372,6 +3359,7 @@ typedef $$HabitCompletionsTableTableCreateCompanionBuilder =
       required String habitId,
       required HabitCompletionType type,
       required DateTime completedDate,
+      Value<int> streakCount,
       Value<int> rowid,
     });
 typedef $$HabitCompletionsTableTableUpdateCompanionBuilder =
@@ -3380,6 +3368,7 @@ typedef $$HabitCompletionsTableTableUpdateCompanionBuilder =
       Value<String> habitId,
       Value<HabitCompletionType> type,
       Value<DateTime> completedDate,
+      Value<int> streakCount,
       Value<int> rowid,
     });
 
@@ -3445,6 +3434,11 @@ class $$HabitCompletionsTableTableFilterComposer
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
+  ColumnFilters<int> get streakCount => $composableBuilder(
+    column: $table.streakCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$HabitsTableTableFilterComposer get habitId {
     final $$HabitsTableTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -3493,6 +3487,11 @@ class $$HabitCompletionsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get streakCount => $composableBuilder(
+    column: $table.streakCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$HabitsTableTableOrderingComposer get habitId {
     final $$HabitsTableTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -3537,6 +3536,11 @@ class $$HabitCompletionsTableTableAnnotationComposer
         column: $table.completedDate,
         builder: (column) => column,
       );
+
+  GeneratedColumn<int> get streakCount => $composableBuilder(
+    column: $table.streakCount,
+    builder: (column) => column,
+  );
 
   $$HabitsTableTableAnnotationComposer get habitId {
     final $$HabitsTableTableAnnotationComposer composer = $composerBuilder(
@@ -3605,12 +3609,14 @@ class $$HabitCompletionsTableTableTableManager
                 Value<String> habitId = const Value.absent(),
                 Value<HabitCompletionType> type = const Value.absent(),
                 Value<DateTime> completedDate = const Value.absent(),
+                Value<int> streakCount = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => HabitCompletionsTableCompanion(
                 id: id,
                 habitId: habitId,
                 type: type,
                 completedDate: completedDate,
+                streakCount: streakCount,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -3619,12 +3625,14 @@ class $$HabitCompletionsTableTableTableManager
                 required String habitId,
                 required HabitCompletionType type,
                 required DateTime completedDate,
+                Value<int> streakCount = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => HabitCompletionsTableCompanion.insert(
                 id: id,
                 habitId: habitId,
                 type: type,
                 completedDate: completedDate,
+                streakCount: streakCount,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

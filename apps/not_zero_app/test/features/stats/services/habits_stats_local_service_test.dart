@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:not_zero_app/src/features/stats/models/habits_counting_data.dart';
 import 'package:not_zero_app/src/features/stats/services/habits_stats_local_service.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
@@ -92,11 +93,16 @@ void main() {
         endPeriod: now.endOfDay,
       );
 
-      expect(result.completed.length, 1);
-      // Key is Record (importance, regularity)
+      // All combinations are initialized
+      expect(
+        result.completed.length,
+        TaskImportance.values.length * HabitStreakPeriod.values.length,
+      );
+
+      // Key is Record (importance, streakPeriod)
       const key = (
         importance: TaskImportance.important,
-        regularity: HabitRegularity.daily(),
+        streakPeriod: HabitStreakPeriod.fewDays,
       );
       expect(result.completed[key], 1);
     });
@@ -108,6 +114,7 @@ void main() {
         final day2 = DateTime(2023, 1, 2); // 00:00:00
 
         final habitId = uuid.v4();
+        // Habit with Normal importance
         await db
             .into(db.habitsTable)
             .insert(
@@ -136,9 +143,13 @@ void main() {
           endPeriod: day1.endOfDay,
         );
 
-        expect(result.completed.isNotEmpty, isTrue);
+        const key = (
+          importance: TaskImportance.normal,
+          streakPeriod: HabitStreakPeriod.fewDays,
+        );
+
         expect(
-          result.completed.values.first,
+          result.completed[key],
           0,
           reason: 'Should count 0 for Day 2 completion in Day 1',
         );
@@ -149,6 +160,7 @@ void main() {
       final day1 = DateTime(2023);
 
       final habitId = uuid.v4();
+      // Habit with Normal importance
       await db
           .into(db.habitsTable)
           .insert(
@@ -177,8 +189,12 @@ void main() {
         endPeriod: day1.endOfDay,
       );
 
-      expect(result.completed.isNotEmpty, isTrue);
-      expect(result.completed.values.first, 1);
+      const key = (
+        importance: TaskImportance.normal,
+        streakPeriod: HabitStreakPeriod.fewDays,
+      );
+
+      expect(result.completed[key], 1);
     });
   });
 }

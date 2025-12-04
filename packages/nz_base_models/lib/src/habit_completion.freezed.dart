@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HabitCompletion {
 
- String get id; String get habitId; HabitCompletionType get type; DateTime get completedDate;
+ String get id; String get habitId; HabitCompletionType get type; DateTime get completedDate; int get streakCount;
 /// Create a copy of HabitCompletion
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $HabitCompletionCopyWith<HabitCompletion> get copyWith => _$HabitCompletionCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HabitCompletion&&(identical(other.id, id) || other.id == id)&&(identical(other.habitId, habitId) || other.habitId == habitId)&&(identical(other.type, type) || other.type == type)&&(identical(other.completedDate, completedDate) || other.completedDate == completedDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HabitCompletion&&(identical(other.id, id) || other.id == id)&&(identical(other.habitId, habitId) || other.habitId == habitId)&&(identical(other.type, type) || other.type == type)&&(identical(other.completedDate, completedDate) || other.completedDate == completedDate)&&(identical(other.streakCount, streakCount) || other.streakCount == streakCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,habitId,type,completedDate);
+int get hashCode => Object.hash(runtimeType,id,habitId,type,completedDate,streakCount);
 
 @override
 String toString() {
-  return 'HabitCompletion(id: $id, habitId: $habitId, type: $type, completedDate: $completedDate)';
+  return 'HabitCompletion(id: $id, habitId: $habitId, type: $type, completedDate: $completedDate, streakCount: $streakCount)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $HabitCompletionCopyWith<$Res>  {
   factory $HabitCompletionCopyWith(HabitCompletion value, $Res Function(HabitCompletion) _then) = _$HabitCompletionCopyWithImpl;
 @useResult
 $Res call({
- String id, String habitId, HabitCompletionType type, DateTime completedDate
+ String id, String habitId, HabitCompletionType type, DateTime completedDate, int streakCount
 });
 
 
@@ -65,13 +65,14 @@ class _$HabitCompletionCopyWithImpl<$Res>
 
 /// Create a copy of HabitCompletion
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? habitId = null,Object? type = null,Object? completedDate = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? habitId = null,Object? type = null,Object? completedDate = null,Object? streakCount = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,habitId: null == habitId ? _self.habitId : habitId // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as HabitCompletionType,completedDate: null == completedDate ? _self.completedDate : completedDate // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,streakCount: null == streakCount ? _self.streakCount : streakCount // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String habitId,  HabitCompletionType type,  DateTime completedDate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String habitId,  HabitCompletionType type,  DateTime completedDate,  int streakCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HabitCompletion() when $default != null:
-return $default(_that.id,_that.habitId,_that.type,_that.completedDate);case _:
+return $default(_that.id,_that.habitId,_that.type,_that.completedDate,_that.streakCount);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.id,_that.habitId,_that.type,_that.completedDate);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String habitId,  HabitCompletionType type,  DateTime completedDate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String habitId,  HabitCompletionType type,  DateTime completedDate,  int streakCount)  $default,) {final _that = this;
 switch (_that) {
 case _HabitCompletion():
-return $default(_that.id,_that.habitId,_that.type,_that.completedDate);case _:
+return $default(_that.id,_that.habitId,_that.type,_that.completedDate,_that.streakCount);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.habitId,_that.type,_that.completedDate);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String habitId,  HabitCompletionType type,  DateTime completedDate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String habitId,  HabitCompletionType type,  DateTime completedDate,  int streakCount)?  $default,) {final _that = this;
 switch (_that) {
 case _HabitCompletion() when $default != null:
-return $default(_that.id,_that.habitId,_that.type,_that.completedDate);case _:
+return $default(_that.id,_that.habitId,_that.type,_that.completedDate,_that.streakCount);case _:
   return null;
 
 }
@@ -212,13 +213,14 @@ return $default(_that.id,_that.habitId,_that.type,_that.completedDate);case _:
 @JsonSerializable()
 
 class _HabitCompletion implements HabitCompletion {
-  const _HabitCompletion({required this.id, required this.habitId, required this.type, required this.completedDate});
+  const _HabitCompletion({required this.id, required this.habitId, required this.type, required this.completedDate, this.streakCount = 1});
   factory _HabitCompletion.fromJson(Map<String, dynamic> json) => _$HabitCompletionFromJson(json);
 
 @override final  String id;
 @override final  String habitId;
 @override final  HabitCompletionType type;
 @override final  DateTime completedDate;
+@override@JsonKey() final  int streakCount;
 
 /// Create a copy of HabitCompletion
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HabitCompletion&&(identical(other.id, id) || other.id == id)&&(identical(other.habitId, habitId) || other.habitId == habitId)&&(identical(other.type, type) || other.type == type)&&(identical(other.completedDate, completedDate) || other.completedDate == completedDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HabitCompletion&&(identical(other.id, id) || other.id == id)&&(identical(other.habitId, habitId) || other.habitId == habitId)&&(identical(other.type, type) || other.type == type)&&(identical(other.completedDate, completedDate) || other.completedDate == completedDate)&&(identical(other.streakCount, streakCount) || other.streakCount == streakCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,habitId,type,completedDate);
+int get hashCode => Object.hash(runtimeType,id,habitId,type,completedDate,streakCount);
 
 @override
 String toString() {
-  return 'HabitCompletion(id: $id, habitId: $habitId, type: $type, completedDate: $completedDate)';
+  return 'HabitCompletion(id: $id, habitId: $habitId, type: $type, completedDate: $completedDate, streakCount: $streakCount)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$HabitCompletionCopyWith<$Res> implements $HabitCompletion
   factory _$HabitCompletionCopyWith(_HabitCompletion value, $Res Function(_HabitCompletion) _then) = __$HabitCompletionCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String habitId, HabitCompletionType type, DateTime completedDate
+ String id, String habitId, HabitCompletionType type, DateTime completedDate, int streakCount
 });
 
 
@@ -270,13 +272,14 @@ class __$HabitCompletionCopyWithImpl<$Res>
 
 /// Create a copy of HabitCompletion
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? habitId = null,Object? type = null,Object? completedDate = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? habitId = null,Object? type = null,Object? completedDate = null,Object? streakCount = null,}) {
   return _then(_HabitCompletion(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,habitId: null == habitId ? _self.habitId : habitId // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as HabitCompletionType,completedDate: null == completedDate ? _self.completedDate : completedDate // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,streakCount: null == streakCount ? _self.streakCount : streakCount // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

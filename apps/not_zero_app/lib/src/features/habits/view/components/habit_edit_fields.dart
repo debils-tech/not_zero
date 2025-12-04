@@ -91,35 +91,3 @@ class HabitEditImportanceField extends StatelessWidget {
     );
   }
 }
-
-class HabitEditRegularityField extends StatelessWidget {
-  const HabitEditRegularityField({super.key});
-
-  static const name = 'regularity';
-
-  @override
-  Widget build(BuildContext context) {
-    return FormBuilderField<HabitRegularity>(
-      name: name,
-      enabled: false,
-      builder: (field) {
-        return Column(
-          children: [
-            Text(
-              context.t.habits.edit.fields.habitRegularity,
-              style: context.theme.textTheme.bodySmall?.copyWith(
-                color: context.theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-            const SizedBox(height: 8),
-            OutlinedButton(
-              onPressed: null,
-              // onPressed: () => field.didChange(const HabitRegularity.daily()),
-              child: Text(context.t.habits.edit.fields.habitRegularityDaily),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}

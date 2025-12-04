@@ -27,6 +27,7 @@ abstract class HabitCompletion with _$HabitCompletion {
     required String habitId,
     required HabitCompletionType type,
     required DateTime completedDate,
+    @Default(1) int streakCount,
   }) = _HabitCompletion;
 
   factory HabitCompletion.create({

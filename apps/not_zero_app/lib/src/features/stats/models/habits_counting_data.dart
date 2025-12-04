@@ -13,5 +13,20 @@ abstract class HabitsCountingData with _$HabitsCountingData {
 
 typedef UniqueHabitCombination = ({
   TaskImportance importance,
-  HabitRegularity regularity,
+  HabitStreakPeriod streakPeriod,
 });
+
+enum HabitStreakPeriod {
+  fewDays(1, 14),
+  fewWeeks(14, 28),
+  fewMonths(28, null)
+  ;
+
+  const HabitStreakPeriod(
+    this.minDays,
+    this.maxDays,
+  );
+
+  final int minDays;
+  final int? maxDays;
+}

@@ -102,7 +102,11 @@ class TotalScoreNotifier extends AsyncNotifier<int> {
           );
         }
 
-      case HabitActionDeletedMultiple():
+      case HabitActionDeletedMultiple() ||
+          HabitActionCompleted() ||
+          HabitActionNotCompleted():
+        // FIXME(uslashvlad): Try not to recalculate total points
+        // every time habit completed
         unawaited(
           _countTotalPoints().then((value) => state = AsyncValue.data(value)),
         );
@@ -110,21 +114,21 @@ class TotalScoreNotifier extends AsyncNotifier<int> {
       case HabitActionCreated():
         newPoints += scoreEvaluation.evaluateTaskCreatedScore();
 
-      case HabitActionCompleted(:final habit):
-        newPoints += scoreEvaluation
-            .evaluateHabitScore(
-              habit.importance,
-              habit.regularity,
-            )
-            .round();
+      // case HabitActionCompleted(:final habit):
+      //   newPoints += scoreEvaluation
+      //       .evaluateHabitScore(
+      //         habit.importance,
+      //         habit.regularity,
+      //       )
+      //       .round();
 
-      case HabitActionNotCompleted(:final habit):
-        newPoints -= scoreEvaluation
-            .evaluateHabitScore(
-              habit.importance,
-              habit.regularity,
-            )
-            .round();
+      // case HabitActionNotCompleted(:final habit):
+      //   newPoints -= scoreEvaluation
+      //       .evaluateHabitScore(
+      //         habit.importance,
+      //         habit.regularity,
+      //       )
+      //       .round();
     }
 
     if (newPoints != currentPoints) {

@@ -17,9 +17,6 @@ _Habit _$HabitFromJson(Map<String, dynamic> json) => _Habit(
   modifiedAt: json['modifiedAt'] == null
       ? null
       : DateTime.parse(json['modifiedAt'] as String),
-  regularity: json['regularity'] == null
-      ? const HabitRegularity.daily()
-      : HabitRegularity.fromJson(json['regularity'] as Map<String, dynamic>),
   tags:
       (json['tags'] as List<dynamic>?)
           ?.map((e) => ItemTag.fromJson(e as Map<String, dynamic>))
@@ -34,7 +31,6 @@ Map<String, dynamic> _$HabitToJson(_Habit instance) => <String, dynamic>{
   'description': instance.description,
   'importance': _$TaskImportanceEnumMap[instance.importance]!,
   'modifiedAt': instance.modifiedAt?.toIso8601String(),
-  'regularity': instance.regularity,
   'tags': ItemTag.tagsToIds(instance.tags),
 };
 

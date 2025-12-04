@@ -106,8 +106,6 @@ class _HabitEditScreenBody extends ConsumerWidget {
         HabitEditDescriptionField.name: habitToEdit?.description,
         HabitEditImportanceField.name:
             habitToEdit?.importance ?? TaskImportance.normal,
-        HabitEditRegularityField.name:
-            habitToEdit?.regularity ?? const HabitRegularity.daily(),
       },
       onChanged: () {
         final isValid = formKey.currentState?.validate() ?? false;
@@ -137,7 +135,6 @@ class _HabitEditScreenBody extends ConsumerWidget {
           SizedBox(height: 12),
           HabitEditDescriptionField(),
           SizedBox(height: 12),
-          HabitEditRegularityField(),
         ],
       ),
     );
@@ -194,8 +191,6 @@ class _FloatingSubmitButton extends ConsumerWidget {
       final description = values[HabitEditDescriptionField.name] as String?;
       final importance =
           values[HabitEditImportanceField.name] as TaskImportance?;
-      final regularity =
-          values[HabitEditRegularityField.name] as HabitRegularity?;
 
       final prevHabit = habitToEdit;
       final notifier = ref.read(habitsListNotifierProvider.notifier);
@@ -206,7 +201,6 @@ class _FloatingSubmitButton extends ConsumerWidget {
               title: title,
               description: description,
               importance: importance,
-              regularity: regularity,
             ),
           ),
         );
@@ -217,7 +211,6 @@ class _FloatingSubmitButton extends ConsumerWidget {
               title: title,
               description: description,
               importance: importance,
-              regularity: regularity,
             ),
           ),
         );

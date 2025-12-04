@@ -66,8 +66,29 @@ class HabitsLocalService implements BaseService {
         .get();
   }
 
+  Future<int> getHabitStreak({
+    required String habitId,
+    required DateTime streakDate,
+  }) async {
+    final yesterday = streakDate.subtract(const Duration(days: 1));
+    final lastCompletion =
+        await (_db.select(_db.habitCompletionsTable)
+              ..where(
+                (tbl) =>
+                    tbl.habitId.equals(habitId) &
+                    tbl.completedDate.dayInRange(
+                      yesterday,
+                      streakDate,
+                    ),
+              )
+              ..orderBy([(tbl) => OrderingTerm.desc(tbl.completedDate)])
+              ..limit(1))
+            .getSingleOrNull();
+    return lastCompletion?.streakCount ?? 0;
+  }
+
   /// Saves general habit information and tags.
-  /// Does not save or delete completions.
+  /// Does not save or delete tag entries or completions.
   Future<void> saveHabit(Habit habit) {
     return _db.transaction(() async {
       await _db

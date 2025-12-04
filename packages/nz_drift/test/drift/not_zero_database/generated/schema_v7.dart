@@ -1010,14 +1010,6 @@ class HabitsTable extends Table with TableInfo<HabitsTable, HabitsTableData> {
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
-  late final GeneratedColumn<String> regularity = GeneratedColumn<String>(
-    'regularity',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    defaultValue: const CustomExpression('\'{"type":"daily"}\''),
-  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1026,7 +1018,6 @@ class HabitsTable extends Table with TableInfo<HabitsTable, HabitsTableData> {
     createdAt,
     modifiedAt,
     importance,
-    regularity,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1063,10 +1054,6 @@ class HabitsTable extends Table with TableInfo<HabitsTable, HabitsTableData> {
         DriftSqlType.int,
         data['${effectivePrefix}importance'],
       )!,
-      regularity: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}regularity'],
-      )!,
     );
   }
 
@@ -1083,7 +1070,6 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
   final DateTime createdAt;
   final DateTime? modifiedAt;
   final int importance;
-  final String regularity;
   const HabitsTableData({
     required this.id,
     required this.title,
@@ -1091,7 +1077,6 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
     required this.createdAt,
     this.modifiedAt,
     required this.importance,
-    required this.regularity,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1104,7 +1089,6 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
       map['modified_at'] = Variable<DateTime>(modifiedAt);
     }
     map['importance'] = Variable<int>(importance);
-    map['regularity'] = Variable<String>(regularity);
     return map;
   }
 
@@ -1118,7 +1102,6 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
           ? const Value.absent()
           : Value(modifiedAt),
       importance: Value(importance),
-      regularity: Value(regularity),
     );
   }
 
@@ -1134,7 +1117,6 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       modifiedAt: serializer.fromJson<DateTime?>(json['modifiedAt']),
       importance: serializer.fromJson<int>(json['importance']),
-      regularity: serializer.fromJson<String>(json['regularity']),
     );
   }
   @override
@@ -1147,7 +1129,6 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'modifiedAt': serializer.toJson<DateTime?>(modifiedAt),
       'importance': serializer.toJson<int>(importance),
-      'regularity': serializer.toJson<String>(regularity),
     };
   }
 
@@ -1158,7 +1139,6 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
     DateTime? createdAt,
     Value<DateTime?> modifiedAt = const Value.absent(),
     int? importance,
-    String? regularity,
   }) => HabitsTableData(
     id: id ?? this.id,
     title: title ?? this.title,
@@ -1166,7 +1146,6 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
     createdAt: createdAt ?? this.createdAt,
     modifiedAt: modifiedAt.present ? modifiedAt.value : this.modifiedAt,
     importance: importance ?? this.importance,
-    regularity: regularity ?? this.regularity,
   );
   HabitsTableData copyWithCompanion(HabitsTableCompanion data) {
     return HabitsTableData(
@@ -1182,9 +1161,6 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
       importance: data.importance.present
           ? data.importance.value
           : this.importance,
-      regularity: data.regularity.present
-          ? data.regularity.value
-          : this.regularity,
     );
   }
 
@@ -1196,22 +1172,14 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
           ..write('description: $description, ')
           ..write('createdAt: $createdAt, ')
           ..write('modifiedAt: $modifiedAt, ')
-          ..write('importance: $importance, ')
-          ..write('regularity: $regularity')
+          ..write('importance: $importance')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-    id,
-    title,
-    description,
-    createdAt,
-    modifiedAt,
-    importance,
-    regularity,
-  );
+  int get hashCode =>
+      Object.hash(id, title, description, createdAt, modifiedAt, importance);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1221,8 +1189,7 @@ class HabitsTableData extends DataClass implements Insertable<HabitsTableData> {
           other.description == this.description &&
           other.createdAt == this.createdAt &&
           other.modifiedAt == this.modifiedAt &&
-          other.importance == this.importance &&
-          other.regularity == this.regularity);
+          other.importance == this.importance);
 }
 
 class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
@@ -1232,7 +1199,6 @@ class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
   final Value<DateTime> createdAt;
   final Value<DateTime?> modifiedAt;
   final Value<int> importance;
-  final Value<String> regularity;
   final Value<int> rowid;
   const HabitsTableCompanion({
     this.id = const Value.absent(),
@@ -1241,7 +1207,6 @@ class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
     this.createdAt = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     this.importance = const Value.absent(),
-    this.regularity = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   HabitsTableCompanion.insert({
@@ -1251,7 +1216,6 @@ class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
     this.createdAt = const Value.absent(),
     this.modifiedAt = const Value.absent(),
     required int importance,
-    this.regularity = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        title = Value(title),
@@ -1263,7 +1227,6 @@ class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
     Expression<DateTime>? createdAt,
     Expression<DateTime>? modifiedAt,
     Expression<int>? importance,
-    Expression<String>? regularity,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1273,7 +1236,6 @@ class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
       if (createdAt != null) 'created_at': createdAt,
       if (modifiedAt != null) 'modified_at': modifiedAt,
       if (importance != null) 'importance': importance,
-      if (regularity != null) 'regularity': regularity,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1285,7 +1247,6 @@ class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
     Value<DateTime>? createdAt,
     Value<DateTime?>? modifiedAt,
     Value<int>? importance,
-    Value<String>? regularity,
     Value<int>? rowid,
   }) {
     return HabitsTableCompanion(
@@ -1295,7 +1256,6 @@ class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
       createdAt: createdAt ?? this.createdAt,
       modifiedAt: modifiedAt ?? this.modifiedAt,
       importance: importance ?? this.importance,
-      regularity: regularity ?? this.regularity,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1321,9 +1281,6 @@ class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
     if (importance.present) {
       map['importance'] = Variable<int>(importance.value);
     }
-    if (regularity.present) {
-      map['regularity'] = Variable<String>(regularity.value);
-    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1339,7 +1296,6 @@ class HabitsTableCompanion extends UpdateCompanion<HabitsTableData> {
           ..write('createdAt: $createdAt, ')
           ..write('modifiedAt: $modifiedAt, ')
           ..write('importance: $importance, ')
-          ..write('regularity: $regularity, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1383,8 +1339,22 @@ class HabitCompletionsTable extends Table
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  late final GeneratedColumn<int> streakCount = GeneratedColumn<int>(
+    'streak_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const CustomExpression('1'),
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, habitId, type, completedDate];
+  List<GeneratedColumn> get $columns => [
+    id,
+    habitId,
+    type,
+    completedDate,
+    streakCount,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1419,6 +1389,10 @@ class HabitCompletionsTable extends Table
         DriftSqlType.string,
         data['${effectivePrefix}completed_date'],
       )!,
+      streakCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}streak_count'],
+      )!,
     );
   }
 
@@ -1434,11 +1408,13 @@ class HabitCompletionsTableData extends DataClass
   final String habitId;
   final int type;
   final String completedDate;
+  final int streakCount;
   const HabitCompletionsTableData({
     required this.id,
     required this.habitId,
     required this.type,
     required this.completedDate,
+    required this.streakCount,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1447,6 +1423,7 @@ class HabitCompletionsTableData extends DataClass
     map['habit_id'] = Variable<String>(habitId);
     map['type'] = Variable<int>(type);
     map['completed_date'] = Variable<String>(completedDate);
+    map['streak_count'] = Variable<int>(streakCount);
     return map;
   }
 
@@ -1456,6 +1433,7 @@ class HabitCompletionsTableData extends DataClass
       habitId: Value(habitId),
       type: Value(type),
       completedDate: Value(completedDate),
+      streakCount: Value(streakCount),
     );
   }
 
@@ -1469,6 +1447,7 @@ class HabitCompletionsTableData extends DataClass
       habitId: serializer.fromJson<String>(json['habitId']),
       type: serializer.fromJson<int>(json['type']),
       completedDate: serializer.fromJson<String>(json['completedDate']),
+      streakCount: serializer.fromJson<int>(json['streakCount']),
     );
   }
   @override
@@ -1479,6 +1458,7 @@ class HabitCompletionsTableData extends DataClass
       'habitId': serializer.toJson<String>(habitId),
       'type': serializer.toJson<int>(type),
       'completedDate': serializer.toJson<String>(completedDate),
+      'streakCount': serializer.toJson<int>(streakCount),
     };
   }
 
@@ -1487,11 +1467,13 @@ class HabitCompletionsTableData extends DataClass
     String? habitId,
     int? type,
     String? completedDate,
+    int? streakCount,
   }) => HabitCompletionsTableData(
     id: id ?? this.id,
     habitId: habitId ?? this.habitId,
     type: type ?? this.type,
     completedDate: completedDate ?? this.completedDate,
+    streakCount: streakCount ?? this.streakCount,
   );
   HabitCompletionsTableData copyWithCompanion(
     HabitCompletionsTableCompanion data,
@@ -1503,6 +1485,9 @@ class HabitCompletionsTableData extends DataClass
       completedDate: data.completedDate.present
           ? data.completedDate.value
           : this.completedDate,
+      streakCount: data.streakCount.present
+          ? data.streakCount.value
+          : this.streakCount,
     );
   }
 
@@ -1512,13 +1497,15 @@ class HabitCompletionsTableData extends DataClass
           ..write('id: $id, ')
           ..write('habitId: $habitId, ')
           ..write('type: $type, ')
-          ..write('completedDate: $completedDate')
+          ..write('completedDate: $completedDate, ')
+          ..write('streakCount: $streakCount')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, habitId, type, completedDate);
+  int get hashCode =>
+      Object.hash(id, habitId, type, completedDate, streakCount);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1526,7 +1513,8 @@ class HabitCompletionsTableData extends DataClass
           other.id == this.id &&
           other.habitId == this.habitId &&
           other.type == this.type &&
-          other.completedDate == this.completedDate);
+          other.completedDate == this.completedDate &&
+          other.streakCount == this.streakCount);
 }
 
 class HabitCompletionsTableCompanion
@@ -1535,12 +1523,14 @@ class HabitCompletionsTableCompanion
   final Value<String> habitId;
   final Value<int> type;
   final Value<String> completedDate;
+  final Value<int> streakCount;
   final Value<int> rowid;
   const HabitCompletionsTableCompanion({
     this.id = const Value.absent(),
     this.habitId = const Value.absent(),
     this.type = const Value.absent(),
     this.completedDate = const Value.absent(),
+    this.streakCount = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   HabitCompletionsTableCompanion.insert({
@@ -1548,6 +1538,7 @@ class HabitCompletionsTableCompanion
     required String habitId,
     required int type,
     required String completedDate,
+    this.streakCount = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        habitId = Value(habitId),
@@ -1558,6 +1549,7 @@ class HabitCompletionsTableCompanion
     Expression<String>? habitId,
     Expression<int>? type,
     Expression<String>? completedDate,
+    Expression<int>? streakCount,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1565,6 +1557,7 @@ class HabitCompletionsTableCompanion
       if (habitId != null) 'habit_id': habitId,
       if (type != null) 'type': type,
       if (completedDate != null) 'completed_date': completedDate,
+      if (streakCount != null) 'streak_count': streakCount,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1574,6 +1567,7 @@ class HabitCompletionsTableCompanion
     Value<String>? habitId,
     Value<int>? type,
     Value<String>? completedDate,
+    Value<int>? streakCount,
     Value<int>? rowid,
   }) {
     return HabitCompletionsTableCompanion(
@@ -1581,6 +1575,7 @@ class HabitCompletionsTableCompanion
       habitId: habitId ?? this.habitId,
       type: type ?? this.type,
       completedDate: completedDate ?? this.completedDate,
+      streakCount: streakCount ?? this.streakCount,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1600,6 +1595,9 @@ class HabitCompletionsTableCompanion
     if (completedDate.present) {
       map['completed_date'] = Variable<String>(completedDate.value);
     }
+    if (streakCount.present) {
+      map['streak_count'] = Variable<int>(streakCount.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1613,6 +1611,7 @@ class HabitCompletionsTableCompanion
           ..write('habitId: $habitId, ')
           ..write('type: $type, ')
           ..write('completedDate: $completedDate, ')
+          ..write('streakCount: $streakCount, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();

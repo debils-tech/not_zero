@@ -60,6 +60,7 @@ void main() {
               title: 'Task 1',
               createdAt: now,
               completedAt: now,
+              importance: .important,
             ).toInsertable(),
           );
 

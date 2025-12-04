@@ -41,6 +41,7 @@ final excludedPatterns = [
   Glob('**.g.dart'),
   Glob('**.freezed.dart'),
   Glob('**.tailor.dart'),
+  Glob('**.steps.dart'),
   Glob('**/generated/**'),
 ];
 
