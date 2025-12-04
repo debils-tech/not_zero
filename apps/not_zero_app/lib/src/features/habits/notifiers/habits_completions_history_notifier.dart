@@ -52,20 +52,26 @@ class HabitsCompletionsHistoryNotifier
       case HabitActionCompleted(:final habit, :final completion):
         if (habit.id != this.habit.id) return;
         final newState = List.of(currentState);
-        newState[_indexForDate(newState, completion.completedDate)] = (
-          completion.completedDate,
-          completion,
-        );
-        state = AsyncValue.data(newState);
+        final index = _indexForDate(newState, completion.completedDate);
+        if (index != -1) {
+          newState[index] = (
+            completion.completedDate,
+            completion,
+          );
+          state = AsyncValue.data(newState);
+        }
 
       case HabitActionNotCompleted(:final habit, :final completion):
         if (habit.id != this.habit.id) return;
         final newState = List.of(currentState);
-        newState[_indexForDate(newState, completion.completedDate)] = (
-          completion.completedDate,
-          null,
-        );
-        state = AsyncValue.data(newState);
+        final index = _indexForDate(newState, completion.completedDate);
+        if (index != -1) {
+          newState[index] = (
+            completion.completedDate,
+            null,
+          );
+          state = AsyncValue.data(newState);
+        }
 
       default:
         return;
