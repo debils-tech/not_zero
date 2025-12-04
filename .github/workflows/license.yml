@@ -4,17 +4,23 @@ on:
   pull_request:
   push:
     branches: [main]
+    paths-ignore:
+      - '.github/workflows/check.yml'
 
 jobs:
   check-license:
     runs-on: ubuntu-latest
     steps:
+      ### INITIAL ###
       - uses: actions/checkout@v3
-
-      - uses: dart-lang/setup-dart@v1
+      - name: Read Flutter version
+        id: fvm
+        run: echo "flutter_version=$(jq -r '.flutter' .fvmrc)" >> $GITHUB_OUTPUT
+      - uses: subosito/flutter-action@v2
         with:
-          sdk: stable
-
+          flutter-version: ${{ steps.fvm.outputs.flutter_version }}
+          channel: stable
+          cache: true
       - uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-pubcache
@@ -24,9 +30,10 @@ jobs:
 
       ### PREPARATION ###
       - name: Check dart installation
-        run: dart --version
+        run: flutter --version
       - name: Get dependencies
-        run: dart pub get
+        run: flutter pub get
 
+      ### CHECKS ###
       - name: Check License Headers
         run: dart run tools/license_manager.dart --check

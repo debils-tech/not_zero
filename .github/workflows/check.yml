@@ -2,6 +2,9 @@ name: Analyze and check app
 
 on:
   pull_request:
+    paths-ignore:
+      - '.github/workflows/license.yml'
+      - '.github/workflows/release.yml'
 
 jobs:
   check:
