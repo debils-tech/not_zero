@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,45 +33,8 @@ class TasksListFloatingButtons extends ConsumerWidget {
       switchInCurve: Curves.easeInOut,
       switchOutCurve: Curves.easeInOut,
       child: selectionState.isNotEmpty
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _CancelTasksButton(selectionState: selectionState),
-                const SizedBox(width: 8),
-                _DeleteTasksButton(selectionState: selectionState), // ⚡
-              ],
-            )
+          ? _DeleteTasksButton(selectionState: selectionState)
           : const _NewTaskButton(),
-    );
-  }
-}
-
-class _CancelTasksButton extends ConsumerWidget {
-  const _CancelTasksButton({
-    required this.selectionState,
-  });
-
-  final Set<String> selectionState;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return FloatingActionButton.extended(
-      onPressed: () {
-        final showCanceled = ref.read(
-          tasksFiltersNotifier.select((state) => state.canceled == null),
-        );
-        final selectionNotifier = ref.read(
-          itemSelectionNotifierProvider.notifier,
-        );
-        unawaited(
-          ref
-              .read(tasksMainListNotifier.notifier)
-              .cancelMultipleTasks(selectionState, showCanceled: showCanceled),
-        );
-        selectionNotifier.removeAll();
-      },
-      icon: const Icon(Icons.cancel_outlined),
-      label: Text(t.tasks.list.cancelButton),
     );
   }
 }
@@ -78,9 +57,9 @@ class _DeleteTasksButton extends ConsumerWidget {
 
         final confirm = await showConfirmationDialog(
           context,
-          title: t.common.dialog.deleteTitle,
-          content: t.tasks.list.deleteDialog.content(n: selectedCount),
-          confirm: t.common.dialog.deleteButton,
+          title: context.t.common.dialog.deleteTitle,
+          content: context.t.tasks.list.deleteDialog.content(n: selectedCount),
+          confirm: context.t.common.dialog.deleteButton,
           dangerous: true,
         );
         if (confirm ?? false) {
@@ -90,12 +69,12 @@ class _DeleteTasksButton extends ConsumerWidget {
           unawaited(
             ref
                 .read(tasksMainListNotifier.notifier)
-                .deleteMultipleTasks(selectionState),
+                .deleteTasks(selectionState),
           );
           selectionNotifier.removeAll();
         }
       },
-      tooltip: t.tasks.list.tooltips.deleteSelectedButton,
+      tooltip: context.t.tasks.list.tooltips.deleteSelectedButton,
       child: const Icon(Icons.delete_outline_rounded),
     );
   }
@@ -108,7 +87,7 @@ class _NewTaskButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () => context.push('/tasks/new'),
-      tooltip: t.tasks.list.tooltips.addNewButton,
+      tooltip: context.t.tasks.list.tooltips.addNewButton,
       child: const Icon(Icons.add_task_rounded),
     );
   }

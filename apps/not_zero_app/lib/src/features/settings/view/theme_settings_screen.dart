@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -18,7 +34,7 @@ class ThemeSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.settings.theme.title),
+        title: Text(context.t.settings.theme.title),
       ),
       body: RadioGroup<ThemeState>(
         groupValue: themeSettings.themeState,
@@ -30,16 +46,16 @@ class ThemeSettingsScreen extends ConsumerWidget {
         child: ListView(
           children: [
             RadioListTile<ThemeState>(
-              title: Text(t.settings.theme.values.light),
-              value: ThemeState.light,
+              title: Text(context.t.settings.theme.values.light),
+              value: .light,
             ),
             RadioListTile<ThemeState>(
-              title: Text(t.settings.theme.values.dark),
-              value: ThemeState.dark,
+              title: Text(context.t.settings.theme.values.dark),
+              value: .dark,
             ),
             RadioListTile<ThemeState>(
-              title: Text(t.settings.theme.values.system),
-              value: ThemeState.system,
+              title: Text(context.t.settings.theme.values.system),
+              value: .system,
             ),
             const Divider(),
             _DynamicColorsCheckbox(
@@ -49,8 +65,8 @@ class ThemeSettingsScreen extends ConsumerWidget {
             SwitchListTile(
               value: themeSettings.harmonizeColors,
               onChanged: themeStateController.setHarmonizeColors,
-              title: Text(t.settings.theme.harmonizeColors.title),
-              subtitle: Text(t.settings.theme.harmonizeColors.subtitle),
+              title: Text(context.t.settings.theme.harmonizeColors.title),
+              subtitle: Text(context.t.settings.theme.harmonizeColors.subtitle),
             ),
           ],
         ),
@@ -79,11 +95,16 @@ class _DynamicColorsCheckbox extends StatelessWidget {
     return SwitchListTile(
       value: enabled,
       onChanged: isSupported ? onChanged : null,
-      title: Text(t.settings.theme.useDynamicColorsOption.title),
+      title: Text(context.t.settings.theme.useDynamicColorsOption.title),
       subtitle: Text(
         isSupported
-            ? t.settings.theme.useDynamicColorsOption.subtitle
-            : t.settings.theme.useDynamicColorsOption.subttileUnavailable,
+            ? context.t.settings.theme.useDynamicColorsOption.subtitle
+            : context
+                  .t
+                  .settings
+                  .theme
+                  .useDynamicColorsOption
+                  .subttileUnavailable,
       ),
     );
   }

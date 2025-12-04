@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +22,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:not_zero_app/src/features/settings/di.dart';
-import 'package:not_zero_app/src/features/settings/models/theme_state.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
 import 'package:not_zero_app/src/helpers/global_navigation.dart';
 import 'package:not_zero_app/src/helpers/licenses.dart';
@@ -73,9 +88,9 @@ class MyApp extends ConsumerWidget {
 
           //-- Themes --
           themeMode: switch (themeSettings.themeState) {
-            ThemeState.light => ThemeMode.light,
-            ThemeState.dark => ThemeMode.dark,
-            ThemeState.system => ThemeMode.system,
+            .light => ThemeMode.light,
+            .dark => ThemeMode.dark,
+            .system => ThemeMode.system,
           },
           theme: lightTheme,
           darkTheme: darkTheme,

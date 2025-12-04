@@ -1,5 +1,22 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsBlocHeader extends StatelessWidget {
@@ -10,10 +27,10 @@ class SettingsBlocHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 9, top: 12, bottom: 6),
+      padding: const .only(left: 9, top: 12, bottom: 6),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.titleSmall,
+        style: context.theme.textTheme.titleSmall,
       ),
     );
   }
@@ -69,7 +86,7 @@ class SettingsUrlEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => launchUrlString(url, mode: LaunchMode.externalApplication),
+      onTap: () => launchUrlString(url, mode: .externalApplication),
       leading: icon != null ? Icon(icon) : null,
       title: Text(title),
     );

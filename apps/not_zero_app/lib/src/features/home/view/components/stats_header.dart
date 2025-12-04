@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
@@ -18,11 +34,11 @@ class HomeStatsHeader extends ConsumerWidget {
 
     return Container(
       height: 150,
-      alignment: Alignment.center,
+      alignment: .center,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
+          begin: .bottomCenter,
+          end: .topCenter,
           colors: [
             theme.scaffoldBackgroundColor,
             theme.colorScheme.primaryContainer,
@@ -31,16 +47,16 @@ class HomeStatsHeader extends ConsumerWidget {
           stops: const [0.0, 0.3, 1.0],
         ),
       ),
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: const .only(bottom: 15),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           if (totalScore != null)
             Text(
               totalScore.toString(),
               style: const TextStyle(
                 fontSize: 34,
-                fontWeight: FontWeight.w700,
+                fontWeight: .w700,
               ),
             )
           else

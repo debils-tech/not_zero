@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/tags/view/tag_selector.dart';
@@ -21,8 +37,8 @@ class TasksListScreen extends ConsumerWidget {
       ],
       child: const Scaffold(
         appBar: TasksListAppBar(),
-        body: _TasksListScreenBody(),
         floatingActionButton: TasksListFloatingButtons(),
+        body: _TasksListScreenBody(),
       ),
     );
   }
@@ -51,7 +67,11 @@ class _TasksListScreenBody extends ConsumerWidget {
       },
       child: switch (state) {
         AsyncData(value: final tasks) => _TasksListView(tasks),
-        _ => const _TasksLoadingView(),
+        AsyncLoading() => const _TasksLoadingView(),
+        AsyncError(:final error, :final stackTrace) => EverythingBrokeText(
+          error,
+          stackTrace,
+        ),
       },
     );
   }
@@ -78,16 +98,15 @@ class _TasksListView extends StatelessWidget {
     return AdaptiveListLimiter(
       maxWidth: 600,
       child: ListView(
-        padding: const EdgeInsets.only(top: 5, bottom: 75, left: 10, right: 10),
+        padding: const .only(top: 5, bottom: 75, left: 10, right: 10),
         children: [
           const _TasksFilters(),
-          if (tasks.isNotEmpty)
-            ...tasks.map(
-              (t) => TaskCard(
-                t,
-                key: Key('Task ${t.id}'),
-              ),
+          ...tasks.map(
+            (t) => TaskCard(
+              t,
+              key: Key('Task ${t.id}'),
             ),
+          ),
           if (tasks.isEmpty) const TasksEmptyListPlaceholder(),
         ],
       ),
@@ -117,11 +136,11 @@ class _TasksFilters extends ConsumerWidget {
     );
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         if (selectedDay != null) ...[
           DateRangeSwitch(
-            rangeType: DateRangeType.day,
+            rangeType: .day,
             initialDate: selectedDay,
             onChanged: (startDay, endDay) {
               assert(startDay.isAtSameDay(endDay), 'Invalid date range');
@@ -148,8 +167,8 @@ class _TasksFilters extends ConsumerWidget {
             allTasksCount != null &&
             allTasksCount > 0) ...[
           Text(
-            t.tasks.list.tasksLeftToComplete(n: tasksLeftToComplete),
-            style: Theme.of(context).textTheme.labelMedium,
+            context.t.tasks.list.tasksLeftToComplete(n: tasksLeftToComplete),
+            style: context.theme.textTheme.labelMedium,
           ),
           const SizedBox(height: 8),
         ],

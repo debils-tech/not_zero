@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/tasks/di.dart';
@@ -7,7 +23,7 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const TasksListAppBar({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(60);
+  Size get preferredSize => const .fromHeight(60);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,16 +34,15 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
     if (selectedItemsCount == 0) {
       return AppBar(
-        title: Text(t.tasks.list.title),
+        title: Text(context.t.tasks.list.title),
         actions: const [
           _TasksSomedayButton(),
-          _TasksPopupMenuButton(),
         ],
       );
     } else {
       return AppBar(
         title: Text(
-          t.tasks.list.titleSelection(n: selectedItemsCount),
+          context.t.tasks.list.titleSelection(n: selectedItemsCount),
         ),
         actions: [
           IconButton(
@@ -37,12 +52,12 @@ class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 taskList?.map((e) => e.id).toSet() ?? const {},
               );
             },
-            tooltip: t.tasks.list.tooltips.selectAllButton,
+            tooltip: context.t.tasks.list.tooltips.selectAllButton,
             icon: const Icon(Icons.select_all_rounded),
           ),
           IconButton(
             onPressed: selectionNotifier.removeAll,
-            tooltip: t.tasks.list.tooltips.removeSelectionButton,
+            tooltip: context.t.tasks.list.tooltips.removeSelectionButton,
             icon: const Icon(Icons.deselect_rounded),
           ),
         ],
@@ -62,7 +77,7 @@ class _TasksSomedayButton extends ConsumerWidget {
           ref.read(tasksFiltersNotifier.notifier).selectDay(DateTime.now());
         },
         icon: const Icon(Icons.alarm_rounded),
-        label: Text(t.tasks.list.planning.labelWhenEnabled),
+        label: Text(context.t.tasks.list.planning.labelWhenEnabled),
       );
     }
 
@@ -71,45 +86,6 @@ class _TasksSomedayButton extends ConsumerWidget {
         ref.read(tasksFiltersNotifier.notifier).toggleSomeday();
       },
       icon: const Icon(Icons.alarm_off_rounded),
-    );
-  }
-}
-
-class _TasksPopupMenuButton extends ConsumerWidget {
-  const _TasksPopupMenuButton();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final showCanceled = ref.watch(
-      // null means show all
-      tasksFiltersNotifier.select((state) => state.canceled == null),
-    );
-
-    return PopupMenuButton(
-      itemBuilder: (context) => [
-        PopupMenuItem<void>(
-          onTap: () {
-            if (showCanceled) {
-              ref.read(tasksFiltersNotifier.notifier).hideCanceled();
-            } else {
-              ref.read(tasksFiltersNotifier.notifier).showCanceled();
-            }
-          },
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  t.tasks.list.appBarActions.popupMenu.showCanceledOption,
-                ),
-              ),
-              Visibility(
-                visible: showCanceled,
-                child: const Icon(Icons.check_rounded),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

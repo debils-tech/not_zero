@@ -103,18 +103,30 @@ flutter run
 
 ### Common scripts
 
+- Install melos ([melos getting started](https://melos.invertase.dev/~melos-latest/getting-started)):
+
+```bash
+dart pub global activate melos
+```
+
 - Generate code (freezed/json):
 
 ```bash
-dart run melos generate
+melos run generate
+```
+
+- Generate localizations (slang):
+
+```bash
+melos run l10n
 ```
 
 - Format, analyze, and test:
 
 ```bash
-dart run melos format --set-exit-if-changed --output none $(git ls-files | grep --colour=never -e ".*\.dart")
-dart run melos exec flutter analyze --no-fatal-infos
-dart run melos run --no-select test
+melos format --set-exit-if-changed --output none $(git ls-files | grep --colour=never -e ".*\.dart")
+melos exec flutter analyze --no-fatal-infos
+melos run --no-select test
 ```
 
 - Build artifacts (examples):
@@ -122,6 +134,15 @@ dart run melos run --no-select test
 ```bash
 make build-android
 make build-linux
+```
+
+- Update database schema:
+
+```bash
+# Make all changes first, including schema version bump
+# Generate database files and migrations "packages/nz_drift" directory
+dart run build_runner build
+dart run drift_dev make-migrations
 ```
 
 ### Features

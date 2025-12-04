@@ -1,7 +1,24 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nz_flutter_core/src/components/common_widgets/clickable_card.dart';
 import 'package:nz_flutter_core/src/components/selection/di.dart';
+import 'package:nz_flutter_core/src/utils/build_context_quick_access_ext.dart';
 
 class SelectableCard extends ConsumerWidget {
   const SelectableCard({
@@ -31,8 +48,6 @@ class SelectableCard extends ConsumerWidget {
       itemSelectionNotifierProvider.select((selection) => selection.isNotEmpty),
     );
 
-    final theme = Theme.of(context);
-
     void toggleSelection() {
       if (isSelected) {
         notifier.remove(identifier);
@@ -48,12 +63,16 @@ class SelectableCard extends ConsumerWidget {
       child: AnimatedContainer(
         decoration: BoxDecoration(
           border: isSelected
-              ? Border.all(
-                  width: 3.5,
-                  color: theme.colorScheme.primary.withValues(alpha: 0.7),
+              ? .fromBorderSide(
+                  BorderSide(
+                    width: 3.5,
+                    color: context.theme.colorScheme.primary.withValues(
+                      alpha: 0.7,
+                    ),
+                  ),
                 )
               : null,
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          borderRadius: const .all(.circular(15)),
         ),
         duration: _animDuration,
         curve: _animCurve,

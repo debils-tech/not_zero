@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,8 +28,8 @@ class WeeklyStatsChart extends StatelessWidget {
     DateTime? start,
     DateTime? end,
     super.key,
-  }) : rangeStart = start ?? DateTime.now().startOfWeek,
-       rangeEnd = end ?? DateTime.now().endOfWeek;
+  }) : rangeStart = start ?? .now().startOfWeek,
+       rangeEnd = end ?? .now().endOfWeek;
 
   final List<int> stats;
   final int? selectedIndex;
@@ -24,7 +40,7 @@ class WeeklyStatsChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chartsColors = Theme.of(context).chartsColorScheme;
+    final chartsColors = context.theme.chartsColorScheme;
 
     final barData = LineChartBarData(
       spots: _getChartSpots(),
@@ -73,14 +89,14 @@ class WeeklyStatsChart extends StatelessWidget {
           // },
           touchTooltipData: LineTouchTooltipData(
             getTooltipColor: (_) => chartsColors.tooltipBackgroundColor,
-            tooltipBorderRadius: const BorderRadius.all(Radius.circular(8)),
+            tooltipBorderRadius: const .all(.circular(8)),
             getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
               return lineBarsSpot.map((lineBarSpot) {
                 return LineTooltipItem(
                   lineBarSpot.y.toInt().toString(),
                   TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
+                    color: context.theme.colorScheme.primary,
+                    fontWeight: .bold,
                   ),
                 );
               }).toList();
@@ -99,7 +115,7 @@ class WeeklyStatsChart extends StatelessWidget {
         ),
         borderData: FlBorderData(
           show: true,
-          border: Border.fromBorderSide(
+          border: .fromBorderSide(
             BorderSide(color: chartsColors.borderColor),
           ),
         ),
@@ -141,7 +157,7 @@ class WeeklyStatsChart extends StatelessWidget {
     final specificDay = start.add(Duration(days: value.round()));
     final title = DateFormat.E().format(specificDay);
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const .only(top: 10),
       child: Text(title),
     );
   }

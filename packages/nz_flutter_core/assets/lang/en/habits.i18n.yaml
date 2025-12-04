@@ -1,0 +1,34 @@
+list:
+  title: "Habits"
+  titleSelection:
+    one: "Selected $n task"
+    other: "Selected $n tasks"
+  deleteDialog:
+    content:
+      one: "Are you sure you want delete selected habit?"
+      other: "Are you sure you want delete $n selected habits?"
+  tooltips:
+    addNewButton: "Add new habit"
+    viewHabitButton: More details
+
+view:
+  title: "Habit view"
+  tooltips:
+    editHabitButton: "Edit"
+
+edit:
+  title:
+    create: "New habit"
+    existing: "Edit habit"
+  fields:
+    habitTitle: "Title"
+    habitDescription: "Description"
+    habitRegularity: "Regularity (Currently unavailable)"
+    habitRegularityDaily: "Daily"
+  submit:
+    create: "Create new habit!"
+    existing: "Save changes"
+  deleteDialog:
+    content: "Are you sure you want delete this habit?"
+  tooltips:
+    deleteHabitButton: "Delete"

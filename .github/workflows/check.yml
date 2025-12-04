@@ -2,6 +2,9 @@ name: Analyze and check app
 
 on:
   pull_request:
+    paths-ignore:
+      - '.github/workflows/license.yml'
+      - '.github/workflows/release.yml'
 
 jobs:
   check:
@@ -34,7 +37,7 @@ jobs:
 
       ### ANALYSIS ###
       - name: Ensure that code is formatted correctly
-        run: dart run melos format --set-exit-if-changed --output none $(git ls-files | grep --colour=never -e ".*\.dart")
+        run: melos format --set-exit-if-changed --output none $(git ls-files | grep --colour=never -e ".*\.dart")
       - name: Analyze code to find critical problems
         run: melos exec flutter analyze --no-fatal-infos
 

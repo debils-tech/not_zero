@@ -1,18 +1,29 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 enum TaskImportance {
   notImportant,
   normal,
-  important;
+  important
+  ;
 
-  factory TaskImportance.fromIndex(int? index) {
-    switch (index) {
-      case 0:
-        return TaskImportance.notImportant;
-      case 1:
-        return TaskImportance.normal;
-      case 2:
-        return TaskImportance.important;
-      default:
-        return TaskImportance.normal;
-    }
-  }
+  factory TaskImportance.fromIndex(int? index) => switch (index) {
+    0 => .notImportant,
+    1 => .normal,
+    2 => .important,
+    _ => .normal,
+  };
 }

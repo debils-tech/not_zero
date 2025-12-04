@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/tags/di.dart';
@@ -27,7 +43,7 @@ class ItemTagSelector extends ConsumerWidget {
       height: 35,
       child: switch (state) {
         AsyncData(value: final tags) => ListView(
-          scrollDirection: Axis.horizontal,
+          scrollDirection: .horizontal,
           children: <Widget>[
             ...tags.map((tag) {
               final isSelected = selectedTags.contains(tag.id);
@@ -66,16 +82,15 @@ class _TagButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return _RoundedButton(
       selected: selected,
-      color: theme.tagsColorScheme.colorByIndex(tag.colorIndex),
+      color: context.theme.tagsColorScheme.colorByIndex(tag.colorIndex),
       onPressed: () => onPressed(!selected),
       onLongPress: () => TagCreationDialog.show(context, tag),
       child: Text(
         tag.name.toUpperCase(),
         style: const TextStyle(
-          fontWeight: FontWeight.w600,
+          fontWeight: .w600,
           height: 1,
         ),
       ),
@@ -89,7 +104,7 @@ class _AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _RoundedButton(
-      color: Theme.of(context).colorScheme.onSurface,
+      color: context.theme.colorScheme.onSurface,
       selected: false,
       onPressed: () => TagCreationDialog.show(context),
       child: const Icon(Icons.add_rounded),
@@ -114,7 +129,7 @@ class _RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    final backgroundColor = context.theme.scaffoldBackgroundColor;
 
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),

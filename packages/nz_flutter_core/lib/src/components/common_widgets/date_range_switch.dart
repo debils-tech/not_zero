@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
@@ -24,25 +40,25 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
   late DateTime _currentDate;
 
   DateTime get _rangeStart => switch (widget.rangeType) {
-    DateRangeType.day => _currentDate.startOfDay,
-    DateRangeType.week => _currentDate.startOfWeek,
+    .day => _currentDate.startOfDay,
+    .week => _currentDate.startOfWeek,
   };
 
   DateTime get _rangeEnd => switch (widget.rangeType) {
-    DateRangeType.day => _currentDate.endOfDay,
-    DateRangeType.week => _currentDate.endOfWeek,
+    .day => _currentDate.endOfDay,
+    .week => _currentDate.endOfWeek,
   };
 
   @override
   void initState() {
-    _currentDate = widget.initialDate ?? DateTime.now();
+    _currentDate = widget.initialDate ?? .now();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: .center,
       children: [
         IconButton(
           onPressed: _previousRange,
@@ -54,7 +70,7 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
             constraints: const BoxConstraints(maxWidth: 230),
             child: _MiddleButton(
               onTap: _todayRange,
-              onLongPress: widget.rangeType == DateRangeType.day
+              onLongPress: widget.rangeType == .day
                   ? _selectCalendarRange
                   : null,
               rangeStart: _rangeStart,
@@ -73,15 +89,15 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
 
   void _todayRange() {
     setState(() {
-      _currentDate = DateTime.now();
+      _currentDate = .now();
     });
     widget.onChanged?.call(_rangeStart, _rangeEnd);
   }
 
   void _previousRange() {
     final newDate = switch (widget.rangeType) {
-      DateRangeType.day => _currentDate.dayBefore,
-      DateRangeType.week => _currentDate.weekBefore,
+      .day => _currentDate.dayBefore,
+      .week => _currentDate.weekBefore,
     };
     setState(() {
       _currentDate = newDate;
@@ -91,8 +107,8 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
 
   void _nextRange() {
     final newDate = switch (widget.rangeType) {
-      DateRangeType.day => _currentDate.dayAfter,
-      DateRangeType.week => _currentDate.weekAfter,
+      .day => _currentDate.dayAfter,
+      .week => _currentDate.weekAfter,
     };
     setState(() {
       _currentDate = newDate;
@@ -147,7 +163,7 @@ class _MiddleButton extends StatelessWidget {
     final String text;
 
     if (rangeStart.isAtSameDay(rangeEnd)) {
-      text = NzDateTimeFormat.relativeLocalFormat(rangeStart);
+      text = NzDateTimeFormat.relativeLocalFormat(context, rangeStart);
     } else {
       text = NzDateTimeFormat.rangeLocalFormat(rangeStart, rangeEnd);
     }

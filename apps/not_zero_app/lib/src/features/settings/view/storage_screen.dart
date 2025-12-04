@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:not_zero_app/src/features/settings/view/components/list_elements.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
@@ -10,23 +26,23 @@ class StorageSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(t.settings.storage.title)),
+      appBar: AppBar(title: Text(context.t.settings.storage.title)),
       body: ListView(
         children: [
-          SettingsBlocHeader(t.settings.storage.aboutHeader),
+          SettingsBlocHeader(context.t.settings.storage.aboutHeader),
           Padding(
-            padding: const EdgeInsets.fromLTRB(15, 6, 15, 18),
-            child: SelectableText(t.settings.storage.aboutContent),
+            padding: const .fromLTRB(15, 6, 15, 18),
+            child: SelectableText(context.t.settings.storage.aboutContent),
           ),
           ListTile(
             // onTap: () => _exportData(context),
             leading: const Icon(Icons.save_rounded),
-            title: Text(t.settings.storage.exportTitle),
+            title: Text(context.t.settings.storage.exportTitle),
           ),
           ListTile(
             // onTap: () => _importData(context),
             leading: const Icon(Icons.download_rounded),
-            title: Text(t.settings.storage.importTitle),
+            title: Text(context.t.settings.storage.importTitle),
           ),
         ],
       ),
@@ -102,7 +118,7 @@ class StorageSettingsScreen extends StatelessWidget {
   //             icon: const Icon(Icons.save_rounded),
   //             title: Text(title),
   //             content: const Row(
-  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               mainAxisAlignment: .center,
   //               children: [
   //                 CircularProgressIndicator(),
   //               ],

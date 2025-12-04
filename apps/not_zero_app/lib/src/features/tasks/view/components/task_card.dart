@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -23,17 +39,17 @@ class TaskCard extends StatelessWidget {
         identifier: task.id,
         child: _ImportanceIndicatorBox(
           importance: task.importance,
-          child: Row(
-            children: [
-              const SizedBox(width: 15),
-              Flexible(
-                fit: FlexFit.tight,
-                child: _TaskTextBlock(task: task),
-              ),
-              const SizedBox(width: 12),
-              _TaskCheckbox(task: task),
-              const SizedBox(width: 8),
-            ],
+          child: Padding(
+            padding: const .only(left: 15, right: 8, top: 2, bottom: 6),
+            child: Row(
+              spacing: 12,
+              children: [
+                Expanded(
+                  child: _TaskTextBlock(task: task),
+                ),
+                _TaskCheckbox(task: task),
+              ],
+            ),
           ),
         ),
       ),
@@ -48,46 +64,42 @@ class _TaskTextBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
-        const SizedBox(height: 2),
         SizedBox(
           height: 20,
           child: _TaskTimeText(task),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 2, bottom: 8),
+          padding: const .only(top: 2, bottom: 8),
           child: TagListIndicator(tags: task.tags),
         ),
         Text(
           task.title,
-          overflow: TextOverflow.ellipsis,
+          overflow: .ellipsis,
           maxLines: 3,
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            decoration: task.isCanceled ? TextDecoration.lineThrough : null,
+          style: context.theme.textTheme.titleMedium?.copyWith(
+            fontWeight: .w600,
+            decoration: task.isCanceled ? .lineThrough : null,
             decorationThickness: 2.5,
           ),
         ),
         const SizedBox(height: 4),
         if (task.description.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(
+            padding: const .symmetric(
               horizontal: 4,
             ),
             child: Text(
               task.description,
-              style: theme.textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.w500,
+              style: context.theme.textTheme.bodySmall?.copyWith(
+                fontWeight: .w500,
               ),
-              overflow: TextOverflow.ellipsis,
+              overflow: .ellipsis,
               maxLines: 4,
             ),
           ),
-        const SizedBox(height: 6),
       ],
     );
   }
@@ -104,7 +116,7 @@ class _TaskTimeText extends StatelessWidget {
 
     final formattedTime = NzDateTimeFormat.localFormat(timeToShow);
 
-    final ts = t.common.timeSubtitle;
+    final ts = context.t.common.timeSubtitle;
     final String finalTextTime;
     if (task.isCompleted) {
       finalTextTime = ts.completedAt(time: formattedTime);
@@ -114,7 +126,7 @@ class _TaskTimeText extends StatelessWidget {
       finalTextTime = ts.createdAt(time: formattedTime);
     }
 
-    final textStyle = Theme.of(context).textTheme.labelMedium;
+    final textStyle = context.theme.textTheme.labelMedium;
     return Text(
       finalTextTime,
       style: textStyle?.copyWith(
@@ -142,7 +154,7 @@ class _ImportanceIndicatorBox extends StatelessWidget {
             width: 7,
             color: _colorByImportance(
               importance,
-              Theme.of(context).tasksColorScheme,
+              context.theme.tasksColorScheme,
             ),
           ),
         ),
@@ -155,9 +167,9 @@ class _ImportanceIndicatorBox extends StatelessWidget {
     TaskImportance importance,
     TasksColorScheme colorScheme,
   ) => switch (importance) {
-    TaskImportance.notImportant => colorScheme.notImportantColor,
-    TaskImportance.normal => colorScheme.normalColor,
-    TaskImportance.important => colorScheme.importantColor,
+    .notImportant => colorScheme.notImportantColor,
+    .normal => colorScheme.normalColor,
+    .important => colorScheme.importantColor,
   };
 }
 
@@ -174,26 +186,23 @@ class _TaskCheckbox extends ConsumerWidget {
     );
 
     if (task.isCanceled) {
+      // State of checkbox widget when task is canceled
       return TextButton.icon(
         onPressed: () => ref
-            .read(tasksRepositoryProvider)
-            .updateTask(
-              oldTask: task,
-              newTask: task.complete(completed: false),
-            ),
+            .read(tasksMainListNotifier.notifier)
+            .updateTask(task.complete(completed: false)),
         icon: const Icon(
           Icons.cancel_outlined,
           size: 20,
         ),
-        label: Text(t.tasks.list.canceledTaskMark),
+        label: Text(context.t.tasks.list.canceledTaskMark),
       );
     }
 
     if (task.forDate == null) {
+      // State of checkbox widget when task is not scheduled for a specific date
       return IconButton.outlined(
         onPressed: () async {
-          final tasksRepo = ref.read(tasksRepositoryProvider);
-
           final firstDate = DateTime.now();
           final lastDate = firstDate.add(const Duration(days: 365));
           final newDate = await showDatePicker(
@@ -205,31 +214,28 @@ class _TaskCheckbox extends ConsumerWidget {
           if (newDate == null) return;
 
           unawaited(
-            tasksRepo.updateTask(
-              oldTask: task,
-              newTask: task.copyWith(forDate: newDate),
-            ),
+            ref
+                .read(tasksMainListNotifier.notifier)
+                .updateTask(task.copyWith(forDate: newDate)),
           );
         },
         icon: const Icon(
           Icons.calendar_today_rounded,
           size: 20,
         ),
-        tooltip: t.tasks.list.tooltips.selectDateForSomedayTasksButton,
+        tooltip: context.t.tasks.list.tooltips.selectDateForSomedayTasksButton,
       );
     }
 
+    // The most normal state of a task checkbox widget (actual checkbox)
     return Transform.scale(
       scale: 1.3,
       child: Checkbox(
         value: task.isCompleted,
         shape: const CircleBorder(),
         onChanged: (value) => ref
-            .read(tasksRepositoryProvider)
-            .updateTask(
-              oldTask: task,
-              newTask: task.complete(completed: value ?? false),
-            ),
+            .read(tasksMainListNotifier.notifier)
+            .updateTask(task.complete(completed: value ?? false)),
       ),
     );
   }

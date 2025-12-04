@@ -2,7 +2,7 @@ name: not_zero
 publish_to: 'none'
 
 environment:
-  sdk: ^3.9.2
+  sdk: ^3.10.0
 
 workspace:
   - apps/not_zero_app
@@ -17,12 +17,14 @@ workspace:
 
 dev_dependencies:
   melos: ^7.1.1
+  glob: ^2.1.3
 
 melos:
   scripts:
     generate:
-      exec: dart run build_runner build -d
-      orderDependents: true
+      run: dart run build_runner build -d
+      exec:
+        orderDependents: true
       packageFilters:
         dependsOn:
           - build_runner
@@ -34,8 +36,9 @@ melos:
     fix:
       exec: dart fix --apply .
     upgrade:
-      exec: dart pub upgrade --major-versions
-      orderDependents: true
+      run: dart pub upgrade --major-versions
+      exec:
+        orderDependents: true
     test:
       exec: flutter test
       packageFilters:

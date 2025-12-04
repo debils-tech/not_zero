@@ -9,9 +9,11 @@ part of 'task.dart';
 _Task _$TaskFromJson(Map<String, dynamic> json) => _Task(
   id: json['id'] as String,
   title: json['title'] as String,
-  importance: $enumDecode(_$TaskImportanceEnumMap, json['importance']),
   createdAt: DateTime.parse(json['createdAt'] as String),
   description: json['description'] as String? ?? '',
+  importance:
+      $enumDecodeNullable(_$TaskImportanceEnumMap, json['importance']) ??
+      TaskImportance.normal,
   modifiedAt: json['modifiedAt'] == null
       ? null
       : DateTime.parse(json['modifiedAt'] as String),
@@ -35,15 +37,15 @@ _Task _$TaskFromJson(Map<String, dynamic> json) => _Task(
 Map<String, dynamic> _$TaskToJson(_Task instance) => <String, dynamic>{
   'id': instance.id,
   'title': instance.title,
-  'importance': _$TaskImportanceEnumMap[instance.importance]!,
   'createdAt': instance.createdAt.toIso8601String(),
   'description': instance.description,
+  'importance': _$TaskImportanceEnumMap[instance.importance]!,
   'modifiedAt': instance.modifiedAt?.toIso8601String(),
   'completedAt': instance.completedAt?.toIso8601String(),
   'canceledAt': instance.canceledAt?.toIso8601String(),
   'forDate': instance.forDate?.toIso8601String(),
   'persistent': instance.persistent,
-  'tags': Task._tagsToJson(instance.tags),
+  'tags': ItemTag.tagsToIds(instance.tags),
 };
 
 const _$TaskImportanceEnumMap = {

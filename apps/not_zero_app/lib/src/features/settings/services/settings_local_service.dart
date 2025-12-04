@@ -1,8 +1,25 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/settings/models/theme_state.dart';
 import 'package:nz_boxes/nz_boxes.dart';
+import 'package:nz_common/nz_common.dart';
 
-class SettingsLocalService {
+class SettingsLocalService implements BaseService {
   const SettingsLocalService(this._settingsBox);
 
   final NotZeroSimpleBox _settingsBox;
@@ -12,6 +29,7 @@ class SettingsLocalService {
   static const _themeStateKey = 'themeState';
   static const _useDynamicColorsKey = 'useDynamicColors';
   static const _harmonizeColorsKey = 'harmonizeColors';
+  static const _expandedHabitsUiKey = 'expandedHabitsUi';
 
   ThemeState? getThemeState() {
     final stringValue = _settingsBox.getString(_themeStateKey);
@@ -40,5 +58,13 @@ class SettingsLocalService {
 
   Future<void> setHarmonizeColors(bool value) {
     return _settingsBox.putBool(_harmonizeColorsKey, value);
+  }
+
+  bool? getExpandedHabitsUi() {
+    return _settingsBox.getBool(_expandedHabitsUiKey);
+  }
+
+  Future<void> setExpandedHabitsUi(bool value) {
+    return _settingsBox.putBool(_expandedHabitsUiKey, value);
   }
 }

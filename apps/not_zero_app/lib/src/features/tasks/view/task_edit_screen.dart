@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -22,8 +38,8 @@ class TaskEditScreen extends ConsumerWidget {
     final formKey = ref.watch(_formKeyProvider);
 
     final screenTitle = taskToEdit == null
-        ? t.tasks.edit.title.create
-        : t.tasks.edit.title.existing;
+        ? context.t.tasks.edit.title.create
+        : context.t.tasks.edit.title.existing;
     final taskActions = taskToEdit != null
         ? [_DeleteTaskButton(taskToEdit!)]
         : null;
@@ -40,7 +56,7 @@ class TaskEditScreen extends ConsumerWidget {
       floatingActionButton: isChanged
           ? _FloatingSubmitButton(formKey, taskToEdit: taskToEdit)
           : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: .centerFloat,
     );
   }
 }
@@ -57,22 +73,22 @@ class _DeleteTaskButton extends ConsumerWidget {
         final navigator = GoRouter.of(context);
         final confirm = await showConfirmationDialog(
           context,
-          title: t.common.dialog.deleteTitle,
-          content: t.tasks.edit.deleteDialog.content,
+          title: context.t.common.dialog.deleteTitle,
+          content: context.t.tasks.edit.deleteDialog.content,
           confirm: t.common.dialog.deleteButton,
           dangerous: true,
         );
         if (confirm ?? false) {
-          final repository = ref.read(tasksRepositoryProvider);
-          unawaited(repository.deleteTask(task));
+          final notifier = ref.read(tasksMainListNotifier.notifier);
+          unawaited(notifier.deleteTasks({task.id}));
           navigator.pop();
         }
       },
       iconSize: 26,
-      tooltip: t.tasks.edit.tooltips.deleteTaskButton,
+      tooltip: context.t.tasks.edit.tooltips.deleteTaskButton,
       icon: Icon(
         Icons.delete_outline_rounded,
-        color: Theme.of(context).colorScheme.error,
+        color: context.theme.colorScheme.error,
       ),
     );
   }
@@ -120,7 +136,7 @@ class _TaskEditScreenBody extends ConsumerWidget {
       child: Stack(
         children: [
           ListView(
-            padding: const EdgeInsets.only(
+            padding: const .only(
               left: 10,
               right: 10,
               top: 5,
@@ -157,8 +173,8 @@ class _TaskEditScreenBody extends ConsumerWidget {
 
     final confirm = await showConfirmationDialog(
       context,
-      title: t.common.dialog.exitTitle,
-      content: t.common.dialog.exitContent,
+      title: context.t.common.dialog.exitTitle,
+      content: context.t.common.dialog.exitContent,
       dangerous: true,
     );
     if (confirm ?? false) return true;
@@ -179,15 +195,15 @@ class _FloatingSubmitButton extends ConsumerWidget {
       onPressed: () => _onTap(context, ref),
       style: FilledButton.styleFrom(
         elevation: 20,
-        padding: const EdgeInsets.symmetric(
+        padding: const .symmetric(
           horizontal: 20,
           vertical: 15,
         ),
       ),
       child: Text(
         taskToEdit == null
-            ? t.tasks.edit.submit.create
-            : t.tasks.edit.submit.existing,
+            ? context.t.tasks.edit.submit.create
+            : context.t.tasks.edit.submit.existing,
         style: const TextStyle(fontSize: 20),
       ),
     );
@@ -207,10 +223,10 @@ class _FloatingSubmitButton extends ConsumerWidget {
       final persistent = values[TaskEditPersistenceField.name] as bool;
 
       final prevTask = taskToEdit;
-      final repository = ref.read(tasksRepositoryProvider);
+      final notifier = ref.read(tasksMainListNotifier.notifier);
       if (prevTask == null) {
         unawaited(
-          repository.addTask(
+          notifier.addTask(
             Task.create(
               title: title,
               importance: importance,
@@ -223,9 +239,8 @@ class _FloatingSubmitButton extends ConsumerWidget {
         );
       } else {
         unawaited(
-          repository.updateTask(
-            oldTask: prevTask,
-            newTask: prevTask.edit(
+          notifier.updateTask(
+            prevTask.edit(
               title: title,
               importance: importance,
               description: description,
@@ -243,12 +258,14 @@ class _FloatingSubmitButton extends ConsumerWidget {
   }
 }
 
-final StateProvider<GlobalKey<FormBuilderState>> _formKeyProvider =
-    StateProvider.autoDispose<GlobalKey<FormBuilderState>>((ref) {
-      return GlobalKey<FormBuilderState>();
-    });
+final _formKeyProvider = Provider.autoDispose<GlobalKey<FormBuilderState>>((
+  ref,
+) {
+  return GlobalKey<FormBuilderState>();
+});
 
-final StateProvider<bool> _isTaskChangedProvider =
-    StateProvider.autoDispose<bool>((ref) {
-      return false;
-    });
+// TODO(uSlashVlad): Move `StateProvider` to `NotifierProvider`
+// Maybe create some universal class for this.
+final _isTaskChangedProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
+});

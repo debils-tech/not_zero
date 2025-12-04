@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 // dart format width=80
 import 'package:drift/drift.dart';
 import 'package:drift_dev/api/migrations_native.dart';
@@ -48,15 +64,15 @@ void main() {
           id: 'd9be9a9e-fb36-46e8-ad57-348efe38bb4a',
           title: 'Cool new task',
           description: 'Nice description',
-          createdAt: DateTime.fromMicrosecondsSinceEpoch(
+          createdAt: .fromMicrosecondsSinceEpoch(
             1388084662312456,
             isUtc: true,
           ),
-          modifiedAt: DateTime.fromMicrosecondsSinceEpoch(
+          modifiedAt: .fromMicrosecondsSinceEpoch(
             1366934400012087,
             isUtc: true,
           ),
-          completedAt: DateTime.fromMicrosecondsSinceEpoch(
+          completedAt: .fromMicrosecondsSinceEpoch(
             1717843669610792,
             isUtc: true,
           ),
@@ -68,15 +84,15 @@ void main() {
           id: 'd9be9a9e-fb36-46e8-ad57-348efe38bb4a',
           title: 'Cool new task',
           description: 'Nice description',
-          createdAt: DateTime.fromMicrosecondsSinceEpoch(
+          createdAt: .fromMicrosecondsSinceEpoch(
             1388084662000000,
             isUtc: true,
           ),
-          modifiedAt: DateTime.fromMicrosecondsSinceEpoch(
+          modifiedAt: .fromMicrosecondsSinceEpoch(
             1366934400000000,
             isUtc: true,
           ),
-          completedAt: DateTime.fromMicrosecondsSinceEpoch(
+          completedAt: .fromMicrosecondsSinceEpoch(
             1717843669000000,
             isUtc: true,
           ),

@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nz_base_models/nz_base_models.dart';
@@ -10,7 +26,7 @@ class TaskEditingInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme.titleSmall;
+    final textTheme = context.theme.textTheme.titleSmall;
 
     final timeFormat = DateFormat.Hm();
     final dateFormat = DateFormat.yMMMMd();
@@ -25,16 +41,16 @@ class TaskEditingInfo extends StatelessWidget {
         : null;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text(
-          t.common.timeSubtitle.createdAt(time: createAtDate),
+          context.t.common.timeSubtitle.createdAt(time: createAtDate),
           style: textTheme,
         ),
         const SizedBox(height: 2),
         if (modifiedAtDate != null)
           Text(
-            t.common.timeSubtitle.modifiedAt(time: modifiedAtDate),
+            context.t.common.timeSubtitle.modifiedAt(time: modifiedAtDate),
             style: textTheme,
           ),
       ],

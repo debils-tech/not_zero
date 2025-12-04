@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +32,7 @@ class TaskViewScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.tasks.view.title),
+        title: Text(context.t.tasks.view.title),
         bottom: _TaskViewImportanceIndicator(taskToView),
       ),
       body: _TaskViewScreenBody(taskToView),
@@ -32,16 +48,16 @@ class _TaskViewImportanceIndicator extends StatelessWidget
   final Task task;
 
   @override
-  Size get preferredSize => const Size.fromHeight(8);
+  Size get preferredSize => const .fromHeight(8);
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints.expand(height: preferredSize.height),
+      constraints: .expand(height: preferredSize.height),
       child: ColoredBox(
         color: _colorByImportance(
           task.importance,
-          Theme.of(context).tasksColorScheme,
+          context.theme.tasksColorScheme,
         ),
       ),
     );
@@ -51,9 +67,9 @@ class _TaskViewImportanceIndicator extends StatelessWidget
     TaskImportance importance,
     TasksColorScheme colorScheme,
   ) => switch (importance) {
-    TaskImportance.notImportant => colorScheme.notImportantColor,
-    TaskImportance.normal => colorScheme.normalColor,
-    TaskImportance.important => colorScheme.importantColor,
+    .notImportant => colorScheme.notImportantColor,
+    .normal => colorScheme.normalColor,
+    .important => colorScheme.importantColor,
   };
 }
 
@@ -64,18 +80,17 @@ class _TaskViewScreenBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     final task =
         ref.watch(specificTaskStreamProvider(taskToView.id)).value ??
         taskToView;
 
     return ListView(
-      padding: const EdgeInsets.only(top: 7, bottom: 75, left: 7, right: 7),
+      padding: const .only(top: 7, bottom: 75, left: 7, right: 7),
       children: [
         TagListIndicator(
           tags: task.tags,
           fontSize: 13,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderRadius: const .all(.circular(12)),
         ),
         GestureDetector(
           onTap: () => context.pushReplacement(
@@ -83,13 +98,13 @@ class _TaskViewScreenBody extends ConsumerWidget {
             extra: taskToView,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: [
               const SizedBox(height: 8),
               Text(
                 task.title,
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
+                style: context.theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: .w700,
                 ),
               ),
               const SizedBox(height: 10),
@@ -98,7 +113,7 @@ class _TaskViewScreenBody extends ConsumerWidget {
         ),
         if (task.description.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const .symmetric(horizontal: 8),
             child: SelectableText(task.description),
           ),
         const SizedBox(height: 10),
@@ -120,7 +135,7 @@ class _EditFloatingButton extends ConsumerWidget {
         '/tasks/edit/${taskToView.id}',
         extra: taskToView,
       ),
-      tooltip: t.tasks.view.tooltips.editTaskButton,
+      tooltip: context.t.tasks.view.tooltips.editTaskButton,
       child: const Icon(Icons.edit_rounded),
     );
   }

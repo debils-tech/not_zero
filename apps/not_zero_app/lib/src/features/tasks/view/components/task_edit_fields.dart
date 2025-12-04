@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -15,14 +31,15 @@ class TaskEditTitleField extends StatelessWidget {
     return FormBuilderTextField(
       name: name,
       autofocus: true,
-      textCapitalization: TextCapitalization.sentences,
+      textCapitalization: .sentences,
       decoration: InputDecoration(
-        labelText: t.tasks.edit.fields.taskTitle,
+        labelText: context.t.tasks.edit.fields.taskTitle,
         counter: const SizedBox.shrink(),
       ),
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
       ]),
+      textInputAction: .next,
       maxLength: 75,
     );
   }
@@ -37,10 +54,11 @@ class TaskEditDescriptionField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: name,
-      textCapitalization: TextCapitalization.sentences,
+      textCapitalization: .sentences,
       decoration: InputDecoration(
-        labelText: t.tasks.edit.fields.taskDescription,
+        labelText: context.t.tasks.edit.fields.taskDescription,
       ),
+      textInputAction: .next,
       maxLines: null,
     );
   }
@@ -53,7 +71,7 @@ class TaskEditImportanceField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final taskColors = Theme.of(context).tasksColorScheme;
+    final taskColors = context.theme.tasksColorScheme;
 
     return FormBuilderField<TaskImportance>(
       name: name,
@@ -125,7 +143,7 @@ class TaskEditForDateField extends StatelessWidget {
               OutlinedButton.icon(
                 onPressed: () => field.didChange(null),
                 icon: const Icon(Icons.close_rounded),
-                label: Text(t.tasks.edit.fields.taskForSomeday),
+                label: Text(context.t.tasks.edit.fields.taskForSomeday),
               ),
             ],
           ],
@@ -144,10 +162,10 @@ class TaskEditPersistenceField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderSwitch(
       name: name,
-      decoration: const InputDecoration(border: InputBorder.none),
-      controlAffinity: ListTileControlAffinity.leading,
+      decoration: const InputDecoration(border: .none),
+      controlAffinity: .leading,
       title: Text(
-        t.tasks.edit.fields.taskPersistence,
+        context.t.tasks.edit.fields.taskPersistence,
         style: const TextStyle(fontSize: 15),
       ),
     );

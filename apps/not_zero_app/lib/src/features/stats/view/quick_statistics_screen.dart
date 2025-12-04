@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
@@ -22,7 +38,7 @@ class _QuickStatsAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const _QuickStatsAppBar();
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const .fromHeight(100);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,13 +46,13 @@ class _QuickStatsAppBar extends ConsumerWidget implements PreferredSizeWidget {
       quickStatisticsNotifierProvider.notifier,
     );
     return AppBar(
-      title: Text(t.stats.quickView.title),
+      title: Text(context.t.stats.quickView.title),
       bottom: PreferredSize(
-        preferredSize: Size.zero,
+        preferredSize: .zero,
         child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: const .all(4),
           child: DateRangeSwitch(
-            rangeType: DateRangeType.week,
+            rangeType: .week,
             onChanged: quickStatsNotifier.loadDays,
           ),
         ),
@@ -53,13 +69,13 @@ class _QuickStatsBody extends StatelessWidget {
     return AdaptiveListLimiter(
       maxWidth: 600,
       child: ListView(
-        padding: const EdgeInsets.all(10),
+        padding: const .all(10),
         children: [
           Padding(
-            padding: const EdgeInsets.all(4),
+            padding: const .all(4),
             child: Text(
-              t.stats.quickView.weeklyChart,
-              style: Theme.of(context).textTheme.bodyLarge,
+              context.t.stats.quickView.weeklyChart,
+              style: context.theme.textTheme.bodyLarge,
             ),
           ),
           const SizedBox(height: 8),
@@ -86,11 +102,11 @@ class _WeeklyChartWithSelection extends ConsumerWidget {
 
     return ChartCard(
       innerHeight: 220,
-      padding: const EdgeInsets.symmetric(vertical: 15),
+      padding: const .symmetric(vertical: 15),
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
+            padding: const .symmetric(horizontal: 25),
             child: WeeklyStatsChart(
               stats: chartStats,
               rendererKey: weeklyRendererKey,
@@ -131,7 +147,7 @@ class _SelectionGesture extends ConsumerWidget {
               event.localPosition,
               constrains,
             ),
-            behavior: HitTestBehavior.opaque,
+            behavior: .opaque,
           ),
         );
       },

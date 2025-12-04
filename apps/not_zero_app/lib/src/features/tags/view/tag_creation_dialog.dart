@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -23,9 +39,9 @@ class TagCreationDialog extends StatefulWidget {
       useSafeArea: true,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(28),
-          topRight: Radius.circular(28),
+        borderRadius: .only(
+          topLeft: .circular(28),
+          topRight: .circular(28),
         ),
       ),
       builder: (_) => TagCreationDialog(
@@ -58,19 +74,19 @@ class _TagCreationDialogState extends State<TagCreationDialog> {
                 'color': 0,
               },
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: [
             Text(
               isEdit
-                  ? t.tags.creation.title.existing
-                  : t.tags.creation.title.create,
-              style: Theme.of(context).textTheme.headlineSmall,
+                  ? context.t.tags.creation.title.existing
+                  : context.t.tags.creation.title.create,
+              style: context.theme.textTheme.headlineSmall,
             ),
             const SizedBox(height: 8),
             FormBuilderTextField(
               name: 'name',
               // autofocus: true,
-              textCapitalization: TextCapitalization.words,
+              textCapitalization: .words,
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(),
               ]),
@@ -83,7 +99,7 @@ class _TagCreationDialogState extends State<TagCreationDialog> {
             const _TagColorField(),
             const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: .spaceEvenly,
               children: [
                 SizedBox(
                   width: 48,
@@ -120,12 +136,12 @@ class _TagColorField extends StatelessWidget {
       builder: (field) {
         return Container(
           height: 2 * (verticalPadding + iconButtonPadding) + iconSize,
-          padding: const EdgeInsets.symmetric(
+          padding: const .symmetric(
             horizontal: 16,
             vertical: verticalPadding,
           ),
           child: ListView.separated(
-            scrollDirection: Axis.horizontal,
+            scrollDirection: .horizontal,
             itemBuilder: (_, index) {
               final isSelected = field.value == index;
               return IconButton(
@@ -140,7 +156,7 @@ class _TagColorField extends StatelessWidget {
                             strokeAlign: BorderSide.strokeAlignCenter,
                           )
                         : null,
-                    shape: BoxShape.circle,
+                    shape: .circle,
                   ),
                   child: const SizedBox.square(dimension: iconSize),
                 ),
@@ -169,9 +185,9 @@ class _DeleteButton extends ConsumerWidget {
         final navigator = GoRouter.of(context);
         final confirm = await showConfirmationDialog(
           context,
-          title: t.common.dialog.deleteTitle,
-          content: t.tags.creation.deleteDialog.content,
-          confirm: t.common.dialog.deleteButton,
+          title: context.t.common.dialog.deleteTitle,
+          content: context.t.tags.creation.deleteDialog.content,
+          confirm: context.t.common.dialog.deleteButton,
           dangerous: true,
         );
         if (confirm ?? false) {
@@ -179,10 +195,10 @@ class _DeleteButton extends ConsumerWidget {
           navigator.pop();
         }
       },
-      tooltip: t.tags.creation.tooltips.deleteTagButton,
+      tooltip: context.t.tags.creation.tooltips.deleteTagButton,
       icon: Icon(
         Icons.delete_outline_rounded,
-        color: Theme.of(context).colorScheme.error,
+        color: context.theme.colorScheme.error,
       ),
     );
   }
@@ -207,7 +223,7 @@ class _SubmitButton extends ConsumerWidget {
 
           final ItemTag tag;
           if (tagToEdit == null) {
-            tag = ItemTag.create(name: name, colorIndex: color);
+            tag = .create(name: name, colorIndex: color);
           } else {
             tag = tagToEdit!.edit(name: name, colorIndex: color);
           }
@@ -217,10 +233,10 @@ class _SubmitButton extends ConsumerWidget {
         }
       },
       style: FilledButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const .symmetric(vertical: 16),
       ),
       child: Text(
-        t.tags.creation.submit,
+        context.t.tags.creation.submit,
         style: const TextStyle(fontSize: 20),
       ),
     );

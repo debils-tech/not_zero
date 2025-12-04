@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/settings/constants/links.dart';
@@ -13,26 +29,26 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.settings.about.title),
+        title: Text(context.t.settings.about.title),
       ),
       body: ListView(
         children: [
-          SettingsBlocHeader(t.settings.about.blocks.version),
+          SettingsBlocHeader(context.t.settings.about.blocks.version),
           const _AppInfoTile(),
-          SettingsBlocHeader(t.settings.about.blocks.links),
+          SettingsBlocHeader(context.t.settings.about.blocks.links),
           SettingsUrlEntry(
             url: ContactLinks.telegram,
-            title: t.settings.about.blocks.telegram,
+            title: context.t.settings.about.blocks.telegram,
             icon: NotZeroIcons.telegram_plane,
           ),
           SettingsUrlEntry(
             url: ContactLinks.repository,
-            title: t.settings.about.blocks.repository,
+            title: context.t.settings.about.blocks.repository,
             icon: NotZeroIcons.github_circled,
           ),
           SettingsMenuEntry(
             route: '/settings/about/licenses',
-            title: t.settings.about.blocks.licenses,
+            title: context.t.settings.about.blocks.licenses,
           ),
         ],
       ),

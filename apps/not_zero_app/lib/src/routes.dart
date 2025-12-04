@@ -1,4 +1,23 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:go_router/go_router.dart';
+import 'package:not_zero_app/src/features/habits/view/habit_edit_screen.dart';
+import 'package:not_zero_app/src/features/habits/view/habit_view_screen.dart';
+import 'package:not_zero_app/src/features/habits/view/habits_list_screen.dart';
 import 'package:not_zero_app/src/features/home/view/home_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/about_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/licenses_screen.dart';
@@ -32,7 +51,7 @@ final appRouter = GoRouter(
               path: 'view/:id',
               builder: (context, state) {
                 final extra = state.extra;
-                assert(extra is Task?, 'Extra should be Task object');
+                assert(extra is Task, 'Extra should be Task object');
                 return TaskViewScreen(
                   // TODO(uSlashVlad): Maybe will be helpful to load actual task
                   taskToView: extra! as Task,
@@ -43,9 +62,39 @@ final appRouter = GoRouter(
               path: 'edit/:id',
               builder: (context, state) {
                 final extra = state.extra;
-                assert(extra is Task?, 'Extra should be Task object');
+                assert(extra is Task, 'Extra should be Task object');
                 return TaskEditScreen(
                   taskToEdit: extra as Task?,
+                );
+              },
+            ),
+          ],
+        ),
+        GoRoute(
+          path: 'habits',
+          builder: (_, _) => const HabitsListScreen(),
+          routes: [
+            GoRoute(
+              path: 'new',
+              builder: (_, _) => const HabitEditScreen(),
+            ),
+            GoRoute(
+              path: 'view/:id',
+              builder: (context, state) {
+                final extra = state.extra;
+                assert(extra is Habit, 'Extra should be Habit object');
+                return HabitViewScreen(
+                  habitToView: extra! as Habit,
+                );
+              },
+            ),
+            GoRoute(
+              path: 'edit/:id',
+              builder: (context, state) {
+                final extra = state.extra;
+                assert(extra is Habit, 'Extra should be Habit object');
+                return HabitEditScreen(
+                  habitToEdit: extra as Habit?,
                 );
               },
             ),

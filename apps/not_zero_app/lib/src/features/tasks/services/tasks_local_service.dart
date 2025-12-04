@@ -1,34 +1,52 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:drift/drift.dart';
 import 'package:not_zero_app/src/features/tasks/models/tasks_filters.dart';
 import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_common/nz_common.dart';
 import 'package:nz_drift/nz_drift.dart';
 
-class TasksLocalService {
-  TasksLocalService(this._db);
+class TasksLocalService implements BaseService {
+  const TasksLocalService(this._db);
 
   final NotZeroDatabase _db;
 
-  Future<List<Task>> getTasks(TasksFilters filters) async {
-    final allTags = await _tagMappings;
-    final joinedTagsWithTasks =
-        _db.select(_db.tasksTable).join([
-            leftOuterJoin(
-              _db.tasksTagEntries,
-              _db.tasksTagEntries.task.equalsExp(_db.tasksTable.id),
-            ),
-          ])
-          ..orderBy(_tasksOrdering)
-          ..groupBy([_db.tasksTable.id])
-          ..where(_createFilterForTasks(filters));
+  Future<List<Task>> getTasks(TasksFilters filters) {
+    return _db.transaction(() async {
+      final joinedTagsWithTasks =
+          _db.select(_db.tasksTable).join([
+              leftOuterJoin(
+                _db.tasksTagEntries,
+                _db.tasksTagEntries.task.equalsExp(_db.tasksTable.id),
+                useColumns: false,
+              ),
+            ])
+            ..addColumns({_db.tasksTagEntries.tagsList})
+            ..orderBy(_tasksOrdering)
+            ..groupBy([_db.tasksTable.id])
+            ..where(_createFilterForTasks(filters));
 
-    final tasksEntries = joinedTagsWithTasks.map((rows) {
-      final task = rows.readTable(_db.tasksTable);
-      final tagsForTask = allTags[task.id];
-      if (tagsForTask == null) return task;
-      return task.copyWith(tags: tagsForTask);
+      final tagsMapper = TagsEfficientMapper(_db);
+      return joinedTagsWithTasks.asyncMap((rows) async {
+        final task = rows.readTable(_db.tasksTable);
+        final tags = await tagsMapper.readTaskTags(rows);
+        return task.copyWith(tags: tags);
+      }).get();
     });
-
-    return tasksEntries.get();
   }
 
   Expression<bool> _createFilterForTasks(TasksFilters filters) {
@@ -79,26 +97,6 @@ class TasksLocalService {
     return Expression.and(dbFilters);
   }
 
-  Future<Map<String, List<ItemTag>>> get _tagMappings async {
-    final tags = await _db.select(_db.tasksTagEntries).join(
-      [
-        innerJoin(
-          _db.tagsTable,
-          _db.tasksTagEntries.tag.equalsExp(_db.tagsTable.id),
-        ),
-      ],
-    ).get();
-
-    final map = <String, List<ItemTag>>{};
-    for (final tagRow in tags) {
-      final taskId = tagRow.read(_db.tasksTagEntries.task)!;
-      final tag = tagRow.readTable(_db.tagsTable);
-      map.putIfAbsent(taskId, () => []).add(tag);
-    }
-
-    return map;
-  }
-
   List<OrderingTerm> get _tasksOrdering => [
     OrderingTerm(expression: _db.tasksTable.isCompleted),
     OrderingTerm(
@@ -125,31 +123,14 @@ class TasksLocalService {
     });
   }
 
-  // It neither update tags nor inserts new data, only updates fields for
-  // multiple rows in single transaction.
-  Future<void> updateTasks(Iterable<Task> tasks) {
-    return _db.transaction(() async {
-      for (final task in tasks) {
-        final affected = await _db
-            .update(_db.tasksTable)
-            .replace(task.toInsertable());
-
-        assert(
-          affected,
-          "Somehow tried to update task that wasn't presented in the db",
-        );
-      }
-    });
-  }
-
   Future<void> deleteTasks(Iterable<String> tasks) {
     return _db.transaction(() async {
       await (_db.delete(
-        _db.tasksTable,
-      )..where((tbl) => tbl.id.isIn(tasks))).go();
-      await (_db.delete(
         _db.tasksTagEntries,
       )..where((tbl) => tbl.task.isIn(tasks))).go();
+      await (_db.delete(
+        _db.tasksTable,
+      )..where((tbl) => tbl.id.isIn(tasks))).go();
     });
   }
 }

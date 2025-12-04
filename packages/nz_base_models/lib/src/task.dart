@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nz_base_models/src/tag.dart';
 import 'package:nz_base_models/src/task_importance.dart';
@@ -12,15 +28,15 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   factory Task({
     required String id,
     required String title,
-    required TaskImportance importance,
     required DateTime createdAt,
     @Default('') String description,
+    @Default(TaskImportance.normal) TaskImportance importance,
     DateTime? modifiedAt,
     DateTime? completedAt,
     DateTime? canceledAt,
     DateTime? forDate,
     @Default(true) bool persistent,
-    @JsonKey(toJson: Task._tagsToJson) @Default([]) List<ItemTag> tags,
+    @JsonKey(toJson: ItemTag.tagsToIds) @Default([]) List<ItemTag> tags,
   }) = _Task;
 
   const Task._();
@@ -99,7 +115,4 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     // Sorting by time that task was created
     return createdAt.compareTo(other.createdAt);
   }
-
-  static List<String> _tagsToJson(List<ItemTag> field) =>
-      field.map((e) => e.id).toList();
 }

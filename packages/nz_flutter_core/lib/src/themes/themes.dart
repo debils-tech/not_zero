@@ -1,3 +1,19 @@
+// Not Zero, cross-platform wellbeing application.
+// Copyright (C) 2025 Nagorny Vladislav
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nz_flutter_core/src/themes/extensions/charts_colors.dart';
@@ -9,7 +25,7 @@ export 'extensions/tags_colors.dart';
 export 'extensions/tasks_colors.dart';
 
 final defaultLightTheme = _lightThemeBase.copyWith(
-  splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
+  splashFactory: InkSparkle.splashFactory,
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
       ..._lightThemeBase.pageTransitionsTheme.builders,
@@ -18,7 +34,7 @@ final defaultLightTheme = _lightThemeBase.copyWith(
   ),
   inputDecorationTheme: _lightThemeBase.inputDecorationTheme.copyWith(
     border: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(8)),
+      borderRadius: .all(.circular(8)),
     ),
   ),
 );
@@ -37,8 +53,8 @@ final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
       tooltipBackgroundColor: Color(0xFF1B171E),
       weeklyStatsLine: Color(0xFFBB86FC),
       weeklyStatsBelowGradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
+        begin: .topCenter,
+        end: .bottomCenter,
         colors: [Color(0x80BB86FC), Color(0x60BB86FC)],
       ),
     ),
@@ -58,7 +74,7 @@ final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
 );
 
 final defaultDarkTheme = _darkThemeBase.copyWith(
-  splashFactory: kIsWeb ? null : InkSparkle.splashFactory,
+  splashFactory: InkSparkle.splashFactory,
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
       ..._lightThemeBase.pageTransitionsTheme.builders,
@@ -67,7 +83,7 @@ final defaultDarkTheme = _darkThemeBase.copyWith(
   ),
   inputDecorationTheme: _lightThemeBase.inputDecorationTheme.copyWith(
     border: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(12)),
+      borderRadius: .all(.circular(12)),
     ),
   ),
 );
@@ -86,8 +102,8 @@ final _darkThemeBase = ThemeData.dark(useMaterial3: true).copyWith(
       tooltipBackgroundColor: Color(0xFF1B171E),
       weeklyStatsLine: Color(0xFF6200EE),
       weeklyStatsBelowGradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
+        begin: .topCenter,
+        end: .bottomCenter,
         colors: [Color(0x806200EE), Color(0x40BB86FC)],
       ),
     ),
