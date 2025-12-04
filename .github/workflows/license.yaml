@@ -15,5 +15,18 @@ jobs:
         with:
           sdk: stable
 
+      - uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-pubcache
+          path: |
+            ~/.pub-cache/git
+            ~/.pub-cache/hosted
+
+      ### PREPARATION ###
+      - name: Check dart installation
+        run: dart --version
+      - name: Get dependencies
+        run: dart pub get
+
       - name: Check License Headers
-        run: dart tools/license_manager.dart --check
+        run: dart run tools/license_manager.dart --check
