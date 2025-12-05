@@ -57,7 +57,7 @@ class HabitEditDescriptionField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: context.t.habits.edit.fields.habitDescription,
       ),
-      textInputAction: .next,
+      textInputAction: .newline,
       maxLines: null,
     );
   }

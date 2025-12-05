@@ -36,7 +36,6 @@ class TagCreationDialog extends StatefulWidget {
   ]) {
     return showModalBottomSheet(
       context: context,
-      useSafeArea: true,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: .only(
@@ -59,60 +58,63 @@ class _TagCreationDialogState extends State<TagCreationDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final isEdit = widget.tagToEdit != null;
+    final tagToEdit = widget.tagToEdit;
+    final isEdit = tagToEdit != null;
 
-    return Padding(
-      padding: const EdgeInsets.all(8) + MediaQuery.of(context).viewInsets,
-      child: FormBuilder(
-        key: formKey,
-        initialValue: isEdit
-            ? {
-                'name': widget.tagToEdit!.name,
-                'color': widget.tagToEdit!.colorIndex,
-              }
-            : {
-                'color': 0,
-              },
-        child: Column(
-          mainAxisSize: .min,
-          children: [
-            Text(
-              isEdit
-                  ? context.t.tags.creation.title.existing
-                  : context.t.tags.creation.title.create,
-              style: context.theme.textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 8),
-            FormBuilderTextField(
-              name: 'name',
-              // autofocus: true,
-              textCapitalization: .words,
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(),
-              ]),
-              decoration: InputDecoration(
-                labelText: t.tags.creation.fields.name,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(8) + MediaQuery.viewInsetsOf(context),
+        child: FormBuilder(
+          key: formKey,
+          initialValue: isEdit
+              ? {
+                  'name': tagToEdit.name,
+                  'color': tagToEdit.colorIndex,
+                }
+              : {
+                  'color': 0,
+                },
+          child: Column(
+            mainAxisSize: .min,
+            children: [
+              Text(
+                isEdit
+                    ? context.t.tags.creation.title.existing
+                    : context.t.tags.creation.title.create,
+                style: context.theme.textTheme.headlineSmall,
               ),
-              maxLength: 30,
-            ),
-            const SizedBox(height: 8),
-            const _TagColorField(),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: .spaceEvenly,
-              children: [
-                SizedBox(
-                  width: 48,
-                  child: isEdit ? _DeleteButton(widget.tagToEdit!.id) : null,
+              const SizedBox(height: 8),
+              FormBuilderTextField(
+                name: 'name',
+                // autofocus: true,
+                textCapitalization: .words,
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                ]),
+                decoration: InputDecoration(
+                  labelText: t.tags.creation.fields.name,
                 ),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: _SubmitButton(formKey, tagToEdit: widget.tagToEdit),
-                ),
-                const SizedBox(width: 48 + 4),
-              ],
-            ),
-          ],
+                maxLength: 30,
+              ),
+              const SizedBox(height: 8),
+              const _TagColorField(),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: .spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 48,
+                    child: isEdit ? _DeleteButton(tagToEdit.id) : null,
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: _SubmitButton(formKey, tagToEdit: tagToEdit),
+                  ),
+                  const SizedBox(width: 48 + 4),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -191,7 +193,9 @@ class _DeleteButton extends ConsumerWidget {
           dangerous: true,
         );
         if (confirm ?? false) {
-          unawaited(ref.read(tagsRepositoryProvider).deleteTag(tagId));
+          unawaited(
+            ref.read(tagsListNotifierProvider.notifier).deleteTag(tagId),
+          );
           navigator.pop();
         }
       },
@@ -228,7 +232,7 @@ class _SubmitButton extends ConsumerWidget {
             tag = tagToEdit!.edit(name: name, colorIndex: color);
           }
 
-          unawaited(ref.read(tagsRepositoryProvider).addTag(tag));
+          unawaited(ref.read(tagsListNotifierProvider.notifier).addTag(tag));
           context.pop();
         }
       },

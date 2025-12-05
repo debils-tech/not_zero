@@ -58,7 +58,7 @@ class TaskEditDescriptionField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: context.t.tasks.edit.fields.taskDescription,
       ),
-      textInputAction: .next,
+      textInputAction: .newline,
       maxLines: null,
     );
   }
