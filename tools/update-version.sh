@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TAG_VERSION="$(echo "$1" | grep -Eo "[0-9]+\.[0-9]+\.[0-9]+")"
+TAG_VERSION="$(echo "$1" | grep -Eo "^[0-9]+\.[0-9]+").$(echo "$2" | grep -Eo "^[0-9]+")"
 
 CURRENT_VERSION=$(grep '^version: ' apps/not_zero_app/pubspec.yaml | sed 's/version: //')
 CURRENT_BUILD_NUMBER=$(echo "$CURRENT_VERSION" | cut -d'+' -f2)
