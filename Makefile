@@ -5,6 +5,7 @@ build-android:
 	cd apps/not_zero_app && flutter build apk --flavor foss
 #    cd apps/not_zero_app && flutter build appbundle
 	FLAVOR=foss sh tools/android/move-builds.sh
+	sh tools/android/check-version-code.sh
 	sh tools/android/check-cert.sh
 
 build-linux:

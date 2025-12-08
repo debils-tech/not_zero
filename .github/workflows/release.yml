@@ -55,7 +55,10 @@ jobs:
         uses: actions/checkout@v3
       - name: Update Version
         id: update_version
-        run: tools/update-version.sh $(echo $GITHUB_REF | sed 's|refs/heads/release/||') >> $GITHUB_OUTPUT
+        run: |
+          tools/update-version.sh \
+          $(echo $GITHUB_REF | sed 's|refs/heads/release/||') \
+          $(git log main..HEAD --grep='Bump version to' -i --oneline | wc -l) >> $GITHUB_OUTPUT
       - name: Validate release notes
         run: tools/validate-release-notes.sh ${{ steps.update_version.outputs.app_version }}
       - name: Commit and Push Changes
