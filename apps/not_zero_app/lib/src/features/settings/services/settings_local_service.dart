@@ -30,6 +30,7 @@ class SettingsLocalService implements BaseService {
   static const _useDynamicColorsKey = 'useDynamicColors';
   static const _harmonizeColorsKey = 'harmonizeColors';
   static const _expandedHabitsUiKey = 'expandedHabitsUi';
+  static const _confettiEnabledKey = 'confettiEnabled';
 
   ThemeState? getThemeState() {
     final stringValue = _settingsBox.getString(_themeStateKey);
@@ -66,5 +67,13 @@ class SettingsLocalService implements BaseService {
 
   Future<void> setExpandedHabitsUi(bool value) {
     return _settingsBox.putBool(_expandedHabitsUiKey, value);
+  }
+
+  bool? getConfetti() {
+    return _settingsBox.getBool(_confettiEnabledKey);
+  }
+
+  Future<void> setConfetti(bool value) {
+    return _settingsBox.putBool(_confettiEnabledKey, value);
   }
 }

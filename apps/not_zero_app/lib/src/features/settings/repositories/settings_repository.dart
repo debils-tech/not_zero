@@ -53,4 +53,12 @@ class SettingsRepository implements BaseRepository {
   Future<void> setHabitsUiStyle(HabitsUiStyle value) {
     return _settingsLocalService.setExpandedHabitsUi(value == .expanded);
   }
+
+  bool getConfetti() {
+    return _settingsLocalService.getConfetti() ?? true;
+  }
+
+  Future<void> setConfetti(bool value) {
+    return _settingsLocalService.setConfetti(value);
+  }
 }

@@ -14,7 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
 import 'package:not_zero_app/src/features/stats/notifiers/quick_statistics_notifier.dart';
@@ -53,7 +56,10 @@ class _QuickStatsAppBar extends ConsumerWidget implements PreferredSizeWidget {
           padding: const .all(4),
           child: DateRangeSwitch(
             rangeType: .week,
-            onChanged: quickStatsNotifier.loadDays,
+            onChanged: (start, end) {
+              unawaited(HapticFeedback.heavyImpact());
+              unawaited(quickStatsNotifier.loadDays(start, end));
+            },
           ),
         ),
       ),

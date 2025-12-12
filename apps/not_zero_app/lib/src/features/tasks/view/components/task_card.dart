@@ -17,8 +17,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero_app/src/features/special_effects/di.dart';
+import 'package:not_zero_app/src/features/special_effects/view/components/emoji_confetti_wrapper.dart';
 import 'package:not_zero_app/src/features/tags/view/tag_list_indicator.dart';
 import 'package:not_zero_app/src/features/tasks/di.dart';
 import 'package:nz_base_models/nz_base_models.dart';
@@ -227,15 +230,30 @@ class _TaskCheckbox extends ConsumerWidget {
       );
     }
 
+    final confettiController = ref.watch(confettiControllerProvider(task.id));
     // The most normal state of a task checkbox widget (actual checkbox)
-    return Transform.scale(
-      scale: 1.3,
-      child: Checkbox(
-        value: task.isCompleted,
-        shape: const CircleBorder(),
-        onChanged: (value) => ref
-            .read(tasksMainListNotifier.notifier)
-            .updateTask(task.complete(completed: value ?? false)),
+    return EmojiConfettiWrapper(
+      controller: confettiController,
+      child: Transform.scale(
+        scale: 1.3,
+        child: Checkbox(
+          value: task.isCompleted,
+          shape: const CircleBorder(),
+          onChanged: (value) {
+            unawaited(HapticFeedback.mediumImpact());
+            if (value ?? false) {
+              confettiController.launch();
+            } else {
+              confettiController.kill();
+            }
+
+            unawaited(
+              ref
+                  .read(tasksMainListNotifier.notifier)
+                  .updateTask(task.complete(completed: value ?? false)),
+            );
+          },
+        ),
       ),
     );
   }
