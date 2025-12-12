@@ -82,6 +82,7 @@ class TranslationsSettingsEn {
 	// Translations
 	late final TranslationsSettingsListEn list = TranslationsSettingsListEn._(_root);
 	late final TranslationsSettingsThemeEn theme = TranslationsSettingsThemeEn._(_root);
+	late final TranslationsSettingsSpecialEffectsEn specialEffects = TranslationsSettingsSpecialEffectsEn._(_root);
 	late final TranslationsSettingsStorageEn storage = TranslationsSettingsStorageEn._(_root);
 	late final TranslationsSettingsAboutEn about = TranslationsSettingsAboutEn._(_root);
 }
@@ -280,6 +281,18 @@ class TranslationsSettingsThemeEn {
 	late final TranslationsSettingsThemeUseDynamicColorsOptionEn useDynamicColorsOption = TranslationsSettingsThemeUseDynamicColorsOptionEn._(_root);
 	late final TranslationsSettingsThemeHarmonizeColorsEn harmonizeColors = TranslationsSettingsThemeHarmonizeColorsEn._(_root);
 	late final TranslationsSettingsThemeValuesEn values = TranslationsSettingsThemeValuesEn._(_root);
+}
+
+// Path: settings.specialEffects
+class TranslationsSettingsSpecialEffectsEn {
+	TranslationsSettingsSpecialEffectsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Special effects'
+	String get title => 'Special effects';
 }
 
 // Path: settings.storage
@@ -590,9 +603,6 @@ class TranslationsSettingsThemeUseDynamicColorsOptionEn {
 
 	/// en: 'App's theme would adapt on system accent colors'
 	String get subtitle => 'App\'s theme would adapt on system accent colors';
-
-	/// en: 'Dynamic colors aren't available on this platform'
-	String get subttileUnavailable => 'Dynamic colors aren\'t available on this platform';
 }
 
 // Path: settings.theme.harmonizeColors
@@ -983,12 +993,12 @@ extension on Translations {
 			'settings.theme.title' => 'Theme',
 			'settings.theme.useDynamicColorsOption.title' => 'Use dynamic colors',
 			'settings.theme.useDynamicColorsOption.subtitle' => 'App\'s theme would adapt on system accent colors',
-			'settings.theme.useDynamicColorsOption.subttileUnavailable' => 'Dynamic colors aren\'t available on this platform',
 			'settings.theme.harmonizeColors.title' => 'Harmonized colors',
 			'settings.theme.harmonizeColors.subtitle' => 'All the custom colors would be more integrated into app theme',
 			'settings.theme.values.light' => 'Light theme',
 			'settings.theme.values.dark' => 'Dark theme',
 			'settings.theme.values.system' => 'Prefer system theme',
+			'settings.specialEffects.title' => 'Special effects',
 			'settings.storage.title' => 'Backup data (work in progress)',
 			'settings.storage.aboutHeader' => 'How it works',
 			'settings.storage.aboutContent' => 'You can export all of your app data into single JSON file and then import at any time on any device.\n⚠️ Warning: while app is in early stage of development, data and formats between versions can be changed and then data can be lost.\n',

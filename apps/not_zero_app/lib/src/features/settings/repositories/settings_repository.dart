@@ -32,7 +32,7 @@ class SettingsRepository implements BaseRepository {
     _log.fine('Loading theme settings');
     return AppThemeSettings(
       themeState: _settingsLocalService.getThemeState() ?? ThemeState.system,
-      useDynamicColors: _settingsLocalService.getUseDynamicColors() ?? true,
+      useDynamicColors: _settingsLocalService.getUseDynamicColors() ?? false,
       harmonizeColors: _settingsLocalService.getHarmonizeColors() ?? true,
     );
   }

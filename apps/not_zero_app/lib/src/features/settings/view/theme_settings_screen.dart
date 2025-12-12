@@ -58,10 +58,17 @@ class ThemeSettingsScreen extends ConsumerWidget {
               value: .system,
             ),
             const Divider(),
-            _DynamicColorsCheckbox(
-              enabled: themeSettings.useDynamicColors,
-              onChanged: themeStateController.setUseDynamicColors,
-            ),
+            if (Platform.isAndroid)
+              SwitchListTile(
+                value: themeSettings.useDynamicColors,
+                onChanged: themeStateController.setUseDynamicColors,
+                title: Text(
+                  context.t.settings.theme.useDynamicColorsOption.title,
+                ),
+                subtitle: Text(
+                  context.t.settings.theme.useDynamicColorsOption.subtitle,
+                ),
+              ),
             SwitchListTile(
               value: themeSettings.harmonizeColors,
               onChanged: themeStateController.setHarmonizeColors,
@@ -70,41 +77,6 @@ class ThemeSettingsScreen extends ConsumerWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _DynamicColorsCheckbox extends StatelessWidget {
-  const _DynamicColorsCheckbox({
-    required this.enabled,
-    required this.onChanged,
-  });
-
-  final bool enabled;
-  final void Function(bool) onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final isSupported =
-        Platform.isAndroid ||
-        Platform.isLinux ||
-        Platform.isMacOS ||
-        Platform.isWindows;
-
-    return SwitchListTile(
-      value: enabled,
-      onChanged: isSupported ? onChanged : null,
-      title: Text(context.t.settings.theme.useDynamicColorsOption.title),
-      subtitle: Text(
-        isSupported
-            ? context.t.settings.theme.useDynamicColorsOption.subtitle
-            : context
-                  .t
-                  .settings
-                  .theme
-                  .useDynamicColorsOption
-                  .subttileUnavailable,
       ),
     );
   }
