@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/habits/di.dart';
 import 'package:not_zero_app/src/features/habits/view/components/habit_card.dart';
+import 'package:not_zero_app/src/features/habits/view/components/habits_empty_list_placeholder.dart';
 import 'package:not_zero_app/src/features/habits/view/components/habits_list_app_bar.dart';
 import 'package:not_zero_app/src/features/habits/view/components/habits_list_floating_buttons.dart';
 import 'package:nz_base_models/nz_base_models.dart';
@@ -95,6 +96,7 @@ class _HabitsListView extends StatelessWidget {
               key: Key('Habit ${h.id}'),
             ),
           ),
+          if (habits.isEmpty) const HabitsEmptyListPlaceholder(),
         ],
       ),
     );

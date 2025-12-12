@@ -17,10 +17,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_confetti/flutter_confetti.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:not_zero_app/src/features/habits/di.dart';
+import 'package:not_zero_app/src/features/special_effects/di.dart';
+import 'package:not_zero_app/src/features/special_effects/view/components/emoji_confetti_wrapper.dart';
 import 'package:not_zero_app/src/features/stats/models/habits_counting_data.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
@@ -48,9 +52,14 @@ class HabitCard extends ConsumerWidget {
     final repository = ref.watch(habitsRepositoryProvider);
     final habitsUiStyle = ref.watch(habitsUiStyleNotifierProvider);
 
+    final confettiController = ref.watch(confettiControllerProvider(habit.id));
+
     return SelectableCard(
       onTap: () {
+        unawaited(HapticFeedback.mediumImpact());
+
         if (currentCompletion != null) {
+          confettiController.kill();
           unawaited(
             repository.deleteHabitCompletion(
               habit: habit,
@@ -60,6 +69,7 @@ class HabitCard extends ConsumerWidget {
           return;
         }
 
+        confettiController.launch();
         unawaited(
           repository.addHabitCompletion(
             habit: habit,
@@ -71,50 +81,65 @@ class HabitCard extends ConsumerWidget {
         );
       },
       identifier: habit.id,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeInOut,
-        decoration: BoxDecoration(
-          color: switch (currentCompletion?.type) {
-            .completed => context.theme.colorScheme.primaryContainer.withAlpha(
-              200,
-            ),
-            .skipped => context.theme.colorScheme.primaryContainer.withAlpha(
-              120,
-            ),
-            _ => null,
-          },
+      child: EmojiConfettiWrapper(
+        controller: confettiController,
+        options: const ConfettiOptions(
+          particleCount: 30,
+          spread: 35,
+          angle: 180,
+          gravity: 0.2,
+          startVelocity: 20,
+          ticks: 80,
+          scalar: 0.75,
+          x: 1,
         ),
-        child: _ImportanceIndicatorBox(
-          importance: habit.importance,
-          child: Padding(
-            padding: const .only(left: 15, right: 8, top: 4, bottom: 6),
-            child: AnimatedSize(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              child: Column(
-                crossAxisAlignment: .stretch,
-                spacing: 8,
-                children: [
-                  Row(
-                    spacing: 4,
-                    children: [
-                      Expanded(
-                        child: _HabitTextBlock(habit: habit),
-                      ),
-                      IconButton(
-                        onPressed: () => context.push(
-                          '/habits/view/${habit.id}',
-                          extra: habit,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          decoration: BoxDecoration(
+            color: switch (currentCompletion?.type) {
+              .completed =>
+                context.theme.colorScheme.primaryContainer.withAlpha(
+                  200,
+                ),
+              .skipped => context.theme.colorScheme.primaryContainer.withAlpha(
+                120,
+              ),
+              _ => null,
+            },
+          ),
+          child: _ImportanceIndicatorBox(
+            importance: habit.importance,
+            child: Padding(
+              padding: const .only(left: 15, right: 8, top: 4, bottom: 6),
+              child: AnimatedSize(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                child: Column(
+                  crossAxisAlignment: .stretch,
+                  spacing: 8,
+                  children: [
+                    Row(
+                      spacing: 4,
+                      children: [
+                        Expanded(
+                          child: _HabitTextBlock(habit: habit),
                         ),
-                        tooltip: context.t.habits.list.tooltips.viewHabitButton,
-                        icon: const Icon(Icons.chevron_right_rounded),
-                      ),
-                    ],
-                  ),
-                  if (habitsUiStyle == .expanded)
-                    _HabitCompletionsHistory(habit: habit),
-                ],
+                        IconButton(
+                          onPressed: () => context.push(
+                            '/habits/view/${habit.id}',
+                            extra: habit,
+                          ),
+                          tooltip:
+                              context.t.habits.list.tooltips.viewHabitButton,
+                          icon: const Icon(Icons.chevron_right_rounded),
+                        ),
+                      ],
+                    ),
+                    if (habitsUiStyle == .expanded)
+                      _HabitCompletionsHistory(habit: habit),
+                  ],
+                ),
               ),
             ),
           ),
@@ -328,11 +353,16 @@ class _HabitCompletionDay extends ConsumerWidget {
 
     final child = Column(
       mainAxisSize: .min,
+      crossAxisAlignment: .stretch,
       spacing: 1,
       children: [
-        Text(date.day.toString()),
+        Text(
+          date.day.toString(),
+          textAlign: .center,
+        ),
         Text(
           weekday,
+          textAlign: .center,
           style: context.theme.textTheme.labelSmall?.copyWith(
             color: context.theme.colorScheme.onSurfaceVariant,
           ),
@@ -349,6 +379,7 @@ class _HabitCompletionDay extends ConsumerWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
+              unawaited(HapticFeedback.mediumImpact());
               if (currentCompletion != null) {
                 unawaited(
                   repository.deleteHabitCompletion(
@@ -370,6 +401,7 @@ class _HabitCompletionDay extends ConsumerWidget {
               );
             },
             onLongPress: () {
+              unawaited(HapticFeedback.mediumImpact());
               if (currentCompletion != null &&
                   currentCompletion.type == .skipped) {
                 unawaited(
