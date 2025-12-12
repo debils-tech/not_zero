@@ -34,7 +34,8 @@ class HabitsEmptyListPlaceholder extends ConsumerWidget {
           style: theme.textTheme.displayLarge?.copyWith(fontSize: 48),
         ),
         const SizedBox(height: 16),
-        Text(context.t.habits.list.empty.title,
+        Text(
+          context.t.habits.list.empty.title,
           style: theme.textTheme.titleLarge,
         ),
         const SizedBox(height: 8),
