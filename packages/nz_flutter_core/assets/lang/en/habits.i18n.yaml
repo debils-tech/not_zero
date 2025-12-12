@@ -10,6 +10,10 @@ list:
   tooltips:
     addNewButton: "Add new habit"
     viewHabitButton: More details
+  empty:
+    icon: '¯\\_(ツ)_/¯'
+    title: 'There is no habits'
+    button: 'Create a new one'
 
 view:
   title: "Habit view"

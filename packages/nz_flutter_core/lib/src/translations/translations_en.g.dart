@@ -221,6 +221,7 @@ class TranslationsHabitsListEn {
 
 	late final TranslationsHabitsListDeleteDialogEn deleteDialog = TranslationsHabitsListDeleteDialogEn._(_root);
 	late final TranslationsHabitsListTooltipsEn tooltips = TranslationsHabitsListTooltipsEn._(_root);
+	late final TranslationsHabitsListEmptyEn empty = TranslationsHabitsListEmptyEn._(_root);
 }
 
 // Path: habits.view
@@ -451,6 +452,24 @@ class TranslationsHabitsListTooltipsEn {
 
 	/// en: 'More details'
 	String get viewHabitButton => 'More details';
+}
+
+// Path: habits.list.empty
+class TranslationsHabitsListEmptyEn {
+	TranslationsHabitsListEmptyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: '¯\\_(ツ)_/¯'
+	String get icon => '¯\\_(ツ)_/¯';
+
+	/// en: 'There is no habits'
+	String get title => 'There is no habits';
+
+	/// en: 'Create a new one'
+	String get button => 'Create a new one';
 }
 
 // Path: habits.view.tooltips
@@ -942,6 +961,9 @@ extension on Translations {
 			'habits.list.deleteDialog.content' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Are you sure you want delete selected habit?', other: 'Are you sure you want delete ${n} selected habits?', ), 
 			'habits.list.tooltips.addNewButton' => 'Add new habit',
 			'habits.list.tooltips.viewHabitButton' => 'More details',
+			'habits.list.empty.icon' => '¯\\_(ツ)_/¯',
+			'habits.list.empty.title' => 'There is no habits',
+			'habits.list.empty.button' => 'Create a new one',
 			'habits.view.title' => 'Habit view',
 			'habits.view.tooltips.editHabitButton' => 'Edit',
 			'habits.edit.title.create' => 'New habit',
