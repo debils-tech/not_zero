@@ -829,6 +829,9 @@ class TranslationsTasksListEmptyEn {
 
 	/// en: 'Reset filters'
 	String get buttonFilters => 'Reset filters';
+
+	/// en: 'Add a task left for later'
+	String get buttonPlanning => 'Add a task left for later';
 }
 
 // Path: tasks.list.planning
@@ -1045,6 +1048,7 @@ extension on Translations {
 			'tasks.list.empty.button' => 'Create a new one',
 			'tasks.list.empty.titleFilters' => 'There is no tasks with such filters',
 			'tasks.list.empty.buttonFilters' => 'Reset filters',
+			'tasks.list.empty.buttonPlanning' => 'Add a task left for later',
 			'tasks.list.planning.labelWhenEnabled' => 'Tasks for someday',
 			'tasks.view.title' => 'Task view',
 			'tasks.view.tooltips.editTaskButton' => 'Edit',

@@ -38,7 +38,7 @@ class HabitsEmptyListPlaceholder extends ConsumerWidget {
           context.t.habits.list.empty.title,
           style: theme.textTheme.titleLarge,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         TextButton(
           onPressed: () => context.go('/habits/new'),
           child: Text(

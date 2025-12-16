@@ -29,6 +29,7 @@ list:
     button: 'Create a new one'
     titleFilters: 'There is no tasks with such filters'
     buttonFilters: 'Reset filters'
+    buttonPlanning: Add a task left for later
   planning:
     labelWhenEnabled: 'Tasks for someday'
 
