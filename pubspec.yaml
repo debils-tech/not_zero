@@ -28,6 +28,11 @@ melos:
       packageFilters:
         dependsOn:
           - build_runner
+    migrations:
+      exec: dart run drift_dev -v make-migrations --no-test
+      packageFilters:
+        dependsOn:
+          - drift_dev
     l10n:
       exec: dart run slang && dart format lib
       packageFilters:

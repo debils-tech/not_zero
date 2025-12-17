@@ -88,6 +88,10 @@ To install it follow [**the official guide**](https://docs.flutter.dev/get-start
 ```bash
 # First, get all the dependencies
 dart run melos bootstrap
+# Then generate all the files that can be needed
+dart run melos run --no-select generate
+dart run melos run --no-select l10n
+dart run melos run --no-select migrations
 
 # Go to the flutter app directory
 cd apps/not_zero_app
@@ -98,5 +102,5 @@ flutter run
 SQLite3 is required for this app to function.
 On Android, iOS, Linux platforms it works out of the box: sqlite lib already included in the package. Other platforms wasn't tested yet.
 
-For backup feature to work properly on Linux it is required to have dialog library be installed.
-It can be either `zenity` (for GTK), `qarma` (for Qt), `kdialog` (for KDE).
+<!-- For backup feature to work properly on Linux it is required to have dialog library be installed.
+It can be either `zenity` (for GTK), `qarma` (for Qt), `kdialog` (for KDE). -->

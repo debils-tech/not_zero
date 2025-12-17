@@ -34,6 +34,8 @@ jobs:
       # Preparation
       - name: Get dependencies
         run: melos bootstrap
+      - name: Generate everything needed for the build
+        run: make generate
       # Checks
       - name: Ensure that code is formatted correctly
         run: melos format --set-exit-if-changed --output none $(git ls-files | grep --colour=never -e ".*\.dart")
@@ -119,6 +121,8 @@ jobs:
       # Preparation
       - name: Get dependencies
         run: melos bootstrap
+      - name: Generate everything needed for the build
+        run: make generate
       - name: Decode and save android keystore
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > $HOME/keystore.jks
