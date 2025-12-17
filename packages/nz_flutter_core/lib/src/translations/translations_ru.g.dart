@@ -81,6 +81,7 @@ class _TranslationsSettingsRu implements TranslationsSettingsEn {
 	@override late final _TranslationsSettingsThemeRu theme = _TranslationsSettingsThemeRu._(_root);
 	@override late final _TranslationsSettingsSpecialEffectsRu specialEffects = _TranslationsSettingsSpecialEffectsRu._(_root);
 	@override late final _TranslationsSettingsStorageRu storage = _TranslationsSettingsStorageRu._(_root);
+	@override late final _TranslationsSettingsDebugRu debug = _TranslationsSettingsDebugRu._(_root);
 	@override late final _TranslationsSettingsAboutRu about = _TranslationsSettingsAboutRu._(_root);
 }
 
@@ -262,6 +263,17 @@ class _TranslationsSettingsStorageRu implements TranslationsSettingsStorageEn {
 	@override late final _TranslationsSettingsStorageImportStatusRu importStatus = _TranslationsSettingsStorageImportStatusRu._(_root);
 	@override late final _TranslationsSettingsStorageExportStatusRu exportStatus = _TranslationsSettingsStorageExportStatusRu._(_root);
 	@override String get closeAppButton => 'Закрыть приложение!';
+}
+
+// Path: settings.debug
+class _TranslationsSettingsDebugRu implements TranslationsSettingsDebugEn {
+	_TranslationsSettingsDebugRu._(this._root);
+
+	final TranslationsRu _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Для разработчиков';
+	@override late final _TranslationsSettingsDebugBlocksRu blocks = _TranslationsSettingsDebugBlocksRu._(_root);
 }
 
 // Path: settings.about
@@ -530,6 +542,16 @@ class _TranslationsSettingsStorageExportStatusRu implements TranslationsSettings
 	@override String get failure => 'Что-то пошло не так. Данные не были экспортированы ;(\nПопробуйте перезапустить приложение\n';
 }
 
+// Path: settings.debug.blocks
+class _TranslationsSettingsDebugBlocksRu implements TranslationsSettingsDebugBlocksEn {
+	_TranslationsSettingsDebugBlocksRu._(this._root);
+
+	final TranslationsRu _root; // ignore: unused_field
+
+	// Translations
+	@override String get language => 'Язык приложения';
+}
+
 // Path: settings.about.blocks
 class _TranslationsSettingsAboutBlocksRu implements TranslationsSettingsAboutBlocksEn {
 	_TranslationsSettingsAboutBlocksRu._(this._root);
@@ -796,6 +818,8 @@ extension on TranslationsRu {
 			'settings.storage.exportStatus.success' => 'Вы успешно экспортировали данные!',
 			'settings.storage.exportStatus.failure' => 'Что-то пошло не так. Данные не были экспортированы ;(\nПопробуйте перезапустить приложение\n',
 			'settings.storage.closeAppButton' => 'Закрыть приложение!',
+			'settings.debug.title' => 'Для разработчиков',
+			'settings.debug.blocks.language' => 'Язык приложения',
 			'settings.about.title' => 'О приложении',
 			'settings.about.blocks.version' => 'Версия приложения',
 			'settings.about.blocks.links' => 'Ссылки',

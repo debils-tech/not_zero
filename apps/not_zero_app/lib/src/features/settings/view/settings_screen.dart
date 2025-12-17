@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/settings/di.dart';
@@ -45,6 +46,12 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.import_export_rounded,
             title: context.t.settings.storage.title,
           ),
+          if (kDebugMode)
+            SettingsMenuEntry(
+              route: '/settings/debug',
+              icon: Icons.construction_rounded,
+              title: context.t.settings.debug.title,
+            ),
           SettingsMenuEntry(
             route: '/settings/about',
             icon: Icons.info_outline_rounded,

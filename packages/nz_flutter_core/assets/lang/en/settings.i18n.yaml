@@ -46,6 +46,11 @@ storage:
       Try to restart an app
   closeAppButton: 'Close this app!'
 
+debug:
+  title: Debug settings
+  blocks:
+    language: 'App language'
+
 about:
   title: 'About'
   blocks:

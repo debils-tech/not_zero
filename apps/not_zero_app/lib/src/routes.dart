@@ -20,6 +20,7 @@ import 'package:not_zero_app/src/features/habits/view/habit_view_screen.dart';
 import 'package:not_zero_app/src/features/habits/view/habits_list_screen.dart';
 import 'package:not_zero_app/src/features/home/view/home_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/about_screen.dart';
+import 'package:not_zero_app/src/features/settings/view/debug_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/licenses_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/settings_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/storage_screen.dart';
@@ -115,6 +116,10 @@ final appRouter = GoRouter(
             GoRoute(
               path: 'storage',
               builder: (_, _) => const StorageSettingsScreen(),
+            ),
+            GoRoute(
+              path: 'debug',
+              builder: (_, _) => const DebugScreen(),
             ),
             GoRoute(
               path: 'about',

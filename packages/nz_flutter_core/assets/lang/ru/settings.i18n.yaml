@@ -46,6 +46,11 @@ storage:
       Попробуйте перезапустить приложение
   closeAppButton: "Закрыть приложение!"
 
+debug:
+  title: Для разработчиков
+  blocks:
+    language: 'Язык приложения'
+
 about:
   title: "О приложении"
   blocks:

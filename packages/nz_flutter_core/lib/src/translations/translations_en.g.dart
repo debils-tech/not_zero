@@ -84,6 +84,7 @@ class TranslationsSettingsEn {
 	late final TranslationsSettingsThemeEn theme = TranslationsSettingsThemeEn._(_root);
 	late final TranslationsSettingsSpecialEffectsEn specialEffects = TranslationsSettingsSpecialEffectsEn._(_root);
 	late final TranslationsSettingsStorageEn storage = TranslationsSettingsStorageEn._(_root);
+	late final TranslationsSettingsDebugEn debug = TranslationsSettingsDebugEn._(_root);
 	late final TranslationsSettingsAboutEn about = TranslationsSettingsAboutEn._(_root);
 }
 
@@ -323,6 +324,20 @@ class TranslationsSettingsStorageEn {
 
 	/// en: 'Close this app!'
 	String get closeAppButton => 'Close this app!';
+}
+
+// Path: settings.debug
+class TranslationsSettingsDebugEn {
+	TranslationsSettingsDebugEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Debug settings'
+	String get title => 'Debug settings';
+
+	late final TranslationsSettingsDebugBlocksEn blocks = TranslationsSettingsDebugBlocksEn._(_root);
 }
 
 // Path: settings.about
@@ -677,6 +692,18 @@ class TranslationsSettingsStorageExportStatusEn {
 	String get failure => 'Something went wrong. Your data wasn\'t exported ;(\nTry to restart an app\n';
 }
 
+// Path: settings.debug.blocks
+class TranslationsSettingsDebugBlocksEn {
+	TranslationsSettingsDebugBlocksEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'App language'
+	String get language => 'App language';
+}
+
 // Path: settings.about.blocks
 class TranslationsSettingsAboutBlocksEn {
 	TranslationsSettingsAboutBlocksEn._(this._root);
@@ -1015,6 +1042,8 @@ extension on Translations {
 			'settings.storage.exportStatus.success' => 'You successfully exported your data!',
 			'settings.storage.exportStatus.failure' => 'Something went wrong. Your data wasn\'t exported ;(\nTry to restart an app\n',
 			'settings.storage.closeAppButton' => 'Close this app!',
+			'settings.debug.title' => 'Debug settings',
+			'settings.debug.blocks.language' => 'App language',
 			'settings.about.title' => 'About',
 			'settings.about.blocks.version' => 'App version',
 			'settings.about.blocks.links' => 'Links',
