@@ -49,6 +49,7 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^6.8.0
   nz_lint: ^1.0.0
+  alchemist: ^0.13.0
 
 flutter:
   default-flavor: dev

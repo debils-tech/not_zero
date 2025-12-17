@@ -50,3 +50,11 @@ app.*.map.json
 *.freezed.dart
 *.tailor.dart
 *.steps.dart
+
+# Golden tests
+# Ignore all artifacts that aren't for CI
+**/test/**/goldens/*
+!**/test/**/goldens/ci
+# Ignore all artifacts that aren't for English (it is useless for CI versions)
+**/test/**/goldens/ci/*.*.png
+!**/test/**/goldens/ci/*.en.png

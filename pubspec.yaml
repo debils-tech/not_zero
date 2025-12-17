@@ -48,3 +48,9 @@ melos:
       exec: flutter test
       packageFilters:
         dirExists: test
+    update-goldens:
+      exec: flutter test -t golden --update-goldens
+      packageFilters:
+        dependsOn:
+          - alchemist
+        dirExists: test
