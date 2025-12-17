@@ -694,8 +694,8 @@ class TranslationsSettingsAboutBlocksEn {
 	/// en: 'Telegram'
 	String get telegram => 'Telegram';
 
-	/// en: 'Repository'
-	String get repository => 'Repository';
+	/// en: 'Source code'
+	String get repository => 'Source code';
 
 	/// en: 'Licenses'
 	String get licenses => 'Licenses';
@@ -1019,7 +1019,7 @@ extension on Translations {
 			'settings.about.blocks.version' => 'App version',
 			'settings.about.blocks.links' => 'Links',
 			'settings.about.blocks.telegram' => 'Telegram',
-			'settings.about.blocks.repository' => 'Repository',
+			'settings.about.blocks.repository' => 'Source code',
 			'settings.about.blocks.licenses' => 'Licenses',
 			'stats.quickView.title' => 'Statistics',
 			'stats.quickView.weeklyChart' => 'Points per day',

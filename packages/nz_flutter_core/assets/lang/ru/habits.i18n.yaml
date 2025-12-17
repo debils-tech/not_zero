@@ -1,0 +1,43 @@
+list:
+  title: "Привычки"
+  titleSelection:
+    zero: "Выбрано $n привычек"
+    one: "Выбрана $n привычка"
+    few: "Выбрано $n привычки"
+    many: "Выбрано $n привычек"
+    other: "Выбрано $n привычек"
+  deleteDialog:
+    content:
+      one: "Вы уверены, что хотите удалить выбранную привычку?"
+      few: "Вы уверены, что хотите удалить $n выбранные привычки?"
+      many: "Вы уверены, что хотите удалить $n выбранных привычек?"
+      other: "Вы уверены, что хотите удалить $n выбранных привычек?"
+  tooltips:
+    addNewButton: "Добавить привычку"
+    viewHabitButton: "Подробнее"
+  empty:
+    icon: '¯\\_(ツ)_/¯'
+    title: "Привычек нет"
+    button: "Создать новую"
+
+view:
+  title: "Просмотр привычки"
+  tooltips:
+    editHabitButton: "Редактировать"
+
+edit:
+  title:
+    create: "Новая привычка"
+    existing: "Редактировать привычку"
+  fields:
+    habitTitle: "Название"
+    habitDescription: "Описание"
+    habitRegularity: "Регулярность (пока недоступно)"
+    habitRegularityDaily: "Ежедневно"
+  submit:
+    create: "Создать привычку!"
+    existing: "Сохранить изменения"
+  deleteDialog:
+    content: "Вы уверены, что хотите удалить эту привычку?"
+  tooltips:
+    deleteHabitButton: "Удалить"

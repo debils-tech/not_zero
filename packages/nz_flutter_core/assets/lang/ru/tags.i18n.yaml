@@ -1,0 +1,14 @@
+creation:
+  title:
+    create: "Новый тег"
+    existing: "Редактировать тег"
+  fields:
+    name: "Название"
+    color: "Цвет тега"
+  submit: "Сохранить"
+  deleteDialog:
+    content: |
+      Вы уверены, что хотите удалить этот тег?
+      Все задачи с этим тегом тоже потеряют его
+  tooltips:
+    deleteTagButton: "Удалить"
