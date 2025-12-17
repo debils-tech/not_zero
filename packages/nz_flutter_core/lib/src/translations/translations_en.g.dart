@@ -84,6 +84,7 @@ class TranslationsSettingsEn {
 	late final TranslationsSettingsThemeEn theme = TranslationsSettingsThemeEn._(_root);
 	late final TranslationsSettingsSpecialEffectsEn specialEffects = TranslationsSettingsSpecialEffectsEn._(_root);
 	late final TranslationsSettingsStorageEn storage = TranslationsSettingsStorageEn._(_root);
+	late final TranslationsSettingsDebugEn debug = TranslationsSettingsDebugEn._(_root);
 	late final TranslationsSettingsAboutEn about = TranslationsSettingsAboutEn._(_root);
 }
 
@@ -323,6 +324,20 @@ class TranslationsSettingsStorageEn {
 
 	/// en: 'Close this app!'
 	String get closeAppButton => 'Close this app!';
+}
+
+// Path: settings.debug
+class TranslationsSettingsDebugEn {
+	TranslationsSettingsDebugEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Debug settings'
+	String get title => 'Debug settings';
+
+	late final TranslationsSettingsDebugBlocksEn blocks = TranslationsSettingsDebugBlocksEn._(_root);
 }
 
 // Path: settings.about
@@ -677,6 +692,18 @@ class TranslationsSettingsStorageExportStatusEn {
 	String get failure => 'Something went wrong. Your data wasn\'t exported ;(\nTry to restart an app\n';
 }
 
+// Path: settings.debug.blocks
+class TranslationsSettingsDebugBlocksEn {
+	TranslationsSettingsDebugBlocksEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'App language'
+	String get language => 'App language';
+}
+
 // Path: settings.about.blocks
 class TranslationsSettingsAboutBlocksEn {
 	TranslationsSettingsAboutBlocksEn._(this._root);
@@ -694,8 +721,8 @@ class TranslationsSettingsAboutBlocksEn {
 	/// en: 'Telegram'
 	String get telegram => 'Telegram';
 
-	/// en: 'Repository'
-	String get repository => 'Repository';
+	/// en: 'Source code'
+	String get repository => 'Source code';
 
 	/// en: 'Licenses'
 	String get licenses => 'Licenses';
@@ -829,6 +856,9 @@ class TranslationsTasksListEmptyEn {
 
 	/// en: 'Reset filters'
 	String get buttonFilters => 'Reset filters';
+
+	/// en: 'Add a task left for later'
+	String get buttonPlanning => 'Add a task left for later';
 }
 
 // Path: tasks.list.planning
@@ -1012,11 +1042,13 @@ extension on Translations {
 			'settings.storage.exportStatus.success' => 'You successfully exported your data!',
 			'settings.storage.exportStatus.failure' => 'Something went wrong. Your data wasn\'t exported ;(\nTry to restart an app\n',
 			'settings.storage.closeAppButton' => 'Close this app!',
+			'settings.debug.title' => 'Debug settings',
+			'settings.debug.blocks.language' => 'App language',
 			'settings.about.title' => 'About',
 			'settings.about.blocks.version' => 'App version',
 			'settings.about.blocks.links' => 'Links',
 			'settings.about.blocks.telegram' => 'Telegram',
-			'settings.about.blocks.repository' => 'Repository',
+			'settings.about.blocks.repository' => 'Source code',
 			'settings.about.blocks.licenses' => 'Licenses',
 			'stats.quickView.title' => 'Statistics',
 			'stats.quickView.weeklyChart' => 'Points per day',
@@ -1045,6 +1077,7 @@ extension on Translations {
 			'tasks.list.empty.button' => 'Create a new one',
 			'tasks.list.empty.titleFilters' => 'There is no tasks with such filters',
 			'tasks.list.empty.buttonFilters' => 'Reset filters',
+			'tasks.list.empty.buttonPlanning' => 'Add a task left for later',
 			'tasks.list.planning.labelWhenEnabled' => 'Tasks for someday',
 			'tasks.view.title' => 'Task view',
 			'tasks.view.tooltips.editTaskButton' => 'Edit',

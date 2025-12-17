@@ -73,18 +73,15 @@ class _TasksSomedayButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (ref.watch(tasksFiltersNotifier.select((state) => state.someday))) {
       return FilledButton.tonalIcon(
-        onPressed: () {
-          ref.read(tasksFiltersNotifier.notifier).selectDay(DateTime.now());
-        },
+        onPressed: () =>
+            ref.read(tasksFiltersNotifier.notifier).toggleSomeday(),
         icon: const Icon(Icons.alarm_rounded),
         label: Text(context.t.tasks.list.planning.labelWhenEnabled),
       );
     }
 
     return IconButton(
-      onPressed: () {
-        ref.read(tasksFiltersNotifier.notifier).toggleSomeday();
-      },
+      onPressed: () => ref.read(tasksFiltersNotifier.notifier).toggleSomeday(),
       icon: const Icon(Icons.alarm_off_rounded),
     );
   }
