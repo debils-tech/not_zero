@@ -27,13 +27,15 @@ Development is divided into several stages, with specific features planned for e
 - [x] App branding (logo, icons, posters)
 - [x] Stable database version
 - [x] Automatic builds and basic packaging
-- [x] Export and import of app's data `(now broken 😢)`
 - [x] Basic stats
 - [x] Tags & Sublists
 - [x] Tasks of the "do it someday" type
-- [ ] Habits `Work in progress 🚧`
+- [x] Habits
+- [ ] Export and import of app's data (rewrite)
 - [ ] Better stats
+- [ ] Daily check-ins
 - [ ] "Start your day" and "end your day" features
+- [ ] Some distinct UI kit for the app
 
 </details>
 
@@ -43,8 +45,11 @@ Development is divided into several stages, with specific features planned for e
 *The future is blurry here...*
 
 - [ ] Release in F-Droid
+- [ ] Time tracking
+- [ ] Mood journal
 - [ ] Onboarding
 - [ ] Some backend for the app *(still local-only approach)*
+- [ ] General gamification goal *(huge ⭐, more info later)*
 - [ ] Release in Google Play
 - [ ] Adaptation for iOS
 - [ ] Release in App Store
@@ -52,7 +57,6 @@ Development is divided into several stages, with specific features planned for e
 - [ ] Adaptation of app for desktop
 - [ ] Release on Linux
 - [ ] Advanced stats (weekly, monthly statistics)
-- [ ] General gamification goal *(huge ⭐, more info later)*
 - [ ] Social features *(huge ⭐, more info later)*
 
 </details>
