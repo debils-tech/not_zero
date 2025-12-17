@@ -17,19 +17,16 @@
 import 'package:flutter/material.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
-class CheckInStreakContinuedDialog extends StatelessWidget {
-  const CheckInStreakContinuedDialog({
-    required this.streakCount,
+class CheckInStreakNewDialog extends StatelessWidget {
+  const CheckInStreakNewDialog({
     required this.onCheckIn,
     super.key,
   });
 
-  final int streakCount;
   final VoidCallback onCheckIn;
 
   @override
   Widget build(BuildContext context) {
-    final streakColor = context.theme.colorScheme.primary;
     return Dialog(
       child: Padding(
         padding: const .symmetric(vertical: 16),
@@ -37,46 +34,23 @@ class CheckInStreakContinuedDialog extends StatelessWidget {
           mainAxisSize: .min,
           children: [
             Text(
-              context.t.checkIn.streakDialog.continues.title,
+              context.t.checkIn.streakDialog.newStreak.title,
               style: context.theme.textTheme.titleLarge,
             ),
             Padding(
               padding: const .only(top: 8, bottom: 2, left: 8, right: 8),
               child: Text(
-                context.t.checkIn.streakDialog.continues.subtitle(
-                  n: streakCount,
-                ),
+                context.t.checkIn.streakDialog.newStreak.subtitle,
                 style: context.theme.textTheme.bodySmall?.copyWith(
                   color: context.theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ),
-            const Divider(),
-            const SizedBox(height: 2),
-            Row(
-              mainAxisAlignment: .center,
-              spacing: 4,
-              children: [
-                Text(
-                  streakCount.toString(),
-                  style: context.theme.textTheme.titleLarge?.copyWith(
-                    fontSize: 32,
-                    fontWeight: .w800,
-                    color: streakColor,
-                  ),
-                ),
-                Icon(
-                  Icons.local_fire_department_rounded,
-                  size: 32,
-                  color: streakColor,
-                ),
-              ],
-            ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: onCheckIn,
               icon: const Icon(Icons.check_rounded),
-              label: Text(context.t.checkIn.streakDialog.continues.button),
+              label: Text(context.t.checkIn.streakDialog.newStreak.button),
             ),
           ],
         ),

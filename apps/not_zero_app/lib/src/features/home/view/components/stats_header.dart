@@ -16,8 +16,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/check_in/di.dart';
+import 'package:not_zero_app/src/features/check_in/models/check_in_streak_state.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
 import 'package:not_zero_app/src/helpers/not_zero_icons.dart';
+import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class HomeStatsHeader extends ConsumerWidget {
   const HomeStatsHeader({super.key});
@@ -26,9 +29,11 @@ class HomeStatsHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
-    final state = ref.watch(totalScoreNotifierProvider);
-    final totalScore = switch (state) {
-      AsyncData(:final value) => value,
+    final totalScore = ref.watch(totalScoreNotifierProvider).value;
+
+    final checkInStreakState = ref.watch(checkInStateNotifierProvider).value;
+    final currentStreakCount = switch (checkInStreakState) {
+      CheckInStreakStateCheckedIn(:final checkIn) => checkIn.streakCount,
       _ => null,
     };
 
@@ -48,21 +53,34 @@ class HomeStatsHeader extends ConsumerWidget {
         ),
       ),
       padding: const .only(bottom: 15),
-      child: Row(
-        mainAxisSize: .min,
+      child: Column(
+        mainAxisAlignment: .center,
+        spacing: 4,
         children: [
-          if (totalScore != null)
+          Row(
+            mainAxisSize: .min,
+            spacing: 6,
+            children: [
+              if (totalScore != null)
+                Text(
+                  totalScore.toString(),
+                  style: const TextStyle(
+                    fontSize: 34,
+                    fontWeight: .w700,
+                  ),
+                )
+              else
+                const CircularProgressIndicator(),
+              const Icon(NotZeroIcons.zero),
+            ],
+          ),
+          if (currentStreakCount != null && currentStreakCount > 1)
             Text(
-              totalScore.toString(),
-              style: const TextStyle(
-                fontSize: 34,
-                fontWeight: .w700,
+              context.t.checkIn.streakBadge.title(n: currentStreakCount),
+              style: context.theme.textTheme.labelMedium?.copyWith(
+                color: context.theme.colorScheme.onSurfaceVariant,
               ),
-            )
-          else
-            const CircularProgressIndicator(),
-          const SizedBox(width: 6),
-          const Icon(NotZeroIcons.zero),
+            ),
         ],
       ),
     );

@@ -17,18 +17,18 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:not_zero_app/src/features/check_in/view/components/check_in_streak_continues_dialog.dart';
+import 'package:not_zero_app/src/features/check_in/view/components/check_in_streak_new_dialog.dart';
 
 import '../../../../fakes/fake_translation_provider.dart';
 import '../../../../utils/golden_test_themed_scenario_ext.dart';
 import '../../../../utils/golden_test_translations_expanding.dart';
 
 void main() {
-  group('CheckIn Dialog Golden Tests (Streak Continued)', () {
+  group('CheckIn Dialog Golden Tests (New Streak)', () {
     testWithAllTranslations(
       (locale) => goldenTest(
         'renders correctly (${locale.name})',
-        fileName: 'check_in_streak_continues_dialog.${locale.languageCode}',
+        fileName: 'check_in_streak_new_dialog.${locale.languageCode}',
         builder: () => FakeTranslationProvider(
           locale: locale,
           child: GoldenTestGroup(
@@ -36,15 +36,13 @@ void main() {
             children: [
               GoldenTestScenario(
                 name: 'minimal streak',
-                child: CheckInStreakContinuedDialog(
-                  streakCount: 2,
+                child: CheckInStreakNewDialog(
                   onCheckIn: () {},
                 ),
               ),
               GoldenTestScenario(
                 name: 'sample streak',
-                child: CheckInStreakContinuedDialog(
-                  streakCount: 999,
+                child: CheckInStreakNewDialog(
                   onCheckIn: () {},
                 ),
               ),

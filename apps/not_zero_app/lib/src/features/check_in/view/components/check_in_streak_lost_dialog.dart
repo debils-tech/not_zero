@@ -17,8 +17,8 @@
 import 'package:flutter/material.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
-class CheckInStreakContinuedDialog extends StatelessWidget {
-  const CheckInStreakContinuedDialog({
+class CheckInStreakLostDialog extends StatelessWidget {
+  const CheckInStreakLostDialog({
     required this.streakCount,
     required this.onCheckIn,
     super.key,
@@ -29,7 +29,7 @@ class CheckInStreakContinuedDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final streakColor = context.theme.colorScheme.primary;
+    final streakColor = context.theme.colorScheme.secondary;
     return Dialog(
       child: Padding(
         padding: const .symmetric(vertical: 16),
@@ -37,15 +37,13 @@ class CheckInStreakContinuedDialog extends StatelessWidget {
           mainAxisSize: .min,
           children: [
             Text(
-              context.t.checkIn.streakDialog.continues.title,
+              context.t.checkIn.streakDialog.lost.title,
               style: context.theme.textTheme.titleLarge,
             ),
             Padding(
               padding: const .only(top: 8, bottom: 2, left: 8, right: 8),
               child: Text(
-                context.t.checkIn.streakDialog.continues.subtitle(
-                  n: streakCount,
-                ),
+                context.t.checkIn.streakDialog.lost.subtitle(n: streakCount),
                 style: context.theme.textTheme.bodySmall?.copyWith(
                   color: context.theme.colorScheme.onSurfaceVariant,
                 ),
@@ -60,14 +58,13 @@ class CheckInStreakContinuedDialog extends StatelessWidget {
                 Text(
                   streakCount.toString(),
                   style: context.theme.textTheme.titleLarge?.copyWith(
-                    fontSize: 32,
                     fontWeight: .w800,
                     color: streakColor,
                   ),
                 ),
                 Icon(
-                  Icons.local_fire_department_rounded,
-                  size: 32,
+                  Icons.ac_unit_rounded,
+                  size: 26,
                   color: streakColor,
                 ),
               ],
@@ -76,7 +73,7 @@ class CheckInStreakContinuedDialog extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onCheckIn,
               icon: const Icon(Icons.check_rounded),
-              label: Text(context.t.checkIn.streakDialog.continues.button),
+              label: Text(context.t.checkIn.streakDialog.lost.button),
             ),
           ],
         ),

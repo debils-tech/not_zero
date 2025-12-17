@@ -1,3 +1,10 @@
+streakBadge:
+  title:
+    one: $n день подряд
+    few: $n дня подряд
+    many: $n дней подряд
+    other: $n дней подряд
+
 streakDialog:
   continues:
     title: "Ты в ударе!"
