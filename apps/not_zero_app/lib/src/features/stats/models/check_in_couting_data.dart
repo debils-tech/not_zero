@@ -19,7 +19,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'check_in_couting_data.freezed.dart';
 
 @freezed
-abstract class CheckInCoutingData with _$CheckInCoutingData{
+abstract class CheckInCoutingData with _$CheckInCoutingData {
   const factory CheckInCoutingData({
     required Map<CheckInStreakPeriod, int> checkIns,
   }) = _CheckInCoutingData;

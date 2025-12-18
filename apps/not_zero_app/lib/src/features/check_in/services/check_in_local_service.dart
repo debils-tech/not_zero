@@ -26,12 +26,12 @@ class CheckInLocalService implements BaseService {
 
   Future<AppDailyCheckIn?> getLastCheckIn({required DateTime streakDate}) {
     return (_db.select(_db.checkInTable)
-              ..where(
-                (tbl) => tbl.checkInDate.dayInRange(null, streakDate),
-              )
-              ..orderBy([(tbl) => OrderingTerm.desc(tbl.checkInDate)])
-              ..limit(1))
-            .getSingleOrNull();
+          ..where(
+            (tbl) => tbl.checkInDate.dayInRange(null, streakDate),
+          )
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.checkInDate)])
+          ..limit(1))
+        .getSingleOrNull();
   }
 
   Future<void> saveCheckIn(AppDailyCheckIn checkIn) {
