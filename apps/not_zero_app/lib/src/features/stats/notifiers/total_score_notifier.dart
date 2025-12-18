@@ -17,8 +17,10 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/check_in/models/check_in_action.dart';
 import 'package:not_zero_app/src/features/habits/models/habit_action.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
+import 'package:not_zero_app/src/features/stats/models/check_in_couting_data.dart';
 import 'package:not_zero_app/src/features/tasks/models/task_action.dart';
 import 'package:not_zero_app/src/helpers/ref_actions_extension.dart';
 
@@ -27,6 +29,7 @@ class TotalScoreNotifier extends AsyncNotifier<int> {
   Future<int> build() async {
     ref.listenActions<TaskAction>(_handleTaskAction);
     ref.listenActions<HabitAction>(_handleHabitAction);
+    ref.listenActions<CheckInAction>(_handleCheckInAction);
 
     return _countTotalPoints();
   }
@@ -129,6 +132,25 @@ class TotalScoreNotifier extends AsyncNotifier<int> {
       //         habit.regularity,
       //       )
       //       .round();
+    }
+
+    if (newPoints != currentPoints) {
+      state = AsyncValue.data(newPoints);
+    }
+  }
+
+  void _handleCheckInAction(CheckInAction action) {
+    final currentPoints = state.value;
+    if (currentPoints == null) return;
+
+    final scoreEvaluation = ref.read(scoreEvaluationRepositoryProvider);
+    var newPoints = currentPoints;
+
+    switch (action) {
+      case CheckInActionCheckedIn():
+        newPoints += scoreEvaluation.evaluateSingleCheckInScore(
+          CheckInStreakPeriod.fromStreak(action.checkIn.streakCount),
+        );
     }
 
     if (newPoints != currentPoints) {

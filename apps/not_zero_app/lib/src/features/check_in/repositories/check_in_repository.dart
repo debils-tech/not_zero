@@ -14,15 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:not_zero_app/src/features/check_in/models/check_in_action.dart';
 import 'package:not_zero_app/src/features/check_in/models/check_in_streak_state.dart';
 import 'package:not_zero_app/src/features/check_in/services/check_in_local_service.dart';
+import 'package:nz_actions_bus/nz_actions_bus.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
 
 class CheckInRepository implements BaseRepository {
-  const CheckInRepository(this._localService);
+  const CheckInRepository(this._localService, this._actionsBus);
 
   final CheckInLocalService _localService;
+  final ActionsBus _actionsBus;
 
   Future<CheckInStreakState> getCurrentStreakState() async {
     final today = DateTime.now();
@@ -72,6 +75,8 @@ class CheckInRepository implements BaseRepository {
     );
 
     await _localService.saveCheckIn(newCheckIn);
+
+    _actionsBus.emit(CheckInAction.checkedIn(checkIn: newCheckIn));
     return newCheckIn;
   }
 }

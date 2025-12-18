@@ -19,6 +19,7 @@ import 'package:not_zero_app/src/features/stats/notifiers/quick_statistics_notif
 import 'package:not_zero_app/src/features/stats/notifiers/total_score_notifier.dart';
 import 'package:not_zero_app/src/features/stats/repositories/score_evaluation_repository.dart';
 import 'package:not_zero_app/src/features/stats/repositories/stats_repository.dart';
+import 'package:not_zero_app/src/features/stats/services/check_in_stats_local_service.dart';
 import 'package:not_zero_app/src/features/stats/services/habits_stats_local_service.dart';
 import 'package:not_zero_app/src/features/stats/services/tasks_stats_local_service.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
@@ -37,10 +38,19 @@ final habitsStatsLocalServiceProvider = Provider<HabitsStatsLocalService>((
   );
 });
 
+final checkInStatsLocalServiceProvider = Provider<CheckInStatsLocalService>((
+  ref,
+) {
+  return CheckInStatsLocalService(
+    ref.watch(databaseProvider),
+  );
+});
+
 final statsRepositoryProvider = Provider<StatsRepository>((ref) {
   return StatsRepository(
     ref.watch(tasksStatsLocalServiceProvider),
     ref.watch(habitsStatsLocalServiceProvider),
+    ref.watch(checkInStatsLocalServiceProvider),
     ref.watch(scoreEvaluationRepositoryProvider),
   );
 });

@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/actions_bus/di.dart';
 import 'package:not_zero_app/src/features/check_in/notifiers/check_in_state_notifier.dart';
 import 'package:not_zero_app/src/features/check_in/repositories/check_in_repository.dart';
 import 'package:not_zero_app/src/features/check_in/services/check_in_local_service.dart';
@@ -29,6 +30,7 @@ final checkInLocalServiceProvider = Provider<CheckInLocalService>((ref) {
 final checkInRepositoryProvider = Provider<CheckInRepository>((ref) {
   return CheckInRepository(
     ref.watch(checkInLocalServiceProvider),
+    ref.watch(actionsBusProvider),
   );
 });
 
