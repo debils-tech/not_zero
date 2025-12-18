@@ -15,6 +15,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:drift/drift.dart';
+import 'package:nz_base_models/nz_base_models.dart';
+import 'package:nz_drift/nz_drift.dart';
+import 'package:nz_drift/src/converters/date_converter.dart';
 import 'package:nz_drift/src/db.steps.dart';
 
 part 'from_1_to_2.dart';
