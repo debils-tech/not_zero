@@ -94,8 +94,13 @@ class HabitsRepository implements BaseRepository {
     final streakForCompletion = await _localService.getHabitStreak(
       habitId: habit.id,
       streakDate: completion.completedDate,
+      includeExactDate: false,
     );
-    completion = completion.copyWith(streakCount: streakForCompletion + 1);
+    completion = completion.copyWith(
+      streakCount: completion.type == HabitCompletionType.completed
+          ? streakForCompletion + 1
+          : streakForCompletion,
+    );
 
     _actionsBus.emit(
       HabitAction.completed(habit: habit, completion: completion),

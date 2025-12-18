@@ -67,9 +67,9 @@ class CheckInStatsLocalService implements BaseRepository {
     CheckInStreakPeriod streakPeriod,
   ) {
     final maxDays = streakPeriod.maxDays;
-    return streakCount.isBiggerOrEqualValue(streakPeriod.minDays) &
+    return streakCount.isBiggerOrEqual(Constant(streakPeriod.minDays)) &
         (maxDays == null
             ? const Constant(true)
-            : streakCount.isSmallerThanValue(maxDays));
+            : streakCount.isSmallerThan(Constant(maxDays)));
   }
 }
