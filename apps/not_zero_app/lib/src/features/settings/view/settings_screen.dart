@@ -37,7 +37,6 @@ class SettingsScreen extends StatelessWidget {
           ),
           SettingsBlocHeader(context.t.settings.list.blocks.other),
           SettingsMenuEntry(
-            disabled: true,
             route: '/settings/storage',
             icon: Icons.import_export_rounded,
             title: context.t.settings.storage.title,

@@ -21,8 +21,6 @@ import 'package:nz_flutter_core/nz_flutter_core.dart';
 class StorageSettingsScreen extends StatelessWidget {
   const StorageSettingsScreen({super.key});
 
-  // TODO(uSlashVlad): Fix backup feature
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
