@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run this file like this:
-# sh android/tools/check-cert.sh app-arm64-v8a-release.apk
+# bash tools/android/check-cert.sh app-arm64-v8a-release.apk
 
 RELEASE_DIR=apps/not_zero_app/build/releases/android
 FINGERPRINT="SHA-256 digest: 3847cfe3a52dfddebcfa51af3ed322a4196ea76b3d659e1001b922ed0a17fd8a"
