@@ -23,7 +23,7 @@ import 'dart:io';
 final isPlatformTest = Platform.environment.containsKey('FLUTTER_TEST');
 
 /// Checks if code is running in CI environment. Can be useful in tests.
-const isPlatformCi = bool.fromEnvironment('CI');
+final isPlatformCi = Platform.environment.containsKey('CI');
 
 final isPlatformDesktop =
     Platform.isLinux || Platform.isMacOS || Platform.isWindows;
