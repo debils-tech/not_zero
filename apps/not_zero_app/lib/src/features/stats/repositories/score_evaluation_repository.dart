@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:not_zero_app/src/features/stats/models/check_in_couting_data.dart';
 import 'package:not_zero_app/src/features/stats/models/habits_counting_data.dart';
 import 'package:not_zero_app/src/features/stats/models/tasks_counting_data.dart';
 import 'package:nz_base_models/nz_base_models.dart';
@@ -60,7 +61,7 @@ class ScoreEvaluationRepository implements BaseRepository {
                 // by the score for this combination
                 sum +
                 entry.value *
-                    evaluateHabitScore(
+                    evaluateSingleHabitScore(
                       entry.key.importance,
                       entry.key.streakPeriod,
                     ),
@@ -68,7 +69,7 @@ class ScoreEvaluationRepository implements BaseRepository {
           .floor() +
       countingData.created * evaluateHabitCreatedScore();
 
-  int evaluateHabitScore(
+  int evaluateSingleHabitScore(
     TaskImportance importance,
     HabitStreakPeriod streakPeriod,
   ) =>
@@ -84,4 +85,24 @@ class ScoreEvaluationRepository implements BaseRepository {
       };
 
   int evaluateHabitCreatedScore() => _habitCreatedScore;
+
+  // --- CHECK IN ---
+
+  int evaluateCheckInsScore(CheckInCoutingData countingData) => countingData
+      .checkIns
+      .entries
+      .fold<double>(
+        0,
+        (sum, entry) =>
+            sum + entry.value * evaluateSingleCheckInScore(entry.key),
+      )
+      .floor();
+
+  int evaluateSingleCheckInScore(CheckInStreakPeriod streakPeriod) =>
+      switch (streakPeriod) {
+        CheckInStreakPeriod.fewDays => 3,
+        CheckInStreakPeriod.fewWeeks => 4,
+        CheckInStreakPeriod.fewMonths => 5,
+        CheckInStreakPeriod.longTime => 7,
+      };
 }

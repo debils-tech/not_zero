@@ -228,7 +228,11 @@ class _StreakCountIndicator extends ConsumerWidget {
             fontWeight: streakFontWeight,
           ),
         ),
-        Icon(Icons.whatshot_rounded, size: 16, color: streakColor),
+        Icon(
+          Icons.local_fire_department_rounded,
+          size: 16,
+          color: streakColor,
+        ),
       ],
     );
   }

@@ -16,6 +16,7 @@
 
 import 'package:collection/collection.dart';
 import 'package:not_zero_app/src/features/stats/repositories/score_evaluation_repository.dart';
+import 'package:not_zero_app/src/features/stats/services/check_in_stats_local_service.dart';
 import 'package:not_zero_app/src/features/stats/services/habits_stats_local_service.dart';
 import 'package:not_zero_app/src/features/stats/services/tasks_stats_local_service.dart';
 import 'package:nz_common/nz_common.dart';
@@ -24,11 +25,13 @@ class StatsRepository implements BaseRepository {
   const StatsRepository(
     this._tasksLocalService,
     this._habitsLocalService,
+    this._checkInLocalService,
     this._scoreEvaluationRepository,
   );
 
   final TasksStatsLocalService _tasksLocalService;
   final HabitsStatsLocalService _habitsLocalService;
+  final CheckInStatsLocalService _checkInLocalService;
   final ScoreEvaluationRepository _scoreEvaluationRepository;
 
   Future<int> countTotalPoints() => _asyncScoreSum();
@@ -57,6 +60,11 @@ class StatsRepository implements BaseRepository {
           .countHabitStats(startPeriod: start, endPeriod: end)
           .then(
             _scoreEvaluationRepository.evaluateHabitsScore,
+          ),
+      _checkInLocalService
+          .countCheckInStats(startPeriod: start, endPeriod: end)
+          .then(
+            _scoreEvaluationRepository.evaluateCheckInsScore,
           ),
     ]);
     return calculations.sum;

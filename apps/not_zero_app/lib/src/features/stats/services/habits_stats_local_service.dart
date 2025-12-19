@@ -95,6 +95,11 @@ class HabitsStatsLocalService implements BaseService {
             ..addColumns({countAll()})
             ..where(_db.habitCompletionsTable.habitId.isInQuery(habitsIds))
             ..where(
+              _db.habitCompletionsTable.type.equalsValue(
+                HabitCompletionType.completed,
+              ),
+            )
+            ..where(
               _db.habitCompletionsTable.completedDate.dayInRange(
                 startPeriod,
                 endPeriod,
@@ -113,9 +118,9 @@ class HabitsStatsLocalService implements BaseService {
     HabitStreakPeriod streakPeriod,
   ) {
     final maxDays = streakPeriod.maxDays;
-    return streakCount.isBiggerOrEqualValue(streakPeriod.minDays) &
+    return streakCount.isBiggerOrEqual(Constant(streakPeriod.minDays)) &
         (maxDays == null
             ? const Constant(true)
-            : streakCount.isSmallerThanValue(maxDays));
+            : streakCount.isSmallerThan(Constant(maxDays)));
   }
 }

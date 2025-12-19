@@ -1,0 +1,22 @@
+streakBadge:
+  title:
+    one: $n day in a row
+    other: $n days in a row
+
+streakDialog:
+  continues:
+    title: You're on fire!
+    subtitle:
+      one: You've checked in for $n day in a row. Keep the momentum going!
+      other: You've checked in for $n days in a row. Keep the momentum going!
+    button: Check In
+  lost:
+    title: Streak Reset
+    subtitle:
+      one: You missed yesterday. Your previous streak was $n day.
+      other: You missed yesterday. Your previous streak was $n days.
+    button: Start New Streak
+  newStreak:
+    title: Let's get started!
+    subtitle: Small steps lead to big changes. Check in daily to earn points and build your streak.
+    button: Check In for Day 1

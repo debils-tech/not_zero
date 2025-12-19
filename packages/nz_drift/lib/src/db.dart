@@ -21,6 +21,7 @@ import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_drift/src/converters/date_converter.dart';
 import 'package:nz_drift/src/database/native_database.dart';
 import 'package:nz_drift/src/migrations/migrations.dart';
+import 'package:nz_drift/src/tables/check_in_table.dart';
 import 'package:nz_drift/src/tables/habits_table.dart';
 import 'package:nz_drift/src/tables/tags_table.dart';
 import 'package:nz_drift/src/tables/tasks_table.dart';
@@ -35,6 +36,7 @@ part 'db.g.dart';
     HabitsTable,
     HabitCompletionsTable,
     HabitsTagEntries,
+    CheckInTable,
   ],
 )
 class NotZeroDatabase extends _$NotZeroDatabase {
@@ -43,7 +45,7 @@ class NotZeroDatabase extends _$NotZeroDatabase {
   NotZeroDatabase.memory() : super(openDriftDatabase(permanent: false));
 
   @override
-  int get schemaVersion => 7;
+  int get schemaVersion => 8;
 
   @override
   MigrationStrategy get migration {

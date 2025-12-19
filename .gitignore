@@ -50,3 +50,9 @@ app.*.map.json
 *.freezed.dart
 *.tailor.dart
 *.steps.dart
+
+# Golden tests
+# Ignore all artifacts that aren't for CI
+**/test/**/goldens/**/*.*
+**/test/**/failures/**/*.*
+!**/test/**/goldens/ci/*.*

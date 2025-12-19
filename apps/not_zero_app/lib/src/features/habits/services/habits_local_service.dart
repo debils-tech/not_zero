@@ -69,6 +69,7 @@ class HabitsLocalService implements BaseService {
   Future<int> getHabitStreak({
     required String habitId,
     required DateTime streakDate,
+    bool includeExactDate = true,
   }) async {
     final yesterday = streakDate.subtract(const Duration(days: 1));
     final lastCompletion =
@@ -76,10 +77,12 @@ class HabitsLocalService implements BaseService {
               ..where(
                 (tbl) =>
                     tbl.habitId.equals(habitId) &
-                    tbl.completedDate.dayInRange(
-                      yesterday,
-                      streakDate,
-                    ),
+                    (includeExactDate
+                        ? tbl.completedDate.dayInRange(
+                            yesterday,
+                            streakDate,
+                          )
+                        : tbl.completedDate.sameDayAs(yesterday)),
               )
               ..orderBy([(tbl) => OrderingTerm.desc(tbl.completedDate)])
               ..limit(1))
@@ -115,13 +118,11 @@ class HabitsLocalService implements BaseService {
           .insertOnConflictUpdate(completion.toInsertable());
 
       // Updating all the subsequent completions to update their streak count
-      var rowsChanged = true;
       var nextDate = completion.completedDate;
-      var nextStreak = completion.streakCount;
-      while (rowsChanged) {
+      int? currentStreak = completion.streakCount;
+      while (currentStreak != null) {
         nextDate = nextDate.add(const Duration(days: 1));
-        nextStreak++;
-        final changed =
+        final changedRows =
             await (_db.update(
                   _db.habitCompletionsTable,
                 )..where(
@@ -129,12 +130,19 @@ class HabitsLocalService implements BaseService {
                       tbl.completedDate.equalsValue(nextDate) &
                       tbl.habitId.equals(completion.habitId),
                 ))
-                .write(
-                  HabitCompletionsTableCompanion(
-                    streakCount: Value(nextStreak),
+                .writeReturning(
+                  HabitCompletionsTableCompanion.custom(
+                    streakCount: Constant(currentStreak + 1).iif(
+                      _db.habitCompletionsTable.type.equalsValue(
+                        HabitCompletionType.completed,
+                      ),
+                      Constant(currentStreak),
+                    ),
                   ),
                 );
-        rowsChanged = changed > 0;
+
+        final newCompletion = changedRows.firstOrNull;
+        currentStreak = newCompletion?.streakCount;
       }
     });
   }
@@ -147,12 +155,11 @@ class HabitsLocalService implements BaseService {
       )..where((tbl) => tbl.id.equals(completion.id))).go();
 
       // Updating all the subsequent completions to update their streak count
-      var rowsChanged = true;
       var nextDate = completion.completedDate;
-      var nextStreak = 1;
-      while (rowsChanged) {
+      int? currentStreak = 0;
+      while (currentStreak != null) {
         nextDate = nextDate.add(const Duration(days: 1));
-        final changed =
+        final changedRows =
             await (_db.update(
                   _db.habitCompletionsTable,
                 )..where(
@@ -160,13 +167,19 @@ class HabitsLocalService implements BaseService {
                       tbl.completedDate.equalsValue(nextDate) &
                       tbl.habitId.equals(completion.habitId),
                 ))
-                .write(
-                  HabitCompletionsTableCompanion(
-                    streakCount: Value(nextStreak),
+                .writeReturning(
+                  HabitCompletionsTableCompanion.custom(
+                    streakCount: Constant(currentStreak + 1).iif(
+                      _db.habitCompletionsTable.type.equalsValue(
+                        HabitCompletionType.completed,
+                      ),
+                      Constant(currentStreak),
+                    ),
                   ),
                 );
-        rowsChanged = changed > 0;
-        nextStreak++;
+
+        final newCompletion = changedRows.firstOrNull;
+        currentStreak = newCompletion?.streakCount;
       }
     });
   }
