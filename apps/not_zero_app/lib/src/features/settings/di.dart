@@ -16,7 +16,9 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/settings/notifiers/theme_settings_notifier.dart';
+import 'package:not_zero_app/src/features/settings/repositories/backup_repository.dart';
 import 'package:not_zero_app/src/features/settings/repositories/settings_repository.dart';
+import 'package:not_zero_app/src/features/settings/services/backup_local_service.dart';
 import 'package:not_zero_app/src/features/settings/services/settings_local_service.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
 import 'package:not_zero_app/src/helpers/app_info.dart';
@@ -27,9 +29,22 @@ final settingsLocalServiceProvider = Provider<SettingsLocalService>((ref) {
   );
 });
 
+final backupLocalServiceProvider = Provider<BackupLocalService>((ref) {
+  return BackupLocalService(
+    ref.watch(databaseProvider),
+    ref.watch(settingsBoxProvider),
+  );
+});
+
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   return SettingsRepository(
     ref.watch(settingsLocalServiceProvider),
+  );
+});
+
+final backupRepositoryProvider = Provider<BackupRepository>((ref) {
+  return BackupRepository(
+    ref.watch(backupLocalServiceProvider),
   );
 });
 

@@ -289,8 +289,8 @@ class TranslationsSettingsStorageEn {
 
 	// Translations
 
-	/// en: 'Backup data (work in progress)'
-	String get title => 'Backup data (work in progress)';
+	/// en: 'Backup data'
+	String get title => 'Backup data';
 
 	/// en: 'How it works'
 	String get aboutHeader => 'How it works';
@@ -304,6 +304,7 @@ class TranslationsSettingsStorageEn {
 	/// en: 'Export'
 	String get exportTitle => 'Export';
 
+	late final TranslationsSettingsStorageFileDialogEn fileDialog = TranslationsSettingsStorageFileDialogEn._(_root);
 	late final TranslationsSettingsStorageImportStatusEn importStatus = TranslationsSettingsStorageImportStatusEn._(_root);
 	late final TranslationsSettingsStorageExportStatusEn exportStatus = TranslationsSettingsStorageExportStatusEn._(_root);
 
@@ -607,6 +608,18 @@ class TranslationsSettingsThemeValuesEn {
 
 	/// en: 'Prefer system theme'
 	String get system => 'Prefer system theme';
+}
+
+// Path: settings.storage.fileDialog
+class TranslationsSettingsStorageFileDialogEn {
+	TranslationsSettingsStorageFileDialogEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Choose where to store backup file...'
+	String get saveTitle => 'Choose where to store backup file...';
 }
 
 // Path: settings.storage.importStatus
@@ -967,11 +980,12 @@ extension on Translations {
 			'settings.theme.values.light' => 'Light theme',
 			'settings.theme.values.dark' => 'Dark theme',
 			'settings.theme.values.system' => 'Prefer system theme',
-			'settings.storage.title' => 'Backup data (work in progress)',
+			'settings.storage.title' => 'Backup data',
 			'settings.storage.aboutHeader' => 'How it works',
 			'settings.storage.aboutContent' => 'You can export all of your app data into single JSON file and then import at any time on any device.\n⚠️ Warning: while app is in early stage of development, data and formats between versions can be changed and then data can be lost.\n',
 			'settings.storage.importTitle' => 'Import',
 			'settings.storage.exportTitle' => 'Export',
+			'settings.storage.fileDialog.saveTitle' => 'Choose where to store backup file...',
 			'settings.storage.importStatus.process' => 'Importing your data...',
 			'settings.storage.importStatus.successTitle' => 'Restart required',
 			'settings.storage.importStatus.success' => 'You successfully imported app\'s data!\nFor finishing this process, please restart this app\n',
