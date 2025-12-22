@@ -22,6 +22,12 @@ This is a concise overview of the primary features implemented in the main app (
 - Habit list UI supports compact and expanded layouts
 - Habit events integrate with the app’s statistics and scoring system
 
+### Daily check-in
+
+- Daily “check in” flow that encourages opening the app regularly and building a streak
+- On app open, shows a dialog to start/continue a streak (or notify about a lost streak)
+- Each check-in awards points; the amount increases with longer streaks and is integrated into the total score/statistics
+
 ### Quick statistics
 
 - Simple charts and counters (powered by `fl_chart`) to provide a quick view on progress
@@ -34,11 +40,16 @@ This is a concise overview of the primary features implemented in the main app (
 ### Settings
 
 - About page and licenses
-- Storage settings
+- Storage settings (data export/import)
 
 ### Backup and restore
 
-- Export and import app data (Linux requires a dialog helper such as `zenity`, `qarma`, or `kdialog`)
+- Export and import app data from **Settings → Storage**
+- Backup is saved as a `.tar.gz` archive containing:
+  - Drift/SQLite database (`db.sqlite`)
+  - Key-value settings (`settings.json`)
+  - Backup metadata (`backup_info.json`) and app metadata (`app_info.json`)
+- Restore currently applies the database and settings from the archive
 
 ---
 

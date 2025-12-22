@@ -31,11 +31,10 @@ Development is divided into several stages, with specific features planned for e
 - [x] Tags & Sublists
 - [x] Tasks of the "do it someday" type
 - [x] Habits
-- [ ] Export and import of app's data (rewrite)
+- [x] Export and import of app's data
+- [x] Daily check-ins
 - [ ] Better stats
-- [ ] Daily check-ins
 - [ ] "Start your day" and "end your day" features
-- [ ] Some distinct UI kit for the app
 
 </details>
 

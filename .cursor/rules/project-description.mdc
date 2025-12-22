@@ -17,6 +17,8 @@ alwaysApply: true
 - Codegen uses `freezed` + `json_serializable` (run via Melos scripts).
 - Pinned Flutter version is in `.fvmrc`.
 - Habits feature (recurring habit tracking with per‑day completions and history) lives in `apps/not_zero_app/lib/src/features/habits/`.
+- Daily check-in feature (streak-based check-ins that award points and integrate with total score) lives in `apps/not_zero_app/lib/src/features/check_in/`.
+- Backup/restore is implemented under Settings → Storage (`apps/not_zero_app/lib/src/features/settings/`) and exports/imports app data as a `.tar.gz` archive.
 
 ## Mandatory reading for agents
 
@@ -35,11 +37,11 @@ alwaysApply: true
 
 ## Commands cheat‑sheet
 
-- Bootstrap workspace: `dart run melos bootstrap`
-- Generate code: `dart run melos generate`
-- Analyze: `dart run melos exec flutter analyze --no-fatal-infos`
-- Test: `dart run melos run --no-select test`
-- Build examples: `make build-android`, `make build-linux`
+- Bootstrap workspace: `melos bootstrap`
+- Generate code: `melos generate`
+- Analyze: `melos exec flutter analyze --no-fatal-infos`
+- Test: `melos run --no-select test`
+- Release build: `make build-android`, `make build-linux`
 
 ## Documentation maintenance
 
