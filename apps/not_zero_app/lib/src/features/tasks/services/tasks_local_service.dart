@@ -58,8 +58,10 @@ class TasksLocalService implements BaseService {
       dbFilters.add(_db.tasksTagEntries.tag.isIn(searchTags));
     }
 
-    final forDate = filters.forDate;
-    if (forDate != null) {
+    if (filters.someday) {
+      dbFilters.add(tasksTable.forDate.isNull());
+    } else {
+      final forDate = filters.forDate;
       dbFilters.add(
         // If completed at queried day
         tasksTable.isCompleted & tasksTable.completedAt.sameDayAs(forDate) |
@@ -72,17 +74,6 @@ class TasksLocalService implements BaseService {
                         tasksTable.forDate.dayBefore(forDate)),
       );
     }
-
-    if (filters.someday) {
-      dbFilters.add(tasksTable.forDate.isNull());
-    }
-
-    assert(
-      filters.forDate == null || !filters.someday,
-      'Filtering by "forDate" and by "someday" at the same '
-      'will result in empty set of tasks '
-      'since "someday" is when "forDate" != null',
-    );
 
     final canceled = filters.canceled;
     if (canceled != null) {

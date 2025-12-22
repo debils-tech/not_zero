@@ -15,6 +15,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 export 'src/db.dart';
-export 'src/tables/tables.dart';
+export 'src/tables/check_in_table.dart';
+export 'src/tables/habits_table.dart';
+export 'src/tables/tags_table.dart';
+export 'src/tables/tasks_table.dart';
 export 'src/utils/expression_helpers.dart';
 export 'src/utils/tags_efficient_mapper.dart';

@@ -39,6 +39,7 @@ dependencies:
   drift_flutter: ^0.2.7
   dynamic_color: ^1.8.1
   collection: ^1.19.1
+  flutter_confetti: ^0.5.1
   tar: ^2.0.2
   file_picker: ^10.3.8
 
@@ -50,6 +51,7 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^6.8.0
   nz_lint: ^1.0.0
+  alchemist: ^0.13.0
 
 flutter:
   default-flavor: dev

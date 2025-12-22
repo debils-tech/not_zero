@@ -62,20 +62,20 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
   );
 
   Task edit({
-    String? title,
-    String? description,
-    TaskImportance? importance,
-    List<ItemTag>? tags,
-    DateTime? forDate,
-    bool? persistent,
+    required String title,
+    required String? description,
+    required TaskImportance importance,
+    required List<ItemTag>? tags,
+    required DateTime? forDate,
+    required bool? persistent,
   }) => copyWith(
-    title: title ?? this.title,
-    description: description ?? this.description,
-    importance: importance ?? this.importance,
-    modifiedAt: DateTime.now(),
-    forDate: forDate ?? this.forDate,
-    tags: tags ?? this.tags,
-    persistent: persistent ?? this.persistent,
+    title: title,
+    description: description ?? '',
+    createdAt: DateTime.now(),
+    importance: importance,
+    tags: tags ?? [],
+    forDate: forDate,
+    persistent: persistent ?? true,
   );
 
   Task complete({required bool completed}) => copyWith(

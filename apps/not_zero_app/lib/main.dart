@@ -61,6 +61,7 @@ class MyApp extends ConsumerWidget {
     final locale = TranslationProvider.of(context).flutterLocale;
 
     final themeSettings = ref.watch(themeSettingsNotifierProvider);
+    final appRouter = ref.watch(appRouterProvider);
 
     return _OptionalDynamicColorsBuilder(
       useDynamicColors: themeSettings.useDynamicColors,

@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/settings/notifiers/special_effects_notifier.dart';
 import 'package:not_zero_app/src/features/settings/notifiers/theme_settings_notifier.dart';
 import 'package:not_zero_app/src/features/settings/repositories/backup_repository.dart';
 import 'package:not_zero_app/src/features/settings/repositories/settings_repository.dart';
@@ -52,6 +53,9 @@ final themeSettingsNotifierProvider = NotifierProvider.autoDispose(
   ThemeSettingsNotifier.new,
 );
 
+final specialEffectsNotifierProvider = NotifierProvider.autoDispose(
+  SpecialEffectsNotifier.new,
+);
 final appInfoProvider = FutureProvider<AppInfo>((ref) async {
   return AppInfo.fromEnvironment();
 });

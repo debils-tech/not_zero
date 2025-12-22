@@ -14,7 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/settings/view/components/list_elements.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
@@ -35,12 +38,19 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.wb_sunny_outlined,
             title: context.t.settings.theme.title,
           ),
+          const _SpecialEffectsSwitch(),
           SettingsBlocHeader(context.t.settings.list.blocks.other),
           SettingsMenuEntry(
             route: '/settings/storage',
             icon: Icons.import_export_rounded,
             title: context.t.settings.storage.title,
           ),
+          if (kDebugMode)
+            SettingsMenuEntry(
+              route: '/settings/debug',
+              icon: Icons.construction_rounded,
+              title: context.t.settings.debug.title,
+            ),
           SettingsMenuEntry(
             route: '/settings/about',
             icon: Icons.info_outline_rounded,
@@ -48,6 +58,21 @@ class SettingsScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _SpecialEffectsSwitch extends ConsumerWidget {
+  const _SpecialEffectsSwitch();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SwitchListTile(
+      value: ref.watch(specialEffectsNotifierProvider),
+      onChanged: (value) {
+        ref.read(specialEffectsNotifierProvider.notifier).setConfetti(value);
+      },
+      title: Text(context.t.settings.specialEffects.title),
     );
   }
 }

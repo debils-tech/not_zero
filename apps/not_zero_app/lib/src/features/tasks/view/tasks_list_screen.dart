@@ -123,6 +123,9 @@ class _TasksFilters extends ConsumerWidget {
     final selectedDay = ref.watch(
       tasksFiltersNotifier.select((state) => state.forDate),
     );
+    final isSomeday = ref.watch(
+      tasksFiltersNotifier.select((state) => state.someday),
+    );
     final selectedTags = ref.watch(
       tasksFiltersNotifier.select((state) => state.searchTags),
     );
@@ -138,7 +141,7 @@ class _TasksFilters extends ConsumerWidget {
     return Column(
       crossAxisAlignment: .start,
       children: [
-        if (selectedDay != null) ...[
+        if (!isSomeday) ...[
           DateRangeSwitch(
             rangeType: .day,
             initialDate: selectedDay,

@@ -99,6 +99,16 @@ android {
             }
         }
     }
+
+    // Override version code for split APKs to avoid the 1000/2000/4000 prefix.
+    // This ensures all APKs have the exact version code defined in pubspec.yaml.
+    applicationVariants.all {
+        outputs.forEach { output ->
+            if (output is com.android.build.gradle.api.ApkVariantOutput) {
+                output.versionCodeOverride = flutterVersionCode
+            }
+        }
+    }
 }
 
 flutter {

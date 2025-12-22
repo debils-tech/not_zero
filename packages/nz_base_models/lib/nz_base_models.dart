@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+export 'src/app_daily_check_in.dart';
 export 'src/habit.dart';
 export 'src/habit_completion.dart';
 export 'src/tag.dart';

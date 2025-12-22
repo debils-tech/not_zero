@@ -1,0 +1,63 @@
+list:
+  title: "Задачи"
+  titleSelection:
+    zero: "Выбрано $n задач"
+    one: "Выбрана $n задача"
+    few: "Выбрано $n задачи"
+    many: "Выбрано $n задач"
+    other: "Выбрано $n задач"
+  deleteDialog:
+    content:
+      one: "Вы уверены, что хотите удалить выбранную задачу?"
+      few: "Вы уверены, что хотите удалить $n выбранные задачи?"
+      many: "Вы уверены, что хотите удалить $n выбранных задач?"
+      other: "Вы уверены, что хотите удалить $n выбранных задач?"
+  tooltips:
+    deleteSelectedButton: "Удалить выбранные"
+    selectAllButton: "Выбрать все"
+    removeSelectionButton: "Снять выделение"
+    addNewButton: "Добавить задачу"
+    canceledMarkButton: "Возобновить"
+    selectDateForSomedayTasksButton: "Выбрать дату для задачи"
+  appBarActions:
+    popupMenu:
+      showCanceledOption: "Показывать отменённые"
+  cancelButton: "Отменить задачи"
+  canceledTaskMark: "Отменена"
+  tasksLeftToComplete:
+    zero: "Нет невыполненных задач"
+    one: "Осталась $n задача"
+    few: "Осталось $n задачи"
+    many: "Осталось $n задач"
+    other: "Осталось $n задач"
+  empty:
+    icon: '¯\\_(ツ)_/¯'
+    title: "Задач нет"
+    button: "Создать новую"
+    titleFilters: "Нет задач с такими фильтрами"
+    buttonFilters: "Сбросить фильтры"
+    buttonPlanning: "Показать задачи на потом"
+  planning:
+    labelWhenEnabled: "Задачи на потом"
+
+view:
+  title: "Просмотр задачи"
+  tooltips:
+    editTaskButton: "Редактировать"
+
+edit:
+  title:
+    create: "Новая задача"
+    existing: "Редактировать задачу"
+  fields:
+    taskTitle: "Название"
+    taskDescription: "Описание"
+    taskForSomeday: "На потом"
+    taskPersistence: "Сохранять задачу до выполнения"
+  submit:
+    create: "Создать задачу!"
+    existing: "Сохранить изменения"
+  deleteDialog:
+    content: "Вы уверены, что хотите удалить эту задачу?"
+  tooltips:
+    deleteTaskButton: "Удалить"

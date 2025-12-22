@@ -6,3 +6,5 @@ targets:
           store_date_time_values_as_text: false
           databases:
             not_zero_database: lib/src/db.dart
+          test_dir: test/drift/
+          schema_dir: drift_schemas/

@@ -27,12 +27,11 @@ class TasksEmptyListPlaceholder extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final hasFilters = ref.watch(
       tasksFiltersNotifier.select(
-        (state) =>
-            state.someday ||
-            (state.canceled ?? false) ||
-            state.searchTags.isNotEmpty,
+        (state) => (state.canceled ?? false) || state.searchTags.isNotEmpty,
       ),
     );
+
+    final somedayTaskCount = ref.watch(_somedayTaskCountProvider).value;
 
     final theme = Theme.of(context);
     return Column(
@@ -50,23 +49,38 @@ class TasksEmptyListPlaceholder extends ConsumerWidget {
               : context.t.tasks.list.empty.title,
           style: theme.textTheme.titleLarge,
         ),
-        const SizedBox(height: 8),
-        TextButton(
-          onPressed: () {
-            if (hasFilters) {
-              ref.read(tasksFiltersNotifier.notifier).resetFilters();
-            } else {
-              context.go('/tasks/new');
-            }
-          },
-          child: Text(
-            hasFilters
-                ? context.t.tasks.list.empty.buttonFilters
-                : context.t.tasks.list.empty.button,
+        const SizedBox(height: 12),
+        if (somedayTaskCount != null && somedayTaskCount > 0) ...[
+          OutlinedButton.icon(
+            onPressed: () =>
+                ref.read(tasksFiltersNotifier.notifier).toggleSomeday(),
+            label: Text(context.t.tasks.list.empty.buttonPlanning),
+            icon: const Icon(Icons.arrow_forward_rounded),
           ),
-        ),
+          const SizedBox(height: 4),
+        ],
+        if (hasFilters)
+          TextButton(
+            onPressed: () =>
+                ref.read(tasksFiltersNotifier.notifier).resetFilters(),
+            child: Text(context.t.tasks.list.empty.buttonFilters),
+          )
+        else
+          TextButton(
+            onPressed: () => context.go('/tasks/new'),
+            child: Text(context.t.tasks.list.empty.button),
+          ),
         const SizedBox(height: 24),
       ],
     );
   }
 }
+
+final _somedayTaskCountProvider = FutureProvider.autoDispose<int>((ref) async {
+  final currentFilters = ref.watch(tasksFiltersNotifier);
+  if (currentFilters.someday) return 0;
+
+  final newFilters = currentFilters.copyWith(someday: true);
+  final tasks = await ref.watch(tasksRepositoryProvider).getTasks(newFilters);
+  return tasks.length;
+});

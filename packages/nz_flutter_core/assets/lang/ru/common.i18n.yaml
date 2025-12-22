@@ -1,0 +1,23 @@
+dialog:
+  confirmTitle: "Подтвердить?"
+  cancelButton: "Отмена"
+  okButton: "Да"
+  deleteTitle: "Подтвердить удаление"
+  deleteButton: "Удалить"
+  webSaveTitle: "Сохранить файл"
+  exitTitle: "Подтвердить выход"
+  exitContent: "Вы уверены, что хотите выйти со страницы? Все изменения будут потеряны!"
+
+timeSubtitle:
+  createdAt: "создано ${time}"
+  modifiedAt: "изменено ${time}"
+  completedAt: "выполнено ${time}"
+
+copy:
+  defaultText: "Копировать текст"
+  completedText: "Скопировано!"
+
+timeOptions:
+  today: "Сегодня"
+  yesterday: "Вчера"
+  tomorrow: "Завтра"

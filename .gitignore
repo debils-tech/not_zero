@@ -44,3 +44,15 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+# Generated files that can be easily regenerated
+*.g.dart
+*.freezed.dart
+*.tailor.dart
+*.steps.dart
+
+# Golden tests
+# Ignore all artifacts that aren't for CI
+**/test/**/goldens/**/*.*
+**/test/**/failures/**/*.*
+!**/test/**/goldens/ci/*.*

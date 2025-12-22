@@ -27,13 +27,15 @@ Development is divided into several stages, with specific features planned for e
 - [x] App branding (logo, icons, posters)
 - [x] Stable database version
 - [x] Automatic builds and basic packaging
-- [x] Export and import of app's data `(now broken 😢)`
 - [x] Basic stats
 - [x] Tags & Sublists
 - [x] Tasks of the "do it someday" type
-- [ ] Habits `Work in progress 🚧`
+- [x] Habits
+- [ ] Export and import of app's data (rewrite)
 - [ ] Better stats
+- [ ] Daily check-ins
 - [ ] "Start your day" and "end your day" features
+- [ ] Some distinct UI kit for the app
 
 </details>
 
@@ -43,8 +45,11 @@ Development is divided into several stages, with specific features planned for e
 *The future is blurry here...*
 
 - [ ] Release in F-Droid
+- [ ] Time tracking
+- [ ] Mood journal
 - [ ] Onboarding
 - [ ] Some backend for the app *(still local-only approach)*
+- [ ] General gamification goal *(huge ⭐, more info later)*
 - [ ] Release in Google Play
 - [ ] Adaptation for iOS
 - [ ] Release in App Store
@@ -52,7 +57,6 @@ Development is divided into several stages, with specific features planned for e
 - [ ] Adaptation of app for desktop
 - [ ] Release on Linux
 - [ ] Advanced stats (weekly, monthly statistics)
-- [ ] General gamification goal *(huge ⭐, more info later)*
 - [ ] Social features *(huge ⭐, more info later)*
 
 </details>
@@ -84,6 +88,10 @@ To install it follow [**the official guide**](https://docs.flutter.dev/get-start
 ```bash
 # First, get all the dependencies
 dart run melos bootstrap
+# Then generate all the files that can be needed
+dart run melos run --no-select generate
+dart run melos run --no-select l10n
+dart run melos run --no-select migrations
 
 # Go to the flutter app directory
 cd apps/not_zero_app
@@ -94,5 +102,5 @@ flutter run
 SQLite3 is required for this app to function.
 On Android, iOS, Linux platforms it works out of the box: sqlite lib already included in the package. Other platforms wasn't tested yet.
 
-For backup feature to work properly on Linux it is required to have dialog library be installed.
-It can be either `zenity` (for GTK), `qarma` (for Qt), `kdialog` (for KDE).
+<!-- For backup feature to work properly on Linux it is required to have dialog library be installed.
+It can be either `zenity` (for GTK), `qarma` (for Qt), `kdialog` (for KDE). -->

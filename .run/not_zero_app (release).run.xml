@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="not_zero_app (release)" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="additionalArgs" value="--release" />
+    <option name="buildFlavor" value="foss" />
+    <option name="filePath" value="$PROJECT_DIR$/apps/not_zero_app/lib/main.dart" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -12,6 +12,7 @@
             "name": "not_zero_app (profile mode)",
             "cwd": "apps/not_zero_app",
             "request": "launch",
+            "args": ["--flavor", "dev"],
             "type": "dart",
             "flutterMode": "profile"
         },
@@ -19,6 +20,7 @@
             "name": "not_zero_app (release mode)",
             "cwd": "apps/not_zero_app",
             "request": "launch",
+            "args": ["--flavor", "foss"],
             "type": "dart",
             "flutterMode": "release"
         }

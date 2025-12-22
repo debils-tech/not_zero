@@ -10,7 +10,6 @@ theme:
   useDynamicColorsOption:
     title: 'Use dynamic colors'
     subtitle: App's theme would adapt on system accent colors
-    subttileUnavailable: Dynamic colors aren't available on this platform
   harmonizeColors:
     title: 'Harmonized colors'
     subtitle: 'All the custom colors would be more integrated into app theme'
@@ -18,6 +17,9 @@ theme:
     light: 'Light theme'
     dark: 'Dark theme'
     system: 'Prefer system theme'
+
+specialEffects:
+  title: 'Special effects'
 
 storage:
   title: 'Backup data'
@@ -46,11 +48,16 @@ storage:
       Try to restart an app
   closeAppButton: 'Close this app!'
 
+debug:
+  title: Debug settings
+  blocks:
+    language: 'App language'
+
 about:
   title: 'About'
   blocks:
     version: 'App version'
     links: 'Links'
     telegram: 'Telegram'
-    repository: 'Repository'
+    repository: 'Source code'
     licenses: 'Licenses'

@@ -32,7 +32,7 @@ class SettingsRepository implements BaseRepository {
     _log.fine('Loading theme settings');
     return AppThemeSettings(
       themeState: _settingsLocalService.getThemeState() ?? ThemeState.system,
-      useDynamicColors: _settingsLocalService.getUseDynamicColors() ?? true,
+      useDynamicColors: _settingsLocalService.getUseDynamicColors() ?? false,
       harmonizeColors: _settingsLocalService.getHarmonizeColors() ?? true,
     );
   }
@@ -52,5 +52,13 @@ class SettingsRepository implements BaseRepository {
 
   Future<void> setHabitsUiStyle(HabitsUiStyle value) {
     return _settingsLocalService.setExpandedHabitsUi(value == .expanded);
+  }
+
+  bool getConfetti() {
+    return _settingsLocalService.getConfetti() ?? true;
+  }
+
+  Future<void> setConfetti(bool value) {
+    return _settingsLocalService.setConfetti(value);
   }
 }
