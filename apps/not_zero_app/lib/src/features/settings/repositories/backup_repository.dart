@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/settings/services/backup_local_service.dart';
@@ -15,7 +16,7 @@ class BackupRepository implements BaseRepository {
   static const _appInfoBackupEntryName = 'app_info.json';
   static const _backupInfoBackupEntryName = 'backup_info.json';
 
-  Future<bool> backupLocalData(File backupFile) async {
+  Future<Uint8List?> backupLocalData() async {
     final dbEntry = _localService.databaseBackupStream().then(
       (stream) => TarEntry(
         TarHeader(name: _dbBackupEntryName, mode: 0x777),
@@ -48,16 +49,13 @@ class BackupRepository implements BaseRepository {
     ]).transform(tarWriter).transform(gzip.encoder);
 
     try {
-      // Writing all the data to the backup file
-      final fileSink = backupFile.openWrite();
-      await tarByteStream.pipe(fileSink);
-      // Flushing and closing the file
-      await fileSink.flush();
-      await fileSink.close();
-      return true;
+      // Combining all the byte data into a single Uint8List
+      final byteBulder = BytesBuilder();
+      await tarByteStream.forEach(byteBulder.add);
+      return byteBulder.toBytes();
     } on Object catch (e, s) {
       Logger('BackupRepository').severe('Failed to backup local data', e, s);
-      return false;
+      return null;
     }
   }
 }

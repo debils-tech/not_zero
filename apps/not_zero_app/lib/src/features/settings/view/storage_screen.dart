@@ -14,12 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/settings/repositories/backup_repository.dart';
 import 'package:not_zero_app/src/features/settings/view/components/list_elements.dart';
@@ -63,31 +62,44 @@ class StorageSettingsScreen extends ConsumerWidget {
     final navigator = GoRouter.of(context);
     final messenger = ScaffoldMessenger.of(context);
 
-    final backupFilePath = await FilePicker.platform.saveFile(
-      dialogTitle: context.t.settings.storage.fileDialog.saveTitle,
-      type: FileType.custom,
-      allowedExtensions: ['tar.gz'],
-      fileName: 'not_zero_backup_${DateTime.now().toIso8601String()}.tar.gz',
-    );
-    if (backupFilePath == null) return;
-
     _showExportingDialog(
-      // TODO(uSlashVlad): Rewrite this to proper dialog.
-      // ignore: use_build_context_synchronously
       context,
       icon: Icons.save_rounded,
       title: t.settings.storage.exportStatus.process,
     );
 
-    final result = await backupRepository.backupLocalData(File(backupFilePath));
-
-    final infoText = result
-        ? t.settings.storage.exportStatus.success
-        : t.settings.storage.exportStatus.failure;
+    final backupData = await backupRepository.backupLocalData();
+    if (backupData == null) {
+      messenger.showSnackBar(
+        SnackBar(content: Text(t.settings.storage.exportStatus.failure)),
+      );
+      return;
+    }
 
     navigator.pop();
     messenger.hideCurrentSnackBar();
-    messenger.showSnackBar(SnackBar(content: Text(infoText)));
+
+    try {
+      final backupFilePath = await FilePicker.platform.saveFile(
+        dialogTitle: t.settings.storage.fileDialog.saveTitle,
+        type: FileType.custom,
+        allowedExtensions: ['tar.gz'],
+        fileName: 'not_zero_backup_${DateTime.now().toIso8601String()}.tar.gz',
+        bytes: backupData,
+      );
+      if (backupFilePath == null) return;
+
+      messenger.showSnackBar(
+        SnackBar(content: Text(t.settings.storage.exportStatus.success)),
+      );
+    } on Object catch (e, s) {
+      Logger(
+        'StorageSettingsScreen',
+      ).severe('Failed to save backup data', e, s);
+      messenger.showSnackBar(
+        SnackBar(content: Text(t.settings.storage.exportStatus.failure)),
+      );
+    }
   }
   //
   // Future<void> _importData(BuildContext context) async {
