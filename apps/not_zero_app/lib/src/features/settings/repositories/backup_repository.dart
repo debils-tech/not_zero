@@ -52,10 +52,39 @@ class BackupRepository implements BaseRepository {
       // Combining all the byte data into a single Uint8List
       final byteBulder = BytesBuilder();
       await tarByteStream.forEach(byteBulder.add);
-      return byteBulder.toBytes();
+      return byteBulder.takeBytes();
     } on Object catch (e, s) {
       Logger('BackupRepository').severe('Failed to backup local data', e, s);
       return null;
+    }
+  }
+
+  Future<bool> restoreLocalData(Uint8List data) async {
+    final tarStream = Stream<List<int>>.value(data).transform(gzip.decoder);
+    final reader = TarReader(tarStream);
+
+    try {
+      var restoredAnything = false;
+
+      while (await reader.moveNext()) {
+        final entry = reader.current;
+        final fileData = entry.contents.map(Uint8List.fromList);
+
+        switch (entry.header.name) {
+          case _dbBackupEntryName:
+            await _localService.databaseRestoreFromStream(fileData);
+            restoredAnything = true;
+          case _settingsBackupEntryName:
+            await _localService.settingsRestoreData(fileData);
+            restoredAnything = true;
+        }
+      }
+
+      return restoredAnything;
+    } on Object catch (e, s) {
+      await reader.cancel();
+      Logger('BackupRepository').severe('Failed to restore local data', e, s);
+      return false;
     }
   }
 }

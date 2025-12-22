@@ -28,4 +28,28 @@ class BackupLocalService implements BaseService {
       'timestamp': DateTime.now().toIso8601String(),
     }),
   );
+
+  Future<void> databaseRestoreFromStream(Stream<Uint8List> dataStream) async =>
+      _db.restoreFromStream(dataStream);
+
+  Future<void> settingsRestoreData(Stream<Uint8List> dataStream) async {
+    final dataBuiler = BytesBuilder();
+    await dataStream.forEach(dataBuiler.add);
+
+    final settingsMap = Map<String, dynamic>.from(
+      jsonDecode(utf8.decode(dataBuiler.takeBytes())) as Map,
+    );
+    await _settingsBox.clearAll();
+    for (final entry in settingsMap.entries) {
+      final value = entry.value;
+      switch (value) {
+        case String():
+          await _settingsBox.putString(entry.key, value);
+        case int():
+          await _settingsBox.putInt(entry.key, value);
+        case bool():
+          await _settingsBox.putBool(entry.key, value);
+      }
+    }
+  }
 }

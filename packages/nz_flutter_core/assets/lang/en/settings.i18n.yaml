@@ -31,12 +31,12 @@ storage:
   exportTitle: 'Export'
   fileDialog:
     saveTitle: 'Choose where to store backup file...'
+    openTitle: 'Choose previously storead backup file...'
   importStatus:
     process: 'Importing your data...'
     successTitle: 'Restart required'
     success: |
       You successfully imported app's data!
-      For finishing this process, please restart this app
     failure: |
       Something went wrong. Your data wasn't imported :(
       Try again on some other file

@@ -22,6 +22,7 @@ import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/settings/repositories/backup_repository.dart';
 import 'package:not_zero_app/src/features/settings/view/components/list_elements.dart';
+import 'package:not_zero_app/src/features/storage/di.dart';
 import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class StorageSettingsScreen extends ConsumerWidget {
@@ -45,11 +46,11 @@ class StorageSettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.save_rounded),
             title: Text(context.t.settings.storage.exportTitle),
           ),
-          // ListTile(
-          //   // onTap: () => _importData(context),
-          //   leading: const Icon(Icons.download_rounded),
-          //   title: Text(context.t.settings.storage.importTitle),
-          // ),
+          ListTile(
+            onTap: () => _importData(context, backupRepository, ref: ref),
+            leading: const Icon(Icons.publish_rounded),
+            title: Text(context.t.settings.storage.importTitle),
+          ),
         ],
       ),
     );
@@ -101,42 +102,54 @@ class StorageSettingsScreen extends ConsumerWidget {
       );
     }
   }
-  //
-  // Future<void> _importData(BuildContext context) async {
-  //   _showExportingDialog(
-  //     icon: Icons.download_rounded,
-  //     title: t.settings.storage.importStatus.process,
-  //   );
-  //
-  //   final navigator = Navigator.of(context, rootNavigator: true);
-  //   final messenger = ScaffoldMessenger.of(context);
-  //
-  //   final result = await getIt<SettingsRepository>().importData();
-  //
-  //   navigator.pop();
-  //   if (!result) {
-  //     messenger.hideCurrentSnackBar();
-  //     messenger.showSnackBar(
-  //       SnackBar(content: Text(t.settings.storage.importStatus.failure)),
-  //     );
-  //     return;
-  //   }
-  //
-  //   final closeDialogAction = [
-  //     TextButton(
-  //       onPressed: () {
-  //         if (Platform.isAndroid) {
-  //           SystemNavigator.pop();
-  //         } else {
-  //           exit(0);
-  //         }
-  //       },
-  //       child: Text(t.settings.storage.closeAppButton),
-  //     ),
-  //   ];
-  //
-  //   _showSuccessfulImportDialog(actions: closeDialogAction);
-  // }
+
+  Future<void> _importData(
+    BuildContext context,
+    BackupRepository backupRepository, {
+    required WidgetRef ref,
+  }) async {
+    final navigator = Navigator.of(context, rootNavigator: true);
+    final messenger = ScaffoldMessenger.of(context);
+
+    final filePicker = await FilePicker.platform.pickFiles(
+      dialogTitle: t.settings.storage.fileDialog.openTitle,
+      type: FileType.custom,
+      allowedExtensions: ['tar.gz'],
+      withData: true,
+    );
+    if (filePicker == null) return;
+
+    final data = filePicker.files.firstOrNull?.bytes;
+    if (data == null) return;
+
+    _showExportingDialog(
+      // TODO(uSlashVlad): It's bad, will be replaced with a proper route later
+      // ignore: use_build_context_synchronously
+      context,
+      icon: Icons.download_rounded,
+      title: t.settings.storage.importStatus.process,
+    );
+
+    final result = await backupRepository.restoreLocalData(data);
+
+    navigator.pop();
+    if (!result) {
+      messenger.hideCurrentSnackBar();
+      messenger.showSnackBar(
+        SnackBar(content: Text(t.settings.storage.importStatus.failure)),
+      );
+      return;
+    }
+
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(content: Text(t.settings.storage.importStatus.success)),
+    );
+
+    // Re-creating all the connected providers to update the data in the whole app
+    ref.invalidate(databaseProvider, asReload: true);
+    ref.invalidate(settingsBoxProvider, asReload: true);
+  }
 
   void _showExportingDialog(
     BuildContext context, {
@@ -158,22 +171,4 @@ class StorageSettingsScreen extends ConsumerWidget {
       );
     },
   );
-  //
-  // void _showSuccessfulImportDialog({List<Widget>? actions}) => unawaited(
-  //       showDialog(
-  //         context: GlobalNavigation.context,
-  //         barrierDismissible: false,
-  //         builder: (context) {
-  //           // There is an option to close an app only on this platforms
-  //           final isClosingSupported = Platform.isAndroid || isPlatformDesktop;
-  //
-  //           return AlertDialog(
-  //             icon: const Icon(Icons.warning_amber_rounded),
-  //             title: Text(t.settings.storage.importStatus.successTitle),
-  //             content: Text(t.settings.storage.importStatus.success),
-  //             actions: isClosingSupported ? actions : null,
-  //           );
-  //         },
-  //       ),
-  //     );
 }
