@@ -41,7 +41,7 @@ abstract class AppInfo with _$AppInfo {
       name: 'Not Zero',
       platform: Platform.operatingSystem,
       version: packageInfo.version,
-      buildNumber: int.parse(packageInfo.buildNumber),
+      buildNumber: int.tryParse(packageInfo.buildNumber) ?? 0,
     );
   }
 }
