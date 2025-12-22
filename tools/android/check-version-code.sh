@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run this file like this:
-# sh tools/android/check-version-code.sh [RELEASE_DIR] [EXPECTED_VERSION_CODE]
+# bash tools/android/check-version-code.sh [RELEASE_DIR] [EXPECTED_VERSION_CODE]
 #
 # If RELEASE_DIR is not provided, it defaults to apps/not_zero_app/build/releases/android
 # If EXPECTED_VERSION_CODE is not provided, it is extracted from apps/not_zero_app/pubspec.yaml
