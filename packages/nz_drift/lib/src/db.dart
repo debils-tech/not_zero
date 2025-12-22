@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:drift/drift.dart';
@@ -70,22 +71,68 @@ class NotZeroDatabase extends _$NotZeroDatabase {
     );
   }
 
-  Future<void> drop() {
-    return transaction(() async {
-      for (final table in allTables) {
-        await delete(table).go();
-      }
-    });
-  }
-
   Future<void> deleteFromDisk() async {
     final path = await getDatabasePath();
-    if (path == null) return;
 
     final dbFile = File(path);
     if (dbFile.existsSync()) {
       await close();
       dbFile.deleteSync();
     }
+  }
+
+  Future<Stream<Uint8List>> backupToStream() async {
+    final backupPath = await getBackupDatabasePath();
+    final backupFile = File(backupPath);
+
+    // VACUUM requires the target file to not exist
+    if (backupFile.existsSync()) {
+      backupFile.deleteSync();
+    }
+
+    await customStatement('VACUUM INTO ?', [backupPath]);
+
+    final stream = backupFile.openRead();
+
+    // Wrap the stream to delete file when fully read
+    final controller = StreamController<List<int>>();
+    final subscription = stream.listen(
+      controller.add,
+      onError: controller.addError,
+      onDone: () async {
+        // Close controller and delete file after last listener is done
+        await controller.close();
+        if (backupFile.existsSync()) {
+          backupFile.deleteSync();
+        }
+      },
+      cancelOnError: false,
+    );
+    // Propagate pause and resume to the original subscription
+    controller
+      ..onPause = subscription.pause
+      ..onResume = subscription.resume
+      ..onCancel = subscription.cancel;
+
+    return controller.stream.map(Uint8List.fromList);
+  }
+
+  Future<void> restoreFromStream(Stream<Uint8List> dataStream) async {
+    // Deleting the current database
+    await deleteFromDisk();
+
+    // Creating the new database file
+    final dbFile = File(await getDatabasePath());
+    if (!dbFile.existsSync()) {
+      dbFile.createSync();
+    }
+
+    // Writing all the data to the new database file
+    final dbFileSink = dbFile.openWrite();
+    await dbFileSink.addStream(dataStream);
+
+    // Flushing and closing the file
+    await dbFileSink.flush();
+    await dbFileSink.close();
   }
 }

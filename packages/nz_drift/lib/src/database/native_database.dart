@@ -27,7 +27,7 @@ QueryExecutor openDriftDatabase({bool permanent = true}) {
   if (permanent) {
     return LazyDatabase(() async {
       final path = await getDatabasePath();
-      final file = File(path!);
+      final file = File(path);
 
       if (_useLogs) {
         // No flutter package, so no kDebugMode or debugPrint available here.
@@ -43,7 +43,7 @@ QueryExecutor openDriftDatabase({bool permanent = true}) {
   return NativeDatabase.memory(logStatements: _useLogs);
 }
 
-Future<String?> getDatabasePath() async {
+Future<String> getDatabasePath() async {
   final String dbFolder;
   if (Platform.isLinux && !isPlatformTest) {
     dbFolder = p.join(Platform.environment['HOME'] ?? '~', '.config/not_zero');
@@ -52,6 +52,16 @@ Future<String?> getDatabasePath() async {
   }
 
   return p.join(dbFolder, 'db.sqlite');
+}
+
+Future<String> getBackupDatabasePath() async {
+  final cacheDirectory = await getTemporaryDirectory();
+  final timestamp = DateTime.now().millisecondsSinceEpoch;
+  final backupPath = p.join(
+    cacheDirectory.path,
+    'nz-db-backup-$timestamp.sqlite',
+  );
+  return backupPath;
 }
 
 bool get _useLogs {
