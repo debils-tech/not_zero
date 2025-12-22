@@ -58,6 +58,7 @@ jobs:
       - name: Update Version
         id: update_version
         run: |
+          git fetch origin main:main --depth 1
           tools/update-version.sh \
           $(echo $GITHUB_REF | sed 's|refs/heads/release/||') \
           $(git log main..HEAD --grep='Bump version to' -i --oneline | wc -l) >> $GITHUB_OUTPUT
