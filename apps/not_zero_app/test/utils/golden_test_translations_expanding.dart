@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import 'package:nz_flutter_core/nz_flutter_core.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
 
 void testWithAllTranslations(void Function(AppLocale) testCallback) {
   for (final locale in AppLocale.values) {

@@ -15,7 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter/material.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
 
 class FakeTranslationProvider extends StatelessWidget {
   const FakeTranslationProvider({

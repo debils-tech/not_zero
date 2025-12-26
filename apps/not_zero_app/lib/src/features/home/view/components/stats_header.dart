@@ -19,8 +19,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/check_in/di.dart';
 import 'package:not_zero_app/src/features/check_in/models/check_in_streak_state.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 import 'package:not_zero_app/src/helpers/not_zero_icons.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class HomeStatsHeader extends ConsumerWidget {
   const HomeStatsHeader({super.key});

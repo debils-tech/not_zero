@@ -16,8 +16,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/common/view/components/selection/di.dart';
 import 'package:not_zero_app/src/features/tasks/di.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
 
 class TasksListAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const TasksListAppBar({super.key});

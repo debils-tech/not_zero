@@ -14,29 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/common/view/components/selection/notifiers/item_selection_notifier.dart';
 
-class NavigationManager {
-  NavigationManager();
-
-  final _globalKey = GlobalKey<NavigatorState>();
-
-  Key get key => _globalKey;
-
-  BuildContext? get _context => _globalKey.currentContext;
-
-  GoRouter get _router => GoRouter.of(_context!);
-
-  void go(String path, {Object? extra}) => _router.go(path, extra: extra);
-
-  Future<void> push(String path, {Object? extra}) =>
-      _router.push(path, extra: extra);
-
-  void pop() => _router.pop();
-
-  void popToRoot() => _router.go('/');
-
-  void replace(String path, {Object? extra}) =>
-      _router.replace<void>(path, extra: extra);
-}
+final itemSelectionNotifierProvider = NotifierProvider.autoDispose(
+  ItemSelectionNotifier.new,
+);

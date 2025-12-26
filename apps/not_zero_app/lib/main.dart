@@ -23,11 +23,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
+import 'package:not_zero_app/src/features/themes/themes.dart';
+import 'package:not_zero_app/src/features/themes/utils/dynamic_theme_application_ext.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
 import 'package:not_zero_app/src/helpers/global_navigation.dart';
 import 'package:not_zero_app/src/helpers/licenses.dart';
 import 'package:not_zero_app/src/routes.dart';
 import 'package:nz_common/nz_common.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 import 'package:nz_logger/nz_logger.dart';
 
 void main() async {

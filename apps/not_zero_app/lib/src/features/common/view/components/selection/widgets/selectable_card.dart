@@ -16,9 +16,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nz_flutter_core/src/components/common_widgets/clickable_card.dart';
-import 'package:nz_flutter_core/src/components/selection/di.dart';
-import 'package:nz_flutter_core/src/utils/build_context_quick_access_ext.dart';
+import 'package:not_zero_app/src/features/common/view/components/common_widgets/clickable_card.dart';
+import 'package:not_zero_app/src/features/common/view/components/selection/di.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 
 class SelectableCard extends ConsumerWidget {
   const SelectableCard({

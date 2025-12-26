@@ -17,8 +17,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero_app/src/features/themes/themes.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class HabitViewScreen extends ConsumerWidget {
   const HabitViewScreen({required this.habitToView, super.key});

@@ -22,12 +22,15 @@ import 'package:flutter_confetti/flutter_confetti.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:not_zero_app/src/features/common/view/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero_app/src/features/habits/di.dart';
 import 'package:not_zero_app/src/features/special_effects/di.dart';
 import 'package:not_zero_app/src/features/special_effects/view/components/emoji_confetti_wrapper.dart';
 import 'package:not_zero_app/src/features/stats/models/habits_counting_data.dart';
+import 'package:not_zero_app/src/features/themes/themes.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class HabitCard extends ConsumerWidget {
   const HabitCard(

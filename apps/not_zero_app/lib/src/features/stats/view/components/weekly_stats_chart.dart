@@ -17,8 +17,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:not_zero_app/src/features/themes/extensions/charts_colors.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 import 'package:nz_common/nz_common.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class WeeklyStatsChart extends StatelessWidget {
   WeeklyStatsChart({

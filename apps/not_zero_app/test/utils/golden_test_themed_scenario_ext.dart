@@ -16,7 +16,7 @@
 
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
+import 'package:not_zero_app/src/features/themes/themes.dart';
 
 extension GoldenTestThemedScenarioExt on List<GoldenTestScenario> {
   List<GoldenTestScenario> themed() {

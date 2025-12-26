@@ -16,9 +16,9 @@
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'package:nz_flutter_core/src/themes/extensions/charts_colors.dart';
-import 'package:nz_flutter_core/src/themes/extensions/tags_colors.dart';
-import 'package:nz_flutter_core/src/themes/extensions/tasks_colors.dart';
+import 'package:not_zero_app/src/features/themes/extensions/charts_colors.dart';
+import 'package:not_zero_app/src/features/themes/extensions/tags_colors.dart';
+import 'package:not_zero_app/src/features/themes/extensions/tasks_colors.dart';
 
 extension DynamicThemeApplicationExt on ThemeData {
   ThemeData applyDynamicColors(

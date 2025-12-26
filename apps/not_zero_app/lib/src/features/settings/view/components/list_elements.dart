@@ -16,7 +16,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsBlocHeader extends StatelessWidget {

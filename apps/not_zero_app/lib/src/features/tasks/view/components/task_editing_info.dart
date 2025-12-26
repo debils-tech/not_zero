@@ -16,8 +16,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class TaskEditingInfo extends StatelessWidget {
   const TaskEditingInfo(this.task, {super.key});

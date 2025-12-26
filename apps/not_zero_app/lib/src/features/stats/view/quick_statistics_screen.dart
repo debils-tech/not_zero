@@ -19,11 +19,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/common/view/components/adaptive/list_limiter.dart';
+import 'package:not_zero_app/src/features/common/view/components/common_widgets/date_range_switch.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
 import 'package:not_zero_app/src/features/stats/notifiers/quick_statistics_notifier.dart';
 import 'package:not_zero_app/src/features/stats/view/components/chart_card.dart';
 import 'package:not_zero_app/src/features/stats/view/components/weekly_stats_chart.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 
 class QuickStatisticsScreen extends ConsumerWidget {
   const QuickStatisticsScreen({super.key});

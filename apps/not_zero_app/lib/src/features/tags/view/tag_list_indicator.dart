@@ -15,8 +15,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter/material.dart';
+import 'package:not_zero_app/src/features/themes/extensions/tags_colors.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class TagListIndicator extends StatelessWidget {
   const TagListIndicator({

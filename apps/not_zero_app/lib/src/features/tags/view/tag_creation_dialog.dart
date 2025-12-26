@@ -21,9 +21,12 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero_app/src/features/common/view/components/confirmation_dialog.dart';
 import 'package:not_zero_app/src/features/tags/di.dart';
+import 'package:not_zero_app/src/features/themes/extensions/tags_colors.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class TagCreationDialog extends StatefulWidget {
   const TagCreationDialog({super.key, this.tagToEdit});

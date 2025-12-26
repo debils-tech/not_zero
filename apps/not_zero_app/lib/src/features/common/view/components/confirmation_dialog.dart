@@ -16,8 +16,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nz_flutter_core/src/translations/translations.g.dart';
-import 'package:nz_flutter_core/src/utils/build_context_quick_access_ext.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 
 Future<bool?> showConfirmationDialog(
   BuildContext context, {

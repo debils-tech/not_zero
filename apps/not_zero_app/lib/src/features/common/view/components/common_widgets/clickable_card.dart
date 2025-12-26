@@ -14,9 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nz_flutter_core/src/components/selection/notifiers/item_selection_notifier.dart';
+import 'package:flutter/material.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 
-final itemSelectionNotifierProvider = NotifierProvider.autoDispose(
-  ItemSelectionNotifier.new,
-);
+class ClickableCard extends StatelessWidget {
+  const ClickableCard({required this.child, super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: context.theme.cardTheme.color,
+      elevation: 2,
+      clipBehavior: .antiAlias,
+      child: child,
+    );
+  }
+}

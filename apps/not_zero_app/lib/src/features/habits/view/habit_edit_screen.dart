@@ -21,10 +21,12 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero_app/src/features/common/view/components/confirmation_dialog.dart';
 import 'package:not_zero_app/src/features/habits/di.dart';
 import 'package:not_zero_app/src/features/habits/view/components/habit_edit_fields.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class HabitEditScreen extends ConsumerWidget {
   const HabitEditScreen({this.habitToEdit, super.key});

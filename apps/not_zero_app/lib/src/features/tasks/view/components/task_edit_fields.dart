@@ -17,9 +17,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:not_zero_app/src/features/common/view/components/common_widgets/fancy_date_picker_button.dart';
+import 'package:not_zero_app/src/features/common/view/components/common_widgets/stars_rate.dart';
 import 'package:not_zero_app/src/features/tags/view/tag_selector.dart';
+import 'package:not_zero_app/src/features/themes/extensions/tasks_colors.dart';
+import 'package:not_zero_app/src/features/translations/translations.g.dart';
+import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-import 'package:nz_flutter_core/nz_flutter_core.dart';
 
 class TaskEditTitleField extends StatelessWidget {
   const TaskEditTitleField({super.key});

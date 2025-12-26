@@ -14,11 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nz_flutter_core/src/themes/extensions/charts_colors.dart';
-import 'package:nz_flutter_core/src/themes/extensions/tags_colors.dart';
-import 'package:nz_flutter_core/src/themes/extensions/tasks_colors.dart';
+import 'package:not_zero_app/src/features/themes/extensions/charts_colors.dart';
+import 'package:not_zero_app/src/features/themes/extensions/tags_colors.dart';
+import 'package:not_zero_app/src/features/themes/extensions/tasks_colors.dart';
 
 export 'extensions/charts_colors.dart';
 export 'extensions/tags_colors.dart';
