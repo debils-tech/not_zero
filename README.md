@@ -79,6 +79,16 @@ Development is divided into several stages, with specific features planned for e
 <img src="screenshots/Screenshot_tasks.png" width="180">
 <img src="screenshots/Screenshot_stats.png" width="180">
 
+## Installation
+
+Currently only Android builds are available. You can build yourself on other
+
+<a href="http://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/debils-tech/not_zero">
+    <img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" height="55">
+</a>
+
+Or just download the latest release from [repository releases](https://github.com/debils-tech/not_zero/releases)
+
 ## Building and running
 
 First of all app is built using Flutter SDK.
