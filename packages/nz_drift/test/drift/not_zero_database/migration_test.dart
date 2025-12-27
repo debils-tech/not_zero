@@ -52,8 +52,7 @@ void main() {
   });
 
   test(
-    // Somehow I getting an SQLite error:
-    // ignore: lines_longer_than_80_chars
+    // Somehow I am getting an SQLite error:
     // NOT NULL constraint failed: tmp_for_copy_tasks_table.created_at, constraint failed
     // While there is no null data in the table
     skip: true,

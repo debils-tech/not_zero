@@ -353,14 +353,12 @@ void main() {
             habitId: habitA.id,
             type: HabitCompletionType.completed,
             completedDate: baseDate,
-            streakCount: 1,
           );
           final habitADay3 = HabitCompletion(
             id: const Uuid().v4(),
             habitId: habitA.id,
             type: HabitCompletionType.completed,
             completedDate: baseDate.add(const Duration(days: 2)),
-            streakCount: 1,
           );
           await habitsLocalService.saveCompletion(habitADay1);
           await habitsLocalService.saveCompletion(habitADay3);
