@@ -44,7 +44,7 @@ void main() {
               GoldenTestScenario(
                 name: 'sample streak',
                 child: CheckInStreakContinuedDialog(
-                  streakCount: 999,
+                  streakCount: 998,
                   onCheckIn: () {},
                 ),
               ),
