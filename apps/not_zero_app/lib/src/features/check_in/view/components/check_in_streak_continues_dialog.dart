@@ -45,7 +45,7 @@ class CheckInStreakContinuedDialog extends StatelessWidget {
               padding: const .only(top: 8, bottom: 2, left: 8, right: 8),
               child: Text(
                 context.t.checkIn.streakDialog.continues.subtitle(
-                  n: streakCount,
+                  n: streakCount + 1,
                 ),
                 style: context.theme.textTheme.bodySmall?.copyWith(
                   color: context.theme.colorScheme.onSurfaceVariant,
@@ -59,7 +59,7 @@ class CheckInStreakContinuedDialog extends StatelessWidget {
               spacing: 4,
               children: [
                 Text(
-                  streakCount.toString(),
+                  (streakCount + 1).toString(),
                   style: context.theme.textTheme.titleLarge?.copyWith(
                     fontSize: 32,
                     fontWeight: .w800,
