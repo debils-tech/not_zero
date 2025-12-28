@@ -118,7 +118,9 @@ class _TaskEditScreenBody extends ConsumerWidget {
         TaskEditImportanceField.name:
             taskToEdit?.importance ?? TaskImportance.normal,
         TaskEditTagsSelectionField.name: taskToEdit?.tags ?? selectedTags,
-        TaskEditForDateField.name: taskToEdit?.forDate ?? filters.forDate,
+        TaskEditForDateField.name: taskToEdit != null
+            ? taskToEdit?.forDate
+            : (filters.someday ? null : filters.forDate),
         TaskEditPersistenceField.name: taskToEdit?.persistent ?? true,
       },
       onChanged: () {
