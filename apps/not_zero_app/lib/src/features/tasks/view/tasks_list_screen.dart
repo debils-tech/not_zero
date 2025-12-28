@@ -60,15 +60,23 @@ class _TasksListScreenBody extends ConsumerWidget {
     final hasSelection = ref.watch(
       itemSelectionNotifierProvider.select((selection) => selection.isNotEmpty),
     );
+    final somedayFilter = ref.watch(
+      tasksFiltersNotifier.select((filters) => filters.someday),
+    );
 
     return PopScope(
-      canPop: !hasSelection,
+      canPop: !hasSelection && !somedayFilter,
       onPopInvokedWithResult: (canPop, _) {
-        if (!canPop) {
+        if (canPop) return;
+
+        if (hasSelection) {
           final selectionNotifier = ref.read(
             itemSelectionNotifierProvider.notifier,
           );
           selectionNotifier.removeAll();
+        } else if (somedayFilter) {
+          final filtersNotifier = ref.read(tasksFiltersNotifier.notifier);
+          filtersNotifier.toggleSomeday();
         }
       },
       child: switch (state) {
