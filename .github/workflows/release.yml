@@ -59,9 +59,7 @@ jobs:
         id: update_version
         run: |
           git fetch origin main:main
-          tools/update-version.sh \
-          $(echo $GITHUB_REF | sed 's|refs/heads/release/||') \
-          $(git log main..HEAD --grep='Bump version to' -i --oneline | wc -l) >> $GITHUB_OUTPUT
+          tools/update-version.sh $(echo $GITHUB_REF | sed 's|refs/heads/release/||') >> $GITHUB_OUTPUT
       - name: Validate release notes
         run: tools/validate-release-notes.sh ${{ steps.update_version.outputs.app_version }}
       - name: Commit and Push Changes
