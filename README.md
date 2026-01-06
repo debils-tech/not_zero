@@ -75,9 +75,9 @@ Development is divided into several stages, with specific features planned for e
 
 ## Screenshots
 
-<img src="screenshots/Screenshot_main.png" width="180">
-<img src="screenshots/Screenshot_tasks.png" width="180">
-<img src="screenshots/Screenshot_stats.png" width="180">
+<img src="apps/not_zero_app/android/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="25%" d>
+<img src="apps/not_zero_app/android/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="25%">
+<img src="apps/not_zero_app/android/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="25%">
 
 ## Installation
 
