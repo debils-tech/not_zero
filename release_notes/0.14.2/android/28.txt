@@ -1,0 +1,5 @@
+- Daily check in. Open "Not Zero" every day and earn points! More points are gained longer your streak
+- Buckups. You can now backup and restore data. Can be usefull if app's data needs to be transfered to some devices
+- Added translation to russian language
+- Added simple special effects! Now there is a burst on confetti when you complete a task or a habit
+- Some UI improvements in general
