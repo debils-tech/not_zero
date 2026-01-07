@@ -10,4 +10,4 @@ Not Zero is a task management and well-being application designed to help you st
 • <b>Your Data, Your Control:</b> Enjoy a privacy-focused experience with local storage and full data export/import capabilities.<br>
 • <b>Personalization:</b> Choose between light and dark themes to suit your style.<br>
 <br>
-Not Zero is free, open-source, and constantly evolving to bring you more features for a balanced and productive life. Start your journey to "Not Zero" days today!
+Not Zero is free, open-source, and constantly evolving to bring you more features for a balanced and productive life.
