@@ -4,3 +4,5 @@ targets:
       freezed:
         options:
           union_key: type
+          when: false
+          map: false

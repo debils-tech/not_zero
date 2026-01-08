@@ -21,6 +21,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:not_zero_app/src/features/notifications/helpers/init_notification_helper.dart';
 import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
 import 'package:not_zero_app/src/features/themes/themes.dart';
@@ -44,6 +45,8 @@ void main() async {
 
   final settings = container.read(settingsBoxProvider);
   await settings.init();
+
+  await InitNotificationHelper.initAppNotifications();
 
   runApp(
     UncontrolledProviderScope(

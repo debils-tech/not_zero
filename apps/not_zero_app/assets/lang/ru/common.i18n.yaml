@@ -21,3 +21,9 @@ timeOptions:
   today: "Сегодня"
   yesterday: "Вчера"
   tomorrow: "Завтра"
+
+notifications:
+  linuxDefaultAction: "Открыть уведомление"
+  channels:
+    reminders:
+      name: Напоминания

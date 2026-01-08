@@ -21,3 +21,9 @@ timeOptions:
   today: 'Today'
   yesterday: 'Yesterday'
   tomorrow: 'Tomorrow'
+
+notifications:
+  linuxDefaultAction: 'Open notification'
+  channels:
+    reminders:
+      name: Reminders
