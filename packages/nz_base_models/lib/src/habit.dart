@@ -15,12 +15,12 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nz_base_models/src/reminder_local_time.dart';
 import 'package:nz_base_models/src/tag.dart';
 import 'package:nz_base_models/src/task_importance.dart';
 import 'package:uuid/uuid.dart';
 
 part 'habit.freezed.dart';
-part 'habit.g.dart';
 
 @freezed
 abstract class Habit with _$Habit {
@@ -32,11 +32,10 @@ abstract class Habit with _$Habit {
     @Default(TaskImportance.normal) TaskImportance importance,
     DateTime? modifiedAt,
     @JsonKey(toJson: ItemTag.tagsToIds) @Default([]) List<ItemTag> tags,
+    ReminderLocalTime? reminderTime,
   }) = _Habit;
 
   const Habit._();
-
-  factory Habit.fromJson(Map<String, dynamic> json) => _$HabitFromJson(json);
 
   factory Habit.create({
     required String title,

@@ -15,13 +15,13 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nz_base_models/src/reminder_local_time.dart';
 import 'package:nz_base_models/src/tag.dart';
 import 'package:nz_base_models/src/task_importance.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:uuid/uuid.dart';
 
 part 'task.freezed.dart';
-part 'task.g.dart';
 
 @freezed
 abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
@@ -35,13 +35,12 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     DateTime? completedAt,
     DateTime? canceledAt,
     DateTime? forDate,
+    ReminderLocalTime? reminderTime,
     @Default(true) bool persistent,
     @JsonKey(toJson: ItemTag.tagsToIds) @Default([]) List<ItemTag> tags,
   }) = _Task;
 
   const Task._();
-
-  factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 
   factory Task.create({
     required String title,
