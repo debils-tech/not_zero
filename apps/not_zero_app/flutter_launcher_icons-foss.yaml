@@ -2,6 +2,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon-1024x1024.png"
+  adaptive_icon_monochrome: "assets/icon-monochrome-1024x1024.png"
 
   windows:
     generate: true

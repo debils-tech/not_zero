@@ -43,6 +43,7 @@ dependencies:
   file_picker: ^10.3.8
   slang_flutter: ^4.11.0
   theme_tailor_annotation: ^3.1.1
+  flutter_local_notifications: ^19.5.0
 
 dev_dependencies:
   build_runner: ^2.4.12
@@ -55,6 +56,7 @@ dev_dependencies:
   alchemist: ^0.13.0
   theme_tailor: ^3.1.1
   slang: ^4.11.1
+  android_notification_icons: ^0.0.1
 
 flutter:
   default-flavor: dev
@@ -67,3 +69,6 @@ flutter:
         - asset: assets/fonts/SourceCodePro-VariableFont.ttf
 
   uses-material-design: true
+
+android_notification_icons:
+  image_path: 'assets/icon-monochrome-1024x1024.png'
