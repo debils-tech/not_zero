@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:not_zero_app/src/features/common/view/components/common_widgets/reminder_picker_tile.dart';
 import 'package:not_zero_app/src/features/common/view/components/common_widgets/stars_rate.dart';
 import 'package:not_zero_app/src/features/themes/themes.dart';
 import 'package:not_zero_app/src/features/translations/translations.g.dart';
@@ -91,6 +92,24 @@ class HabitEditImportanceField extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class HabitEditReminderField extends StatelessWidget {
+  const HabitEditReminderField({super.key});
+
+  static const name = 'reminder_time';
+
+  @override
+  Widget build(BuildContext context) {
+    return FormBuilderField<ReminderLocalTime>(
+      name: name,
+      builder: (field) => ReminderPickerTile(
+        value: field.value,
+        onChanged: field.didChange,
+        borderRadius: const BorderRadiusGeometry.all(Radius.circular(16)),
+      ),
     );
   }
 }

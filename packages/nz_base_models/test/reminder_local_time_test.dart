@@ -20,13 +20,13 @@ import 'package:test/test.dart';
 void main() {
   group('ReminderLocalTime.toString()', () {
     test('Regular local time with UTC to string', () {
-      const reminderTime = ReminderLocalTime(12, 23);
+      const reminderTime = ReminderLocalTime(12, 23, timezoneOffset: 0);
       final string = reminderTime.toString();
       expect(string, equals('12:23T0:00'));
     });
 
     test('Regular local time with padding and UTC to string', () {
-      const reminderTime = ReminderLocalTime(8, 5);
+      const reminderTime = ReminderLocalTime(8, 5, timezoneOffset: 0);
       final string = reminderTime.toString();
       expect(string, equals('08:05T0:00'));
     });
@@ -173,6 +173,7 @@ void main() {
       final utcTime = reminderTime.toUtc();
       expect(utcTime.hour, equals(7));
       expect(utcTime.minute, equals(10));
+      expect(utcTime.timezoneOffset, equals(0));
     });
 
     test('Regular negative timezone case to UTC', () {
@@ -180,13 +181,15 @@ void main() {
       final utcTime = reminderTime.toUtc();
       expect(utcTime.hour, equals(13));
       expect(utcTime.minute, equals(10));
+      expect(utcTime.timezoneOffset, equals(0));
     });
 
     test('Zero timezone case to UTC', () {
-      const reminderTime = ReminderLocalTime(10, 10);
+      const reminderTime = ReminderLocalTime(10, 10, timezoneOffset: 0);
       final utcTime = reminderTime.toUtc();
       expect(utcTime.hour, equals(10));
       expect(utcTime.minute, equals(10));
+      expect(utcTime.timezoneOffset, equals(0));
     });
 
     test('Simple fractional timezone case to UTC', () {
@@ -194,6 +197,7 @@ void main() {
       final utcTime = reminderTime.toUtc();
       expect(utcTime.hour, equals(7));
       expect(utcTime.minute, equals(10));
+      expect(utcTime.timezoneOffset, equals(0));
     });
 
     test('Fractional timezone case with negative minutes overflow to UTC', () {
@@ -201,6 +205,7 @@ void main() {
       final utcTime = reminderTime.toUtc();
       expect(utcTime.hour, equals(6));
       expect(utcTime.minute, equals(40));
+      expect(utcTime.timezoneOffset, equals(0));
     });
 
     test('Fractional timezone case with positive minutes overflow to UTC', () {
@@ -208,6 +213,7 @@ void main() {
       final utcTime = reminderTime.toUtc();
       expect(utcTime.hour, equals(10));
       expect(utcTime.minute, equals(10));
+      expect(utcTime.timezoneOffset, equals(0));
     });
   });
 }

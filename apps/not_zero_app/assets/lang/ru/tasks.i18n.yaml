@@ -54,6 +54,8 @@ edit:
     taskDescription: "Описание"
     taskForSomeday: "На потом"
     taskPersistence: "Сохранять задачу до выполнения"
+    taskReminder: Напоминание
+    taskReminderNone: Нет
   submit:
     create: "Создать задачу!"
     existing: "Сохранить изменения"

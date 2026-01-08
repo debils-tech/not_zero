@@ -25,8 +25,19 @@ abstract class ReminderLocalTime with _$ReminderLocalTime {
     int minute, {
 
     /// Timezone offset in hours
-    @Default(0) double timezoneOffset,
+    required double timezoneOffset,
   }) = _ReminderLocalTime;
+
+  factory ReminderLocalTime.create(int hour, int minute) {
+    final currentTimezoneOffset = DateTime.now().timeZoneOffset;
+    return ReminderLocalTime(
+      hour,
+      minute,
+      timezoneOffset:
+          currentTimezoneOffset.inHours +
+          currentTimezoneOffset.minutesWithoutHours / Duration.minutesPerHour,
+    );
+  }
 
   const ReminderLocalTime._();
 
@@ -99,12 +110,20 @@ abstract class ReminderLocalTime with _$ReminderLocalTime {
     final currentTimezoneOffset = DateTime.now().timeZoneOffset;
     return toUtc()._addOffset(
       currentTimezoneOffset.inHours,
-      currentTimezoneOffset.inMinutes -
-          currentTimezoneOffset.inHours * Duration.minutesPerHour,
+      currentTimezoneOffset.minutesWithoutHours,
     );
   }
 
   ReminderLocalTime _addOffset(int hoursOffset, int minutesOffset) {
+    assert(
+      hoursOffset >= -24 && hoursOffset <= 24,
+      "Shouldn't offset on more than 1 day",
+    );
+    assert(
+      minutesOffset > -60 && minutesOffset < 60,
+      'Minutes offset should be within an hour',
+    );
+
     // newMinutes can be negative, so we remove hours from the result time
     // Example: 19:10 - 10:30 results in 9 hours and -20 minutes
     // So we remove 1 hour, take remainder of minutes and end up with 8:40
@@ -119,6 +138,14 @@ abstract class ReminderLocalTime with _$ReminderLocalTime {
     return ReminderLocalTime(
       newHours % Duration.hoursPerDay,
       newMinutes % Duration.minutesPerHour,
+      timezoneOffset:
+          timezoneOffset +
+          hoursOffset +
+          minutesOffset / Duration.minutesPerHour,
     );
   }
+}
+
+extension on Duration {
+  int get minutesWithoutHours => inMinutes - inHours * Duration.minutesPerHour;
 }

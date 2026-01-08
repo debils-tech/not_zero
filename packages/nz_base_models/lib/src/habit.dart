@@ -41,12 +41,14 @@ abstract class Habit with _$Habit {
     required String title,
     String? description,
     TaskImportance? importance,
+    ReminderLocalTime? reminderTime,
   }) => Habit(
     id: const Uuid().v4(),
     title: title,
     description: description ?? '',
     createdAt: DateTime.now(),
     importance: importance ?? .normal,
+    reminderTime: reminderTime,
   );
 
   Habit edit({

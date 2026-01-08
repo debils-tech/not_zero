@@ -1,56 +1,56 @@
 list:
-  title: 'Tasks'
+  title: Tasks
   titleSelection:
-    one: 'Selected $n task'
-    other: 'Selected $n tasks'
+    one: Selected $n task
+    other: Selected $n tasks
   deleteDialog:
     content:
-      one: 'Are you sure you want delete selected task?'
-      other: 'Are you sure you want delete $n selected tasks?'
+      one: Are you sure you want delete selected task?
+      other: Are you sure you want delete $n selected tasks?
   tooltips:
-    deleteSelectedButton: 'Delete selected'
-    selectAllButton: 'Select all'
-    removeSelectionButton: 'Remove selection'
-    addNewButton: 'Add new task'
-    canceledMarkButton: 'Reopen'
-    selectDateForSomedayTasksButton: 'Select date for the task'
+    deleteSelectedButton: Delete selected
+    selectAllButton: Select all
+    removeSelectionButton: Remove selection
+    addNewButton: Add new task
+    canceledMarkButton: Reopen
+    selectDateForSomedayTasksButton: Select date for the task
   appBarActions:
     popupMenu:
       showCanceledOption: Show canceled
-  cancelButton: 'Cancel tasks'
-  canceledTaskMark: 'Canceled'
+  cancelButton: Cancel tasks
+  canceledTaskMark: Canceled
   tasksLeftToComplete:
-    zero: 'No tasks left to complete'
-    one: '$n task left to complete'
-    other: '$n tasks left to complete'
+    zero: No tasks left to complete
+    one: $n task left to complete
+    other: $n tasks left to complete
   empty:
-    icon: '¯\\_(ツ)_/¯'
-    title: 'There is no tasks'
-    button: 'Create a new one'
-    titleFilters: 'There is no tasks with such filters'
-    buttonFilters: 'Reset filters'
+    icon: ¯\\_(ツ)_/¯
+    title: There is no tasks
+    button: Create a new one
+    titleFilters: There is no tasks with such filters
+    buttonFilters: Reset filters
     buttonPlanning: Add a task left for later
   planning:
-    labelWhenEnabled: 'Tasks for someday'
-
+    labelWhenEnabled: Tasks for someday
 view:
-  title: 'Task view'
+  title: Task view
   tooltips:
-    editTaskButton: 'Edit'
-
+    editTaskButton: Edit
 edit:
   title:
-    create: 'New task'
-    existing: 'Edit task'
+    create: New task
+    existing: Edit task
   fields:
-    taskTitle: 'Title'
-    taskDescription: 'Description'
-    taskForSomeday: 'Someday'
-    taskPersistence: 'Keep this task until complete'
+    taskTitle: Title
+    taskDescription: Description
+    taskForSomeday: Someday
+    taskPersistence: Keep this task until complete
+    taskReminder: Reminder
+    taskReminderNone: None
   submit:
-    create: 'Create new task!'
-    existing: 'Save changes'
+    create: Create new task!
+    existing: Save changes
   deleteDialog:
-    content: 'Are you sure you want delete this task?'
+    content: Are you sure you want delete this task?
   tooltips:
-    deleteTaskButton: 'Delete'
+    deleteTaskButton: Delete

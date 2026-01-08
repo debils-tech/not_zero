@@ -48,6 +48,7 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     String? description,
     List<ItemTag>? tags,
     DateTime? forDate,
+    ReminderLocalTime? reminderTime,
     bool? persistent,
   }) => Task(
     id: const Uuid().v4(),
@@ -57,6 +58,7 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     importance: importance,
     tags: tags ?? [],
     forDate: forDate,
+    reminderTime: reminderTime,
     persistent: persistent ?? true,
   );
 
