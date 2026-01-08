@@ -17,6 +17,7 @@
 import 'package:drift/drift.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_drift/src/converters/date_converter.dart';
+import 'package:nz_drift/src/converters/string_reminder_time_converter.dart';
 
 @UseRowClass(Habit, generateInsertable: true)
 class HabitsTable extends Table {
@@ -26,6 +27,8 @@ class HabitsTable extends Table {
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get modifiedAt => dateTime().nullable()();
   IntColumn get importance => intEnum<TaskImportance>()();
+  TextColumn get reminderTime =>
+      text().map(const StringReminderTimeConverter()).nullable()();
 
   @override
   Set<Column<Object>>? get primaryKey => {id};

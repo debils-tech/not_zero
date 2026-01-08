@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,27 +16,15 @@
 
 import 'package:drift/drift.dart';
 import 'package:nz_base_models/nz_base_models.dart';
-import 'package:nz_drift/nz_drift.dart';
-import 'package:nz_drift/src/converters/date_converter.dart';
-import 'package:nz_drift/src/db.steps.dart';
 
-part 'from_1_to_2.dart';
-part 'from_2_to_3.dart';
-part 'from_3_to_4.dart';
-part 'from_4_to_5.dart';
-part 'from_5_to_6.dart';
-part 'from_6_to_7.dart';
-part 'from_7_to_8.dart';
-part 'from_8_to_9.dart';
+class StringReminderTimeConverter
+    extends TypeConverter<ReminderLocalTime, String> {
+  const StringReminderTimeConverter();
 
-Future<int> Function(int, GeneratedDatabase) get notZeroMigrationSteps =>
-    migrationSteps(
-      from1To2: _from1To2,
-      from2To3: _from2To3,
-      from3To4: _from3To4,
-      from4To5: _from4To5,
-      from5To6: _from5To6,
-      from6To7: _from6To7,
-      from7To8: _from7To8,
-      from8To9: _from8To9,
-    );
+  @override
+  ReminderLocalTime fromSql(String fromDb) =>
+      ReminderLocalTime.fromString(fromDb);
+
+  @override
+  String toSql(ReminderLocalTime value) => value.toString();
+}
