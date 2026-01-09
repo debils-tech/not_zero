@@ -209,16 +209,15 @@ class HabitsRepository implements BaseRepository {
 
   Iterable<DateTime> _reminderDateTimes(ReminderLocalTime reminderTime) sync* {
     final currentTime = DateTime.now();
-    var reminderDateTime = currentTime.startOfDay.add(
+    final initReminderDateTime = currentTime.startOfDay.add(
       reminderTime.toDuration(),
     );
-    final scheduleEnd = reminderDateTime.add(const Duration(days: 15));
 
     // Scheduling on 2 weeks from today (skipping if this time has passed)
-    while (reminderDateTime.isBefore(scheduleEnd)) {
+    for (var i = 0; i <= 15; i++) {
+      final reminderDateTime = initReminderDateTime.add(Duration(days: i));
       if (reminderDateTime.isBefore(currentTime)) continue;
       yield reminderDateTime;
-      reminderDateTime = reminderDateTime.add(const Duration(days: 1));
     }
   }
 
