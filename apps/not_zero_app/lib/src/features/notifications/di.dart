@@ -15,6 +15,7 @@ final notificationPermissionRepositoryProvider = Provider(
 
 final notificationsShowRepositoryProvider = Provider(
   (ref) => NotificationsShowRepository(
+    ref.watch(notificationPermissionRepositoryProvider),
     ref.watch(notificationPluginProvider),
   ),
 );

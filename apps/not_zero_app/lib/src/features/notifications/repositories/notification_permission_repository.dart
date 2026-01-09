@@ -4,13 +4,19 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nz_common/nz_common.dart';
 
 class NotificationPermissionRepository implements BaseRepository {
-  const NotificationPermissionRepository(this.notificationsPlugin);
+  const NotificationPermissionRepository(this._notificationsPlugin);
 
-  final FlutterLocalNotificationsPlugin notificationsPlugin;
+  final FlutterLocalNotificationsPlugin _notificationsPlugin;
 
   Future<bool> requestPermissions() async {
+    final permissionGranted = await isNotificationPermissionGranted();
+    final exactAlarms = await canUseExactAlarm();
+    if ((permissionGranted ?? false) && exactAlarms) {
+      return true;
+    }
+
     if (Platform.isAndroid) {
-      final androidPlugin = notificationsPlugin
+      final androidPlugin = _notificationsPlugin
           .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin
           >();
@@ -23,11 +29,18 @@ class NotificationPermissionRepository implements BaseRepository {
       // For Android 12 and below, this returns true immediately
       final granted =
           await androidPlugin.requestNotificationsPermission() ?? false;
+
+      // SCHEDULE_EXACT_ALARM or USE_EXACT_ALARM permission is required
+      // for exact time notification scheduling
+      if (!exactAlarms) {
+        await androidPlugin.requestExactAlarmsPermission();
+      }
+
       return granted;
     }
 
     if (Platform.isIOS) {
-      final iosPlugin = notificationsPlugin
+      final iosPlugin = _notificationsPlugin
           .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin
           >();
@@ -46,7 +59,7 @@ class NotificationPermissionRepository implements BaseRepository {
       return granted ?? false;
     }
     if (Platform.isMacOS) {
-      final macosPlugin = notificationsPlugin
+      final macosPlugin = _notificationsPlugin
           .resolvePlatformSpecificImplementation<
             MacOSFlutterLocalNotificationsPlugin
           >();
@@ -69,9 +82,9 @@ class NotificationPermissionRepository implements BaseRepository {
     return true;
   }
 
-  Future<bool?> arePermissionsGranted() async {
+  Future<bool?> isNotificationPermissionGranted() async {
     if (Platform.isAndroid) {
-      final androidPlugin = notificationsPlugin
+      final androidPlugin = _notificationsPlugin
           .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin
           >();
@@ -92,6 +105,23 @@ class NotificationPermissionRepository implements BaseRepository {
     }
 
     // For other platforms, assume permissions are always granted
+    return true;
+  }
+
+  Future<bool> canUseExactAlarm() async {
+    if (Platform.isAndroid) {
+      final androidPlugin = _notificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >();
+
+      if (androidPlugin == null) {
+        return false;
+      }
+
+      return await androidPlugin.canScheduleExactNotifications() ?? false;
+    }
+
     return true;
   }
 }

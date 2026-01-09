@@ -45,7 +45,9 @@
 
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
 
-    <!-- Permissions for the notifications https://pub.dev/packages/flutter_local_notifications#androidmanifestxml-setup -->
+    <!-- Permissions for the notification scheduling https://pub.dev/packages/flutter_local_notifications#androidmanifestxml-setup -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <!-- Maybe shouldn't use this permission https://developer.android.com/reference/android/Manifest.permission#USE_EXACT_ALARM -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 </manifest>

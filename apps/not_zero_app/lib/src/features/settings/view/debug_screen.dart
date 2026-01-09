@@ -71,27 +71,8 @@ class _TestNotificationsTile extends ConsumerWidget {
 
     return ListTile(
       onTap: () async {
-        final scaffoldMessenger = ScaffoldMessenger.of(context);
-
-        final hasPermission = await permissionsRepository
-            .arePermissionsGranted();
-        if (hasPermission == null || !hasPermission) {
-          final permissionGranted = await permissionsRepository
-              .requestPermissions();
-
-          if (permissionGranted) {
-            scaffoldMessenger.showSnackBar(
-              const SnackBar(content: Text('Notification permission is given')),
-            );
-          } else {
-            scaffoldMessenger.showSnackBar(
-              const SnackBar(
-                content: Text("Notification permission wasn't given"),
-              ),
-            );
-            return;
-          }
-        }
+        final hasPermission = await permissionsRepository.requestPermissions();
+        if (!hasPermission) return;
 
         await notificationShowRepository.showTestReminder();
       },

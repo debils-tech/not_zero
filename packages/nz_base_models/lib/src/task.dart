@@ -68,6 +68,7 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     required TaskImportance importance,
     required List<ItemTag>? tags,
     required DateTime? forDate,
+    required ReminderLocalTime? reminderTime,
     required bool? persistent,
   }) => copyWith(
     title: title,
@@ -76,6 +77,7 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     importance: importance,
     tags: tags ?? [],
     forDate: forDate,
+    reminderTime: reminderTime,
     persistent: persistent ?? true,
   );
 
@@ -90,6 +92,19 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
       copyWith(canceledAt: canceled ? DateTime.now() : null, completedAt: null);
 
   bool get isCanceled => canceledAt != null;
+
+  DateTime? get reminderDateTime {
+    final forDate = this.forDate;
+    final reminderTime = this.reminderTime;
+    if (forDate == null || reminderTime == null) return null;
+
+    return forDate.startOfDay.add(
+      Duration(
+        hours: reminderTime.hour,
+        minutes: reminderTime.minute,
+      ),
+    );
+  }
 
   @override
   int compareTo(Task other) {

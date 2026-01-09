@@ -52,13 +52,15 @@ abstract class Habit with _$Habit {
   );
 
   Habit edit({
-    String? title,
-    String? description,
-    TaskImportance? importance,
+    required String title,
+    required String? description,
+    required TaskImportance importance,
+    required ReminderLocalTime? reminderTime,
   }) => copyWith(
-    title: title ?? this.title,
-    description: description ?? this.description,
-    importance: importance ?? this.importance,
+    title: title,
+    description: description ?? '',
+    importance: importance,
+    reminderTime: reminderTime,
     modifiedAt: DateTime.now(),
   );
 }

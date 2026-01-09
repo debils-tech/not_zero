@@ -195,7 +195,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
       final title = values[HabitEditTitleField.name] as String;
       final description = values[HabitEditDescriptionField.name] as String?;
       final importance =
-          values[HabitEditImportanceField.name] as TaskImportance?;
+          values[HabitEditImportanceField.name] as TaskImportance;
       final reminderTime =
           values[HabitEditReminderField.name] as ReminderLocalTime?;
 
@@ -219,6 +219,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
               title: title,
               description: description,
               importance: importance,
+              reminderTime: reminderTime,
             ),
           ),
         );

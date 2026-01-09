@@ -22,6 +22,7 @@ import 'package:not_zero_app/src/features/habits/notifiers/habits_list_notifier.
 import 'package:not_zero_app/src/features/habits/notifiers/habits_ui_style_notifier.dart';
 import 'package:not_zero_app/src/features/habits/repositories/habits_repository.dart';
 import 'package:not_zero_app/src/features/habits/services/habits_local_service.dart';
+import 'package:not_zero_app/src/features/notifications/di.dart';
 import 'package:not_zero_app/src/features/settings/models/habits_ui_style.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
 import 'package:nz_base_models/nz_base_models.dart';
@@ -36,6 +37,7 @@ final habitsLocalServiceProvider = Provider<HabitsLocalService>((ref) {
 final habitsRepositoryProvider = Provider<HabitsRepository>((ref) {
   return HabitsRepository(
     ref.watch(habitsLocalServiceProvider),
+    ref.watch(notificationsShowRepositoryProvider),
     ref.watch(actionsBusProvider),
   );
 });

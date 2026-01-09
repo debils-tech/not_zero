@@ -17,39 +17,57 @@
 import 'package:collection/collection.dart';
 import 'package:not_zero_app/src/features/habits/models/habit_action.dart';
 import 'package:not_zero_app/src/features/habits/services/habits_local_service.dart';
+import 'package:not_zero_app/src/features/notifications/models/app_notification_payload.dart';
+import 'package:not_zero_app/src/features/notifications/repositories/notifications_show_repository.dart';
 import 'package:nz_actions_bus/nz_actions_bus.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
 
 class HabitsRepository implements BaseRepository {
-  const HabitsRepository(this._localService, this._actionsBus);
+  const HabitsRepository(
+    this._localService,
+    this._notificationsShowRepository,
+    this._actionsBus,
+  );
 
   final HabitsLocalService _localService;
+  final NotificationsShowRepository _notificationsShowRepository;
   final ActionsBus _actionsBus;
 
   Future<List<Habit>> getAllHabits() => _localService.getHabits();
 
-  Future<void> addHabit(Habit habit) {
+  Future<void> addHabit(Habit habit) async {
     _actionsBus.emit(HabitAction.created(habit: habit));
 
-    return _localService.saveHabit(habit);
+    await _localService.saveHabit(habit);
+
+    await _scheduleHabitReminder(habit);
   }
 
   Future<void> updateHabit({
     required Habit oldHabit,
     required Habit newHabit,
-  }) {
+  }) async {
     _actionsBus.emit(
       HabitAction.updated(oldHabit: oldHabit, newHabit: newHabit),
     );
 
-    return _localService.saveHabit(newHabit);
+    await _localService.saveHabit(newHabit);
+
+    if (oldHabit.reminderTime != null && oldHabit.reminderTime == null) {
+      await _cancelHabitSchedule(oldHabit);
+    }
+    await _scheduleHabitReminder(newHabit);
   }
 
-  Future<void> deleteHabits(Iterable<Habit> habits) {
+  Future<void> deleteHabits(Iterable<Habit> habits) async {
     _actionsBus.emit(HabitAction.deleted(habits: habits));
 
-    return _localService.deleteHabits(habits.map((e) => e.id).toSet());
+    await _localService.deleteHabits(habits.map((e) => e.id).toSet());
+
+    for (final habit in habits) {
+      await _cancelHabitSchedule(habit);
+    }
   }
 
   Future<List<Pair<DateTime, HabitCompletion?>>> getHabitCompletionsAroundDate({
@@ -119,4 +137,64 @@ class HabitsRepository implements BaseRepository {
 
     return _localService.deleteCompletion(completion);
   }
+
+  Future<void> _scheduleHabitReminder(Habit habit) {
+    final reminderTime = habit.reminderTime;
+    if (reminderTime == null) return Future.value();
+
+    final reminderDateTimes = _reminderDateTimes(reminderTime);
+    // Scheduling reminders on all specified dates
+    return Future.wait(
+      reminderDateTimes.map(
+        (reminderDateTime) => _notificationsShowRepository.scheduleReminder(
+          id: _habitReminderId(habit.id, reminderDateTime),
+          text: habit.title,
+          scheduleDateTime: reminderDateTime,
+          payload: AppNotificationPayload.habitReminder(
+            habitId: habit.id,
+            forDateTime: reminderDateTime,
+          ),
+          idGroup: _taskReminderIdGroup,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _cancelHabitSchedule(Habit habit) {
+    final reminderTime = habit.reminderTime;
+    if (reminderTime == null) return Future.value();
+
+    final reminderDateTimes = _reminderDateTimes(reminderTime);
+    return Future.wait(
+      reminderDateTimes.map(
+        (reminderDateTime) => _notificationsShowRepository.cancelReminder(
+          id: _habitReminderId(habit.id, reminderDateTime),
+          idGroup: _taskReminderIdGroup,
+        ),
+      ),
+    );
+  }
+
+  Iterable<DateTime> _reminderDateTimes(ReminderLocalTime reminderTime) sync* {
+    final currentTime = DateTime.now();
+    var reminderDateTime = currentTime.startOfDay.add(
+      Duration(
+        hours: reminderTime.hour,
+        minutes: reminderTime.minute,
+      ),
+    );
+    final scheduleEnd = reminderDateTime.add(const Duration(days: 15));
+
+    // Scheduling on 2 weeks from today (skipping if this time has passed)
+    while (reminderDateTime.isBefore(scheduleEnd)) {
+      if (reminderDateTime.isBefore(currentTime)) continue;
+      yield reminderDateTime;
+      reminderDateTime = reminderDateTime.add(const Duration(days: 1));
+    }
+  }
+
+  static String _habitReminderId(String habitId, DateTime reminderDateTime) =>
+      '${reminderDateTime.year}-${reminderDateTime.month}-${reminderDateTime.day}:$habitId';
+
+  static const _taskReminderIdGroup = 'habit:reminder';
 }

@@ -257,6 +257,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
               description: description,
               tags: tags,
               forDate: forDate,
+              reminderTime: reminderTime,
               persistent: persistent,
             ),
           ),
