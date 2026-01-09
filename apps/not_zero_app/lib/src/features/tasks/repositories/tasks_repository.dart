@@ -54,10 +54,15 @@ class TasksRepository implements BaseRepository {
 
     await _localService.saveTask(newTask);
 
-    if (oldTask.reminderDateTime != null && newTask.reminderDateTime == null) {
+    if (oldTask.reminderDateTime != null && newTask.reminderDateTime == null ||
+        !oldTask.isCompleted && newTask.isCompleted) {
+      // If reminder was removed or task was completed
       await _cancelTaskSchedule(oldTask);
+    } else if (oldTask.reminderDateTime != newTask.reminderDateTime &&
+        !newTask.isCompleted) {
+      // Reschedule only if reminder was changed and task wasn't completed
+      await _scheduleTaskReminder(newTask);
     }
-    await _scheduleTaskReminder(newTask);
   }
 
   Future<void> deleteTasks(Iterable<Task> tasks) async {

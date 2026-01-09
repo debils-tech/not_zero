@@ -98,12 +98,7 @@ abstract class Task with _$Task, ObjectIdMixin implements Comparable<Task> {
     final reminderTime = this.reminderTime;
     if (forDate == null || reminderTime == null) return null;
 
-    return forDate.startOfDay.add(
-      Duration(
-        hours: reminderTime.hour,
-        minutes: reminderTime.minute,
-      ),
-    );
+    return forDate.startOfDay.add(reminderTime.toDuration());
   }
 
   @override

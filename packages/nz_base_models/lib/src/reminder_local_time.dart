@@ -144,6 +144,8 @@ abstract class ReminderLocalTime with _$ReminderLocalTime {
           minutesOffset / Duration.minutesPerHour,
     );
   }
+
+  Duration toDuration() => Duration(hours: hour, minutes: minute);
 }
 
 extension on Duration {
