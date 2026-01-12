@@ -16,6 +16,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -27,6 +28,7 @@ abstract class AppInfo with _$AppInfo {
   const factory AppInfo({
     required String name,
     required String packageName,
+    required String? flavor,
     required String platform,
     required String version,
     @JsonKey(name: 'build') required int buildNumber,
@@ -41,6 +43,7 @@ abstract class AppInfo with _$AppInfo {
     return AppInfo(
       name: 'Not Zero',
       packageName: packageInfo.packageName,
+      flavor: appFlavor,
       platform: Platform.operatingSystem,
       version: packageInfo.version,
       buildNumber: int.tryParse(packageInfo.buildNumber) ?? 0,

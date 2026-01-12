@@ -66,7 +66,7 @@ class _AppInfoTile extends ConsumerWidget {
     return switch (appInfo) {
       AsyncData(:final value) => ListTile(
         title: SelectableText(value.name),
-        subtitle: SelectableText(value.platform),
+        subtitle: SelectableText('${value.platform} ${value.flavor ?? ''}'),
         trailing: SelectableText('${value.version} (${value.buildNumber})'),
       ),
       _ => const ListTile(
