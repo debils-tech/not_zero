@@ -149,6 +149,7 @@ class StorageSettingsScreen extends ConsumerWidget {
     // Re-creating all the connected providers to update the data in the whole app
     ref.invalidate(databaseProvider, asReload: true);
     ref.invalidate(settingsBoxProvider, asReload: true);
+    ref.invalidate(tempBoxProvider, asReload: true);
   }
 
   void _showExportingDialog(

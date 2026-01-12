@@ -23,10 +23,11 @@ import 'package:nz_common/nz_common.dart';
 import 'package:nz_drift/nz_drift.dart';
 
 class BackupLocalService implements BaseService {
-  const BackupLocalService(this._db, this._settingsBox);
+  const BackupLocalService(this._db, this._settingsBox, this._tempBox);
 
   final NotZeroDatabase _db;
   final NotZeroSimpleBox _settingsBox;
+  final NotZeroSimpleBox _tempBox;
 
   Future<Stream<Uint8List>> databaseBackupStream() => _db.backupToStream();
 
@@ -68,4 +69,6 @@ class BackupLocalService implements BaseService {
       }
     }
   }
+
+  Future<void> clearTempBox() async => _tempBox.clearAll();
 }

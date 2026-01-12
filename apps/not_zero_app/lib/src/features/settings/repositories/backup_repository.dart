@@ -96,6 +96,8 @@ class BackupRepository implements BaseRepository {
         }
       }
 
+      await _localService.clearTempBox();
+
       return restoredAnything;
     } on Object catch (e, s) {
       await reader.cancel();
