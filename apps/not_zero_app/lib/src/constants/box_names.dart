@@ -16,4 +16,5 @@
 
 abstract final class BoxNames {
   static const String settings = 'settings';
+  static const String temp = 'temp';
 }

@@ -15,10 +15,12 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:collection/collection.dart';
+import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/habits/models/habit_action.dart';
 import 'package:not_zero_app/src/features/habits/services/habits_local_service.dart';
 import 'package:not_zero_app/src/features/notifications/models/app_notification_payload.dart';
 import 'package:not_zero_app/src/features/notifications/repositories/notifications_show_repository.dart';
+import 'package:not_zero_app/src/features/notifications/services/schedules_local_service.dart';
 import 'package:nz_actions_bus/nz_actions_bus.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
@@ -27,12 +29,16 @@ class HabitsRepository implements BaseRepository {
   const HabitsRepository(
     this._localService,
     this._notificationsShowRepository,
+    this._schedulesLocalService,
     this._actionsBus,
   );
 
   final HabitsLocalService _localService;
   final NotificationsShowRepository _notificationsShowRepository;
+  final SchedulesLocalService _schedulesLocalService;
   final ActionsBus _actionsBus;
+
+  static final _logger = Logger('HabitsRepository');
 
   Future<List<Habit>> getAllHabits() => _localService.getHabits();
 
@@ -159,6 +165,37 @@ class HabitsRepository implements BaseRepository {
       );
       await _scheduleReminderForDate(habit, reminderDateTime);
     }
+  }
+
+  Future<void> rescheduleAllReminders() async {
+    final lastScheduling = _schedulesLocalService
+        .getLastHabitsReminderScheduling();
+    if (lastScheduling != null &&
+        DateTime.now().difference(lastScheduling).inDays < 7) {
+      // Should reschedule only if there wasn't a scheduling in the last 7 days.
+      return;
+    }
+
+    final habitsWithReminders = await _localService.getHabits(
+      withReminders: true,
+    );
+
+    try {
+      for (final habit in habitsWithReminders) {
+        await _scheduleHabitReminder(habit);
+      }
+    } on Object catch (e, s) {
+      _logger.severe(
+        "Couldn't schedule habits reminders! "
+        'Probably some platform-level error happened',
+        e,
+        s,
+      );
+    }
+
+    await _schedulesLocalService.setLastHabitsReminderScheduling(
+      DateTime.now(),
+    );
   }
 
   Future<void> _scheduleHabitReminder(Habit habit) {

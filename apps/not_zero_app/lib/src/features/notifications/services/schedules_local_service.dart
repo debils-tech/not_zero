@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,27 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero_app/src/constants/box_names.dart';
 import 'package:nz_boxes/nz_boxes.dart';
 import 'package:nz_common/nz_common.dart';
-import 'package:nz_drift/nz_drift.dart';
 
-final databaseProvider = Provider<NotZeroDatabase>((ref) {
-  if (isPlatformTest) {
-    // It will be generally better to run test on faster database.
-    //
-    // Also it helps to avoid problems with complex things like drift isolates.
-    return NotZeroDatabase.memory();
+class SchedulesLocalService implements BaseService {
+  const SchedulesLocalService(this._tempBox);
+
+  final NotZeroSimpleBox _tempBox;
+
+  static const _lastHabitsRemindersSchedulingKey =
+      'lastHabitsRemindersScheduling';
+
+  DateTime? getLastHabitsReminderScheduling() {
+    final stringValue = _tempBox.getString(_lastHabitsRemindersSchedulingKey);
+    if (stringValue == null) return null;
+
+    return DateTime.tryParse(stringValue);
   }
 
-  return NotZeroDatabase();
-});
-
-final settingsBoxProvider = Provider<NotZeroSimpleBox>((ref) {
-  return NotZeroSimpleBox(BoxNames.settings);
-});
-
-final tempBoxProvider = Provider<NotZeroSimpleBox>((ref) {
-  return NotZeroSimpleBox(BoxNames.temp);
-});
+  Future<void> setLastHabitsReminderScheduling(DateTime state) {
+    return _tempBox.putString(
+      _lastHabitsRemindersSchedulingKey,
+      state.toIso8601String(),
+    );
+  }
+}

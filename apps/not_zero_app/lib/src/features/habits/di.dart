@@ -38,6 +38,7 @@ final habitsRepositoryProvider = Provider<HabitsRepository>((ref) {
   return HabitsRepository(
     ref.watch(habitsLocalServiceProvider),
     ref.watch(notificationsShowRepositoryProvider),
+    ref.watch(schedulesLocalServiceProvider),
     ref.watch(actionsBusProvider),
   );
 });

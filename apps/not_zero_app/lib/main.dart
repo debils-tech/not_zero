@@ -21,6 +21,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:not_zero_app/src/features/habits/di.dart';
 import 'package:not_zero_app/src/features/notifications/helpers/init_notification_helper.dart';
 import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
@@ -67,6 +68,12 @@ class MyApp extends ConsumerWidget {
 
     final themeSettings = ref.watch(themeSettingsNotifierProvider);
     final appRouter = ref.watch(appRouterProvider);
+
+    // Reschedule all habits reminders on app startup if necessary.
+    ref.listen(
+      habitsRepositoryProvider,
+      (_, repo) => repo.rescheduleAllReminders(),
+    );
 
     return _OptionalDynamicColorsBuilder(
       useDynamicColors: themeSettings.useDynamicColors,
