@@ -81,6 +81,9 @@ class ReminderPickerTile extends StatelessWidget {
         );
         onChanged(reminderTime);
       },
+      leading: value != null
+          ? const Icon(Icons.notifications_active_rounded)
+          : const Icon(Icons.notifications_none_rounded),
       // TODO(uSlashVlad): Remove tasks translations from universal time picker!
       title: Text(context.t.tasks.edit.fields.taskReminder),
       trailing: valueIndicator,
