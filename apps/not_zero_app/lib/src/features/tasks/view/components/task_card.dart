@@ -87,13 +87,13 @@ class _TaskTextBlock extends StatelessWidget {
           overflow: .ellipsis,
           maxLines: 3,
           style: context.theme.textTheme.titleMedium?.copyWith(
-            fontWeight: .w600,
+            fontWeight: task.isCompleted ? .w400 : .w600,
             decoration: task.isCanceled ? .lineThrough : null,
             decorationThickness: 2.5,
           ),
         ),
         const SizedBox(height: 4),
-        if (task.description.isNotEmpty)
+        if (task.description.isNotEmpty && !task.isCompleted)
           Padding(
             padding: const .symmetric(
               horizontal: 4,
