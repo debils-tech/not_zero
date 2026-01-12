@@ -17,6 +17,7 @@
 export 'src/app_daily_check_in.dart';
 export 'src/habit.dart';
 export 'src/habit_completion.dart';
+export 'src/reminder_local_time.dart';
 export 'src/tag.dart';
 export 'src/task.dart';
 export 'src/task_importance.dart';

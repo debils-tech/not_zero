@@ -19,6 +19,7 @@
 import 'package:drift/drift.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_drift/src/converters/date_converter.dart';
+import 'package:nz_drift/src/converters/string_reminder_time_converter.dart';
 
 @UseRowClass(Task, generateInsertable: true)
 class TasksTable extends Table {
@@ -32,6 +33,8 @@ class TasksTable extends Table {
   DateTimeColumn get completedAt => dateTime().nullable()();
   DateTimeColumn get canceledAt => dateTime().nullable()();
   IntColumn get importance => intEnum<TaskImportance>()();
+  TextColumn get reminderTime =>
+      text().map(const StringReminderTimeConverter()).nullable()();
 
   @override
   Set<Column<Object>>? get primaryKey => {id};

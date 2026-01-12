@@ -17,6 +17,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/notifications/di.dart';
 import 'package:not_zero_app/src/features/translations/translations.g.dart';
 
 class DebugScreen extends StatelessWidget {
@@ -48,8 +50,33 @@ class DebugScreen extends StatelessWidget {
                   .toList(),
             ),
           ),
+          const _TestNotificationsTile(),
         ],
       ),
+    );
+  }
+}
+
+class _TestNotificationsTile extends ConsumerWidget {
+  const _TestNotificationsTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final permissionsRepository = ref.watch(
+      notificationPermissionRepositoryProvider,
+    );
+    final notificationShowRepository = ref.watch(
+      notificationsShowRepositoryProvider,
+    );
+
+    return ListTile(
+      onTap: () async {
+        final hasPermission = await permissionsRepository.requestPermissions();
+        if (!hasPermission) return;
+
+        await notificationShowRepository.showTestReminder();
+      },
+      title: const Text('Test reminder'),
     );
   }
 }

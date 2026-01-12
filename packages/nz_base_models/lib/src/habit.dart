@@ -15,12 +15,12 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nz_base_models/src/reminder_local_time.dart';
 import 'package:nz_base_models/src/tag.dart';
 import 'package:nz_base_models/src/task_importance.dart';
 import 'package:uuid/uuid.dart';
 
 part 'habit.freezed.dart';
-part 'habit.g.dart';
 
 @freezed
 abstract class Habit with _$Habit {
@@ -32,32 +32,35 @@ abstract class Habit with _$Habit {
     @Default(TaskImportance.normal) TaskImportance importance,
     DateTime? modifiedAt,
     @JsonKey(toJson: ItemTag.tagsToIds) @Default([]) List<ItemTag> tags,
+    ReminderLocalTime? reminderTime,
   }) = _Habit;
 
   const Habit._();
-
-  factory Habit.fromJson(Map<String, dynamic> json) => _$HabitFromJson(json);
 
   factory Habit.create({
     required String title,
     String? description,
     TaskImportance? importance,
+    ReminderLocalTime? reminderTime,
   }) => Habit(
     id: const Uuid().v4(),
     title: title,
     description: description ?? '',
     createdAt: DateTime.now(),
     importance: importance ?? .normal,
+    reminderTime: reminderTime,
   );
 
   Habit edit({
-    String? title,
-    String? description,
-    TaskImportance? importance,
+    required String title,
+    required String? description,
+    required TaskImportance importance,
+    required ReminderLocalTime? reminderTime,
   }) => copyWith(
-    title: title ?? this.title,
-    description: description ?? this.description,
-    importance: importance ?? this.importance,
+    title: title,
+    description: description ?? '',
+    importance: importance,
+    reminderTime: reminderTime,
     modifiedAt: DateTime.now(),
   );
 }

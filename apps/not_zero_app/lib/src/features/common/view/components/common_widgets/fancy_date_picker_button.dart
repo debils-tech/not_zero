@@ -47,6 +47,7 @@ class FancyDatePickerButton extends StatelessWidget {
       onPressed: () => _selectDay(context),
       style: OutlinedButton.styleFrom(padding: const .all(16)),
       icon: const Icon(Icons.alarm_off_rounded),
+      // TODO(uSlashVlad): Remove tasks translations from universal date picker!
       label: Text(context.t.tasks.edit.fields.taskForSomeday),
     );
   }
@@ -55,7 +56,6 @@ class FancyDatePickerButton extends StatelessWidget {
     final today = DateTime.now();
     final pickedDate = value;
 
-    // TODO(uSlashVlad): Maybe it would be better to place date picker in the navigation as a usual dialog page?
     final newValue = await showDatePicker(
       context: context,
       // TODO(uSlashVlad): Couldn't pick date in the past, maybe some fix needed

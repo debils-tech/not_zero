@@ -18,7 +18,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'app_daily_check_in.freezed.dart';
-part 'app_daily_check_in.g.dart';
 
 @freezed
 abstract class AppDailyCheckIn with _$AppDailyCheckIn {
@@ -36,7 +35,4 @@ abstract class AppDailyCheckIn with _$AppDailyCheckIn {
     checkInDate: checkInDate,
     streakCount: streakCount,
   );
-
-  factory AppDailyCheckIn.fromJson(Map<String, dynamic> json) =>
-      _$AppDailyCheckInFromJson(json);
 }

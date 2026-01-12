@@ -28,6 +28,7 @@ import 'package:not_zero_app/src/features/tasks/view/components/task_edit_fields
 import 'package:not_zero_app/src/features/tasks/view/components/task_editing_info.dart';
 import 'package:not_zero_app/src/features/translations/translations.g.dart';
 import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
+import 'package:not_zero_app/src/routes.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 
 class TaskEditScreen extends ConsumerWidget {
@@ -121,6 +122,7 @@ class _TaskEditScreenBody extends ConsumerWidget {
         TaskEditForDateField.name: taskToEdit != null
             ? taskToEdit?.forDate
             : (filters.someday ? null : filters.forDate),
+        TaskEditReminderField.name: taskToEdit?.reminderTime,
         TaskEditPersistenceField.name: taskToEdit?.persistent ?? true,
       },
       onChanged: () {
@@ -154,6 +156,8 @@ class _TaskEditScreenBody extends ConsumerWidget {
               const TaskEditDescriptionField(),
               const SizedBox(height: 12),
               const TaskEditForDateField(),
+              const SizedBox(height: 8),
+              const TaskEditReminderField(),
               const SizedBox(height: 8),
               const TaskEditPersistenceField(),
               // const SizedBox(height: 6),
@@ -224,6 +228,8 @@ class _FloatingSubmitButton extends ConsumerWidget {
       final description = values[TaskEditDescriptionField.name] as String?;
       final tags = values[TaskEditTagsSelectionField.name] as List<ItemTag>?;
       final forDate = values[TaskEditForDateField.name] as DateTime?;
+      final reminderTime =
+          values[TaskEditReminderField.name] as ReminderLocalTime?;
       final persistent = values[TaskEditPersistenceField.name] as bool;
 
       final prevTask = taskToEdit;
@@ -237,6 +243,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
               description: description,
               tags: tags,
               forDate: forDate,
+              reminderTime: reminderTime,
               persistent: persistent,
             ),
           ),
@@ -250,14 +257,14 @@ class _FloatingSubmitButton extends ConsumerWidget {
               description: description,
               tags: tags,
               forDate: forDate,
+              reminderTime: reminderTime,
               persistent: persistent,
             ),
           ),
         );
       }
 
-      // TODO(uSlashVlad): Remove navigation using context
-      context.pop();
+      ref.read(appRouterProvider).pop();
     }
   }
 }

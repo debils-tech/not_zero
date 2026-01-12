@@ -17,6 +17,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/actions_bus/di.dart';
+import 'package:not_zero_app/src/features/notifications/di.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
 import 'package:not_zero_app/src/features/tasks/notifiers/tasks_filters_notifier.dart';
 import 'package:not_zero_app/src/features/tasks/notifiers/tasks_main_list_notifier.dart';
@@ -33,6 +34,7 @@ final tasksLocalServiceProvider = Provider<TasksLocalService>((ref) {
 final tasksRepositoryProvider = Provider<TasksRepository>((ref) {
   return TasksRepository(
     ref.watch(tasksLocalServiceProvider),
+    ref.watch(notificationsShowRepositoryProvider),
     ref.watch(actionsBusProvider),
   );
 });

@@ -27,6 +27,7 @@ part 'from_4_to_5.dart';
 part 'from_5_to_6.dart';
 part 'from_6_to_7.dart';
 part 'from_7_to_8.dart';
+part 'from_8_to_9.dart';
 
 Future<int> Function(int, GeneratedDatabase) get notZeroMigrationSteps =>
     migrationSteps(
@@ -37,4 +38,5 @@ Future<int> Function(int, GeneratedDatabase) get notZeroMigrationSteps =>
       from5To6: _from5To6,
       from6To7: _from6To7,
       from7To8: _from7To8,
+      from8To9: _from8To9,
     );

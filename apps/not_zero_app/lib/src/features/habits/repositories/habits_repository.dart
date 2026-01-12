@@ -15,41 +15,68 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:collection/collection.dart';
+import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/habits/models/habit_action.dart';
 import 'package:not_zero_app/src/features/habits/services/habits_local_service.dart';
+import 'package:not_zero_app/src/features/notifications/models/app_notification_payload.dart';
+import 'package:not_zero_app/src/features/notifications/repositories/notifications_show_repository.dart';
+import 'package:not_zero_app/src/features/notifications/services/schedules_local_service.dart';
 import 'package:nz_actions_bus/nz_actions_bus.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
 
 class HabitsRepository implements BaseRepository {
-  const HabitsRepository(this._localService, this._actionsBus);
+  const HabitsRepository(
+    this._localService,
+    this._notificationsShowRepository,
+    this._schedulesLocalService,
+    this._actionsBus,
+  );
 
   final HabitsLocalService _localService;
+  final NotificationsShowRepository _notificationsShowRepository;
+  final SchedulesLocalService _schedulesLocalService;
   final ActionsBus _actionsBus;
+
+  static final _logger = Logger('HabitsRepository');
 
   Future<List<Habit>> getAllHabits() => _localService.getHabits();
 
-  Future<void> addHabit(Habit habit) {
+  Future<void> addHabit(Habit habit) async {
     _actionsBus.emit(HabitAction.created(habit: habit));
 
-    return _localService.saveHabit(habit);
+    await _localService.saveHabit(habit);
+
+    await _scheduleHabitReminder(habit);
   }
 
   Future<void> updateHabit({
     required Habit oldHabit,
     required Habit newHabit,
-  }) {
+  }) async {
     _actionsBus.emit(
       HabitAction.updated(oldHabit: oldHabit, newHabit: newHabit),
     );
 
-    return _localService.saveHabit(newHabit);
+    await _localService.saveHabit(newHabit);
+
+    if (oldHabit.reminderTime != null && newHabit.reminderTime == null) {
+      // If reminder was removed from habit, cancel scheduled reminder
+      await _cancelHabitSchedule(oldHabit);
+    } else if (oldHabit.reminderTime != newHabit.reminderTime) {
+      // Reschedule only if  reminder was changed
+      await _scheduleHabitReminder(newHabit);
+    }
   }
 
-  Future<void> deleteHabits(Iterable<Habit> habits) {
+  Future<void> deleteHabits(Iterable<Habit> habits) async {
     _actionsBus.emit(HabitAction.deleted(habits: habits));
 
-    return _localService.deleteHabits(habits.map((e) => e.id).toSet());
+    await _localService.deleteHabits(habits.map((e) => e.id).toSet());
+
+    for (final habit in habits) {
+      await _cancelHabitSchedule(habit);
+    }
   }
 
   Future<List<Pair<DateTime, HabitCompletion?>>> getHabitCompletionsAroundDate({
@@ -106,17 +133,133 @@ class HabitsRepository implements BaseRepository {
       HabitAction.completed(habit: habit, completion: completion),
     );
 
-    return _localService.saveCompletion(completion);
+    await _localService.saveCompletion(completion);
+
+    final reminderTime = habit.reminderTime;
+    if (completion.completedDate.isAtSameDay(DateTime.now()) &&
+        reminderTime != null) {
+      // If habit was completed for today (latest available date),
+      // we should cancel reminder for this day.
+      // Passing just a completion date since time doesn't matter for canceling.
+      await _cancelReminderForDate(habit, completion.completedDate);
+    }
   }
 
   Future<void> deleteHabitCompletion({
     required Habit habit,
     required HabitCompletion completion,
-  }) {
+  }) async {
     _actionsBus.emit(
       HabitAction.notCompleted(habit: habit, completion: completion),
     );
 
-    return _localService.deleteCompletion(completion);
+    await _localService.deleteCompletion(completion);
+
+    final reminderTime = habit.reminderTime;
+    if (completion.completedDate.isAtSameDay(DateTime.now()) &&
+        reminderTime != null) {
+      // If habit was completed for today (latest available date) and completion was deleted,
+      // we should schedule a reminder (it was possibly deleted previously).
+      final reminderDateTime = completion.completedDate.startOfDay.add(
+        reminderTime.toDuration(),
+      );
+      await _scheduleReminderForDate(habit, reminderDateTime);
+    }
   }
+
+  Future<void> rescheduleAllReminders() async {
+    final lastScheduling = _schedulesLocalService
+        .getLastHabitsReminderScheduling();
+    if (lastScheduling != null &&
+        DateTime.now().difference(lastScheduling).inDays < 7) {
+      // Should reschedule only if there wasn't a scheduling in the last 7 days.
+      return;
+    }
+
+    final habitsWithReminders = await _localService.getHabits(
+      withReminders: true,
+    );
+
+    try {
+      for (final habit in habitsWithReminders) {
+        await _scheduleHabitReminder(habit);
+      }
+    } on Object catch (e, s) {
+      _logger.severe(
+        "Couldn't schedule habits reminders! "
+        'Probably some platform-level error happened',
+        e,
+        s,
+      );
+    }
+
+    await _schedulesLocalService.setLastHabitsReminderScheduling(
+      DateTime.now(),
+    );
+  }
+
+  Future<void> _scheduleHabitReminder(Habit habit) {
+    final reminderTime = habit.reminderTime;
+    if (reminderTime == null) return Future.value();
+
+    final reminderDateTimes = _reminderDateTimes(reminderTime);
+    // FIXME(uSlashVlad): Doesn't check if habit was completed for today.
+    // Scheduling reminders on all specified dates
+    return Future.wait(
+      reminderDateTimes.map(
+        (reminderDateTime) => _scheduleReminderForDate(habit, reminderDateTime),
+      ),
+    );
+  }
+
+  Future<void> _scheduleReminderForDate(
+    Habit habit,
+    DateTime reminderDateTime,
+  ) => _notificationsShowRepository.scheduleReminder(
+    id: _habitReminderId(habit.id, reminderDateTime),
+    text: habit.title,
+    scheduleDateTime: reminderDateTime,
+    payload: AppNotificationPayload.habitReminder(
+      habitId: habit.id,
+      forDateTime: reminderDateTime,
+    ),
+    idGroup: _taskReminderIdGroup,
+  );
+
+  Future<void> _cancelHabitSchedule(Habit habit) {
+    final reminderTime = habit.reminderTime;
+    if (reminderTime == null) return Future.value();
+
+    final reminderDateTimes = _reminderDateTimes(reminderTime);
+    return Future.wait(
+      reminderDateTimes.map(
+        (reminderDateTime) => _cancelReminderForDate(habit, reminderDateTime),
+      ),
+    );
+  }
+
+  Future<void> _cancelReminderForDate(Habit habit, DateTime reminderDateTime) =>
+      _notificationsShowRepository.cancelReminder(
+        id: _habitReminderId(habit.id, reminderDateTime),
+        idGroup: _taskReminderIdGroup,
+      );
+
+  Iterable<DateTime> _reminderDateTimes(ReminderLocalTime reminderTime) sync* {
+    final currentTime = DateTime.now();
+    final initReminderDateTime = currentTime.startOfDay.add(
+      reminderTime.toDuration(),
+    );
+
+    // Scheduling on 2 weeks from today (skipping if this time has passed)
+    for (var i = 0; i <= 15; i++) {
+      final reminderDateTime = initReminderDateTime.add(Duration(days: i));
+      if (reminderDateTime.isBefore(currentTime)) continue;
+      yield reminderDateTime;
+    }
+  }
+
+  static String _habitReminderId(String habitId, DateTime reminderDateTime) =>
+      '${reminderDateTime.year}-${reminderDateTime.month}-${reminderDateTime.day}:$habitId';
+
+  static const _taskReminderIdGroup = 'habit:reminder';
 }

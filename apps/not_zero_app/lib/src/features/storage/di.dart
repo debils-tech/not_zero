@@ -34,3 +34,7 @@ final databaseProvider = Provider<NotZeroDatabase>((ref) {
 final settingsBoxProvider = Provider<NotZeroSimpleBox>((ref) {
   return NotZeroSimpleBox(BoxNames.settings);
 });
+
+final tempBoxProvider = Provider<NotZeroSimpleBox>((ref) {
+  return NotZeroSimpleBox(BoxNames.temp);
+});

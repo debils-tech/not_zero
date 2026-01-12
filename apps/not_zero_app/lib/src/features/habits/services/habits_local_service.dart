@@ -24,7 +24,7 @@ class HabitsLocalService implements BaseService {
 
   final NotZeroDatabase _db;
 
-  Future<List<Habit>> getHabits() {
+  Future<List<Habit>> getHabits({bool withReminders = false}) {
     return _db.transaction(() async {
       final habitsQuery =
           _db.select(_db.habitsTable).join([
@@ -36,6 +36,10 @@ class HabitsLocalService implements BaseService {
             ])
             ..addColumns([_db.habitsTagEntries.tagsList])
             ..groupBy([_db.habitsTable.id]);
+
+      if (withReminders) {
+        habitsQuery.where(_db.habitsTable.reminderTime.isNotNull());
+      }
 
       final tagsMapper = TagsEfficientMapper(_db);
 

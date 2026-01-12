@@ -108,6 +108,7 @@ class _HabitEditScreenBody extends ConsumerWidget {
         HabitEditDescriptionField.name: habitToEdit?.description,
         HabitEditImportanceField.name:
             habitToEdit?.importance ?? TaskImportance.normal,
+        HabitEditReminderField.name: habitToEdit?.reminderTime,
       },
       onChanged: () {
         final isValid = formKey.currentState?.validate() ?? false;
@@ -136,6 +137,8 @@ class _HabitEditScreenBody extends ConsumerWidget {
           HabitEditTitleField(),
           SizedBox(height: 12),
           HabitEditDescriptionField(),
+          SizedBox(height: 12),
+          HabitEditReminderField(),
           SizedBox(height: 12),
         ],
       ),
@@ -192,7 +195,9 @@ class _FloatingSubmitButton extends ConsumerWidget {
       final title = values[HabitEditTitleField.name] as String;
       final description = values[HabitEditDescriptionField.name] as String?;
       final importance =
-          values[HabitEditImportanceField.name] as TaskImportance?;
+          values[HabitEditImportanceField.name] as TaskImportance;
+      final reminderTime =
+          values[HabitEditReminderField.name] as ReminderLocalTime?;
 
       final prevHabit = habitToEdit;
       final notifier = ref.read(habitsListNotifierProvider.notifier);
@@ -203,6 +208,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
               title: title,
               description: description,
               importance: importance,
+              reminderTime: reminderTime,
             ),
           ),
         );
@@ -213,6 +219,7 @@ class _FloatingSubmitButton extends ConsumerWidget {
               title: title,
               description: description,
               importance: importance,
+              reminderTime: reminderTime,
             ),
           ),
         );

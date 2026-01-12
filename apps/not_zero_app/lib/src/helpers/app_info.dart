@@ -26,6 +26,7 @@ part 'app_info.g.dart';
 abstract class AppInfo with _$AppInfo {
   const factory AppInfo({
     required String name,
+    required String packageName,
     required String platform,
     required String version,
     @JsonKey(name: 'build') required int buildNumber,
@@ -39,6 +40,7 @@ abstract class AppInfo with _$AppInfo {
 
     return AppInfo(
       name: 'Not Zero',
+      packageName: packageInfo.packageName,
       platform: Platform.operatingSystem,
       version: packageInfo.version,
       buildNumber: int.tryParse(packageInfo.buildNumber) ?? 0,

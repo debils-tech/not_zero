@@ -18,7 +18,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'habit_completion.freezed.dart';
-part 'habit_completion.g.dart';
 
 @freezed
 abstract class HabitCompletion with _$HabitCompletion {
@@ -40,9 +39,6 @@ abstract class HabitCompletion with _$HabitCompletion {
     type: type,
     completedDate: completedDate,
   );
-
-  factory HabitCompletion.fromJson(Map<String, dynamic> json) =>
-      _$HabitCompletionFromJson(json);
 }
 
 enum HabitCompletionType { completed, skipped }

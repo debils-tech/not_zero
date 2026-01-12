@@ -34,6 +34,7 @@ final backupLocalServiceProvider = Provider<BackupLocalService>((ref) {
   return BackupLocalService(
     ref.watch(databaseProvider),
     ref.watch(settingsBoxProvider),
+    ref.watch(tempBoxProvider),
   );
 });
 

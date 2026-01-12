@@ -19,7 +19,6 @@ import 'package:nz_common/nz_common.dart';
 import 'package:uuid/uuid.dart';
 
 part 'tag.freezed.dart';
-part 'tag.g.dart';
 
 @freezed
 abstract class ItemTag with _$ItemTag, ObjectIdMixin {
@@ -31,9 +30,6 @@ abstract class ItemTag with _$ItemTag, ObjectIdMixin {
   }) = _ItemTag;
 
   const ItemTag._();
-
-  factory ItemTag.fromJson(Map<String, dynamic> json) =>
-      _$ItemTagFromJson(json);
 
   factory ItemTag.create({required String name, int? colorIndex}) => ItemTag(
     id: const Uuid().v4(),
