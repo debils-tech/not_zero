@@ -18,15 +18,18 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
+import 'package:drift_flutter/drift_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_drift/src/converters/date_converter.dart';
 import 'package:nz_drift/src/converters/string_reminder_time_converter.dart';
-import 'package:nz_drift/src/database/native_database.dart';
 import 'package:nz_drift/src/migrations/migrations.dart';
 import 'package:nz_drift/src/tables/check_in_table.dart';
 import 'package:nz_drift/src/tables/habits_table.dart';
 import 'package:nz_drift/src/tables/tags_table.dart';
 import 'package:nz_drift/src/tables/tasks_table.dart';
+import 'package:nz_drift/src/utils/database_paths.dart';
 
 part 'db.g.dart';
 
@@ -42,9 +45,21 @@ part 'db.g.dart';
   ],
 )
 class NotZeroDatabase extends _$NotZeroDatabase {
-  NotZeroDatabase([QueryExecutor? e]) : super(e ?? openDriftDatabase());
+  NotZeroDatabase([QueryExecutor? e])
+    : super(
+        e ??
+            driftDatabase(
+              name: 'db',
+              native: const DriftNativeOptions(
+                shareAcrossIsolates: true,
+                isolateDebugLog: kDebugMode,
+                databasePath: getDatabasePath,
+              ),
+            ),
+      );
 
-  NotZeroDatabase.memory() : super(openDriftDatabase(permanent: false));
+  NotZeroDatabase.memory()
+    : super(NativeDatabase.memory(logStatements: kDebugMode));
 
   @override
   int get schemaVersion => 9;

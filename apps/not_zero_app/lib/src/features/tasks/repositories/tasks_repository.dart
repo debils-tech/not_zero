@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:not_zero_app/src/features/notifications/constants/notification_action_ids.dart';
 import 'package:not_zero_app/src/features/notifications/models/app_notification_payload.dart';
 import 'package:not_zero_app/src/features/notifications/repositories/notifications_show_repository.dart';
 import 'package:not_zero_app/src/features/tasks/models/task_action.dart';
@@ -90,6 +91,7 @@ class TasksRepository implements BaseRepository {
         forDateTime: reminderDateTime,
       ),
       idGroup: _taskReminderIdGroup,
+      categoryId: NotificationCategoryIds.reminder,
     );
   }
 

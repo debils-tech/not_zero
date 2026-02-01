@@ -9,9 +9,9 @@ dialog:
   exitContent: 'Are you sure you want exit this page? All changes will be lost!'
 
 timeSubtitle:
-  createdAt: 'created at ${time}'
-  modifiedAt: 'modified at ${time}'
-  completedAt: 'completed at ${time}'
+  createdAt: 'created ${time}'
+  modifiedAt: 'modified ${time}'
+  completedAt: 'completed ${time}'
 
 copy:
   defaultText: 'Copy content'
@@ -27,3 +27,6 @@ notifications:
   channels:
     reminders:
       name: Reminders
+  actions:
+    complete: Completed!
+    snooze: Snooze for 1 hour

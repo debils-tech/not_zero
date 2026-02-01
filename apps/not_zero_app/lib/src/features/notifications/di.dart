@@ -16,6 +16,7 @@
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/notifications/repositories/init_notification_repository.dart';
 import 'package:not_zero_app/src/features/notifications/repositories/notification_permission_repository.dart';
 import 'package:not_zero_app/src/features/notifications/repositories/notifications_show_repository.dart';
 import 'package:not_zero_app/src/features/notifications/services/schedules_local_service.dart';
@@ -29,6 +30,10 @@ final schedulesLocalServiceProvider = Provider((ref) {
 
 final notificationPluginProvider = Provider(
   (ref) => FlutterLocalNotificationsPlugin(),
+);
+
+final initNotificationRepositoryProvider = Provider(
+  (ref) => const InitNotificationRepository(),
 );
 
 final notificationPermissionRepositoryProvider = Provider(

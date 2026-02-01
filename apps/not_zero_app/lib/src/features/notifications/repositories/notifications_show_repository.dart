@@ -21,6 +21,7 @@ import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:logging/logging.dart';
+import 'package:not_zero_app/src/features/notifications/helpers/notification_actions_registry.dart';
 import 'package:not_zero_app/src/features/notifications/models/app_notification_payload.dart';
 import 'package:not_zero_app/src/features/notifications/repositories/notification_permission_repository.dart';
 import 'package:not_zero_app/src/features/translations/translations.g.dart';
@@ -45,6 +46,7 @@ class NotificationsShowRepository implements BaseRepository {
     required DateTime scheduleDateTime,
     AppNotificationPayload? payload,
     String idGroup = 'reminder',
+    String? categoryId,
   }) async {
     if (Platform.isLinux || Platform.isWindows) {
       _logger.warning(
@@ -81,6 +83,10 @@ class NotificationsShowRepository implements BaseRepository {
       return false;
     }
 
+    final (android: androidActions, linux: linuxActions) = _getPlatformActions(
+      categoryId,
+    );
+
     try {
       final timezonedDateTime = scheduleDateTime.toTimezoned();
       final canUseExactAlarm = await _permissionRepository.canUseExactAlarm();
@@ -94,6 +100,16 @@ class NotificationsShowRepository implements BaseRepository {
           android: AndroidNotificationDetails(
             notificationChannel.id,
             notificationChannel.name,
+            actions: androidActions,
+          ),
+          linux: LinuxNotificationDetails(
+            actions: linuxActions ?? [],
+          ),
+          iOS: DarwinNotificationDetails(
+            categoryIdentifier: categoryId,
+          ),
+          macOS: DarwinNotificationDetails(
+            categoryIdentifier: categoryId,
           ),
         ),
         androidScheduleMode: canUseExactAlarm
@@ -155,6 +171,30 @@ class NotificationsShowRepository implements BaseRepository {
     name: t.common.notifications.channels.reminders.name,
   );
 
+  static _NotificationPlatformActions _getPlatformActions(String? categoryId) {
+    final category = NotificationActionsRegistry.getCategory(categoryId);
+    final androidActions = category?.actions
+        .map(
+          (a) => AndroidNotificationAction(
+            a.id,
+            a.label,
+            showsUserInterface: a.requiresForeground,
+          ),
+        )
+        .toList();
+
+    final linuxActions = category?.actions
+        .map(
+          (a) => LinuxNotificationAction(
+            key: a.id,
+            label: a.label,
+          ),
+        )
+        .toList();
+
+    return (android: androidActions, linux: linuxActions);
+  }
+
   /// Not secure hashing for IDs to get seamingly unique integer IDs for string
   static int _generateIntegerId(String id, {String modifier = ''}) {
     // Combine the UUID with the modifier (if provided)
@@ -197,6 +237,11 @@ class NotificationsShowRepository implements BaseRepository {
 typedef _NotificationChannel = ({
   String id,
   String name,
+});
+
+typedef _NotificationPlatformActions = ({
+  List<AndroidNotificationAction>? android,
+  List<LinuxNotificationAction>? linux,
 });
 
 extension on DateTime {
