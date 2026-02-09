@@ -139,7 +139,8 @@ abstract class ReminderLocalTime
     // Example: 8:40 + 10:30 results in 18 hours and 70 minutes
     // So we add 1 hour, take remainder of minutes and end up with 19:10
     final newMinutes = minute + minutesOffset;
-    final newHours = hour + hoursOffset + newMinutes ~/ Duration.minutesPerHour;
+    final newHours =
+        hour + hoursOffset + (newMinutes / Duration.minutesPerHour).floor();
 
     return ReminderLocalTime(
       newHours % Duration.hoursPerDay,
