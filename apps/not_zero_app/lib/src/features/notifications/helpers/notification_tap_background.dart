@@ -18,14 +18,25 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
+import 'package:not_zero_app/src/features/notifications/di.dart';
 import 'package:not_zero_app/src/features/notifications/models/app_notification_payload.dart';
+import 'package:nz_logger/nz_logger.dart';
 
 /// Top-level function to handle background actions.
 ///
 /// Shouldn't access any app state here.
 @pragma('vm:entry-point')
-void notificationTapBackground(NotificationResponse notificationResponse) {
-  debugPrint(
+Future<void> notificationTapBackground(
+  NotificationResponse notificationResponse,
+) async {
+  // Analyzer doesn't know that kDebugMode can change on build time.
+  // ignore: avoid_redundant_argument_values
+  configLogger(production: !kDebugMode);
+  final log = Logger('notificationTapBackground');
+
+  log.info(
     '[notificationTapBackground] '
     'Notification #${notificationResponse.id} background tap handling '
     'Action tapped: ${notificationResponse.actionId} '
@@ -42,17 +53,18 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
       Map<String, dynamic>.from(json as Map),
     );
 
-    switch ((actionId, payload)) {
-      // TODO(uSlashVlad): Handle payload.
-      case _:
-        debugPrint(
-          '[notificationTapBackground] Unimplemented payload: $payload',
+    final riverpodContainer = ProviderContainer();
+    await riverpodContainer
+        .read(notificationActionHandlerProvider)
+        .handleAction(
+          notificationResponse.id,
+          actionId,
+          payload,
         );
-    }
   } on Object catch (e, s) {
-    debugPrint(
-      '[notificationTapBackground] Error while parsing payload: $e\n$s',
+    log.severe(
+      '[notificationTapBackground] Error while parsing and handling payload '
+      '$notificationPayload: $e\n$s',
     );
-    debugPrint('[notificationTapBackground] Payload: $notificationPayload');
   }
 }

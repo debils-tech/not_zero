@@ -16,11 +16,15 @@
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/habits/di.dart';
 import 'package:not_zero_app/src/features/notifications/repositories/init_notification_repository.dart';
+import 'package:not_zero_app/src/features/notifications/repositories/notification_actions_handler.dart';
 import 'package:not_zero_app/src/features/notifications/repositories/notification_permission_repository.dart';
 import 'package:not_zero_app/src/features/notifications/repositories/notifications_show_repository.dart';
 import 'package:not_zero_app/src/features/notifications/services/schedules_local_service.dart';
 import 'package:not_zero_app/src/features/storage/di.dart';
+import 'package:not_zero_app/src/features/tasks/di.dart';
+import 'package:not_zero_app/src/routes.dart';
 
 final schedulesLocalServiceProvider = Provider((ref) {
   return SchedulesLocalService(
@@ -33,7 +37,9 @@ final notificationPluginProvider = Provider(
 );
 
 final initNotificationRepositoryProvider = Provider(
-  (ref) => const InitNotificationRepository(),
+  (ref) => InitNotificationRepository(
+    () => ref.read(notificationActionHandlerProvider),
+  ),
 );
 
 final notificationPermissionRepositoryProvider = Provider(
@@ -46,5 +52,13 @@ final notificationsShowRepositoryProvider = Provider(
   (ref) => NotificationsShowRepository(
     ref.watch(notificationPermissionRepositoryProvider),
     ref.watch(notificationPluginProvider),
+  ),
+);
+
+final notificationActionHandlerProvider = Provider(
+  (ref) => NotificationActionsHandler(
+    ref.watch(tasksLocalServiceProvider),
+    ref.watch(habitsLocalServiceProvider),
+    () => ref.read(appRouterProvider),
   ),
 );

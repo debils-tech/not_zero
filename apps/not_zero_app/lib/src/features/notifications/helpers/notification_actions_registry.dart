@@ -28,10 +28,6 @@ abstract final class NotificationActionsRegistry {
           id: NotificationActionIds.complete,
           label: t.common.notifications.actions.complete,
         ),
-        NotificationAction(
-          id: NotificationActionIds.snooze,
-          label: t.common.notifications.actions.snooze,
-        ),
       ],
     ),
   ];

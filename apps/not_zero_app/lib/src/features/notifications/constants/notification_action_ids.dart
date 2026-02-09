@@ -18,7 +18,6 @@ abstract final class NotificationActionIds {
   static const String defaultAction = 'default';
 
   static const String complete = 'complete';
-  static const String snooze = 'snooze';
 }
 
 abstract final class NotificationCategoryIds {

@@ -16,18 +16,24 @@
 
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/notifications/constants/notification_action_ids.dart';
 import 'package:not_zero_app/src/features/notifications/helpers/notification_actions_registry.dart';
 import 'package:not_zero_app/src/features/notifications/helpers/notification_tap_background.dart';
 import 'package:not_zero_app/src/features/notifications/models/app_notification_payload.dart';
+import 'package:not_zero_app/src/features/notifications/repositories/notification_actions_handler.dart';
 import 'package:not_zero_app/src/features/translations/translations.g.dart';
 import 'package:not_zero_app/src/helpers/app_info.dart';
 import 'package:nz_common/nz_common.dart';
 
 class InitNotificationRepository implements BaseRepository {
-  const InitNotificationRepository();
+  const InitNotificationRepository(this._actionHandlerGetter);
+
+  // This is getter instead of simple field
+  // to avoid initializing full app on start-up.
+  final ValueGetter<NotificationActionsHandler> _actionHandlerGetter;
 
   static final _logger = Logger('InitNotificationRepository');
 
@@ -80,7 +86,7 @@ class InitNotificationRepository implements BaseRepository {
               'Notifications with action id ${response.actionId} received. '
               'Handling as background tap.',
             );
-            notificationTapBackground(response);
+            unawaited(notificationTapBackground(response));
           }
         },
         onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
@@ -98,9 +104,7 @@ class InitNotificationRepository implements BaseRepository {
   Future<void> _handleDefaultAction(
     int? id,
     AppNotificationPayload payload,
-  ) async {
-    // TODO(uSlashVlad): Handle default action.
-  }
+  ) => _actionHandlerGetter().handleAction(id, null, payload);
 
   static List<DarwinNotificationCategory> _buildDarwinCategories() =>
       NotificationActionsRegistry.categories.map((c) {
