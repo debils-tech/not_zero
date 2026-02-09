@@ -19,7 +19,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'reminder_local_time.freezed.dart';
 
 @freezed
-abstract class ReminderLocalTime with _$ReminderLocalTime {
+abstract class ReminderLocalTime
+    with _$ReminderLocalTime
+    implements Comparable<ReminderLocalTime> {
   const factory ReminderLocalTime(
     int hour,
     int minute, {
@@ -97,6 +99,11 @@ abstract class ReminderLocalTime with _$ReminderLocalTime {
       '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}'
       'T$_hoursOffset:${_minutesOffset.toString().padLeft(2, '0')}';
 
+  @override
+  int compareTo(ReminderLocalTime other) {
+    return toUtc().toDuration().compareTo(other.toUtc().toDuration());
+  }
+
   int get _hoursOffset => timezoneOffset.floor();
 
   int get _minutesOffset =>
@@ -146,6 +153,12 @@ abstract class ReminderLocalTime with _$ReminderLocalTime {
   }
 
   Duration toDuration() => Duration(hours: hour, minutes: minute);
+
+  ReminderLocalTime add(Duration duration) => ReminderLocalTime(
+    (hour + duration.inHours) % Duration.hoursPerDay,
+    (minute + duration.inMinutes) % Duration.minutesPerHour,
+    timezoneOffset: timezoneOffset,
+  );
 }
 
 extension on Duration {

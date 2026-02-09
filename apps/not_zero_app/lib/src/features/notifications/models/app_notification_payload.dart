@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_notification_payload.freezed.dart';
@@ -36,4 +38,13 @@ sealed class AppNotificationPayload with _$AppNotificationPayload {
 
   factory AppNotificationPayload.fromJson(Map<String, dynamic> json) =>
       _$AppNotificationPayloadFromJson(json);
+
+  factory AppNotificationPayload.fromJsonString(String jsonString) =>
+      AppNotificationPayload.fromJson(
+        Map<String, dynamic>.from(jsonDecode(jsonString) as Map),
+      );
+
+  const AppNotificationPayload._();
+
+  String toJsonString() => jsonEncode(toJson());
 }

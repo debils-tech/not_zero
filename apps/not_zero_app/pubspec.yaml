@@ -35,7 +35,6 @@ dependencies:
   uuid: ^4.4.2
   flutter_riverpod: ^3.0.0
   drift: ^2.20.0
-  drift_flutter: ^0.2.7
   dynamic_color: ^1.8.1
   collection: ^1.19.1
   flutter_confetti: ^0.5.1

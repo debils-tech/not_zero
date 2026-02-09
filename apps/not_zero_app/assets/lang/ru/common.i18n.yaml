@@ -27,3 +27,6 @@ notifications:
   channels:
     reminders:
       name: Напоминания
+  actions:
+    complete: Выполнено!
+    snooze: Отложить на 1 час

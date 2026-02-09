@@ -124,4 +124,26 @@ class TasksLocalService implements BaseService {
       )..where((tbl) => tbl.id.isIn(tasks))).go();
     });
   }
+
+  Future<Task?> getTaskById(String id) => _db.transaction(() async {
+    final joinedTagsWithTasks =
+        _db.select(_db.tasksTable).join([
+            leftOuterJoin(
+              _db.tasksTagEntries,
+              _db.tasksTagEntries.task.equalsExp(_db.tasksTable.id),
+              useColumns: false,
+            ),
+          ])
+          ..addColumns({_db.tasksTagEntries.tagsList})
+          ..orderBy(_tasksOrdering)
+          ..groupBy([_db.tasksTable.id])
+          ..where(_db.tasksTable.id.equals(id));
+
+    final tagsMapper = TagsEfficientMapper(_db);
+    return joinedTagsWithTasks.asyncMap((rows) async {
+      final task = rows.readTable(_db.tasksTable);
+      final tags = await tagsMapper.readTaskTags(rows);
+      return task.copyWith(tags: tags);
+    }).getSingleOrNull();
+  });
 }

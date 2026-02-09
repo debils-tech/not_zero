@@ -17,31 +17,9 @@
 // coverage:ignore-file
 import 'dart:io';
 
-import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
 import 'package:nz_common/nz_common.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-
-QueryExecutor openDriftDatabase({bool permanent = true}) {
-  if (permanent) {
-    return LazyDatabase(() async {
-      final path = await getDatabasePath();
-      final file = File(path);
-
-      if (_useLogs) {
-        // No flutter package, so no kDebugMode or debugPrint available here.
-        // Checking debug with _useLogs flag
-        // ignore: avoid_print
-        print('Open database at "$path"');
-      }
-
-      return NativeDatabase(file, logStatements: _useLogs);
-    });
-  }
-
-  return NativeDatabase.memory(logStatements: _useLogs);
-}
 
 Future<String> getDatabasePath() async {
   final String dbFolder;
@@ -62,17 +40,4 @@ Future<String> getBackupDatabasePath() async {
     'nz-db-backup-$timestamp.sqlite',
   );
   return backupPath;
-}
-
-bool get _useLogs {
-  var isInDebug = false;
-  assert(
-    (() {
-      // true only in debug build
-      isInDebug = true;
-      return true;
-    })(),
-    'Database should be opened in debug mode',
-  );
-  return isInDebug;
 }

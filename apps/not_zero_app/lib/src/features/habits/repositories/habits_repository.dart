@@ -18,6 +18,7 @@ import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/habits/models/habit_action.dart';
 import 'package:not_zero_app/src/features/habits/services/habits_local_service.dart';
+import 'package:not_zero_app/src/features/notifications/constants/notification_action_ids.dart';
 import 'package:not_zero_app/src/features/notifications/models/app_notification_payload.dart';
 import 'package:not_zero_app/src/features/notifications/repositories/notifications_show_repository.dart';
 import 'package:not_zero_app/src/features/notifications/services/schedules_local_service.dart';
@@ -224,6 +225,7 @@ class HabitsRepository implements BaseRepository {
       forDateTime: reminderDateTime,
     ),
     idGroup: _taskReminderIdGroup,
+    categoryId: NotificationCategoryIds.reminder,
   );
 
   Future<void> _cancelHabitSchedule(Habit habit) {
