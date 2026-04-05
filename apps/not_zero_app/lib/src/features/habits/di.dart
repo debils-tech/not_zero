@@ -16,8 +16,10 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/actions_bus/di.dart';
+import 'package:not_zero_app/src/features/habits/models/habit_month_calendar_state.dart';
 import 'package:not_zero_app/src/features/habits/notifiers/habit_completions_history_notifier.dart';
 import 'package:not_zero_app/src/features/habits/notifiers/habit_current_streak_notifier.dart';
+import 'package:not_zero_app/src/features/habits/notifiers/habit_month_completions_notifier.dart';
 import 'package:not_zero_app/src/features/habits/notifiers/habits_list_notifier.dart';
 import 'package:not_zero_app/src/features/habits/notifiers/habits_ui_style_notifier.dart';
 import 'package:not_zero_app/src/features/habits/repositories/habits_repository.dart';
@@ -60,6 +62,11 @@ final habitCompletionsWeekHistoryNotifierProvider = AsyncNotifierProvider
 final habitCurrentStreakNotifierProvider = AsyncNotifierProvider.autoDispose
     .family<HabitCurrentStreakNotifier, int, Habit>(
       (habit) => HabitCurrentStreakNotifier(habit: habit),
+    );
+
+final habitMonthCompletionsNotifierProvider = AsyncNotifierProvider.autoDispose
+    .family<HabitMonthCompletionsNotifier, HabitMonthCalendarState, Habit>(
+      (habit) => HabitMonthCompletionsNotifier(habit: habit),
     );
 
 final habitsUiStyleNotifierProvider =
