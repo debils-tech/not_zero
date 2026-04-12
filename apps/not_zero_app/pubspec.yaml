@@ -39,11 +39,11 @@ dependencies:
   collection: ^1.19.1
   flutter_confetti: ^0.5.1
   tar: ^2.0.2
-  file_picker: ^10.3.8
+  file_picker: ^11.0.2
   slang_flutter: ^4.11.0
   theme_tailor_annotation: ^3.1.1
-  flutter_local_notifications: ^19.5.0
-  timezone: ^0.10.1
+  flutter_local_notifications: ^21.0.0
+  timezone: ^0.11.0
   flutter_timezone: ^5.0.1
 
 dev_dependencies:
@@ -54,7 +54,7 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^6.8.0
   nz_lint: ^1.0.0
-  alchemist: ^0.13.0
+  alchemist: ^0.14.0
   theme_tailor: ^3.1.1
   slang: ^4.11.1
   android_notification_icons: ^0.0.1
