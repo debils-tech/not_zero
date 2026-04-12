@@ -150,9 +150,10 @@ class _CalendarGrid extends StatelessWidget {
           itemCount: rowCount * DateTime.daysPerWeek,
           itemBuilder: (context, index) {
             if (index < leadingBlanks) {
-              final cellDate = DateTime(year, month)
-                  .subtract(Duration(days: leadingBlanks - index))
-                  .startOfDay;
+              final cellDate = DateTime(
+                year,
+                month,
+              ).subtract(Duration(days: leadingBlanks - index)).startOfDay;
               return _CalendarDayCell(
                 date: cellDate,
                 outsideCurrentMonth: true,
@@ -169,10 +170,12 @@ class _CalendarGrid extends StatelessWidget {
               );
             }
 
-            final trailingIndex =
-                index - leadingBlanks - daysInMonth;
-            final cellDate =
-                DateTime(year, month + 1, 1 + trailingIndex).startOfDay;
+            final trailingIndex = index - leadingBlanks - daysInMonth;
+            final cellDate = DateTime(
+              year,
+              month + 1,
+              1 + trailingIndex,
+            ).startOfDay;
             return _CalendarDayCell(
               date: cellDate,
               outsideCurrentMonth: true,

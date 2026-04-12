@@ -55,13 +55,16 @@ class HomeCompactHabitCard extends ConsumerWidget {
               ),
             };
             unawaited(
-              ref.read(habitsRepositoryProvider).addHabitCompletion(
+              ref
+                  .read(habitsRepositoryProvider)
+                  .addHabitCompletion(
                     habit: habit,
                     completion: completion,
                   ),
             );
           },
-          onLongPress: () => context.push('/habits/view/${habit.id}', extra: habit),
+          onLongPress: () =>
+              context.push('/habits/view/${habit.id}', extra: habit),
           child: _ImportanceIndicatorBox(
             importance: habit.importance,
             child: Padding(
@@ -122,7 +125,10 @@ class _ImportanceIndicatorBox extends StatelessWidget {
         border: Border(
           left: BorderSide(
             width: 7,
-            color: _colorByImportance(importance, context.theme.tasksColorScheme),
+            color: _colorByImportance(
+              importance,
+              context.theme.tasksColorScheme,
+            ),
           ),
         ),
       ),

@@ -108,7 +108,8 @@ class HabitsRepository implements BaseRepository {
         .toList();
   }
 
-  Future<List<Pair<DateTime, HabitCompletion?>>> getHabitCompletionsForDateRange({
+  Future<List<Pair<DateTime, HabitCompletion?>>>
+  getHabitCompletionsForDateRange({
     required String habitId,
     required DateTime startDate,
     required DateTime endDate,

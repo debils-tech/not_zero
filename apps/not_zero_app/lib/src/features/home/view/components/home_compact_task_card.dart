@@ -67,7 +67,9 @@ class HomeCompactTaskCard extends ConsumerWidget {
                         final completed = value ?? false;
                         unawaited(HapticFeedback.mediumImpact());
                         unawaited(
-                          ref.read(tasksRepositoryProvider).updateTask(
+                          ref
+                              .read(tasksRepositoryProvider)
+                              .updateTask(
                                 oldTask: task,
                                 newTask: task.complete(completed: completed),
                               ),
@@ -101,7 +103,10 @@ class _ImportanceIndicatorBox extends StatelessWidget {
         border: Border(
           left: BorderSide(
             width: 3,
-            color: _colorByImportance(importance, context.theme.tasksColorScheme),
+            color: _colorByImportance(
+              importance,
+              context.theme.tasksColorScheme,
+            ),
           ),
         ),
       ),
