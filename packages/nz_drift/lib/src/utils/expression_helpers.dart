@@ -18,7 +18,7 @@ import 'package:drift/drift.dart';
 
 extension DateTimeExpressionHelper on Expression<DateTime> {
   Expression<bool> sameDayAs(DateTime date) =>
-      this.date.equalsExp(_dateStr(date));
+      modify(const DateTimeModifier.localTime()).date.equalsExp(_dateStr(date));
 
   Expression<bool> inPeriod(DateTime? startPeriod, DateTime? endPeriod) {
     if (startPeriod != null && endPeriod != null) {
