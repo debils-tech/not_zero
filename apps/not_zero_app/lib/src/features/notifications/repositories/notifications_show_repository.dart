@@ -72,7 +72,7 @@ class NotificationsShowRepository implements BaseRepository {
 
     await _updateLocalTimezone();
     try {
-      await _notificationPlugin.cancel(intId);
+      await _notificationPlugin.cancel(id: intId);
     } on Object catch (e, s) {
       _logger.severe(
         'Error while canceling notification schedule '
@@ -92,11 +92,10 @@ class NotificationsShowRepository implements BaseRepository {
       final canUseExactAlarm = await _permissionRepository.canUseExactAlarm();
 
       await _notificationPlugin.zonedSchedule(
-        intId,
-        text,
-        null,
-        timezonedDateTime,
-        NotificationDetails(
+        id: intId,
+        title: text,
+        scheduledDate: timezonedDateTime,
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             notificationChannel.id,
             notificationChannel.name,
@@ -143,7 +142,7 @@ class NotificationsShowRepository implements BaseRepository {
     String idGroup = 'reminder',
   }) async {
     final intId = _generateIntegerId(id, modifier: idGroup);
-    await _notificationPlugin.cancel(intId);
+    await _notificationPlugin.cancel(id: intId);
 
     _logger.info('Canceled notification with id "$idGroup:$id" ($intId) ');
   }
@@ -154,10 +153,10 @@ class NotificationsShowRepository implements BaseRepository {
     _testId *= 2;
     final notificationChannel = _remindersChannel;
     return _notificationPlugin.show(
-      _testId,
-      'Test reminder #$_testId',
-      'Test body',
-      NotificationDetails(
+      id: _testId,
+      title: 'Test reminder #$_testId',
+      body: 'Test body',
+      notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
           notificationChannel.id,
           notificationChannel.name,

@@ -81,7 +81,7 @@ class StorageSettingsScreen extends ConsumerWidget {
     messenger.hideCurrentSnackBar();
 
     try {
-      final backupFilePath = await FilePicker.platform.saveFile(
+      final backupFilePath = await FilePicker.saveFile(
         dialogTitle: t.settings.storage.fileDialog.saveTitle,
         type: FileType.custom,
         allowedExtensions: ['tar.gz'],
@@ -111,7 +111,7 @@ class StorageSettingsScreen extends ConsumerWidget {
     final navigator = Navigator.of(context, rootNavigator: true);
     final messenger = ScaffoldMessenger.of(context);
 
-    final filePicker = await FilePicker.platform.pickFiles(
+    final filePicker = await FilePicker.pickFiles(
       dialogTitle: t.settings.storage.fileDialog.openTitle,
       type: FileType.custom,
       allowedExtensions: ['tar.gz'],

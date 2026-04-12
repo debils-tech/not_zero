@@ -67,7 +67,7 @@ class NotZeroDatabase extends _$NotZeroDatabase {
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
-      onUpgrade: (Migrator m, int from, int to) async {
+      onUpgrade: (m, from, to) async {
         await customStatement('PRAGMA foreign_keys = OFF');
 
         await m.runMigrationSteps(

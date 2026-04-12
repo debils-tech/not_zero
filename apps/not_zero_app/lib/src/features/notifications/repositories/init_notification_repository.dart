@@ -57,7 +57,7 @@ class InitNotificationRepository implements BaseRepository {
       );
 
       await FlutterLocalNotificationsPlugin().initialize(
-        InitializationSettings(
+        settings: InitializationSettings(
           android: androidSettings,
           iOS: darwinSettings,
           macOS: darwinSettings,
