@@ -72,7 +72,10 @@ class HomeStatsHeader extends ConsumerWidget {
                 )
               else
                 const CircularProgressIndicator(),
-              const Icon(NotZeroIcons.zero),
+              Icon(
+                NotZeroIcons.zero,
+                color: DefaultTextStyle.of(context).style.color,
+              ),
             ],
           ),
           if (currentStreakCount != null && currentStreakCount > 1)
