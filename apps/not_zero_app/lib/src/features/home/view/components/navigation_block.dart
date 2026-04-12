@@ -15,17 +15,30 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:not_zero_app/src/features/common/view/components/adaptive/list_limiter.dart';
 import 'package:not_zero_app/src/features/common/view/components/common_widgets/clickable_card.dart';
+import 'package:not_zero_app/src/features/home/di.dart';
 import 'package:not_zero_app/src/features/translations/translations.g.dart';
 import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 
-class HomeNavigationBlock extends StatelessWidget {
+class HomeNavigationBlock extends ConsumerWidget {
   const HomeNavigationBlock({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tasksCount = ref.watch(
+      homeTodayTasksNotifierProvider.select(
+        (state) => state.value?.length ?? 0,
+      ),
+    );
+    final habitsCount = ref.watch(
+      homeTodayHabitsNotifierProvider.select(
+        (state) => state.value?.length ?? 0,
+      ),
+    );
+
     return AdaptiveListLimiter(
       child: Padding(
         padding: const .all(8),
@@ -35,12 +48,14 @@ class HomeNavigationBlock extends StatelessWidget {
               route: '/tasks',
               icon: Icons.format_list_bulleted_rounded,
               title: context.t.tasks.list.title,
+              badgeCount: tasksCount,
             ),
             const SizedBox(height: 6),
             _NavigationCard(
               route: '/habits',
               icon: Icons.published_with_changes_rounded,
               title: context.t.habits.list.title,
+              badgeCount: habitsCount,
             ),
             const SizedBox(height: 6),
             _NavigationCard(
@@ -66,11 +81,13 @@ class _NavigationCard extends StatelessWidget {
     required this.route,
     required this.icon,
     required this.title,
+    this.badgeCount = 0,
   });
 
   final String route;
   final IconData icon;
   final String title;
+  final int badgeCount;
 
   @override
   Widget build(BuildContext context) {
@@ -88,12 +105,41 @@ class _NavigationCard extends StatelessWidget {
                   size: 25,
                 ),
                 const SizedBox(width: 10),
-                Text(
-                  title,
-                  style: context.theme.textTheme.titleLarge,
+                Expanded(
+                  child: Text(
+                    title,
+                    style: context.theme.textTheme.titleLarge,
+                  ),
                 ),
+                if (badgeCount > 0) _NavigationBadge(count: badgeCount),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NavigationBadge extends StatelessWidget {
+  const _NavigationBadge({required this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.theme.colorScheme.primary,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const .symmetric(horizontal: 8, vertical: 2),
+        child: Text(
+          count.toString(),
+          style: context.theme.textTheme.labelMedium?.copyWith(
+            color: context.theme.colorScheme.onError,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
