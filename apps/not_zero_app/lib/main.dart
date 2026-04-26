@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -115,6 +115,20 @@ class MyApp extends ConsumerWidget {
           routeInformationProvider: appRouter.routeInformationProvider,
           routeInformationParser: appRouter.routeInformationParser,
           routerDelegate: appRouter.routerDelegate,
+          builder: (context, child) {
+            final localeFirstWeekday = _weekdayFromFirstDayIndex(
+              MaterialLocalizations.of(context).firstDayOfWeekIndex,
+            );
+            final localeFirstWeekdayNotifier = ref.read(
+              localeFirstWeekdayProvider.notifier,
+            );
+            if (localeFirstWeekdayNotifier.state != localeFirstWeekday) {
+              WidgetsBinding.instance.addPersistentFrameCallback(
+                (_) => localeFirstWeekdayNotifier.state = localeFirstWeekday,
+              );
+            }
+            return child ?? const SizedBox.shrink();
+          },
 
           //-- Localization --
           locale: locale,
@@ -131,6 +145,10 @@ class MyApp extends ConsumerWidget {
       },
     );
   }
+}
+
+int _weekdayFromFirstDayIndex(int firstDayOfWeekIndex) {
+  return firstDayOfWeekIndex == 0 ? DateTime.sunday : firstDayOfWeekIndex;
 }
 
 class _OptionalDynamicColorsBuilder extends ConsumerWidget {

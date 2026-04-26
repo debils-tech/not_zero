@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@ import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/settings/models/app_theme_settings.dart';
 import 'package:not_zero_app/src/features/settings/models/habits_ui_style.dart';
 import 'package:not_zero_app/src/features/settings/models/theme_state.dart';
+import 'package:not_zero_app/src/features/settings/models/week_start.dart';
 import 'package:not_zero_app/src/features/settings/services/settings_local_service.dart';
 import 'package:nz_common/nz_common.dart';
 
@@ -60,5 +61,13 @@ class SettingsRepository implements BaseRepository {
 
   Future<void> setConfetti(bool value) {
     return _settingsLocalService.setConfetti(value);
+  }
+
+  WeekStart? getWeekStart() {
+    return _settingsLocalService.getWeekStart();
+  }
+
+  Future<void> setWeekStart(WeekStart value) {
+    return _settingsLocalService.setWeekStart(value);
   }
 }

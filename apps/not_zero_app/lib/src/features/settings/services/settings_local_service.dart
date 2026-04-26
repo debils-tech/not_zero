@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
 
 import 'package:logging/logging.dart';
 import 'package:not_zero_app/src/features/settings/models/theme_state.dart';
+import 'package:not_zero_app/src/features/settings/models/week_start.dart';
 import 'package:nz_boxes/nz_boxes.dart';
 import 'package:nz_common/nz_common.dart';
 
@@ -31,6 +32,7 @@ class SettingsLocalService implements BaseService {
   static const _harmonizeColorsKey = 'harmonizeColors';
   static const _expandedHabitsUiKey = 'expandedHabitsUi';
   static const _confettiEnabledKey = 'confettiEnabled';
+  static const _weekStartKey = 'weekStart';
 
   ThemeState? getThemeState() {
     final stringValue = _settingsBox.getString(_themeStateKey);
@@ -75,5 +77,13 @@ class SettingsLocalService implements BaseService {
 
   Future<void> setConfetti(bool value) {
     return _settingsBox.putBool(_confettiEnabledKey, value);
+  }
+
+  WeekStart? getWeekStart() {
+    return WeekStart.fromName(_settingsBox.getString(_weekStartKey));
+  }
+
+  Future<void> setWeekStart(WeekStart value) {
+    return _settingsBox.putString(_weekStartKey, value.name);
   }
 }

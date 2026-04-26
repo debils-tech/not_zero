@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import 'package:not_zero_app/src/features/settings/view/licenses_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/settings_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/storage_screen.dart';
 import 'package:not_zero_app/src/features/settings/view/theme_settings_screen.dart';
+import 'package:not_zero_app/src/features/settings/view/week_start_settings_screen.dart';
 import 'package:not_zero_app/src/features/stats/view/quick_statistics_screen.dart';
 import 'package:not_zero_app/src/features/tasks/view/task_edit_screen.dart';
 import 'package:not_zero_app/src/features/tasks/view/task_view_screen.dart';
@@ -114,6 +115,10 @@ final appRouterProvider = Provider<GoRouter>(
               GoRoute(
                 path: 'theme',
                 builder: (_, _) => const ThemeSettingsScreen(),
+              ),
+              GoRoute(
+                path: 'week_start',
+                builder: (_, _) => const WeekStartSettingsScreen(),
               ),
               GoRoute(
                 path: 'storage',

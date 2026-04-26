@@ -18,6 +18,14 @@ theme:
     dark: "Тёмная тема"
     system: "Как в системе"
 
+weekStart:
+  title: "Начало недели"
+  subtitle: "Выберите, какой день недели показывать первым во всем приложении"
+  values:
+    monday: "Понедельник"
+    sunday: "Воскресенье"
+    saturday: "Суббота"
+
 specialEffects:
   title: "Спецэффекты"
 

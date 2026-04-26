@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -120,8 +120,8 @@ class _WeeklyChartWithSelection extends ConsumerWidget {
               stats: chartStats,
               rendererKey: weeklyRendererKey,
               selectedIndex: state.selectedDayIndex,
-              start: state.chartRangeStart,
-              end: state.chartRangeEnd,
+              rangeStart: state.chartRangeStart!,
+              rangeEnd: state.chartRangeEnd!,
             ),
           ),
           const _SelectionGesture(),

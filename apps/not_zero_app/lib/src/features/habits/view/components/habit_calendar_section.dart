@@ -5,11 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:not_zero_app/src/features/habits/di.dart';
 import 'package:not_zero_app/src/features/habits/models/habit_month_calendar_state.dart';
+import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
 import 'package:nz_base_models/nz_base_models.dart';
 import 'package:nz_common/nz_common.dart';
 
-/// Monthly habit completion calendar (Monday-first week). Read-only cells.
+/// Monthly habit completion calendar. Read-only cells.
 class HabitCalendarSection extends ConsumerWidget {
   const HabitCalendarSection({required this.habit, super.key});
 
@@ -18,6 +19,7 @@ class HabitCalendarSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final async = ref.watch(habitMonthCompletionsNotifierProvider(habit));
+    final weekStart = ref.watch(effectiveFirstWeekdayProvider);
     final notifier = ref.read(
       habitMonthCompletionsNotifierProvider(habit).notifier,
     );
@@ -85,9 +87,9 @@ class HabitCalendarSection extends ConsumerWidget {
               AsyncData(:final value) => _CalendarGrid(
                 year: value.year,
                 month: value.month,
+                weekStart: weekStart,
                 leadingBlanks:
-                    (DateTime(value.year, value.month).weekday -
-                        DateTime.monday) %
+                    (DateTime(value.year, value.month).weekday - weekStart) %
                     DateTime.daysPerWeek,
                 daysInMonth: DateTime(value.year, value.month + 1, 0).day,
                 pairs: value.completions,
@@ -117,6 +119,7 @@ class _CalendarGrid extends StatelessWidget {
   const _CalendarGrid({
     required this.year,
     required this.month,
+    required this.weekStart,
     required this.leadingBlanks,
     required this.daysInMonth,
     required this.pairs,
@@ -124,6 +127,7 @@ class _CalendarGrid extends StatelessWidget {
 
   final int year;
   final int month;
+  final int weekStart;
   final int leadingBlanks;
   final int daysInMonth;
   final List<Pair<DateTime, HabitCompletion?>> pairs;
@@ -137,7 +141,7 @@ class _CalendarGrid extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _WeekdayHeaderRow(),
+        _WeekdayHeaderRow(weekStart: weekStart),
         const SizedBox(height: 6),
         GridView.builder(
           shrinkWrap: true,
@@ -187,18 +191,24 @@ class _CalendarGrid extends StatelessWidget {
   }
 }
 
-/// Monday–Sunday labels (MON, TUE, …) aligned with calendar columns.
+/// Weekday labels aligned with calendar columns.
 class _WeekdayHeaderRow extends StatelessWidget {
-  const _WeekdayHeaderRow();
+  const _WeekdayHeaderRow({required this.weekStart});
+
+  final int weekStart;
 
   @override
   Widget build(BuildContext context) {
     final monday = DateTime(2024);
+    final startOffset =
+        (weekStart - DateTime.monday + DateTime.daysPerWeek) %
+        DateTime.daysPerWeek;
+    final startDate = monday.add(Duration(days: startOffset));
     final labels = List.generate(
       DateTime.daysPerWeek,
       (i) => DateFormat(
         DateFormat.ABBR_WEEKDAY,
-      ).format(monday.add(Duration(days: i))).toUpperCase(),
+      ).format(startDate.add(Duration(days: i))).toUpperCase(),
     );
 
     return Row(

@@ -35,6 +35,8 @@ Each feature inside `lib/src/features/<feature>/` follows a Clean‑Architecture
 - The project uses `flutter_riverpod`.
 - Providers are typically declared in `di.dart` inside each feature.
 - Notifiers expose immutable state objects (prefer `freezed` for modeling state).
+- Cross-feature UI preferences (for example, week start day) are exposed via
+  Settings feature providers and consumed by feature-level notifiers/widgets.
 
 ### Data and storage
 
@@ -59,6 +61,9 @@ Each feature inside `lib/src/features/<feature>/` follows a Clean‑Architecture
 - UI never accesses services directly — always go through repositories/notifiers.
 - Cross‑feature utilities should move into an appropriate package under `packages/`.
 - Keep feature code self‑contained; only export what the app layer needs.
+- Date math that may be locale/user-dependent belongs in reusable helpers
+  (`packages/nz_common`), while the effective user preference value is resolved
+  at app level and injected through providers.
 
 ### Tooling
 

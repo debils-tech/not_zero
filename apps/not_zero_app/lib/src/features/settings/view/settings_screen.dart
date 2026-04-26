@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -37,6 +37,11 @@ class SettingsScreen extends StatelessWidget {
             route: '/settings/theme',
             icon: Icons.wb_sunny_outlined,
             title: context.t.settings.theme.title,
+          ),
+          SettingsMenuEntry(
+            route: '/settings/week_start',
+            icon: Icons.view_week_outlined,
+            title: context.t.settings.weekStart.title,
           ),
           const _SpecialEffectsSwitch(),
           SettingsBlocHeader(context.t.settings.list.blocks.other),

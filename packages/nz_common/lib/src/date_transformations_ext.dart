@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -47,14 +47,21 @@ extension DateTimeTransformationsExt on DateTime {
 
   // Weeks transformations
 
-  DateTime get startOfWeek {
+  DateTime startOfWeek({int weekStart = DateTime.monday}) {
+    assert(
+      weekStart >= DateTime.monday && weekStart <= DateTime.sunday,
+      'weekStart must be in DateTime.monday..DateTime.sunday range',
+    );
     final justDate = startOfDay;
-    return justDate.subtract(Duration(days: justDate.weekday - 1));
+    final delta =
+        (justDate.weekday - weekStart + DateTime.daysPerWeek) %
+        DateTime.daysPerWeek;
+    return justDate.subtract(Duration(days: delta));
   }
 
-  DateTime get endOfWeek {
-    final justDate = endOfDay;
-    return justDate.add(Duration(days: 7 - justDate.weekday));
+  DateTime endOfWeek({int weekStart = DateTime.monday}) {
+    final start = startOfWeek(weekStart: weekStart);
+    return start.add(const Duration(days: DateTime.daysPerWeek - 1)).endOfDay;
   }
 
   DateTime get weekBefore {

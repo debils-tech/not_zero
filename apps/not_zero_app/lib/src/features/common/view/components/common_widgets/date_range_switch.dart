@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,12 +15,15 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/common/view/components/common_widgets/show_app_date_picker.dart';
+import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/helpers/nz_date_time_format.dart';
 import 'package:nz_common/nz_common.dart';
 
 enum DateRangeType { day, week }
 
-class DateRangeSwitch extends StatefulWidget {
+class DateRangeSwitch extends ConsumerStatefulWidget {
   const DateRangeSwitch({
     required this.rangeType,
     this.initialDate,
@@ -33,20 +36,22 @@ class DateRangeSwitch extends StatefulWidget {
   final void Function(DateTime rangeStart, DateTime rangeEInd)? onChanged;
 
   @override
-  State<DateRangeSwitch> createState() => _DateRangeSwitchState();
+  ConsumerState<DateRangeSwitch> createState() => _DateRangeSwitchState();
 }
 
-class _DateRangeSwitchState extends State<DateRangeSwitch> {
+class _DateRangeSwitchState extends ConsumerState<DateRangeSwitch> {
   late DateTime _currentDate;
+
+  int get _weekStart => ref.read(effectiveFirstWeekdayProvider);
 
   DateTime get _rangeStart => switch (widget.rangeType) {
     .day => _currentDate.startOfDay,
-    .week => _currentDate.startOfWeek,
+    .week => _currentDate.startOfWeek(weekStart: _weekStart),
   };
 
   DateTime get _rangeEnd => switch (widget.rangeType) {
     .day => _currentDate.endOfDay,
-    .week => _currentDate.endOfWeek,
+    .week => _currentDate.endOfWeek(weekStart: _weekStart),
   };
 
   @override
@@ -57,6 +62,7 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(effectiveFirstWeekdayProvider);
     return Row(
       mainAxisAlignment: .center,
       children: [
@@ -120,7 +126,7 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
     final today = DateTime.now();
     final firstDate = today.subtract(const Duration(days: 365));
     final lastDate = today.add(const Duration(days: 365));
-    final newDate = await showDatePicker(
+    final newDate = await showAppDatePicker(
       context: context,
       initialDate: _currentDate.isBefore(firstDate)
           ? firstDate
