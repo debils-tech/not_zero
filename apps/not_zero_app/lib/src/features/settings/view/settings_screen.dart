@@ -78,6 +78,7 @@ class _SpecialEffectsSwitch extends ConsumerWidget {
         ref.read(specialEffectsNotifierProvider.notifier).setConfetti(value);
       },
       title: Text(context.t.settings.specialEffects.title),
+      secondary: const Icon(Icons.flare_rounded),
     );
   }
 }
