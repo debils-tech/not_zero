@@ -25,17 +25,17 @@ class WeekStartSettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final effectiveValue = ref.watch(effectiveWeekStartProvider);
-    final controller = ref.watch(weekStartNotifierProvider.notifier);
+    final selectedValue = ref.watch(weekStartNotifierProvider);
+    final controller = ref.read(weekStartNotifierProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(context.t.settings.weekStart.title),
       ),
-      body: RadioGroup<WeekStart>(
-        groupValue: effectiveValue,
+      body: RadioGroup<WeekStart?>(
+        groupValue: selectedValue,
         onChanged: (value) {
-          if (value == null || value == effectiveValue) return;
+          if (value == selectedValue) return;
           controller.setWeekStart(value);
         },
         child: ListView(
@@ -43,15 +43,19 @@ class WeekStartSettingsScreen extends ConsumerWidget {
             ListTile(
               title: Text(context.t.settings.weekStart.subtitle),
             ),
-            RadioListTile<WeekStart>(
+            RadioListTile<WeekStart?>(
+              title: Text(context.t.settings.weekStart.values.system),
+              value: null,
+            ),
+            RadioListTile<WeekStart?>(
               title: Text(context.t.settings.weekStart.values.monday),
               value: WeekStart.monday,
             ),
-            RadioListTile<WeekStart>(
+            RadioListTile<WeekStart?>(
               title: Text(context.t.settings.weekStart.values.sunday),
               value: WeekStart.sunday,
             ),
-            RadioListTile<WeekStart>(
+            RadioListTile<WeekStart?>(
               title: Text(context.t.settings.weekStart.values.saturday),
               value: WeekStart.saturday,
             ),

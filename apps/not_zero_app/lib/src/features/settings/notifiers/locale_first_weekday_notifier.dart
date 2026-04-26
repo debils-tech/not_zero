@@ -14,22 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:not_zero_app/src/features/settings/di.dart';
-import 'package:not_zero_app/src/features/settings/models/week_start.dart';
 
-class WeekStartNotifier extends Notifier<WeekStart?> {
+class LocaleFirstWeekdayNotifier extends Notifier<int> {
   @override
-  WeekStart? build() {
-    final settingsRepository = ref.watch(settingsRepositoryProvider);
-    return settingsRepository.getWeekStart();
-  }
+  int build() => DateTime.monday;
 
-  void setWeekStart(WeekStart? value) {
-    state = value;
-    final settingsRepository = ref.read(settingsRepositoryProvider);
-    unawaited(settingsRepository.setWeekStart(value));
+  void setWeekday(int weekday) {
+    if (state == weekday) return;
+    state = weekday;
   }
 }

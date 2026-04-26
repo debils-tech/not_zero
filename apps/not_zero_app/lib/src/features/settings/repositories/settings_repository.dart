@@ -67,7 +67,7 @@ class SettingsRepository implements BaseRepository {
     return _settingsLocalService.getWeekStart();
   }
 
-  Future<void> setWeekStart(WeekStart value) {
+  Future<void> setWeekStart(WeekStart? value) {
     return _settingsLocalService.setWeekStart(value);
   }
 }

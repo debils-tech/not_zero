@@ -119,12 +119,11 @@ class MyApp extends ConsumerWidget {
             final localeFirstWeekday = _weekdayFromFirstDayIndex(
               MaterialLocalizations.of(context).firstDayOfWeekIndex,
             );
-            final localeFirstWeekdayNotifier = ref.read(
-              localeFirstWeekdayProvider.notifier,
-            );
-            if (localeFirstWeekdayNotifier.state != localeFirstWeekday) {
+            if (ref.read(localeFirstWeekdayProvider) != localeFirstWeekday) {
               WidgetsBinding.instance.addPersistentFrameCallback(
-                (_) => localeFirstWeekdayNotifier.state = localeFirstWeekday,
+                (_) => ref
+                    .read(localeFirstWeekdayProvider.notifier)
+                    .setWeekday(localeFirstWeekday),
               );
             }
             return child ?? const SizedBox.shrink();

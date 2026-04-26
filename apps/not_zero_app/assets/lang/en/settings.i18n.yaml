@@ -22,6 +22,7 @@ weekStart:
   title: 'Week start'
   subtitle: 'Choose which weekday should be shown first across the app'
   values:
+    system: 'Use system default'
     monday: 'Monday'
     sunday: 'Sunday'
     saturday: 'Saturday'

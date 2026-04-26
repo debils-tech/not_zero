@@ -15,8 +15,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:not_zero_app/src/features/settings/models/week_start.dart';
+import 'package:not_zero_app/src/features/settings/notifiers/locale_first_weekday_notifier.dart';
 import 'package:not_zero_app/src/features/settings/notifiers/special_effects_notifier.dart';
 import 'package:not_zero_app/src/features/settings/notifiers/theme_settings_notifier.dart';
 import 'package:not_zero_app/src/features/settings/notifiers/week_start_notifier.dart';
@@ -66,7 +66,10 @@ final weekStartNotifierProvider =
       WeekStartNotifier.new,
     );
 
-final localeFirstWeekdayProvider = StateProvider<int>((_) => DateTime.monday);
+final localeFirstWeekdayProvider =
+    NotifierProvider<LocaleFirstWeekdayNotifier, int>(
+      LocaleFirstWeekdayNotifier.new,
+    );
 
 final effectiveFirstWeekdayProvider = Provider<int>((ref) {
   final weekStart = ref.watch(weekStartNotifierProvider);

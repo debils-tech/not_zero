@@ -83,7 +83,10 @@ class SettingsLocalService implements BaseService {
     return WeekStart.fromName(_settingsBox.getString(_weekStartKey));
   }
 
-  Future<void> setWeekStart(WeekStart value) {
+  Future<void> setWeekStart(WeekStart? value) {
+    if (value == null) {
+      return _settingsBox.clear(_weekStartKey);
+    }
     return _settingsBox.putString(_weekStartKey, value.name);
   }
 }
