@@ -53,40 +53,23 @@ class HomeTodayBlock extends ConsumerWidget {
       child: Padding(
         padding: const .all(8),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 4,
           children: [
-            Row(
-              children: [
-                Text(
-                  context.t.common.timeOptions.today,
-                  style: context.theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const Spacer(),
-                if (tasks.isNotEmpty)
-                  TextButton(
-                    onPressed: () => context.push('/tasks'),
-                    child: Text(context.t.tasks.list.title),
-                  ),
-                if (habits.isNotEmpty)
-                  TextButton(
-                    onPressed: () => context.push('/habits'),
-                    child: Text(context.t.habits.list.title),
-                  ),
-              ],
+            Text(
+              context.t.common.timeOptions.today,
+              style: context.theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
             ...topEntries.map((entry) {
-              return Padding(
-                padding: const .only(bottom: 6),
-                child: switch (entry) {
-                  _HomeTodayTaskEntry(:final task) => HomeCompactTaskCard(
-                    task: task,
-                  ),
-                  _HomeTodayHabitEntry(:final habitData) =>
-                    HomeCompactHabitCard(habitData: habitData),
-                },
-              );
+              return switch (entry) {
+                _HomeTodayTaskEntry(:final task) => HomeCompactTaskCard(
+                  task: task,
+                ),
+                _HomeTodayHabitEntry(:final habitData) =>
+                  HomeCompactHabitCard(habitData: habitData),
+              };
             }),
           ],
         ),
