@@ -256,30 +256,30 @@ class _CalendarDayCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final decoration = switch (completion?.type) {
-      HabitCompletionType.completed => BoxDecoration(
-        borderRadius: _radius,
+      HabitCompletionType.completed => ShapeDecoration(
         color: context.theme.colorScheme.primaryContainer,
-        border: Border.fromBorderSide(
-          BorderSide(
+        shape: ContinuousRectangleBorder(
+          borderRadius: _radius,
+          side: BorderSide(
             color: context.theme.colorScheme.primary,
           ),
         ),
       ),
-      HabitCompletionType.skipped => BoxDecoration(
-        borderRadius: _radius,
+      HabitCompletionType.skipped => ShapeDecoration(
         gradient: _strippedGradient(
           context.theme.colorScheme.primaryContainer,
         ),
-        border: Border.fromBorderSide(
-          BorderSide(
+        shape: ContinuousRectangleBorder(
+          borderRadius: _radius,
+          side: BorderSide(
             color: context.theme.colorScheme.primary.withAlpha(127),
           ),
         ),
       ),
-      null => BoxDecoration(
-        borderRadius: _radius,
-        border: Border.fromBorderSide(
-          BorderSide(
+      null => ShapeDecoration(
+        shape: ContinuousRectangleBorder(
+          borderRadius: _radius,
+          side: BorderSide(
             color: context.theme.colorScheme.surfaceContainerHighest,
           ),
         ),

@@ -88,7 +88,7 @@ class ReminderPickerTile extends StatelessWidget {
       title: Text(context.t.tasks.edit.fields.taskReminder),
       trailing: valueIndicator,
       shape: borderRadius != null
-          ? RoundedRectangleBorder(borderRadius: borderRadius)
+          ? ContinuousRectangleBorder(borderRadius: borderRadius)
           : null,
     );
   }
