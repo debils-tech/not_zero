@@ -13,6 +13,7 @@ workspace:
   - packages/nz_logger
   - packages/nz_base_models
   - packages/nz_lint
+  - packages/nz_fonts
 
 dev_dependencies:
   melos: ^7.1.1

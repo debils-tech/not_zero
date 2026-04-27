@@ -1,0 +1,25 @@
+name: nz_fonts
+description: "Package containing all the fonts needed for Not Zero app."
+version: 1.0.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.11.5
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  nz_lint:
+    path: ../nz_lint
+
+flutter:
+  fonts:
+    - family: RobotoFlex
+      fonts:
+        - asset: lib/fonts/RobotoFlex/RobotoFlex-VariableFont.ttf

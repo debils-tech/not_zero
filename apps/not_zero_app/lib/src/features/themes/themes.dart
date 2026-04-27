@@ -18,12 +18,14 @@ import 'package:flutter/material.dart';
 import 'package:not_zero_app/src/features/themes/extensions/charts_colors.dart';
 import 'package:not_zero_app/src/features/themes/extensions/tags_colors.dart';
 import 'package:not_zero_app/src/features/themes/extensions/tasks_colors.dart';
+import 'package:nz_fonts/nz_fonts.dart';
 
 export 'extensions/charts_colors.dart';
 export 'extensions/tags_colors.dart';
 export 'extensions/tasks_colors.dart';
 
 final defaultLightTheme = _lightThemeBase.copyWith(
+  textTheme: NzRobotoFlex.modifyTextTheme(_darkThemeBase.textTheme),
   splashFactory: InkSparkle.splashFactory,
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
@@ -38,7 +40,12 @@ final defaultLightTheme = _lightThemeBase.copyWith(
   ),
 );
 
-final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
+final _lightThemeBase = ThemeData(
+  brightness: Brightness.light,
+  useMaterial3: true,
+  fontFamily: NzRobotoFlex.fontFamily,
+  package: NzRobotoFlex.package,
+).copyWith(
   extensions: const <ThemeExtension>[
     TasksColorScheme(
       notImportantColor: Color(0xFF78909C),
@@ -73,6 +80,7 @@ final _lightThemeBase = ThemeData.light(useMaterial3: true).copyWith(
 );
 
 final defaultDarkTheme = _darkThemeBase.copyWith(
+  textTheme: NzRobotoFlex.modifyTextTheme(_darkThemeBase.textTheme),
   splashFactory: InkSparkle.splashFactory,
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
@@ -87,7 +95,12 @@ final defaultDarkTheme = _darkThemeBase.copyWith(
   ),
 );
 
-final _darkThemeBase = ThemeData.dark(useMaterial3: true).copyWith(
+final _darkThemeBase = ThemeData(
+  brightness: Brightness.dark,
+  useMaterial3: true,
+  fontFamily: NzRobotoFlex.fontFamily,
+  package: NzRobotoFlex.package,
+).copyWith(
   extensions: const <ThemeExtension>[
     TasksColorScheme(
       notImportantColor: Color(0xFFD6D6D6),
