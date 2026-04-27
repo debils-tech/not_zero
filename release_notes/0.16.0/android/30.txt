@@ -1,0 +1,4 @@
+- "Today" overview at the home screen
+- Habits calendar view
+- Small redesigns: new Roboto Flex font, small icon changes
+- Fixed a bug with timezones when tasks appeared in yesterday
