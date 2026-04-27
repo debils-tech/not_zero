@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter/material.dart';
+import 'package:not_zero_app/src/features/common/view/components/common_widgets/show_app_date_picker.dart';
 import 'package:not_zero_app/src/features/translations/translations.g.dart';
 import 'package:not_zero_app/src/helpers/nz_date_time_format.dart';
 
@@ -56,7 +57,7 @@ class FancyDatePickerButton extends StatelessWidget {
     final today = DateTime.now();
     final pickedDate = value;
 
-    final newValue = await showDatePicker(
+    final newValue = await showAppDatePicker(
       context: context,
       // TODO(uSlashVlad): Couldn't pick date in the past, maybe some fix needed
       initialDate: pickedDate != null && today.isAfter(pickedDate)

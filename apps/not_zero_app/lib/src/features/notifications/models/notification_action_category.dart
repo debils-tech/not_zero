@@ -31,9 +31,7 @@ abstract class NotificationAction with _$NotificationAction {
   const factory NotificationAction({
     required String id,
     required String label,
-    @Default(false)
-    bool isDestructive,
-    @Default(false)
-    bool requiresForeground,
+    @Default(false) bool isDestructive,
+    @Default(false) bool requiresForeground,
   }) = _NotificationAction;
 }

@@ -108,6 +108,34 @@ class HabitsRepository implements BaseRepository {
         .toList();
   }
 
+  Future<List<Pair<DateTime, HabitCompletion?>>>
+  getHabitCompletionsForDateRange({
+    required String habitId,
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    final completions = await _localService.getHabitCompletions(
+      habitId: habitId,
+      startDate: startDate,
+      endDate: endDate,
+    );
+
+    final first = startDate.startOfDay;
+    final last = endDate.startOfDay;
+
+    return first
+        .rangeToIncluding(last)
+        .map(
+          (date) => (
+            date,
+            completions.firstWhereOrNull(
+              (completion) => completion.completedDate.isAtSameDay(date),
+            ),
+          ),
+        )
+        .toList();
+  }
+
   Future<int> getHabitStreak({required Habit habit, DateTime? date}) async {
     return _localService.getHabitStreak(
       habitId: habit.id,

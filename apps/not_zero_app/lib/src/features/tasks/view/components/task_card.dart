@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero_app/src/features/common/view/components/common_widgets/show_app_date_picker.dart';
 import 'package:not_zero_app/src/features/common/view/components/selection/widgets/selectable_card.dart';
 import 'package:not_zero_app/src/features/special_effects/di.dart';
 import 'package:not_zero_app/src/features/special_effects/view/components/emoji_confetti_wrapper.dart';
@@ -212,7 +213,7 @@ class _TaskCheckbox extends ConsumerWidget {
         onPressed: () async {
           final firstDate = DateTime.now();
           final lastDate = firstDate.add(const Duration(days: 365));
-          final newDate = await showDatePicker(
+          final newDate = await showAppDatePicker(
             context: context,
             initialDate: firstDate,
             firstDate: firstDate,

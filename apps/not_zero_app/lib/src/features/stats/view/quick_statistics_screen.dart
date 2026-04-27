@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:not_zero_app/src/features/common/view/components/adaptive/list_limiter.dart';
 import 'package:not_zero_app/src/features/common/view/components/common_widgets/date_range_switch.dart';
+import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
 import 'package:not_zero_app/src/features/stats/notifiers/quick_statistics_notifier.dart';
 import 'package:not_zero_app/src/features/stats/view/components/chart_card.dart';
@@ -51,6 +52,7 @@ class _QuickStatsAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final quickStatsNotifier = ref.watch(
       quickStatisticsNotifierProvider.notifier,
     );
+    final weekStart = ref.watch(effectiveFirstWeekdayProvider);
     return AppBar(
       title: Text(context.t.stats.quickView.title),
       bottom: PreferredSize(
@@ -59,6 +61,7 @@ class _QuickStatsAppBar extends ConsumerWidget implements PreferredSizeWidget {
           padding: const .all(4),
           child: DateRangeSwitch(
             rangeType: .week,
+            weekStart: weekStart,
             onChanged: (start, end) {
               unawaited(HapticFeedback.heavyImpact());
               unawaited(quickStatsNotifier.loadDays(start, end));
@@ -120,8 +123,8 @@ class _WeeklyChartWithSelection extends ConsumerWidget {
               stats: chartStats,
               rendererKey: weeklyRendererKey,
               selectedIndex: state.selectedDayIndex,
-              start: state.chartRangeStart,
-              end: state.chartRangeEnd,
+              rangeStart: state.chartRangeStart!,
+              rangeEnd: state.chartRangeEnd!,
             ),
           ),
           const _SelectionGesture(),

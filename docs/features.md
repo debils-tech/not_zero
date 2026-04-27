@@ -41,6 +41,8 @@ This is a concise overview of the primary features implemented in the main app (
 
 - About page and licenses
 - Storage settings (data export/import)
+- Week start preference (Monday / Sunday / Saturday) applied consistently in
+  week-based UI and date pickers
 
 ### Backup and restore
 

@@ -8,7 +8,7 @@ Because the goal is make app more modular and universal, most of the independant
 
 In the main flutter app layout looks like this:
 - `constants/` just for app-wide constants
-- `features/` for independant logical/business features
+- `features/` for independent logical/business features
 - `helpers/` for some random app-wide utils
 
 App uses go_router and routing is described in `routes.dart`. App entrypoint is `lib/main.dart`

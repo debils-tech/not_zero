@@ -105,22 +105,43 @@ class TaskEditTagsSelectionField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilderField<List<ItemTag>>(
-      name: name,
-      builder: (field) {
-        return ItemTagSelector(
-          selectedTags: (field.value ?? []).map((e) => e.id).toSet(),
-          onSelection: (tag, isSelected) {
-            final newValue = field.value?.toSet() ?? {};
-            if (isSelected) {
-              newValue.add(tag);
-            } else {
-              newValue.remove(tag);
-            }
-            field.didChange(newValue.toList());
+    return Column(
+      spacing: 6,
+      children: [
+        Row(
+          spacing: 6,
+          children: [
+            Icon(
+              Icons.sell_rounded,
+              size: 16,
+              color: context.theme.colorScheme.secondary,
+            ),
+            Text(
+              context.t.tags.selection.title,
+              style: context.theme.textTheme.bodyMedium?.copyWith(
+                color: context.theme.colorScheme.secondary,
+              ),
+            ),
+          ],
+        ),
+        FormBuilderField<List<ItemTag>>(
+          name: name,
+          builder: (field) {
+            return ItemTagSelector(
+              selectedTags: (field.value ?? []).map((e) => e.id).toSet(),
+              onSelection: (tag, isSelected) {
+                final newValue = field.value?.toSet() ?? {};
+                if (isSelected) {
+                  newValue.add(tag);
+                } else {
+                  newValue.remove(tag);
+                }
+                field.didChange(newValue.toList());
+              },
+            );
           },
-        );
-      },
+        ),
+      ],
     );
   }
 }
@@ -170,7 +191,6 @@ class TaskEditReminderField extends StatelessWidget {
       builder: (field) => ReminderPickerTile(
         value: field.value,
         onChanged: field.didChange,
-        borderRadius: const BorderRadiusGeometry.all(Radius.circular(16)),
       ),
     );
   }
@@ -185,8 +205,9 @@ class TaskEditPersistenceField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderSwitch(
       name: name,
-      decoration: const InputDecoration(border: .none),
-      controlAffinity: .leading,
+      decoration: const InputDecoration(contentPadding: .zero, border: .none),
+      secondary: const Icon(Icons.push_pin_rounded),
+      contentPadding: const .symmetric(vertical: 4, horizontal: 16),
       title: Text(
         context.t.tasks.edit.fields.taskPersistence,
         style: const TextStyle(fontSize: 15),

@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:not_zero_app/src/features/habits/view/components/habit_calendar_section.dart';
 import 'package:not_zero_app/src/features/themes/themes.dart';
 import 'package:not_zero_app/src/features/translations/translations.g.dart';
 import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
@@ -109,6 +110,8 @@ class _HabitViewScreenBody extends ConsumerWidget {
             padding: const .symmetric(horizontal: 8),
             child: SelectableText(habit.description),
           ),
+        const SizedBox(height: 16),
+        HabitCalendarSection(habit: habit),
         const SizedBox(height: 10),
       ],
     );

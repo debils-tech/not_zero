@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,8 +15,11 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/settings/models/week_start.dart';
+import 'package:not_zero_app/src/features/settings/notifiers/locale_first_weekday_notifier.dart';
 import 'package:not_zero_app/src/features/settings/notifiers/special_effects_notifier.dart';
 import 'package:not_zero_app/src/features/settings/notifiers/theme_settings_notifier.dart';
+import 'package:not_zero_app/src/features/settings/notifiers/week_start_notifier.dart';
 import 'package:not_zero_app/src/features/settings/repositories/backup_repository.dart';
 import 'package:not_zero_app/src/features/settings/repositories/settings_repository.dart';
 import 'package:not_zero_app/src/features/settings/services/backup_local_service.dart';
@@ -57,6 +60,28 @@ final themeSettingsNotifierProvider = NotifierProvider.autoDispose(
 final specialEffectsNotifierProvider = NotifierProvider.autoDispose(
   SpecialEffectsNotifier.new,
 );
+
+final weekStartNotifierProvider =
+    NotifierProvider<WeekStartNotifier, WeekStart?>(
+      WeekStartNotifier.new,
+    );
+
+final localeFirstWeekdayProvider =
+    NotifierProvider<LocaleFirstWeekdayNotifier, int>(
+      LocaleFirstWeekdayNotifier.new,
+    );
+
+final effectiveFirstWeekdayProvider = Provider<int>((ref) {
+  final weekStart = ref.watch(weekStartNotifierProvider);
+  if (weekStart != null) return weekStart.weekday;
+  return ref.watch(localeFirstWeekdayProvider);
+});
+
+final effectiveWeekStartProvider = Provider<WeekStart>((ref) {
+  final effectiveWeekday = ref.watch(effectiveFirstWeekdayProvider);
+  return WeekStart.fromWeekday(effectiveWeekday);
+});
+
 final appInfoProvider = FutureProvider<AppInfo>((ref) async {
   return AppInfo.fromEnvironment();
 });

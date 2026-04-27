@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter/material.dart';
+import 'package:not_zero_app/src/features/common/view/components/common_widgets/show_app_date_picker.dart';
 import 'package:not_zero_app/src/helpers/nz_date_time_format.dart';
 import 'package:nz_common/nz_common.dart';
 
@@ -23,14 +24,16 @@ enum DateRangeType { day, week }
 class DateRangeSwitch extends StatefulWidget {
   const DateRangeSwitch({
     required this.rangeType,
+    required this.weekStart,
     this.initialDate,
     this.onChanged,
     super.key,
   });
 
   final DateRangeType rangeType;
+  final int weekStart;
   final DateTime? initialDate;
-  final void Function(DateTime rangeStart, DateTime rangeEInd)? onChanged;
+  final void Function(DateTime rangeStart, DateTime rangeEnd)? onChanged;
 
   @override
   State<DateRangeSwitch> createState() => _DateRangeSwitchState();
@@ -41,12 +44,12 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
 
   DateTime get _rangeStart => switch (widget.rangeType) {
     .day => _currentDate.startOfDay,
-    .week => _currentDate.startOfWeek,
+    .week => _currentDate.startOfWeek(weekStart: widget.weekStart),
   };
 
   DateTime get _rangeEnd => switch (widget.rangeType) {
     .day => _currentDate.endOfDay,
-    .week => _currentDate.endOfWeek,
+    .week => _currentDate.endOfWeek(weekStart: widget.weekStart),
   };
 
   @override
@@ -120,7 +123,7 @@ class _DateRangeSwitchState extends State<DateRangeSwitch> {
     final today = DateTime.now();
     final firstDate = today.subtract(const Duration(days: 365));
     final lastDate = today.add(const Duration(days: 365));
-    final newDate = await showDatePicker(
+    final newDate = await showAppDatePicker(
       context: context,
       initialDate: _currentDate.isBefore(firstDate)
           ? firstDate

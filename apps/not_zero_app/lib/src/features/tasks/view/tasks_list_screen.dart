@@ -21,6 +21,7 @@ import 'package:not_zero_app/src/features/common/view/components/common_widgets/
 import 'package:not_zero_app/src/features/common/view/components/common_widgets/everything_broke_text.dart';
 import 'package:not_zero_app/src/features/common/view/components/selection/di.dart';
 import 'package:not_zero_app/src/features/common/view/components/selection/notifiers/item_selection_notifier.dart';
+import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/tags/view/tag_selector.dart';
 import 'package:not_zero_app/src/features/tasks/di.dart';
 import 'package:not_zero_app/src/features/tasks/view/components/task_card.dart';
@@ -143,6 +144,7 @@ class _TasksFilters extends ConsumerWidget {
     final selectedTags = ref.watch(
       tasksFiltersNotifier.select((state) => state.searchTags),
     );
+    final weekStart = ref.watch(effectiveFirstWeekdayProvider);
     final (allTasksCount, tasksLeftToComplete) = ref.watch(
       tasksMainListNotifier.select(
         (state) => (
@@ -158,6 +160,7 @@ class _TasksFilters extends ConsumerWidget {
         if (!isSomeday) ...[
           DateRangeSwitch(
             rangeType: .day,
+            weekStart: weekStart,
             initialDate: selectedDay,
             onChanged: (startDay, endDay) {
               assert(startDay.isAtSameDay(endDay), 'Invalid date range');

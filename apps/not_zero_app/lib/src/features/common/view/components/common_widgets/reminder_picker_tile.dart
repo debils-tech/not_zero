@@ -23,18 +23,15 @@ class ReminderPickerTile extends StatelessWidget {
   const ReminderPickerTile({
     required this.value,
     required this.onChanged,
-    this.borderRadius,
     super.key,
   });
 
   final ReminderLocalTime? value;
   final void Function(ReminderLocalTime? newValue) onChanged;
-  final BorderRadiusGeometry? borderRadius;
 
   @override
   Widget build(BuildContext context) {
     final value = this.value;
-    final borderRadius = this.borderRadius;
 
     final Widget valueIndicator;
     if (value != null) {
@@ -87,9 +84,7 @@ class ReminderPickerTile extends StatelessWidget {
       // TODO(uSlashVlad): Remove tasks translations from universal time picker!
       title: Text(context.t.tasks.edit.fields.taskReminder),
       trailing: valueIndicator,
-      shape: borderRadius != null
-          ? RoundedRectangleBorder(borderRadius: borderRadius)
-          : null,
+      shape: const ContinuousRectangleBorder(borderRadius: .all(.circular(16))),
     );
   }
 }

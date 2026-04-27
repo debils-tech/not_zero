@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:not_zero_app/src/features/settings/di.dart';
 import 'package:not_zero_app/src/features/stats/di.dart';
 import 'package:not_zero_app/src/features/stats/models/quick_statistics_state.dart';
 import 'package:nz_common/nz_common.dart';
@@ -24,14 +25,16 @@ import 'package:nz_common/nz_common.dart';
 class QuickStatisticsNotifier extends Notifier<QuickStatisticsState> {
   @override
   QuickStatisticsState build() {
+    ref.watch(effectiveFirstWeekdayProvider);
     unawaited(loadDays());
 
     return const QuickStatisticsState();
   }
 
   Future<void> loadDays([DateTime? start, DateTime? end]) async {
-    final rangeStart = start ?? .now().startOfWeek;
-    final rangeEnd = end ?? .now().endOfWeek;
+    final weekStart = ref.read(effectiveFirstWeekdayProvider);
+    final rangeStart = start ?? .now().startOfWeek(weekStart: weekStart);
+    final rangeEnd = end ?? .now().endOfWeek(weekStart: weekStart);
 
     final repository = ref.read(statsRepositoryProvider);
     final weeklyStats = await repository.getStatsByDays(rangeStart, rangeEnd);
@@ -41,16 +44,21 @@ class QuickStatisticsNotifier extends Notifier<QuickStatisticsState> {
       chartRangeStart: rangeStart,
       chartRangeEnd: rangeEnd,
       selectedDayIndex:
-          state.selectedDayIndex ?? _findTodayInRange(rangeStart, rangeEnd),
+          state.selectedDayIndex ??
+          _findTodayInRange(rangeStart, rangeEnd, weekStart: weekStart),
     );
   }
 
-  int? _findTodayInRange(DateTime start, DateTime end) {
+  int? _findTodayInRange(
+    DateTime start,
+    DateTime end, {
+    required int weekStart,
+  }) {
     final today = DateTime.now();
 
     if (today.isAfter(start) && today.isBefore(end)) {
-      // Works onlt if we want to show only a week.
-      return today.weekday - 1;
+      return (today.weekday - weekStart + DateTime.daysPerWeek) %
+          DateTime.daysPerWeek;
     }
 
     return null;

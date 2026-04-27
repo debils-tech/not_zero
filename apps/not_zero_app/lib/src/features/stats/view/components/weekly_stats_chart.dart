@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,18 +19,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:not_zero_app/src/features/themes/extensions/charts_colors.dart';
 import 'package:not_zero_app/src/helpers/build_context_quick_access_ext.dart';
-import 'package:nz_common/nz_common.dart';
 
 class WeeklyStatsChart extends StatelessWidget {
-  WeeklyStatsChart({
+  const WeeklyStatsChart({
     required this.stats,
     required this.rendererKey,
+    required this.rangeStart,
+    required this.rangeEnd,
     this.selectedIndex,
-    DateTime? start,
-    DateTime? end,
     super.key,
-  }) : rangeStart = start ?? .now().startOfWeek,
-       rangeEnd = end ?? .now().endOfWeek;
+  });
 
   final List<int> stats;
   final int? selectedIndex;

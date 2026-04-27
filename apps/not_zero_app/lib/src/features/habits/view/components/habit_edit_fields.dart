@@ -108,7 +108,6 @@ class HabitEditReminderField extends StatelessWidget {
       builder: (field) => ReminderPickerTile(
         value: field.value,
         onChanged: field.didChange,
-        borderRadius: const BorderRadiusGeometry.all(Radius.circular(16)),
       ),
     );
   }

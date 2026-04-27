@@ -23,6 +23,7 @@ import 'package:not_zero_app/src/features/check_in/models/check_in_streak_state.
 import 'package:not_zero_app/src/features/check_in/view/components/check_in_streak_continues_dialog.dart';
 import 'package:not_zero_app/src/features/check_in/view/components/check_in_streak_lost_dialog.dart';
 import 'package:not_zero_app/src/features/check_in/view/components/check_in_streak_new_dialog.dart';
+import 'package:not_zero_app/src/features/home/view/components/home_today_block.dart';
 import 'package:not_zero_app/src/features/home/view/components/navigation_block.dart';
 import 'package:not_zero_app/src/features/home/view/components/stats_header.dart';
 import 'package:not_zero_app/src/routes.dart';
@@ -72,6 +73,7 @@ class HomeScreen extends ConsumerWidget {
       body: ListView(
         children: const [
           HomeStatsHeader(),
+          HomeTodayBlock(),
           HomeNavigationBlock(),
         ],
       ),

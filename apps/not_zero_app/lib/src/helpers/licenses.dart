@@ -15,16 +15,16 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
+import 'package:nz_fonts/nz_fonts.dart';
 
 void addAppLicenses() {
   LicenseRegistry.addLicense(() async* {
     try {
-      final license = await rootBundle.loadString(
-        'fonts/SourceCodePro-OFL.txt',
-      );
+      final license = await NzRobotoFlex.license();
       yield LicenseEntryWithLineBreaks(['google_fonts'], license);
-    } on Object catch (_) {
+    } on Object catch (e, s) {
+      debugPrint('Error loading license: $e');
+      debugPrintStack(stackTrace: s);
       yield const LicenseEntryWithLineBreaks(
         ['google_fonts'],
         "Can't load license",

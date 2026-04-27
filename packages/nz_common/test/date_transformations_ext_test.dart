@@ -1,5 +1,5 @@
 // Not Zero, cross-platform wellbeing application.
-// Copyright (C) 2025 Nagorny Vladislav
+// Copyright (C) 2026 Nagorny Vladislav
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -27,10 +27,37 @@ void main() {
       expect(niceDay.endOfDay, DateTime(2022, 02, 02, 23, 59, 59, 999, 999));
     });
 
-    test('Start and end of week', () {
-      expect(niceDay.startOfWeek, DateTime(2022, 01, 31));
+    test('Start and end of week with monday start', () {
+      expect(niceDay.startOfWeek(), DateTime(2022, 01, 31));
 
-      expect(niceDay.endOfWeek, DateTime(2022, 02, 06, 23, 59, 59, 999, 999));
+      expect(
+        niceDay.endOfWeek(),
+        DateTime(2022, 02, 06, 23, 59, 59, 999, 999),
+      );
+    });
+
+    test('Start and end of week with sunday start', () {
+      expect(
+        niceDay.startOfWeek(weekStart: DateTime.sunday),
+        DateTime(2022, 1, 30),
+      );
+
+      expect(
+        niceDay.endOfWeek(weekStart: DateTime.sunday),
+        DateTime(2022, 2, 5, 23, 59, 59, 999, 999),
+      );
+    });
+
+    test('Start and end of week with saturday start', () {
+      expect(
+        niceDay.startOfWeek(weekStart: DateTime.saturday),
+        DateTime(2022, 1, 29),
+      );
+
+      expect(
+        niceDay.endOfWeek(weekStart: DateTime.saturday),
+        DateTime(2022, 2, 4, 23, 59, 59, 999, 999),
+      );
     });
 
     test('Start and end of month', () {
@@ -74,10 +101,10 @@ void main() {
     });
 
     test('Range week before', () {
-      expect(niceDay.startOfWeek.weekBefore, DateTime(2022, 1, 24));
+      expect(niceDay.startOfWeek().weekBefore, DateTime(2022, 1, 24));
 
       expect(
-        niceDay.endOfWeek.weekBefore,
+        niceDay.endOfWeek().weekBefore,
         DateTime(2022, 1, 30, 23, 59, 59, 999, 999),
       );
     });
