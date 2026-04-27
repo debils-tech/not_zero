@@ -16,7 +16,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:not_zero_app/src/features/common/view/components/adaptive/list_limiter.dart';
 import 'package:not_zero_app/src/features/home/di.dart';
 import 'package:not_zero_app/src/features/home/notifiers/home_today_habits_notifier.dart';

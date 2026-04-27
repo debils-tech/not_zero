@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+/// Common package for exporting Not Zero fonts to the app.
 library;
 
 export 'src/roboto_flex.dart';

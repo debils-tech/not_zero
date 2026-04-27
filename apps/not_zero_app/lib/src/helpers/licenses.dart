@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:nz_fonts/nz_fonts.dart';
 
 void addAppLicenses() {
