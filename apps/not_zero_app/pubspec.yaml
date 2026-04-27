@@ -66,9 +66,6 @@ flutter:
     - family: NotZero
       fonts:
         - asset: assets/fonts/NotZero.ttf
-    - family: SourceCodePro
-      fonts:
-        - asset: assets/fonts/SourceCodePro-VariableFont.ttf
 
   uses-material-design: true
 

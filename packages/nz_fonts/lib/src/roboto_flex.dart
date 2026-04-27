@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 abstract final class NzRobotoFlex {
   static const fontFamily = 'RobotoFlex';
@@ -10,5 +11,9 @@ abstract final class NzRobotoFlex {
       letterSpacing: -1.5,
       height: 1.1,
     ),
+  );
+
+  static Future<String> license() => rootBundle.loadString(
+    'packages/$package/lib/fonts/RobotoFlex/OFL.txt',
   );
 }

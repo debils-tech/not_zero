@@ -19,6 +19,8 @@ dev_dependencies:
     path: ../nz_lint
 
 flutter:
+  assets:
+    - lib/fonts/RobotoFlex/OFL.txt
   fonts:
     - family: RobotoFlex
       fonts:
