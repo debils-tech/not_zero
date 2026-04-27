@@ -12,7 +12,7 @@ jobs:
     steps:
       # Init
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - name: Read Flutter version
         id: fvm
         run: echo "flutter_version=$(jq -r '.flutter' .fvmrc)" >> $GITHUB_OUTPUT
@@ -54,7 +54,7 @@ jobs:
       commit_hash: ${{ steps.get_hash.outputs.commit_hash }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - name: Update Version
         id: update_version
         run: |
@@ -83,7 +83,7 @@ jobs:
     steps:
       # Init
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           ref: ${{ needs.version_update.outputs.commit_hash }}
       - uses: actions/cache@v5
@@ -104,9 +104,10 @@ jobs:
           cache: true
       - uses: bluefireteam/melos-action@v3
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
-          java-version: "21"
+          distribution: "zulu"
+          java-version: "25"
       - name: Check flutter and Java installation installation
         run: |
           flutter --version
@@ -145,7 +146,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           ref: ${{ needs.version_update.outputs.commit_hash }}
       - name: Download APKs Directory
